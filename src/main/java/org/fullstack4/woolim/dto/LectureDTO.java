@@ -8,7 +8,6 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class LectureDTO {
