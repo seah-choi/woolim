@@ -54,7 +54,7 @@
 <!-- Product Shop Section Begin -->
 <section class="hero-section">
   <div class="hero-items owl-carousel">
-    <div class="single-hero-items set-bg" data-setbg="img/hero-1.jpg">
+    <div class="single-hero-items set-bg" data-setbg="/resources/img/hero-1.jpg">
       <div class="container">
         <div class="row">
           <div class="col-lg-5">
@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-    <div class="single-hero-items set-bg" data-setbg="img/hero-2.jpg">
+    <div class="single-hero-items set-bg" data-setbg="/resources/img/hero-2.jpg">
       <div class="container">
         <div class="row">
           <div class="col-lg-5">
@@ -96,26 +96,32 @@
     <div class="row">
       <div class="col-lg-4">
         <div class="single-banner">
-          <img src="img/banner-1.jpg" alt="">
+          <a href="#">
+          <img src="/resources/img/banner-1.jpg" alt="">
           <div class="inner-text">
-            <h4>Men’s</h4>
+            <h4>고등학생</h4>
           </div>
+          </a>
         </div>
       </div>
       <div class="col-lg-4">
         <div class="single-banner">
-          <img src="img/banner-2.jpg" alt="">
+          <a href="#">
+          <img src="/resources/img/banner-2.jpg" alt="">
           <div class="inner-text">
-            <h4>Women’s</h4>
+            <h4>중학생</h4>
           </div>
+          </a>
         </div>
       </div>
       <div class="col-lg-4">
         <div class="single-banner">
-          <img src="img/banner-3.jpg" alt="">
+          <a href="#">
+          <img src="/resources/img/banner-3.jpg" alt="">
           <div class="inner-text">
-            <h4>Kid’s</h4>
+            <h4>초등학생</h4>
           </div>
+          </a>
         </div>
       </div>
     </div>
@@ -128,111 +134,47 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-3">
-        <div class="product-large set-bg" data-setbg="img/products/women-large.jpg">
-          <h2>Women’s</h2>
-          <a href="#">Discover More</a>
+        <div class="product-large set-bg" data-setbg="/resources/img/products/women-large.jpg">
+          <h2>강좌 리스트</h2>
+          <a href="/lecture/list">Discover More</a>
         </div>
       </div>
       <div class="col-lg-8 offset-lg-1">
         <div class="filter-control">
           <ul>
-            <li class="active">Clothings</li>
-            <li>HandBag</li>
-            <li>Shoes</li>
-            <li>Accessories</li>
+            <li class="active">인기 강좌</li>
+            <li>최신 강좌</li>
+            <li>곧 마감되는 강좌</li>
           </ul>
         </div>
         <div class="product-slider owl-carousel">
+
+<%--          /////////////////반복문/////////////////////////////////////--%>
           <div class="product-item">
             <div class="pi-pic">
-              <img src="img/products/women-1.jpg" alt="">
+              <img src="/resources/img/products/women-1.jpg" alt="">
               <div class="sale">Sale</div>
               <div class="icon">
                 <i class="icon_heart_alt"></i>
               </div>
               <ul>
-                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                <li class="quick-view"><a href="#">+ Quick View</a></li>
+                <li class="w-icon active"><a href="/mypage/cart"><i class="icon_bag_alt"></i></a></li>
+                <li class="quick-view"><a href="/lecture/iist?lecture_idx=1">+ Quick View</a></li>
                 <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
               </ul>
             </div>
             <div class="pi-text">
-              <div class="catagory-name">Coat</div>
+              <div class="catagory-name">과목 카테고리</div>
               <a href="#">
-                <h5>Pure Pineapple</h5>
+                <h5>강좌 제목</h5>
               </a>
               <div class="product-price">
-                $14.00
-                <span>$35.00</span>
+                할인가
+                <span>정가</span>
               </div>
             </div>
           </div>
-          <div class="product-item">
-            <div class="pi-pic">
-              <img src="img/products/women-2.jpg" alt="">
-              <div class="icon">
-                <i class="icon_heart_alt"></i>
-              </div>
-              <ul>
-                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-              </ul>
-            </div>
-            <div class="pi-text">
-              <div class="catagory-name">Shoes</div>
-              <a href="#">
-                <h5>Guangzhou sweater</h5>
-              </a>
-              <div class="product-price">
-                $13.00
-              </div>
-            </div>
-          </div>
-          <div class="product-item">
-            <div class="pi-pic">
-              <img src="img/products/women-3.jpg" alt="">
-              <div class="icon">
-                <i class="icon_heart_alt"></i>
-              </div>
-              <ul>
-                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-              </ul>
-            </div>
-            <div class="pi-text">
-              <div class="catagory-name">Towel</div>
-              <a href="#">
-                <h5>Pure Pineapple</h5>
-              </a>
-              <div class="product-price">
-                $34.00
-              </div>
-            </div>
-          </div>
-          <div class="product-item">
-            <div class="pi-pic">
-              <img src="img/products/women-4.jpg" alt="">
-              <div class="icon">
-                <i class="icon_heart_alt"></i>
-              </div>
-              <ul>
-                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-              </ul>
-            </div>
-            <div class="pi-text">
-              <div class="catagory-name">Towel</div>
-              <a href="#">
-                <h5>Converse Shoes</h5>
-              </a>
-              <div class="product-price">
-                $34.00
-              </div>
-            </div>
-          </div>
+  <%--          /////////////////반복문/////////////////////////////////////--%>
         </div>
       </div>
     </div>
