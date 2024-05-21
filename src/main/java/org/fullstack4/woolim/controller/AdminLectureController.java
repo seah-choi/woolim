@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Log4j2
 @Controller
-@RequestMapping(value="/admin/class")
+@RequestMapping(value="/admin/lecture")
 @RequiredArgsConstructor
-public class AdminClassController {
+public class AdminLectureController {
 
     @GetMapping("/list")
     public void GETList() {
