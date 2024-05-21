@@ -1,30 +1,32 @@
 <%--
   Created by IntelliJ IDEA.
-  User: I
+  User: pc
   Date: 2024-05-21
-  Time: 오후 7:19
+  Time: 오후 8:32
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Purple Admin</title>
-<!-- plugins:css -->
-<link rel="stylesheet" href="../../node_modules/mdi/css/materialdesignicons.min.css">
-<link rel="stylesheet" href="../../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css">
-<!-- endinject -->
-<!-- plugin css for this page -->
-<!-- End plugin css for this page -->
-<!-- inject:css -->
-<link rel="stylesheet" href="../../css/style.css">
-<!-- endinject -->
-<link rel="shortcut icon" href="images/favicon.png" />
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Purple Admin</title>
+        <!-- plugins:css -->
+        <link rel="stylesheet" href="../../node_modules/mdi/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="../../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css">
+        <!-- endinject -->
+        <!-- plugin css for this page -->
+        <link rel="stylesheet" href="../../node_modules/jqvmap/dist/jqvmap.min.css" />
+        <!-- End plugin css for this page -->
+        <!-- inject:css -->
+        <link rel="stylesheet" href="/resources/css/adminStyle.css">
+        <!-- endinject -->
+        <link rel="shortcut icon" href="images/favicon.png" />
 </head>
+
 <body>
 <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
@@ -196,6 +198,7 @@
     <div class="container-fluid page-body-wrapper">
         <div class="row row-offcanvas row-offcanvas-right">
             <!-- partial:../../partials/_sidebar.html -->
+
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
@@ -277,61 +280,63 @@
                     <a href="https://www.bootstrapdash.com/product/purple-bootstrap-4-admin-template/" target="_blank" class="btn btn-lg btn-block purchase-button">Upgrade To Pro</a>
                 </div>
             </nav>
+
             <!-- partial -->
             <div class="content-wrapper">
                 <div class="row">
                     <div class="col-lg-6 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Line chart</h4>
-                                <canvas id="lineChart" style="height:250px"></canvas>
+                                <h4 class="card-title">Hoverable Table</h4>
+                                <p class="card-description">
+                                    Add class <code>.table-hover</code>
+                                </p>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Product</th>
+                                        <th>Sale</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Jacob</td>
+                                        <td>Photoshop</td>
+                                        <td class="text-danger"> 28.76% <i class="mdi mdi-arrow-down"></i></td>
+                                        <td><label class="badge badge-danger">Pending</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Messsy</td>
+                                        <td>Flash</td>
+                                        <td class="text-danger"> 21.06% <i class="mdi mdi-arrow-down"></i></td>
+                                        <td><label class="badge badge-warning">In progress</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>John</td>
+                                        <td>Premier</td>
+                                        <td class="text-danger"> 35.00% <i class="mdi mdi-arrow-down"></i></td>
+                                        <td><label class="badge badge-info">Fixed</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Peter</td>
+                                        <td>After effects</td>
+                                        <td class="text-success"> 82.00% <i class="mdi mdi-arrow-up"></i></td>
+                                        <td><label class="badge badge-success">Completed</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dave</td>
+                                        <td>53275535</td>
+                                        <td class="text-success"> 98.05% <i class="mdi mdi-arrow-up"></i></td>
+                                        <td><label class="badge badge-warning">In progress</label></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Bar chart</h4>
-                                <canvas id="barChart" style="height:230px"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Area chart</h4>
-                                <canvas id="areaChart" style="height:250px"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Doughnut chart</h4>
-                                <canvas id="doughnutChart" style="height:250px"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Pie chart</h4>
-                                <canvas id="pieChart" style="height:250px"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Scatter chart</h4>
-                                <canvas id="scatterChart" style="height:250px"></canvas>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
             <!-- content-wrapper ends -->
@@ -356,14 +361,12 @@
 <script src="../../node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
 <!-- endinject -->
 <!-- Plugin js for this page-->
-<script src="../../node_modules/chart.js/dist/Chart.min.js"></script>
 <!-- End plugin js for this page-->
 <!-- inject:js -->
-<script src="../../js/off-canvas.js"></script>
-<script src="../../js/misc.js"></script>
+<script src="/resources/js/off-canvas.js"></script>
+<script src="/resources/js/misc.js"></script>
 <!-- endinject -->
 <!-- Custom js for this page-->
-<script src="../../js/chart.js"></script>
 <!-- End custom js for this page-->
 </body>
 </html>

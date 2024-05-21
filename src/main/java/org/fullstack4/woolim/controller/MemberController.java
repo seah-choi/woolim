@@ -1,4 +1,4 @@
 package org.fullstack4.woolim.controller;
 
-public class BbsController {
+public class MemberController {
 }
