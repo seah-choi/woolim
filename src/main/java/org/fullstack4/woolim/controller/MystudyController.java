@@ -47,7 +47,7 @@ public class MystudyController {
 
     }
 
-    @GetMapping("/studyPlanList")
+    @GetMapping("/studyPlanModify")
     public void GETStudyPlanModify() {
 
     }
