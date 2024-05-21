@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class PaymentVO {
     private int payment_idx;
     private String payment_num;
+    private String member_id;
     private int price;
     private LocalDate order_date;
     private String payment_type;
