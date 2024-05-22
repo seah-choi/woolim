@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -23,6 +24,74 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+    <style>
+        /* 전체 컨테이너를 플렉스 컨테이너로 설정 */
+        .advanced-search {
+            display: flex;
+            align-items: center;
+        }
+
+        /* 카테고리 선택 버튼 스타일 */
+        .category-btn {
+            height: 40px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 0 15px;
+            font-size: 16px;
+            color: #495057;
+            background-color: #fff;
+            outline: none;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .category-btn:focus {
+            border-color: #80bdff;
+        }
+
+        /* 입력 그룹 컨테이너 스타일 */
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        /* 텍스트 입력 스타일 */
+        .input-group input[type="text"] {
+            height: 40px;
+            padding: 0 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #495057;
+            outline: none;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .input-group input[type="text"]:focus {
+            border-color: #80bdff;
+        }
+
+        /* 버튼 스타일 */
+        .input-group button {
+            height: 40px;
+            padding: 0 20px;
+            border: 1px solid #ced4da;
+            background-color: #68afcb;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .input-group button i {
+            font-size: 16px;
+        }
+
+        .input-group button:hover {
+            background-color: #0056b3;
+        }
+
+
+    </style>
 </head>
 <!-- Header End -->
 
@@ -55,40 +124,40 @@
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
                 <div class="filter-widget">
-                    <h4 class="fw-title">Categories</h4>
+                    <h4 class="fw-title">카테고리</h4>
                     <ul class="filter-catagories">
-                        <li><a href="#">Men</a></li>
-                        <li><a href="#">Women</a></li>
-                        <li><a href="#">Kids</a></li>
+                        <li><a href="#">🧑‍🌾 초등</a></li>
+                        <li><a href="#">🕵️ 중등</a></li>
+                        <li><a href="#">👨‍🚀 고등</a></li>
                     </ul>
                 </div>
                 <div class="filter-widget">
-                    <h4 class="fw-title">Brand</h4>
+                    <h4 class="fw-title">과목</h4>
                     <div class="fw-brand-check">
                         <div class="bc-item">
                             <label for="bc-calvin">
-                                Calvin Klein
+                                📗 국어
                                 <input type="checkbox" id="bc-calvin">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="bc-item">
                             <label for="bc-diesel">
-                                Diesel
+                                ⏲️ 수학
                                 <input type="checkbox" id="bc-diesel">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="bc-item">
                             <label for="bc-polo">
-                                Polo
+                                🆖 영어
                                 <input type="checkbox" id="bc-polo">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="bc-item">
                             <label for="bc-tommy">
-                                Tommy Hilfiger
+                                🔎 과학
                                 <input type="checkbox" id="bc-tommy">
                                 <span class="checkmark"></span>
                             </label>
@@ -96,7 +165,7 @@
                     </div>
                 </div>
                 <div class="filter-widget">
-                    <h4 class="fw-title">Price</h4>
+                    <h4 class="fw-title">가격</h4>
                     <div class="filter-range-wrap">
                         <div class="range-slider">
                             <div class="price-input">
@@ -105,7 +174,7 @@
                             </div>
                         </div>
                         <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                             data-min="33" data-max="98">
+                             data-min="10000" data-max="300000">
                             <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
                             <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
                             <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
@@ -113,7 +182,7 @@
                     </div>
                     <a href="#" class="filter-btn">Filter</a>
                 </div>
-                <div class="filter-widget">
+                <%--<div class="filter-widget">
                     <h4 class="fw-title">Color</h4>
                     <div class="fw-color-choose">
                         <div class="cs-item">
@@ -141,8 +210,8 @@
                             <label class="cs-green" for="cs-green">Green</label>
                         </div>
                     </div>
-                </div>
-                <div class="filter-widget">
+                </div>--%>
+                <%--<div class="filter-widget">
                     <h4 class="fw-title">Size</h4>
                     <div class="fw-size-choose">
                         <div class="sc-item">
@@ -162,11 +231,11 @@
                             <label for="xs-size">xs</label>
                         </div>
                     </div>
-                </div>
+                </div>--%>
                 <div class="filter-widget">
-                    <h4 class="fw-title">Tags</h4>
+                    <h4 class="fw-title">태그</h4>
                     <div class="fw-tags">
-                        <a href="#">Towel</a>
+                        <a href="#">Tow</a>
                         <a href="#">Shoes</a>
                         <a href="#">Coat</a>
                         <a href="#">Dresses</a>
@@ -181,254 +250,132 @@
                     <div class="row">
                         <div class="col-lg-7 col-md-7">
                             <div class="select-option">
-                                <select class="sorting">
-                                    <option value="">Default Sorting</option>
+                                <select class="sorting" id="sorting">
+                                    <option value="1">인기순</option>
+                                    <option value="2">최신순</option>
+                                    <option value="3">댓글순</option>
+                                    <option value="4">좋아요순</option>
                                 </select>
-                                <select class="p-show">
-                                    <option value="">Show:</option>
+                                <select class="sorting" id="viewSorting">
+                                    <option value="">9개씩 보기</option>
+                                    <option value="">12개씩 보기</option>
+                                    <option value="">24개씩 보기</option>
+                                    <option value="">36개씩 보기</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-5 col-md-5 text-right">
-                            <p>Show 01- 09 Of 36 Product</p>
+                        <div class="col-lg-5 col-md-5 text-right" >
+                            <div class="advanced-search">
+                                <div class="flex-container">
+
+
+                                    <form action="/lecture/list" method="get" class="input-group" style="width: 500px;">
+                                        <select class="category-btn" name="type" id="search_area">
+                                            <option value="" ${pageMaker.cri.type == null ? 'selected' : ''}>전체</option>
+                                            <option value="T" ${pageMaker.cri.type eq 'T' ? 'selected' : ''}>제목</option>
+                                            <option value="W" ${pageMaker.cri.type eq 'W' ? 'selected' : ''}>강사</option>
+                                            <option value="C" ${pageMaker.cri.type eq 'C' ? 'selected' : ''}>과목</option>
+                                        </select>
+                                     <c:choose>
+                                                <c:when test="${pageMaker.cri.keyword != null && pageMaker.cri.keyword != ''}">
+                                                    <input type="text" name="keyword" id="keyword" value="${pageMaker.cri.keyword}"/>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <input type="text" name="keyword" id="keyword" placeholder="검색어를 입력하세요.">
+                                                </c:otherwise>
+                                        </c:choose>
+
+                                        <button type="button" id="searchBtn"><i class="ti-search"></i></button>
+                                        <button type="button" id="resetBtn">초기화</button>
+                                    </form>
+
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
                 <div class="product-list">
                     <div class="row">
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="img/products/product-1.jpg" alt="">
-                                    <div class="sale pp-sale">Sale</div>
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
+                        <c:forEach items="${list}" var="list">
+                            <div class="col-lg-4 col-sm-6">
+                                <div class="product-item">
+                                    <div class="pi-pic">
+                                        <img src="/resources/img/lecture/${list.lecture_image}" alt="">
+                                        <div class="sale pp-sale">Sale</div>
+                                        <div class="icon">
+                                            <i class="icon_heart_alt"></i>
+                                        </div>
+                                        <ul>
+                                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                            <li class="quick-view"><a href="#"> 상품 상세보기</a></li>
+                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                        </ul>
                                     </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Towel</div>
-                                    <a href="#">
-                                        <h5>Pure Pineapple</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        $14.00
-                                        <span>$35.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="/resources/img/products/product-2.jpg" alt="">
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Coat</div>
-                                    <a href="#">
-                                        <h5>Guangzhou sweater</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        $13.00
-                                        <span>$35.00</span>
+                                    <div class="pi-text">
+                                        <div class="catagory-name">${list.lecture_category}</div>
+                                        <a href="#">
+                                            <h5>${list.lecture_title}</h5>
+                                        </a>
+                                        <div class="product-price">
+                                                ₩${list.lecture_sale_price}
+                                            <span>₩${list.lecture_price}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="img/products/product-3.jpg" alt="">
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Shoes</div>
-                                    <a href="#">
-                                        <h5>Guangzhou sweater</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        $34.00
-                                        <span>$35.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="img/products/product-4.jpg" alt="">
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Coat</div>
-                                    <a href="#">
-                                        <h5>Microfiber Wool Scarf</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        $64.00
-                                        <span>$35.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="img/products/product-5.jpg" alt="">
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Shoes</div>
-                                    <a href="#">
-                                        <h5>Men's Painted Hat</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        $44.00
-                                        <span>$35.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="img/products/product-6.jpg" alt="">
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Shoes</div>
-                                    <a href="#">
-                                        <h5>Converse Shoes</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        $34.00
-                                        <span>$35.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="img/products/product-7.jpg" alt="">
-                                    <div class="sale pp-sale">Sale</div>
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Towel</div>
-                                    <a href="#">
-                                        <h5>Pure Pineapple</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        $64.00
-                                        <span>$35.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="img/products/product-8.jpg" alt="">
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Coat</div>
-                                    <a href="#">
-                                        <h5>2 Layer Windbreaker</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        $44.00
-                                        <span>$35.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img src="img/products/product-9.jpg" alt="">
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Shoes</div>
-                                    <a href="#">
-                                        <h5>Converse Shoes</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        $34.00
-                                        <span>$35.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </c:forEach>
+
+
                     </div>
                 </div>
               
             </div>
         </div>
     </div>
+    <div class="pageInfo_wrap">
+        <div class="pageInfo_area">
+            <!-- 이전페이지 버튼 -->
+            <c:if test="${pageMaker.prev}">
+                <li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
+            </c:if>
+
+            <!-- 각 번호 페이지 버튼 -->
+            <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+                <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a href="${num}">${num}</a></li>
+            </c:forEach>
+
+
+            <!-- 다음페이지 버튼 -->
+            <c:if test="${pageMaker.next}">
+                <li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
+            </c:if>
+        </div>
+
+ <%--       <div class="search_wrap">
+            <div class="search_area d-flex align-items-center">
+                <select name="type" class="form-control mr-2">
+                    <option value="" <c:out value="${pageMaker.cri.type == null?'selected':'' }"/>>--</option>
+                    <option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':'' }"/>>상품 이름</option>
+                    <option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>상품 저자</option>
+                    <option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>상품 출판사</option>
+                </select>
+                <input type="text" id="keyword" name="keyword" class="form-control mr-2" placeholder="Keyword">
+                <button id="searchBtn" class="btn btn-primary">Search</button>
+            </div>
+        </div>--%>
+
+    </div>
+
+
+    <form class="moveForm" method="get" id="moveForm">
+        <input type="hidden" name="type" value="${pageMaker.cri.type }">
+        <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+        <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+        <input type="hidden" name="keyword" id="key" value="${pageMaker.cri.keyword }">
+        <input type="hidden" name="sorting" value="${pageMaker.cri.sorting}">
+        <input type="hidden" name="viewSorting"  value="${pageMaker.cri.viewSorting}">
+    </form>
 </section>
 <!-- Product Shop Section End -->
 
@@ -540,7 +487,59 @@
     </div>
 </footer>
 <!-- Footer Section End -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>
+    const moveForm = document.querySelector("#moveForm");
+    document.querySelector(".pageinfo")
+    $(".pageInfo_area a").on("click", function(e){
 
+        e.preventDefault();
+        const key = document.querySelector("#key").value;
+        console.log(key+"#");
+        const pageNum = $(this).attr("href");
+        moveForm.querySelector("input[name='pageNum']").value = pageNum;
+        moveForm.querySelector("input[name='type']").value;
+        moveForm.querySelector("input[name='keyword']").value = key;
+
+        moveForm.action = "/lecture/list";
+        moveForm.submit();
+    });
+
+    document.querySelector("#searchBtn").addEventListener("click", function (e) {
+        e.preventDefault();
+
+        let type =  document.querySelector("#search_area").value;
+        console.log(type+"asd");
+        let val = document.querySelector("#keyword").value;
+
+      if(!type){
+            alert("검색 종류를 선택하세요.");
+            return false;
+        }
+
+        if(!val){
+            alert("키워드를 입력하세요.");
+            return false;
+        }
+
+        moveForm.querySelector("input[name='type']").value = type;
+        moveForm.querySelector("input[name='keyword']").value = val;
+        moveForm.querySelector("input[name='pageNum']").value = 1;
+        moveForm.submit();
+    });
+    document.querySelector("#sorting").addEventListener("change", function (e){
+        e.preventDefault();
+        console.log("####");
+        let sorting =  document.querySelector("#sorting").value;
+        moveForm.querySelector("input[name='sorting']").value = sorting;
+        moveForm.submit();
+    });
+
+
+    document.querySelector("#resetBtn").addEventListener("click", function (){
+       location.href= '/lecture/list';
+    });
+</script>
 <!-- Js Plugins -->
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>

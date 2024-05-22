@@ -31,4 +31,8 @@ public class LectureVO {
 
     private String lecture_study;
     private String lecture_content_detail;
+    private int lecture_price;
+    private int lecture_sale;
+    private int lecture_sale_price;
+    private int lecture_count ;
 }
