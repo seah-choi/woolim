@@ -31,15 +31,15 @@
                 <div class="col-lg-6 offset-lg-3">
                     <div class="login-form">
                         <h2>로그인</h2>
-                        <form action="#">
+                        <form name="frmLogin" method="post">
                             <label for="username">아이디</label>
                             <div class="input-group">
-                                <input class="form-control" type="text" id="username">
+                                <input class="form-control" type="text" id="username" name="member_id">
                             </div>
                             <br>
                             <label for="pass">비밀번호</label>
                             <div class="input-group">
-                                <input class="form-control" type="text" id="pass">
+                                <input class="form-control" type="password" id="pass" name="member_pwd">
                             </div>
                             <div class="group-input gi-check">
                                 <div class="gi-more">
@@ -50,7 +50,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <button type="submit" class="site-btn login-btn">로그인</button>
+                            <button type="button" class="site-btn login-btn" onclick="login()">로그인</button>
                         </form>
                         <div class="switch-login">
                             <a href="/member/join" class="or-login">회원가입</a>
@@ -71,5 +71,33 @@
     <script src="/resources/js/jquery.slicknav.js"></script>
     <script src="/resources/js/owl.carousel.min.js"></script>
     <script src="/resources/js/main.js"></script>
+    <script>
+        function login() {
+            let frmData = $("form[name=frmLogin]").serialize();
+            frmData = decodeURIComponent(frmData);
+            $.ajax({
+                url:"/login/login.dox?"+frmData,
+                dataType:"json",
+                type : "POST",
+                data : {
+
+                },
+                success : function(data) {
+                    if(data.result == "success") {
+                        alert(data.msg);
+                        location.replace("/");
+                    }else if(data.result =="false"){
+                        alert(data.msg);
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                fail : function (data){
+
+                }
+
+            });
+        }
+    </script>
 </body>
 </html>

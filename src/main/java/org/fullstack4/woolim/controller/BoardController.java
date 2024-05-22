@@ -36,4 +36,24 @@ public class BoardController {
     public void GETDelete() {
 
     }
+
+    @GetMapping("/freeList")
+    public void GETfreeList() {
+
+    }
+
+    @GetMapping("/freeRegist")
+    public void GETfreeRegist() {
+
+    }
+
+    @GetMapping("/freeModify")
+    public void GETfreeModify() {
+
+    }
+
+    @GetMapping("/freeView")
+    public void GETfreeView() {
+
+    }
 }
