@@ -131,6 +131,31 @@
                         </tr>
                         </tbody>
                     </table>
+                    <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a href="#" class="page-link" aria-label="Previous">&lt;</a>
+                            </li>
+                            <li class="page-item active">
+                                <a href="#" class="page-link">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a href="#" class="page-link">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a href="#" class="page-link">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a href="#" class="page-link">4</a>
+                            </li>
+                            <li class="page-item">
+                                <a href="#" class="page-link">5</a>
+                            </li>
+                            <li class="page-item">
+                                <a href="#" class="page-link" aria-label="Next">&gt;</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
                 <div class="row">
 <%--                    <div class="col-lg-4">--%>
@@ -155,10 +180,13 @@
                             <a href="#" class="proceed-btn">결제</a>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+
+
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -16,7 +16,7 @@
             <li><a href="#">작성글</a></li>
             <li><a href="#">결제 내역</a></li>
             <li><a href="/mypage/jjim">찜 강의</a></li>
-            <li><a href="#">1 : 1 문의하기</a></li>
+            <li><a href="/mypage/qnaList">1 : 1 문의하기</a></li>
             <li><a href="/mypage/cart">장바구니</a></li>
         </ul>
     </div>

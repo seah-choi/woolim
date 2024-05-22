@@ -55,4 +55,20 @@ public class MypageController {
     public void GETJjim() {
 
     }
+    @GetMapping("/qnaList")
+    public void GETQnaList(){
+
+    }
+    @GetMapping("/pointcharge")
+    public void GETChargePoint() {
+
+    }
+    @GetMapping("/qnaRegist")
+    public void GETQnaRegist(){
+
+    }
+    @GetMapping("/qnaView")
+    public void GETQnaView(){
+
+    }
 }
