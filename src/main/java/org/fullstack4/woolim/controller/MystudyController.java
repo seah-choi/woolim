@@ -12,22 +12,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MystudyController {
 
-    @GetMapping("/classlist")
+    @GetMapping("/classList")
     public void GETClassList() {
 
     }
 
-    @GetMapping("/classview")
+    @GetMapping("/classView")
     public void GETClassView() {
 
     }
 
-    @GetMapping("/boardlist")
+    @GetMapping("/boardList")
     public void GETBoardList() {
 
     }
 
-    @GetMapping("/replyslist")
+    @GetMapping("/replyList")
     public void GETReplyList() {
 
     }
@@ -49,6 +49,11 @@ public class MystudyController {
 
     @GetMapping("/studyPlanModify")
     public void GETStudyPlanModify() {
+
+    }
+
+    @GetMapping("/gradeList")
+    public void GETGradeList() {
 
     }
 
