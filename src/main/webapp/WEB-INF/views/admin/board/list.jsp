@@ -52,11 +52,18 @@
 
             <!-- basic table  Start -->
             <div class="pd-20 card-box mb-30">
-                <c:if test="${bbsList.bbs_type eq '01'}">
+
+                <c:if test="${bbsList.bbs_type eq 'bbs01'}">
+                    <h4 class="h4">교육정보 게시판</h4>
+                </c:if>
+                <c:if test="${bbsList.bbs_type eq 'bbs02'}">
+                    <h4 class="h4">자유 게시판</h4>
+                </c:if>
+                <c:if test="${bbsList.bbs_type eq 'bbs04'}">
                     <h4 class="h4">공지사항 게시판</h4>
                 </c:if>
-                <c:if test="${bbsList.bbs_type eq '02'}">
-                    <h4 class="h4">교육정보 게시판</h4>
+                <c:if test="${bbsList.bbs_type eq 'bbs05'}">
+                    <h4 class="h4">자료실</h4>
                 </c:if>
                 <br>
                 <div class="searchBox">
@@ -115,20 +122,23 @@
                         <th>조회수</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <input type="checkbox" id="${dto.comu_idx}" name="comu_idx"
-                                   value="${dto.comu_idx }"/>
-                            <label for="${dto.comu_idx }"><span></span></label>
-                        </td>
-                        <td>1</td>
-                        <td><a href="/admin/board/view">수능특강 국어</a></td>
-                        <td>김철수</td>
-                        <td>2024.02.15</td>
-                        <td>11</td>
 
-                    </tr>
+                    <tbody>
+
+                    <c:forEach items="${bbsList.dtolist}" var="list">
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="${list.bbs_idx}" name="bbs_idx"
+                                       value="${list.bbs_idx}"/>
+                                <label for="${list.bbs_idx}"><span></span></label>
+                            </td>
+                            <td>${list.bbs_idx}</td>
+                            <td><a href="/admin/board/view?bbs_idx=${list.bbs_idx}">${list.bbs_title}</a></td>
+                            <td>${list.member_id}</td>
+                            <td>${list.bbs_reg_date}</td>
+                            <td>${list.bbs_read_cnt}</td>
+                        </tr>
+                    </c:forEach>
 
                     </tbody>
 

@@ -22,12 +22,12 @@ public class BbsServiceImpl implements BbsServiceIf{
     @Override
     public PageResponseDTO<BbsDTO> bbsListByPage(PageRequestDTO pageRequestDTO) {
         List<BbsVO> voList =bbsMapper.bbsListByPage(pageRequestDTO);
-        log.info(voList);
+        log.info("voList" + voList);
         List<BbsDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo, BbsDTO.class)).collect(Collectors.toList());
-        log.info(dtoList);
+        log.info("dtoList" + dtoList);
 
         int total_count = bbsMapper.total_count(pageRequestDTO);
-        log.info(total_count);
+        log.info("total_count" + total_count);
         PageResponseDTO<BbsDTO> responseDTO = PageResponseDTO.<BbsDTO>withAll()
                 .total_count(total_count)
                 .pageRequestDTO(pageRequestDTO)

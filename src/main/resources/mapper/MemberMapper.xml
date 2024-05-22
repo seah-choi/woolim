@@ -29,7 +29,19 @@
                 AND member_Id LIKE CONCAT('%',#{search_word}, '%')
             </if>
             <if test="search_type != null and search_type !=''">
-                AND subject_category_code == #{search_type}
+                <foreach collection="search_type" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            and member_id like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'u'.toString()">
+                            AND subject_category_code == #{search_type}
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            and member_name like concat('%', #{search_word},'%' )
+                        </when>
+                    </choose>
+                </foreach>
             </if>
         </where>
         ORDER by wm.member_idx DESC
