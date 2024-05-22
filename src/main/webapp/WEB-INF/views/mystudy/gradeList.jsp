@@ -58,7 +58,15 @@
         #modify{
             border:1px solid #68afcb;
         }
+        #regist {
+            background: #68afcb;
+            color: #fff;
+        }
 
+        #btn_regist{
+            border:1px solid #68afcb;
+            color: #68afcb;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
@@ -97,6 +105,42 @@
             <span>나의 성적표</span>
         </div>
         <hr>
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" id="btn_regist">성적표 입력</button>
+        <br>
+        <%--        성적표 모달창--%>
+        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel1" style="font-weight: bold">성적표 입력</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form name="frm" action="" method="post">
+                        <div class="modal-body">
+                            <span>과목</span>
+                            <select class="form-select form-select-sm" aria-label="Small select example" name="lecture_category_subject">
+                                <option value="국어">국어</option>
+                                <option value="수학">수학</option>
+                                <option value="영어">영어</option>
+                                <option value="과학">과학</option>
+                            </select>
+                            <br>
+                            <span>강의명</span>
+                            <select class="form-select form-select-sm" aria-label="Small select example" name="lecture_title">
+                                <option value="만점왕 국어">만점왕 국어</option>
+                            </select>
+                            <br>
+                            <span>점수 : </span>
+                            <input type="text" name="grade" value="" style="width: 35px;color: #b80f0f">점
+                        </div>
+                        <div class="modal-footer" style="justify-content: center;">
+                            <button type="button" class="btn" id="regist">등록</button>
+                            <button type="button" class="btn btn-outline-secondary">취소</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <br>
         <div>
             <table class="table">
@@ -115,12 +159,6 @@
                     <td>90</td>
                     <td style="width: 150px;"><button type="button" class="btn" id="view" data-bs-toggle="modal" data-bs-target="#exampleModal">상세보기</button></td>
                 </tr>
-                <tr>
-                    <th scope="row">수학</th>
-                    <td colspan="2">만점왕 수학 6-1</td>
-                    <td>85</td>
-                    <td style="width: 150px;"><button type="button" class="btn" onclick="location.href='/board/freeView'">상세보기</button></td>
-                </tr>
                 </tbody>
             </table>
         </div>
@@ -136,39 +174,19 @@
                         <div class="modal-body">
                             <span>[국어] 만점왕 국어 6-1</span>
                             <br>
-                            <span>점수 : </span><span style="color: #b80f0f">90</span>점
+                            <span>점수 : </span>
+                            <input type="text" id="grade" name="grade" value="90" style="width: 35px;color: #b80f0f">점
                         </div>
                         <div class="modal-footer" style="justify-content: center;">
                             <button type="button" class="btn" id="modify">수정</button>
-                            <button type="submit" class="btn btn-outline-secondary" id="delete">삭제</button>
-                            <button type="button" class="btn" id="check">확인</button>
+                            <button type="button" class="btn btn-outline-secondary" id="delete">취소</button>
+                            <button type="reset" class="btn" id="check" data-bs-dismiss="modal">확인</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="" style="font-weight: bold">성적표 상세보기</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form name="frm" action="" method="post">
-                        <div class="modal-body">
-                            <span>[국어] 만점왕 국어 6-1</span>
-                            <br>
-                            <span>점수 : </span><span style="color: #b80f0f">90</span>점
-                        </div>
-                        <div class="modal-footer" style="justify-content: center;">
-                            <button type="button" class="btn" id="regist">등록</button>
-                            <button type="reset" class="btn btn-outline-secondary" >취소</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
 
         <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">
             <ul class="pagination">
