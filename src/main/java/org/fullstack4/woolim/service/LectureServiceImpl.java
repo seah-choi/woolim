@@ -1,6 +1,5 @@
-package org.fullstack4.woolim.service.lecture;
+package org.fullstack4.woolim.service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.dto.LectureDTO;
 import org.fullstack4.woolim.mapper.LectureMapper;

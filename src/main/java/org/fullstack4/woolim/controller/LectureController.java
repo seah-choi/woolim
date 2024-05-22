@@ -3,7 +3,7 @@ package org.fullstack4.woolim.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.dto.LectureDTO;
-import org.fullstack4.woolim.service.lecture.LectureServiceIf;
+import org.fullstack4.woolim.service.LectureServiceIf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

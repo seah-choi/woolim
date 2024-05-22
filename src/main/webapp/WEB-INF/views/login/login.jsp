@@ -31,15 +31,15 @@
                 <div class="col-lg-6 offset-lg-3">
                     <div class="login-form">
                         <h2>로그인</h2>
-                        <form action="#">
+                        <form action="/login/login" method="post">
                             <label for="username">아이디</label>
                             <div class="input-group">
-                                <input class="form-control" type="text" id="username">
+                                <input class="form-control" type="text" id="username" name="member_id">
                             </div>
                             <br>
                             <label for="pass">비밀번호</label>
                             <div class="input-group">
-                                <input class="form-control" type="text" id="pass">
+                                <input class="form-control" type="password" id="pass" name="member_pwd">
                             </div>
                             <div class="group-input gi-check">
                                 <div class="gi-more">
