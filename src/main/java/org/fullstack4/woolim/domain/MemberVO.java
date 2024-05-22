@@ -35,7 +35,7 @@ public class MemberVO {
 
     private String member_category;
 
-    private int point;
+    private int member_point;
 
     private String member_oauth;
 
