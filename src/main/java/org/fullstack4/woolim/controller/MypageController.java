@@ -63,4 +63,12 @@ public class MypageController {
     public void GETChargePoint() {
 
     }
+    @GetMapping("/qnaRegist")
+    public void GETQnaRegist(){
+
+    }
+    @GetMapping("/qnaView")
+    public void GETQnaView(){
+
+    }
 }

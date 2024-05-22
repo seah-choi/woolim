@@ -183,7 +183,7 @@
                                 <li><a href="/mypage/writeList">작성글</a></li>
                                 <li><a href="/mypage/paymentList">결제내역</a></li>
                                 <li><a href="/mypage/jjim">찜한 강의</a></li>
-                                <li><a href="/mypage/qna/list">1:1문의</a></li>
+                                <li><a href="/mypage/qnaList">1:1문의</a></li>
                                 <li><a href="/mypage/cart">장바구니</a></li>
                                 <li><a href="/mypage/pointcharge">포인트 충전</a></li>
                             </ul>
