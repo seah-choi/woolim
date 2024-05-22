@@ -163,8 +163,8 @@
                         <li><a href="/mystudy/classList">나의 학습방</a>
                             <ul class="dropdown">
                                 <li><a href="/mystudy/classList">나의 강의실</a></li>
-                                <li><a href="/mystudy/boardList">내가 쓴 글</a></li>
-                                <li><a href="/mystudy/replyList">내가 남긴 댓글</a></li>
+                                <li><a href="/mystudy/freeList">내가 쓴 글</a></li>
+                                <li><a href="/mystudy/commentList">내가 남긴 댓글</a></li>
                                 <li><a href="/mystudy/gradeList">성적표</a></li>
                                 <li><a href="/mystudy/studyPlanList">학습계획표</a></li>
                             </ul>
