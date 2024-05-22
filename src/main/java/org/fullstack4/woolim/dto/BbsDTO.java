@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 @Log4j2
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class BbsDTO {
