@@ -1,6 +1,5 @@
 package org.fullstack4.woolim.dto;
 
-import jdk.vm.ci.meta.Local;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +10,7 @@ import java.time.LocalDate;
 
 @Log4j2
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class LectureDTO {
@@ -26,7 +26,7 @@ public class LectureDTO {
     private String lecture_category;
     private String lecture_category_detail;
     private int member_idx;
-    private Local lecture_reg_date;
+    private LocalDate lecture_reg_date;
     private String member_id;
 
     private String lecture_study;
