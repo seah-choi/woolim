@@ -8,6 +8,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+    .nav-item {
+        background: #68afcb !important;
+    }
+    .nav-item .nav-depart .depart-btn {
+        background: #68afcb !important;
+    }
+    .nav-item .nav-menu li a {
+        border-right: 1px solid #fff !important;
+    }
+    .container{
+        padding-top: 15px;
+    }
+    .nav-item .nav-menu li .dropdown {
+        background: #dde5e7 !important;
+    }
+    .nav-item .nav-menu li .dropdown li a {
+        color: #000000;
+    }
+</style>
     <header class="header-section">
         <div class="header-top">
             <div class="container">
