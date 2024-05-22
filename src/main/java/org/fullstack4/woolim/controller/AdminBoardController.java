@@ -31,7 +31,7 @@ public class AdminBoardController {
         log.info("AdminBoardController >> GETList() START");
 
         pageRequestDTO.setBbs_type(bbs_type);
-        log.info(bbs_type);
+        log.info("bbs_type" + bbs_type);
 
         PageResponseDTO<BbsDTO> bbsList = bbsServiceIf.bbsListByPage(pageRequestDTO);
 

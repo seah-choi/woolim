@@ -61,20 +61,22 @@
 
                             <div class="col-md-1 col-sm-12">
                                 <div class="form-group">
-                                    <label>초중고</label>
+                                    <label>구분</label>
                                     <select id="schoolSelect" name="search_type" class="selectpicker form-control school" data-size="5" data-style="btn-outline-info">
                                         <option>전체</option>
-                                        <option value="elementary">초등</option>
-                                        <option value="middle">중등</option>
-                                        <option value="high">고등</option>
+                                        <option value="t">아이디</option>
+                                        <option value="c">이름</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-1 col-sm-12">
                                 <div class="form-group">
-                                    <label>학년</label>
-                                    <select id="gradeSelect" name="search_type" class="selectpicker form-control grade" data-size="5" data-style="btn-outline-info">
+                                    <label>회원 상태</label>
+                                    <select id="gradeSelect" name="member_type" class="selectpicker form-control grade" data-size="5" data-style="btn-outline-info">
                                         <option>전체</option>
+                                        <option value="admin">관리자</option>
+                                        <option value="student">학생</option>
+                                        <option value="teacher">선생님</option>
                                     </select>
                                 </div>
                             </div>
@@ -114,10 +116,10 @@
                         </th>
                         <th>NO.</th>
                         <th>이름</th>
-                        <th></th>
-                        <th>강사명</th>
-                        <th>강좌 기간</th>
-                        <th>강좌 등록일</th>
+                        <th>아이디</th>
+                        <th>회원 상태</th>
+                        <th>가입일</th>
+                        <th>탈퇴 여부</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -136,13 +138,33 @@
                         <td>2024.02.15</td>
                     </tr>
 
+
+                    <tr>
+                        <td>
+                            <div class="custom-control custom-checkbox mb-5">
+                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                <label class="custom-control-label" for="customCheck2"><span></span></label>
+                            </div>
+                        </td>
+                        <td>1</td>
+                        <td>수능특강 국어</td>
+                        <td>국어</td>
+                        <td>김철수</td>
+                        <td>2024.03.01~2024.05.21</td>
+                        <td>2024.02.15</td>
+                    </tr>
+
                     </tbody>
 
                 </table>
-                <div class="d-flex justify-content-sm-end">
-                    <a class="btn btn-primary btn-lg btn-block" href="/admin/lecture/regist" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
+                <div class="d-flex justify-content-sm-end mt-2">
+                    <div class="d-flex justify-content-sm-end mr-3 ">
+                        <a class="btn btn-primary btn-lg btn-block" href="#" style="width: 100px; height: 40px; font-size: 15px;" >수정하기</a>
+                    </div>
+                    <div class="d-flex justify-content-sm-end ml-2 mr-3">
+                        <a class="btn btn-primary btn-lg btn-block" href="#" style="width: 100px; height: 40px; font-size: 15px;" >탈퇴</a>
+                    </div>
                 </div>
-
                 <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
                     <ul class="pagination">
                         <li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous">
@@ -164,41 +186,7 @@
     </div>
 </div>
 <!-- js -->
-<script>
 
-    //분류 셀렉박스
-    const gradeOptions = {
-        elementary: ['전체', '1학년', '2학년', '3학년', '4학년', '5학년', '6학년'],
-        middle: ['전체', '1학년', '2학년', '3학년'],
-        high: ['전체', '1학년', '2학년', '3학년'],
-    };
-
-    document.getElementById('schoolSelect').addEventListener('change', function () {
-        const schoolType = this.value;
-        const gradeSelect = document.getElementById('gradeSelect');
-
-        gradeSelect.innerHTML = '';
-
-        if (schoolType in gradeOptions) {
-            gradeOptions[schoolType].forEach(grade => {
-                const option = document.createElement('option');
-                option.value = grade;
-                option.textContent = grade;
-                gradeSelect.appendChild(option);
-            });
-        } else {
-            const option = document.createElement('option');
-            option.value = 'all';
-            option.textContent = '전체';
-            gradeSelect.appendChild(option);
-        }
-
-        $('.selectpicker').selectpicker('refresh');
-    });
-
-    document.getElementById('schoolSelect').dispatchEvent(new Event('change'));
-
-</script>
 <script src="/resources/vendors/scripts/core.js"></script>
 <script src="/resources/vendors/scripts/script.min.js"></script>
 <script src="/resources/vendors/scripts/process.js"></script>

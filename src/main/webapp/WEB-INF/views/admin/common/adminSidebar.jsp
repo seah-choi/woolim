@@ -50,10 +50,10 @@
                         <span class="micon icon-copy fa fa-calendar-minus-o"></span><span class="mtext">게시판 관리</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="/admin/board/list">공지사항 게시판</a></li>
-                        <li><a href="/admin/board/list">교육정보 게시판</a></li>
-                        <li><a href="/admin/board/list">자료실 게시판</a></li>
-                        <li><a href="/admin/board/list">자유게시판</a></li>
+                        <li><a href="/admin/board/list?bbs_type=bbs04">공지사항 게시판</a></li>
+                        <li><a href="/admin/board/list?bbs_type=bbs01">교육정보 게시판</a></li>
+                        <li><a href="/admin/board/list?bbs_type=bbs05">자료실</a></li>
+                        <li><a href="/admin/board/list?bbs_type=bbs02">자유게시판</a></li>
                     </ul>
                 </li>
 

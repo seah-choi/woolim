@@ -33,6 +33,7 @@ public class PageResponseDTO<E> {
 
     private String bbs_type;
 
+
     PageResponseDTO() {}
 
     @Builder(builderMethodName = "withAll")
