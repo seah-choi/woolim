@@ -23,7 +23,7 @@
         }
 
         #list a {
-            color: #68afcb !important;
+            color: #000 !important;
             text-decoration: none;
         }
 
@@ -102,14 +102,20 @@
             <button class="btn btn-outline-secondary" type="button" id="search" aria-expanded="false">검색</button>
         </div>
         <br>
-        <div>
-            <p>작업형1 모의문제2 6번</p>
+        <div style="border-bottom: 1px solid #ccc;padding: 20px;">
+            <p style="font-weight: bold">작업형1 모의문제2 6번</p>
             <a href="/board/freeView">
             <c:out value="${fn:substring('루키스님 강의 잘 듣고 여러가지 연동을 시도해서 컨텐츠를 만드는 중인데요 지금은 데이터나 오브젝트들이 많지 않아서 별',0,40)}"/>
             <c:if test="${fn:length('루키스님 강의 잘 듣고 여러가지 연동을 시도해서 컨텐츠를 만드는 중인데요 지금은 데이터나 오브젝트들이 많지 않아서 별') > 40}"> ...</c:if></a>
-            <p></p>
+            <div style="display: flex;justify-content: space-between;">
+                <div style="color: #76767f;padding-top: 5px;"><span>seahchoi</span>•<span>2시간 전</span></div>
+                <div>
+                    <img src="/resources/img/free-icon-heart-1077035.png" width="12px" height="12px">1
+                    <img src="/resources/img/free-icon-chat-9256384.png" width="12px" height="12px"> 5
+                </div>
+            </div>
         </div>
-        <nav class="blog-pagination justify-content-center d-flex">
+        <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">
             <ul class="pagination">
                 <li class="page-item">
                     <a href="#" class="page-link" aria-label="Previous">&lt;</a>
