@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value="/mypage")
 @RequiredArgsConstructor
 public class MypageController {
+
+    @GetMapping("/view")
+    public void GETView(){
+
+    }
     @GetMapping("/writeList")
     public void GETWriteList() {
 

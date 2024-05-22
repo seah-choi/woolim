@@ -105,7 +105,7 @@
                             <button type="submit" class="site-btn register-btn">회원가입</button>
                         </form>
                         <div class="switch-login">
-                            <a href="./login.html" class="or-login">로그인</a>
+                            <a href="/login/login" class="or-login">로그인</a>
                         </div>
                     </div>
                 </div>
@@ -113,5 +113,16 @@
         </div>
     </div>
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/resources/js/jquery-3.3.1.min.js"></script>
+    <script src="/resources/js/bootstrap.min.js"></script>
+    <script src="/resources/js/jquery-ui.min.js"></script>
+    <script src="/resources/js/jquery.countdown.min.js"></script>
+    <script src="/resources/js/jquery.nice-select.min.js"></script>
+    <script src="/resources/js/jquery.zoom.min.js"></script>
+    <script src="/resources/js/jquery.dd.min.js"></script>
+    <script src="/resources/js/jquery.slicknav.js"></script>
+    <script src="/resources/js/owl.carousel.min.js"></script>
+    <script src="/resources/js/main.js"></script>
 </body>
 </html>
