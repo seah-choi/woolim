@@ -66,4 +66,14 @@ public class MystudyController {
     public void GETGradeModify() {
 
     }
+
+    @GetMapping("/freeList")
+    public void GETfreeList() {
+
+    }
+
+    @GetMapping("/commentList")
+    public void GETcommentList() {
+
+    }
 }

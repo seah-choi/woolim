@@ -109,11 +109,11 @@
                         <br>
                         <div style="display: flex;justify-content: center;">
                             <div>
-                                <button type="button" class="btn" id="btn_back" onclick="location.href='/board/freeList'">목록</button>
+                                <button type="button" class="btn" id="btn_back" onclick="location.href='/mypage/qnaList'">목록</button>
                             </div>
                             <div>
                                 <button type="submit" class="btn" id="btn_modify">등록</button>
-                                <button type="button" class="btn btn-secondary" id="btn_delete">취소</button>
+                                <button type="button" class="btn btn-secondary" id="btn_delete" onclick="location.href='/mypage/qnaList'">취소</button>
                             </div>
                         </div>
                     </form>

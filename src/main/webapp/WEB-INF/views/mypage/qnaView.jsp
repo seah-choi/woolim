@@ -9,6 +9,86 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+        #box {
+            display: flex;
+            width: 1200px;
+            margin: 0 auto;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        #leftNav{
+            border-right: 1px solid #ccc;
+            padding: 30px;
+        }
+
+        #leftNav a {
+            padding-left: 0;
+            color: #212529 !important;
+        }
+
+        #list a {
+            padding-left: 0;
+            color: #68afcb !important;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #list{
+            padding: 50px;
+            width: 1000px;
+            padding-top: 30px;
+        }
+        #date {
+            color: #8b8686;
+            margin-left: 10px;
+        }
+        #count {
+            color: #8b8686;
+            margin-left: 10px;
+        }
+        #se {
+            display: flex;
+            justify-content: space-between;
+        }
+        #btn_modify{
+            background: #68afcb;
+            color: #fff;
+        }
+        #btn_back{
+            background: #fff;
+            color: #68afcb;
+            border: 1px solid #68afcb;
+            margin-right: 5px;
+        }
+        a {
+            text-decoration: none !important;
+        }
+        #cmCount {
+            color:#68afcb;
+            font-weight: bold;
+        }
+        #btn_comment{
+            background: #68afcb;
+            color: #fff;
+            width: 100px;
+            border-radius: 0;
+        }
+        #floatingTextarea{
+            width: 700px;
+        }
+        #comment{
+            padding: 10px;
+            margin-bottom: 50px;
+        }
+        #cmModify{
+            border: none;
+        }
+        #cmDelete{
+            border: none;
+        }
+
+    </style>
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
@@ -39,38 +119,37 @@
                     </div>
                     <hr>
                     <div style="white-space: pre-wrap;">
-                        <textarea class="form-control" placeholder="Leave a comment here" style="resize: none"></textarea>
+                        <textarea class="form-control" rows="15" placeholder="Leave a comment here" style="resize: none">바람에 날려간 나의 노래도 휘파람 소리로 돌아 오네요.
+                            내 조그만 공간 속에 추억만 쌓이고 까닭 모를 눈물만이 아른거리네
+
+                        </textarea>
 
                     </div>
-                    <br><br>
-                    <div id="comment">
-                        <span>답변</span>&nbsp;<span id="cmCount">1</span>
-                        <div class="form-floating" style="display: flex;margin-top: 10px;margin-bottom: 40px;">
-                            <textarea class="form-control" style="resize:none" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                            <label for="floatingTextarea">댓글</label>
-                            <button type="button" class="btn" id="btn_comment">등록</button>
-                        </div>
-                        <div>
-                            <span style="font-weight: bold">babori</span>&nbsp;<span>2024-05-10</span>
-                            <br>
-                            <p>강의에서 알려드린 판다스로 진행 바랍니다.</p>
-                        </div>
-                        <div style="display: flex;justify-content: flex-end;">
-                            <button type="button" id="cmModify">수정</button>
-                            <span>&nbsp;|&nbsp;</span>
-                            <button type="button" id="cmDelete">삭제</button>
-                        </div>
-                    </div>
-
                     <div style="display: flex;justify-content: center;">
                         <div>
-                            <button type="button" class="btn" id="btn_back" onclick="location.href='/board/freeList'">목록</button>
+                            <button type="button" class="btn" id="btn_back" onclick="location.href='/mypage/qnaList'">목록</button>
                         </div>
                         <div>
                             <button type="button" class="btn" id="btn_modify">수정</button>
                             <button type="button" class="btn btn-secondary" id="btn_delete">삭제</button>
                         </div>
                     </div>
+                    <br><br>
+                    <div id="comment">
+                        <h5 style="font-weight: bold">답변</h5>
+                        <div>
+                            <div>
+                                <span>2024-05-07</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-floating" style="margin-top: 10px;margin-bottom: 40px;white-space: pre-wrap;">
+                            <textarea class="form-control" rows="15" style=" height:373px; resize:none" placeholder="Leave a comment here"></textarea>
+                        </div>
+
+                    </div>
+
+
                 </div>
             </div>
         </div>
