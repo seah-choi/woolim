@@ -1,6 +1,7 @@
-package org.fullstack4.woolim.service;
+package org.fullstack4.woolim.service.lecture;
 
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.dto.LectureDTO;
 import org.fullstack4.woolim.mapper.LectureMapper;
 import org.modelmapper.ModelMapper;
@@ -19,14 +20,17 @@ public class LectureServiceImpl implements LectureServiceIf {
     private ModelMapper modelMapper;
 
     @Override
-    public List<LectureDTO> getList() {
+    public List<LectureDTO> getList(Criteria cri) {
 
-        System.out.println("여기까지들어와짐?");
-        List<LectureDTO> list = lectureMapper.getList().stream().map(vo->modelMapper.map(vo, LectureDTO.class)).collect(Collectors.toList());
-        System.out.println("여기까지들어와짐?11");
-
+        List<LectureDTO> list = lectureMapper.getList(cri).stream().map(vo->modelMapper.map(vo, LectureDTO.class)).collect(Collectors.toList());
 
         return list;
 
+    }
+
+    @Override
+    public int getLectureKeyword(Criteria cri) {
+        int total = lectureMapper.getLectureKeyword(cri);
+        return total;
     }
 }
