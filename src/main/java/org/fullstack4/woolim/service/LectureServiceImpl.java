@@ -20,7 +20,12 @@ public class LectureServiceImpl implements LectureServiceIf {
 
     @Override
     public List<LectureDTO> getList() {
+
+        System.out.println("여기까지들어와짐?");
         List<LectureDTO> list = lectureMapper.getList().stream().map(vo->modelMapper.map(vo, LectureDTO.class)).collect(Collectors.toList());
+        System.out.println("여기까지들어와짐?11");
+
+
         return list;
 
     }
