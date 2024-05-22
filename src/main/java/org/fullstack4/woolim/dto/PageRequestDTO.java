@@ -59,14 +59,15 @@ public class PageRequestDTO {
     private String sort_type;
     private LocalDate search_date1;
     private LocalDate search_date2;
-    private String user_id;
+    private String member_id;
+    private String member_type;
 
     public void setTotal_count(int total_count) {
         this.total_count = total_count;
     }
 
     public int getPage_skip_count() {
-        return (this.page)*this.page_size;
+        return (this.page-1)*this.page_size;
     }
     public String[] getSearch_types() {
         if(search_type  == null || search_type.isEmpty()){
