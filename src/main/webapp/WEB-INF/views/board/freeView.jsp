@@ -57,6 +57,30 @@
         a {
             text-decoration: none !important;
         }
+        #cmCount {
+            color:#68afcb;
+            font-weight: bold;
+        }
+        #btn_comment{
+            background: #68afcb;
+            color: #fff;
+            width: 100px;
+            border-radius: 0;
+        }
+        #floatingTextarea{
+            width: 700px;
+        }
+        #comment{
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 50px;
+        }
+        #cmModify{
+            border: none;
+        }
+        #cmDelete{
+            border: none;
+        }
 
     </style>
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -102,11 +126,10 @@
         </nav>
     </div>
     <div id="list">
-        <h5 style="font-weight: bold">[당첨자 발표] 3-4월 별가게 당첨자 발표</h5>
-        <hr>
+        <h5 style="font-weight: bold">작업형1 모의문제2 6번</h5>
         <div id="se">
             <div>
-                <span style="font-weight: bold">작성일</span><span id="date">2024-05-07</span>
+                <span>seahchoi</span><span id="date">2024-05-07</span>
             </div>
             <div>
                 <span style="font-weight: bold">조회수</span><span id="count">12</span>
@@ -114,35 +137,36 @@
         </div>
         <hr>
         <div style="white-space: pre-wrap;">
-            안녕하세요, 천재교육입니다 :D
+            read버튼을 눌렀을 때 다른 항목들은 잘 찾아내나 id 1번 항목을 read할 경우 error 발생
+            GangnamguPopulationService.cs파일 안의 GetDetail함수의 else로 잡힙니다.
 
-            3-4월 별가게에 참여해 주셔서 감사드리고, 당첨되신 분들 모두 축하드립니다.
-
-
-
-            ★[BBQ]황금올리브치킨+콜라 1.25L
-
-            송*남	010-****-5942
-
-            허*미	010-****-8854
-
-
-
-            ★[스타벅스]오늘도 달콤하게(ICE)
-
-            박*성	010-****-0133
-
-            강*이	010-****-8506
-
-            서*이	010-****-9358
-
-            이*경	010-****-2721
+            확인부탁드리겠습니다.
+            감사합니다.
         </div>
+        <br><br>
+        <div id="comment">
+            <span>답변</span>&nbsp;<span id="cmCount">1</span>
+            <div class="form-floating" style="display: flex;margin-top: 10px;margin-bottom: 40px;">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <label for="floatingTextarea">댓글</label>
+                <button type="button" class="btn" id="btn_comment">등록</button>
+            </div>
+            <div>
+                <span style="font-weight: bold">babori</span>&nbsp;<span>2024-05-10</span>
+                <br>
+                <p>강의에서 알려드린 판다스로 진행 바랍니다.</p>
+            </div>
+            <div style="display: flex;justify-content: flex-end;">
+                <button type="button" id="cmModify">수정</button>
+                <span>&nbsp;|&nbsp;</span>
+                <button type="button" id="cmDelete">삭제</button>
+            </div>
+        </div>
+
         <div style="display: flex;justify-content: center;">
             <div>
                 <button type="button" class="btn" id="btn_back" onclick="location.href='/board/freeList'">목록</button>
             </div>
-            <%--        자유게시판일때만--%>
             <div>
                 <button type="button" class="btn" id="btn_modify">수정</button>
                 <button type="button" class="btn btn-secondary" id="btn_delete">삭제</button>
