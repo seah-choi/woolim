@@ -166,7 +166,7 @@
                         </li>
                         <li><a href="/board/list">게시판</a>
                             <ul class="dropdown">
-                                <li><a href="/board/list">자유게시판</a></li>
+                                <li><a href="/board/freeList">자유게시판</a></li>
                                 <li><a href="/board/list">교육정보</a></li>
                                 <li><a href="/board/list">자료실</a></li>
                                 <li><a href="/board/list">공지사항</a></li>

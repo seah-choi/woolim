@@ -80,7 +80,7 @@
             <h4>게시판</h4>
             <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
             <div style="padding-top: 20px; line-height: unset;">
-                <a class="nav-link" aria-current="page" href="/board/list">자유게시판</a>
+                <a class="nav-link" aria-current="page" href="/board/freeList">자유게시판</a>
                 <a class="nav-link" href="/board/list">교육정보</a>
                 <a class="nav-link" href="/board/list">자료실</a>
                 <a class="nav-link" href="/board/list">공지사항</a>
@@ -88,7 +88,7 @@
         </nav>
     </div>
     <div id="list">
-        <h5 style="font-weight: bold">자유게시판</h5>
+        <h5 style="font-weight: bold">공지사항</h5>
         <hr>
         <div class="input-group">
             <button class="btn btn-outline-secondary dropdown-toggle" id="drop" type="button" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
@@ -143,10 +143,6 @@
                     </li>
                 </ul>
             </nav>
-        <%--        자유게시판일때만--%>
-        <div style="display: flex;justify-content: flex-end;">
-            <button type="button" class="btn" id="btn_regist" onclick="location.href='/board/regist'">글쓰기</button>
-        </div>
     </div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

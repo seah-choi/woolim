@@ -78,6 +78,7 @@
   <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
   <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -100,7 +101,7 @@
       <h4>게시판</h4>
       <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
       <div style="padding-top: 20px; line-height: unset;">
-        <a class="nav-link" aria-current="page" href="/board/list">자유게시판</a>
+        <a class="nav-link" aria-current="page" href="/board/freeList">자유게시판</a>
         <a class="nav-link" href="/board/list">교육정보</a>
         <a class="nav-link" href="/board/list">자료실</a>
         <a class="nav-link" href="/board/list">공지사항</a>
@@ -112,7 +113,7 @@
     <hr>
     <br>
     <div>
-      
+      <textarea id="summernote"></textarea>
     </div>
     <div style="display: flex;justify-content: center;">
       <div>
@@ -137,6 +138,25 @@
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
+<link href="/resources/css/summernote/summernote-lite.css" rel="stylesheet">
+<script src="/resources/js/summernote/summernote-lite.js"></script>
+<script>
+  $('#summernote').summernote({
+    placeholder: 'Hello stand alone ui',
+    tabsize: 2,
+    height: 500,
+    toolbar: [
+      ['style', ['style']],
+      ['font', ['bold', 'underline', 'clear']],
+      ['color', ['color']],
+      ['para', ['ol', 'paragraph']],
+      ['table', ['table']],
+      ['insert', ['link', 'picture', 'video']],
+      ['view', ['codeview', 'help']]
+    ]
+
+  });
+</script>
 </body>
 </html>
 
