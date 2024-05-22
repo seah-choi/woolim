@@ -45,4 +45,9 @@ public class MypageController {
     public void GETDelete() {
 
     }
+
+    @GetMapping("/jjim")
+    public void GETJjim() {
+
+    }
 }
