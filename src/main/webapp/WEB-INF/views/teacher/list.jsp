@@ -92,28 +92,28 @@
                         <div class="bc-item">
                             <label for="bc-calvin">
                                 Calvin Klein
-                                <input type="radio" name ="category" id="bc-calvin">
+                                <input type="radio" name ="category" id="bc-calvin1">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="bc-item">
                             <label for="bc-diesel">
                                 Diesel
-                                <input type="radio" name ="category" id="bc-diesel">
+                                <input type="radio" name ="category" id="bc-diesel1">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="bc-item">
                             <label for="bc-polo">
                                 Polo
-                                <input type="radio" name ="category" id="bc-polo">
+                                <input type="radio" name ="category" id="bc-polo1">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="bc-item">
                             <label for="bc-tommy">
                                 Tommy Hilfiger
-                                <input type="radio" name ="category" id="bc-tommy">
+                                <input type="radio" name ="category" id="bc-tommy1">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -149,7 +149,7 @@
                                         <i class="icon_heart_alt"></i>
                                     </div>
                                     <ul>
-<%--                                        <li class="quick-view"><a href="teacher/list?ts_idx=${list.ts_idx}">자세히 보기</a></li>--%>
+                                        <li class="quick-view"><a href="/teacher/view?member_idx=${list.member_idx}">자세히 보기</a></li>
                                     </ul>
                                 </div>
                                 <div class="pi-text">

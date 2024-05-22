@@ -44,6 +44,11 @@ public class TeacherController {
         model.addAttribute("responseDTO", responseDTO);
     }
 
+    @GetMapping("/view")
+    public void GETView() {
+
+    }
+
     @GetMapping("/regist")
     public void GETRegist() {
 

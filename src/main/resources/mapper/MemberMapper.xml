@@ -55,4 +55,10 @@
         ORDER by wm.member_idx DESC
         LIMIT #{page_skip_count}, #{page_size}
     </select>
+
+    <select id="teacherDetail" resultType="org.fullstack4.woolim.domain.MemberVO">
+        SELECT ts_idx,member_idx,subject_category_code
+        from teacher_subject
+        where member_idx=#{member_idx}
+    </select>
 </mapper>
