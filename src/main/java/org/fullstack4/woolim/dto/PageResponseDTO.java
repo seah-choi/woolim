@@ -26,7 +26,8 @@ public class PageResponseDTO<E> {
     private String search_word;
     private String linkParams;
     private String sort_type;
-    private String user_id;
+    private String member_id;
+    private String member_type;
 
     List<E> dtolist;
 
@@ -40,7 +41,8 @@ public class PageResponseDTO<E> {
         this.total_count = total_count; // 전체 게시글 수
         this.page = pageRequestDTO.getPage(); // 현재 페이지 번호
         this.page_size = pageRequestDTO.getPage_size(); // 한 페이지에 표시될 게시글 수
-        this.page_skip_count = (this.page-1) * this.page_size; //DB 조회해올 로우 시작 인덱스
+//        this.page_skip_count = (this.page-1) * this.page_size; //DB 조회해올 로우 시작 인덱스
+        this.page_skip_count = pageRequestDTO.getPage_skip_count(); //DB 조회해올 로우 시작 인덱스
         this.total_page = (this.total_count > 0) ? (int) Math.ceil(this.total_count / (double) this.page_size) : 1; // 총 페이지수
         this.page_block_size = pageRequestDTO.getPage_block_size(); // 페이지네이션에서 페이징 최대 한번에 몇 개씩 할지
         this.page_block_start = ((int) Math.floor((((double)page)*((double) 1/page_block_size)))*page_block_size)+1; // 현재 페이징의 시작 번호
@@ -52,6 +54,7 @@ public class PageResponseDTO<E> {
         this.search_word = pageRequestDTO.getSearch_word();
         this.linkParams = pageRequestDTO.getLinkParams();
         this.sort_type = pageRequestDTO.getSort_type();
+        this.member_type = pageRequestDTO.getMember_type();
 
         log.info("pageRequestDTO : {}", pageRequestDTO);
         log.info("dtoList : {}", dtoList);

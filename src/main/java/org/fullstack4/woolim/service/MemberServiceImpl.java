@@ -5,12 +5,17 @@ import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.common.InsufficientStockException;
 import org.fullstack4.woolim.domain.MemberVO;
 import org.fullstack4.woolim.dto.MemberDTO;
+import org.fullstack4.woolim.dto.PageRequestDTO;
+import org.fullstack4.woolim.dto.PageResponseDTO;
 import org.fullstack4.woolim.mapper.MemberMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Log4j2
@@ -19,6 +24,7 @@ import javax.servlet.http.HttpSession;
 public class MemberServiceImpl implements MemberServiceIf{
 
     private final MemberMapper memberMapper;
+    private ModelMapper modelMapper;
 
     @Override
     @Transactional(rollbackFor = {InsufficientStockException.class, Exception.class})
@@ -49,5 +55,18 @@ public class MemberServiceImpl implements MemberServiceIf{
             return false;
         }
 
+    }
+
+    @Override
+    public PageResponseDTO<MemberDTO> MemberList(PageRequestDTO pageRequestDTO) {
+        List<MemberVO> voList = memberMapper.MemberListbyPage(pageRequestDTO);
+        List<MemberDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo,MemberDTO.class)).collect(Collectors.toList());
+
+        PageResponseDTO<MemberDTO> responseDTO = PageResponseDTO.<MemberDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .build();
+
+        return responseDTO;
     }
 }
