@@ -9,6 +9,62 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+        #box {
+            display: flex;
+            width: 1200px;
+            margin: 0 auto;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        #leftNav{
+            border-right: 1px solid #ccc;
+            padding: 30px;
+        }
+
+        #leftNav a {
+            padding-left: 0;
+            color: #212529 !important;
+        }
+
+        #list a {
+            color: #000 !important;
+            text-decoration: none;
+        }
+
+        #list{
+            padding: 50px;
+            width: 1000px;
+            padding-top: 30px;
+        }
+
+        #search {
+            background: #68afcb;
+            color: #fff;
+            border: none;
+        }
+        #drop{
+            border: 1px solid #dee2e6;
+        }
+
+        #btn_regist {
+            background: #68afcb;
+            color: #fff;
+        }
+
+        .table{
+            margin-bottom: 50px !important;
+        }
+
+        .page-item.active .page-link {
+            background-color: #68afcb !important;
+            color: #fff !important;
+            border-color : #68afcb !important;
+        }
+        a {
+            text-decoration: none !important;
+        }
+    </style>
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
@@ -56,8 +112,15 @@
                         <tbody>
                         <tr>
                             <th scope="row">1</th>
+                            <td>N</td>
+                            <td><a href="/mypage/qnaView">김광석</a></td>
+                            <td>2024-05-07</td>
+                            <td>12</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
                             <td>Y</td>
-                            <td id="title"><a href="/board/view">[당첨자 발표] 3-4월 별가게 당첨자 발표</a></td>
+                            <td id="title"><a href="/mypage/qnaView">먼지가 되어</a></td>
                             <td>2024-05-07</td>
                             <td>12</td>
                         </tr>
@@ -96,6 +159,9 @@
                         </li>
                     </ul>
                 </nav>
+                <div style="display: flex;justify-content: flex-end;">
+                    <button type="button" class="btn" id="btn_regist" onclick="location.href='/mypage/qnaRegist'">글쓰기</button>
+                </div>
             </div>
         </div>
     </div>
