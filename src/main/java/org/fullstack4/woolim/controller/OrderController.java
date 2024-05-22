@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class OrderController {
     @GetMapping("/order")
     public void GETOrder(){
-
+        log.info("OrderController");
     }
 }

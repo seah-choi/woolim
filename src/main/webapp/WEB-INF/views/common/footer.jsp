@@ -32,7 +32,7 @@
             </div>
             <div class="col-lg-2 offset-lg-1">
                 <div class="footer-widget">
-                    <h5>Information</h5>
+                    <h5>Woolim</h5>
                     <ul>
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Checkout</a></li>
@@ -43,12 +43,12 @@
             </div>
             <div class="col-lg-2">
                 <div class="footer-widget">
-                    <h5>My Account</h5>
+                    <h5>내 정보</h5>
                     <ul>
-                        <li><a href="#">My Account</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Shopping Cart</a></li>
-                        <li><a href="#">Shop</a></li>
+                        <li><a href="/mypage/paymentList">결제 정보</a></li>
+                        <li><a href="/mypage/writeList">내가 쓴 글</a></li>
+                        <li><a href="/mypage/cart">장바구니</a></li>
+                        <li><a href="/lecture/list">Shop</a></li>
                     </ul>
                 </div>
             </div>

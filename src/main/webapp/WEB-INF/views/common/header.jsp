@@ -52,15 +52,13 @@
                     </div>
                     <div class="col-lg-7 col-md-7">
                         <div class="advanced-search">
-
-                            <select class="category-btn">
-                                <option>test</option>
-                                <option>test1</option>
-                                <option>test2</option>
-                                <option>test3</option>
-                                <option>test4</option>
-                                <option>test5</option>
+                            <select class="category-btn" name="category_code">
+                                <option>전체</option>
+                                <option>제목</option>
+                                <option>강사</option>
+                                <option>과목</option>
                             </select>
+
 
                             <form action="/lecture/list" method="get" class="input-group">
                                 <input type="text" name="search_word" placeholder="What do you need?">
