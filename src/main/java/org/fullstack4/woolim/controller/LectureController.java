@@ -24,6 +24,9 @@ public class LectureController {
         System.out.println("#####");
         log.info("-----------------------");
         log.info("-----LectureController-----" +"-> GETList() ");
+        if(cri.getViewSorting() != null) {
+            cri.setAmount(Integer.parseInt(cri.getViewSorting()));
+        }
         List<LectureDTO> lectureDTOS =  lectureServiceIf.getList(cri);
         int total = lectureServiceIf.getLectureKeyword(cri);
         PageMakerDTO pageMakerDTO = new PageMakerDTO(cri,total);
