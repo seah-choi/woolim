@@ -169,11 +169,37 @@
                         </c:forEach>
                     </div>
                 </div>
-                <div class="loading-more">
-                    <i class="icon_loading"></i>
-                    <a href="#">
-                        Loading More
-                    </a>
+                <div class="d-flex justify-content-center">
+                    <!-- Pagination with icons -->
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item <c:if test="${responseDTO.page_block_start - responseDTO.page_block_size < '1'}"> disabled</c:if>" >
+                                <a href="<c:if test="${responseDTO.page_block_start - responseDTO.page_block_size >= '1'}">${responseDTO.linked_params}&page=${responseDTO.page_block_start - responseDTO.page_block_size}</c:if>"
+                                   class="page-link" aria-label="Previous">&laquo;
+                                </a>
+                            </li>
+                            <c:forEach begin="${responseDTO.page_block_start}"
+                                       end="${responseDTO.page_block_end}"
+                                       var="page_num">
+                                <c:choose>
+                                    <c:when test="${responseDTO.page == page_num}">
+                                        <li class="page-item active">
+                                            <a href="#" class="page-link">${page_num}</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item">
+                                            <a href="${responseDTO.linked_params}&page=${page}" class="page-link">${page_num}</a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                            <li class="page-item <c:if test="${responseDTO.page_block_start + responseDTO.page_block_size > responseDTO.total_page}"> disabled</c:if>">
+                                <a href="<c:if test="${responseDTO.page_block_start + responseDTO.page_block_size < responseDTO.total_page}">${responseDTO.linked_params}&page=${responseDTO.page_block_start + responseDTO.page_block_size}</c:if>
+                        " class="page-link" aria-label="Next">&raquo;</a>
+                            </li>
+                        </ul>
+                    </nav><!-- End Pagination with icons -->
                 </div>
             </div>
         </div>
