@@ -5,10 +5,10 @@
     <style>
         #box {
             display: flex;
-            height: 800px;
             width: 1200px;
             margin: 0 auto;
             margin-top: 50px;
+            margin-bottom: 50px;
         }
         #leftNav{
             border-right: 1px solid #ccc;
@@ -44,6 +44,20 @@
             display: flex;
             justify-content: space-between;
         }
+        #btn_modify{
+            background: #68afcb;
+            color: #fff;
+        }
+        #btn_back{
+            background: #fff;
+            color: #68afcb;
+            border: 1px solid #68afcb;
+            margin-right: 5px;
+        }
+        a {
+            text-decoration: none !important;
+        }
+
     </style>
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
@@ -61,6 +75,19 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<div class="breacrumb-section" style="margin-top: 20px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a href="/"><i class="fa fa-home"></i> Home</a>
+                    <a href="/board/list">자유게시판</a>
+                    <span>상세</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="box">
     <div id="leftNav">
         <nav class="nav flex-column">
@@ -111,9 +138,19 @@
 
             이*경	010-****-2721
         </div>
+        <div style="display: flex;justify-content: center;">
+            <div>
+                <button type="button" class="btn" id="btn_back" onclick="location.href='/board/list'">목록</button>
+            </div>
+            <%--        자유게시판일때만--%>
+            <div>
+                <button type="button" class="btn" id="btn_modify">수정</button>
+                <button type="button" class="btn btn-secondary" id="btn_delete">삭제</button>
+            </div>
+        </div>
     </div>
 </div>
-
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>

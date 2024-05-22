@@ -5,10 +5,10 @@
     <style>
         #box {
             display: flex;
-            height: 800px;
             width: 1200px;
             margin: 0 auto;
             margin-top: 50px;
+            margin-bottom: 50px;
         }
         #leftNav{
             border-right: 1px solid #ccc;
@@ -53,6 +53,9 @@
             background-color: #68afcb !important;
             color: #fff !important;
             border-color : #68afcb !important;
+        }
+        a {
+            text-decoration: none !important;
         }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -140,12 +143,13 @@
                     </li>
                 </ul>
             </nav>
+        <%--        자유게시판일때만--%>
         <div style="display: flex;justify-content: flex-end;">
             <button type="button" class="btn" id="btn_regist" onclick="location.href='/board/regist'">글쓰기</button>
         </div>
     </div>
 </div>
-
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
