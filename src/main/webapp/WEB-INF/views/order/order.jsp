@@ -62,7 +62,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="checkout-content">
-                        <a href="#" class="content-btn">포인트 충전하기</a>
+                        <a href="/mypage/pointcharge" class="content-btn">포인트 충전하기</a>
                     </div>
                     <h4>강좌 정보</h4>
                     <div class="row">

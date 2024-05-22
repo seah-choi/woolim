@@ -59,4 +59,8 @@ public class MypageController {
     public void GETQnaList(){
 
     }
+    @GetMapping("/pointcharge")
+    public void GETChargePoint() {
+
+    }
 }
