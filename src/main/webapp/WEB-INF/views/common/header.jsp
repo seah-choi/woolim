@@ -152,12 +152,12 @@
                         <li><a href="/">Home</a></li>
                         <li><a href="/lecture/list">강의</a>
                             <ul class="dropdown">
-                                <li><a href="lecture/list">강좌 리스트</a></li>
+                                <li><a href="/lecture/list">강좌 리스트</a></li>
                             </ul>
                         </li>
                         <li><a href="#">선생님</a>
                             <ul class="dropdown">
-                                <li><a href="teacher/list">선생님 정보</a></li>
+                                <li><a href="/teacher/list">선생님 정보</a></li>
                             </ul>
                         </li>
                         <li><a href="/mystudy/classList">나의 학습방</a>
@@ -185,6 +185,7 @@
                                 <li><a href="/mypage/jjim">찜한 강의</a></li>
                                 <li><a href="/mypage/qna/list">1:1문의</a></li>
                                 <li><a href="/mypage/cart">장바구니</a></li>
+                                <li><a href="/mypage/pointcharge">포인트 충전</a></li>
                             </ul>
                         </li>
                     </ul>
