@@ -149,9 +149,7 @@
                                         <i class="icon_heart_alt"></i>
                                     </div>
                                     <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+<%--                                        <li class="quick-view"><a href="teacher/list?ts_idx=${list.ts_idx}">자세히 보기</a></li>--%>
                                     </ul>
                                 </div>
                                 <div class="pi-text">
@@ -173,8 +171,8 @@
                     <!-- Pagination with icons -->
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <li class="page-item <c:if test="${responseDTO.page_block_start - responseDTO.page_block_size < '1'}"> disabled</c:if>" >
-                                <a href="<c:if test="${responseDTO.page_block_start - responseDTO.page_block_size >= '1'}">${responseDTO.linked_params}&page=${responseDTO.page_block_start - responseDTO.page_block_size}</c:if>"
+                            <li class="page-item <c:if test="${responseDTO.prev_page_plag == 'false'}"> disabled</c:if>" >
+                                <a href="<c:if test="${responseDTO.prev_page_plag == 'true'}">${responseDTO.linked_params}&page=${responseDTO.page_block_start - responseDTO.page_block_size}</c:if>"
                                    class="page-link" aria-label="Previous">&laquo;
                                 </a>
                             </li>
