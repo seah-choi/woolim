@@ -17,9 +17,10 @@
     </select>
 
     <select id ="MemberListbyPage" resultType="org.fullstack4.woolim.domain.MemberVO">
-        SELECT wm.member_idx, member_id, member_name ,member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_oauth,member_reg_date,wts.subject_category_code
-        FROM woo_member AS wm
-        INNER JOIN woo_teacher_subject AS wts ON wm.member_idx = wts.member_idx
+<!--        SELECT member_idx, member_id, member_name ,member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_oauth,member_reg_date,wts.subject_category_code-->
+        SELECT member_idx, member_id, member_name ,member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_oauth,member_reg_date
+        FROM woo_member
+<!--        INNER JOIN woo_teacher_subject AS wts ON wm.member_idx = wts.member_idx-->
         <where>
             <if test="member_type !=null and member_type !=''">
                 member_category = #{member_type}
@@ -44,7 +45,7 @@
                 </foreach>
             </if>
         </where>
-        ORDER by wm.member_idx DESC
+        ORDER by member_idx DESC
         LIMIT #{page_skip_count}, #{page_size}
     </select>
 
