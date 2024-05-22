@@ -9,6 +9,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,7 +44,14 @@ public class CommonUtil {
         return realPath.substring(0,realPath.indexOf("build")) + "src\\main\\webapp\\resources\\upload\\" + target;
     }
 
+    public static boolean loginCheck(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return session.getAttribute("user_id") != null;
+    }
 
+    public static boolean autologincheck(HttpServletRequest req) {
+        return CookieUtil.getCookieValue(req, "user_id") != "";
+    }
 
     public static String comma(String str) {
         return String.format("%,d", parseInt(str));

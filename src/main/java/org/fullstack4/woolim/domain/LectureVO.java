@@ -27,4 +27,7 @@ public class LectureVO {
     private int member_idx;
     private Local lecture_reg_date;
     private String member_id;
+
+    private String lecture_study;
+    private String lecture_content_detail;
 }

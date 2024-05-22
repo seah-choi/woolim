@@ -1,7 +1,10 @@
 package org.fullstack4.woolim.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.fullstack4.woolim.domain.LectureVO;
 
-@Mapper
+import java.util.List;
+
 public interface LectureMapper {
+    List<LectureVO> getList();
 }

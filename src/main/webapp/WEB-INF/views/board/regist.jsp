@@ -5,10 +5,10 @@
   <style>
     #box {
       display: flex;
-      height: 800px;
       width: 1200px;
       margin: 0 auto;
       margin-top: 50px;
+      margin-bottom: 50px;
     }
     #leftNav{
       border-right: 1px solid #ccc;
@@ -45,14 +45,24 @@
       color: #fff;
     }
 
-    .table{
-      margin-bottom: 50px !important;
-    }
-
     .page-item.active .page-link {
       background-color: #68afcb !important;
       color: #fff !important;
       border-color : #68afcb !important;
+    }
+
+    a {
+      text-decoration: none !important;
+    }
+    #btn_modify{
+      background: #68afcb;
+      color: #fff;
+    }
+    #btn_back{
+      background: #fff;
+      color: #68afcb;
+      border: 1px solid #68afcb;
+      margin-right: 5px;
     }
   </style>
   <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -71,6 +81,19 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<div class="breacrumb-section" style="margin-top: 20px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-text product-more">
+          <a href="/"><i class="fa fa-home"></i> Home</a>
+          <a href="/board/list">자유게시판</a>
+          <span style="font-weight: bold">글쓰기</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="box">
   <div id="leftNav">
     <nav class="nav flex-column">
@@ -87,65 +110,22 @@
   <div id="list">
     <h5 style="font-weight: bold">자유게시판</h5>
     <hr>
-    <div class="input-group">
-      <button class="btn btn-outline-secondary dropdown-toggle" id="drop" type="button" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">제목</a></li>
-        <li><a class="dropdown-item" href="#">내용</a></li>
-      </ul>
-      <input type="text" class="form-control" aria-label="Text input with 2 dropdown buttons">
-      <button class="btn btn-outline-secondary" type="button" id="search" aria-expanded="false">검색</button>
-    </div>
     <br>
-    <table class="table">
-      <thead>
-      <tr class="table-secondary">
-        <th scope="col">구분</th>
-        <th scope="col">제목</th>
-        <th scope="col">등록일</th>
-        <th scope="col">조회수</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <th scope="row">공지</th>
-        <td id="title"><a href="/board/view">[당첨자 발표] 3-4월 별가게 당첨자 발표</a></td>
-        <td>2024-05-07</td>
-        <td>12</td>
-      </tr>
-      </tbody>
-    </table>
-    <nav class="blog-pagination justify-content-center d-flex">
-      <ul class="pagination">
-        <li class="page-item">
-          <a href="#" class="page-link" aria-label="Previous">&lt;</a>
-        </li>
-        <li class="page-item active">
-          <a href="#" class="page-link">1</a>
-        </li>
-        <li class="page-item">
-          <a href="#" class="page-link">2</a>
-        </li>
-        <li class="page-item">
-          <a href="#" class="page-link">3</a>
-        </li>
-        <li class="page-item">
-          <a href="#" class="page-link">4</a>
-        </li>
-        <li class="page-item">
-          <a href="#" class="page-link">5</a>
-        </li>
-        <li class="page-item">
-          <a href="#" class="page-link" aria-label="Next">&gt;</a>
-        </li>
-      </ul>
-    </nav>
-    <div style="display: flex;justify-content: flex-end;">
-      <button type="button" class="btn" id="btn_regist" onclick="location.href='/board/regist'">글쓰기</button>
+    <div>
+      
+    </div>
+    <div style="display: flex;justify-content: center;">
+      <div>
+        <button type="button" class="btn" id="btn_back" onclick="location.href='/board/list'">목록</button>
+      </div>
+      <div>
+        <button type="button" class="btn" id="btn_modify">등록</button>
+        <button type="button" class="btn btn-secondary" id="btn_delete">취소</button>
+      </div>
     </div>
   </div>
 </div>
-
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
