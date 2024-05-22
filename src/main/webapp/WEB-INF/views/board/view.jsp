@@ -81,7 +81,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-text product-more">
                     <a href="/"><i class="fa fa-home"></i> Home</a>
-                    <a href="/board/list">자유게시판</a>
+                    <a href="/board/list">공지사항</a>
                     <span>상세</span>
                 </div>
             </div>
@@ -94,7 +94,7 @@
             <h4>게시판</h4>
             <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
             <div style="padding-top: 20px; line-height: unset;">
-                <a class="nav-link" aria-current="page" href="/board/list">자유게시판</a>
+                <a class="nav-link" aria-current="page" href="/board/freeList">자유게시판</a>
                 <a class="nav-link" href="/board/list">교육정보</a>
                 <a class="nav-link" href="/board/list">자료실</a>
                 <a class="nav-link" href="/board/list">공지사항</a>
@@ -141,11 +141,6 @@
         <div style="display: flex;justify-content: center;">
             <div>
                 <button type="button" class="btn" id="btn_back" onclick="location.href='/board/list'">목록</button>
-            </div>
-            <%--        자유게시판일때만--%>
-            <div>
-                <button type="button" class="btn" id="btn_modify">수정</button>
-                <button type="button" class="btn btn-secondary" id="btn_delete">삭제</button>
             </div>
         </div>
     </div>
