@@ -21,7 +21,7 @@ public class LectureServiceImpl implements LectureServiceIf {
 
     @Override
     public List<LectureDTO> getList(Criteria cri) {
-
+        log.info("-----" + cri);
         List<LectureDTO> list = lectureMapper.getList(cri).stream().map(vo->modelMapper.map(vo, LectureDTO.class)).collect(Collectors.toList());
 
         return list;
