@@ -55,4 +55,8 @@ public class MypageController {
     public void GETJjim() {
 
     }
+    @GetMapping("/qnaList")
+    public void GETQnaList(){
+
+    }
 }
