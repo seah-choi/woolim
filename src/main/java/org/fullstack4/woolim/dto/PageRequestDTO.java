@@ -61,6 +61,7 @@ public class PageRequestDTO {
     private LocalDate search_date2;
     private String member_id;
     private String member_type;
+    private String bbs_type;
 
     public void setTotal_count(int total_count) {
         this.total_count = total_count;

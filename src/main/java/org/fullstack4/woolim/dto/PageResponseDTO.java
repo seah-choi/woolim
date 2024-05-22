@@ -31,6 +31,8 @@ public class PageResponseDTO<E> {
 
     List<E> dtolist;
 
+    private String bbs_type;
+
     PageResponseDTO() {}
 
     @Builder(builderMethodName = "withAll")
@@ -55,6 +57,7 @@ public class PageResponseDTO<E> {
         this.linkParams = pageRequestDTO.getLinkParams();
         this.sort_type = pageRequestDTO.getSort_type();
         this.member_type = pageRequestDTO.getMember_type();
+        this.bbs_type = pageRequestDTO.getBbs_type();
 
         log.info("pageRequestDTO : {}", pageRequestDTO);
         log.info("dtoList : {}", dtoList);
