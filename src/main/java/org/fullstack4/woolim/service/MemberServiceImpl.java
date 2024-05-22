@@ -61,8 +61,9 @@ public class MemberServiceImpl implements MemberServiceIf{
     public PageResponseDTO<MemberDTO> MemberList(PageRequestDTO pageRequestDTO) {
         List<MemberVO> voList = memberMapper.MemberListbyPage(pageRequestDTO);
         List<MemberDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo,MemberDTO.class)).collect(Collectors.toList());
-
+        int total_count = memberMapper.total_count(pageRequestDTO);
         PageResponseDTO<MemberDTO> responseDTO = PageResponseDTO.<MemberDTO>withAll()
+                .total_count(total_count)
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList)
                 .build();

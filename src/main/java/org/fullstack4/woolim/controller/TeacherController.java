@@ -27,10 +27,8 @@ public class TeacherController {
     private final ModelMapper modelMapper;
 
     @GetMapping("/list")
-    public void GETList(Model model) {
+    public void GETList(Model model,PageRequestDTO pageRequestDTO) {
         String member_type = "teacher";
-        PageRequestDTO pageRequestDTO = new PageRequestDTO();
-        pageRequestDTO.setPage(1);
         pageRequestDTO.setPage_size(9);
         pageRequestDTO.setMember_type(member_type);
         List<MemberVO> voList = memberMapper.MemberListbyPage(pageRequestDTO);
@@ -42,6 +40,7 @@ public class TeacherController {
                 .dtoList(dtoList)
                 .build();
 
+        log.info(responseDTO);
         model.addAttribute("responseDTO", responseDTO);
     }
 

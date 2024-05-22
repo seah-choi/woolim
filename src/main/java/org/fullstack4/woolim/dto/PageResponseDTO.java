@@ -73,7 +73,7 @@ public class PageResponseDTO<E> {
     }
 
     public int getPage_skip_count(){
-        return (this.page) * this.page_size;
+        return (this.page-1) * this.page_size;
     }
 
     public void setPage_block_start(){
