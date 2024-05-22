@@ -36,12 +36,12 @@
                         <span class="micon icon-copy fa fa-video-camera"></span><span class="mtext">강좌 관리</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="basic-table.html">강좌 목록</a></li>
-                        <li><a href="datatable.html">강좌 추가</a></li>
+                        <li><a href="/admin/lecture/list">강좌 목록</a></li>
+                        <li><a href="/admin/lecture/regist">강좌 등록</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="noDropdown">
+                    <a href="/admin/member/list" class="noDropdown">
                         <span class="micon icon-copy fa fa-user-circle"></span><span class="mtext">회원 관리</span>
                     </a>
                 </li>
@@ -50,10 +50,10 @@
                         <span class="micon icon-copy fa fa-calendar-minus-o"></span><span class="mtext">게시판 관리</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="ui-cards.html">공지사항 게시판</a></li>
-                        <li><a href="ui-buttons.html">교육정보 게시판</a></li>
-                        <li><a href="ui-cards.html">자료실 게시판</a></li>
-                        <li><a href="ui-cards.html">자유게시판</a></li>
+                        <li><a href="/admin/board/list">공지사항 게시판</a></li>
+                        <li><a href="/admin/board/list">교육정보 게시판</a></li>
+                        <li><a href="/admin/board/list">자료실 게시판</a></li>
+                        <li><a href="/admin/board/list">자유게시판</a></li>
                     </ul>
                 </li>
 

@@ -250,17 +250,17 @@
                     <div class="row">
                         <div class="col-lg-7 col-md-7">
                             <div class="select-option">
-                                <select class="sorting" id="sorting">
-                                    <option value="1">인기순</option>
-                                    <option value="2">최신순</option>
-                                    <option value="3">댓글순</option>
-                                    <option value="4">좋아요순</option>
+                                <select class="sorting" id="sorting" onchange="redirectToList()">
+                                    <option value="1" ${pageMaker.cri.sorting == '1' ? 'selected' : ''}>인기순</option>
+                                    <option value="2" ${pageMaker.cri.sorting == '2' ? 'selected' : ''}>최신순</option>
+                                    <option value="3" ${pageMaker.cri.sorting == '3' ? 'selected' : ''}>댓글순</option>
+                                    <option value="4" ${pageMaker.cri.sorting == '4' ? 'selected' : ''}>좋아요순</option>
                                 </select>
-                                <select class="sorting" id="viewSorting">
-                                    <option value="">9개씩 보기</option>
-                                    <option value="">12개씩 보기</option>
-                                    <option value="">24개씩 보기</option>
-                                    <option value="">36개씩 보기</option>
+                                <select class="sorting" id="viewSorting" onchange="viewSorting()">
+                                    <option value="9" ${pageMaker.cri.viewSorting == '9' ? 'selected' : ''}>9개씩 보기</option>
+                                    <option value="12" ${pageMaker.cri.viewSorting == '12' ? 'selected' : ''}>12개씩 보기</option>
+                                    <option value="24" ${pageMaker.cri.viewSorting == '24' ? 'selected' : ''}>24개씩 보기</option>
+                                    <option value="36" ${pageMaker.cri.viewSorting == '36' ? 'selected' : ''}>36개씩 보기</option>
                                 </select>
                             </div>
                         </div>
@@ -500,7 +500,8 @@
         moveForm.querySelector("input[name='pageNum']").value = pageNum;
         moveForm.querySelector("input[name='type']").value;
         moveForm.querySelector("input[name='keyword']").value = key;
-
+        moveForm.querySelector("input[name='viewSorting']").value;
+        moveForm.querySelector("input[name='sorting']").value;
         moveForm.action = "/lecture/list";
         moveForm.submit();
     });
@@ -521,21 +522,40 @@
             alert("키워드를 입력하세요.");
             return false;
         }
-
+        moveForm.querySelector("input[name='viewSorting']").value;
+        moveForm.querySelector("input[name='sorting']").value;
         moveForm.querySelector("input[name='type']").value = type;
         moveForm.querySelector("input[name='keyword']").value = val;
         moveForm.querySelector("input[name='pageNum']").value = 1;
         moveForm.submit();
     });
-    document.querySelector("#sorting").addEventListener("change", function (e){
+  /*  document.querySelector("#sorting").addEventListener("change", function (e){
         e.preventDefault();
         console.log("####");
         let sorting =  document.querySelector("#sorting").value;
         moveForm.querySelector("input[name='sorting']").value = sorting;
         moveForm.submit();
     });
+*/
+    function redirectToList() {
+        let sortingValue = document.getElementById("sorting").value;
+        moveForm.querySelector("input[name='viewSorting']").value;
+        moveForm.querySelector("input[name='sorting']").value = sortingValue;
+        moveForm.querySelector("input[name='type']").value;
+        moveForm.querySelector("input[name='keyword']").value;
+        moveForm.querySelector("input[name='pageNum']").value = 1;
+        moveForm.submit();
 
-
+    }
+    function viewSorting() {
+        let sortingValue = document.getElementById("viewSorting").value;
+        moveForm.querySelector("input[name='viewSorting']").value = sortingValue;
+        moveForm.querySelector("input[name='sorting']").value ;
+        moveForm.querySelector("input[name='type']").value;
+        moveForm.querySelector("input[name='keyword']").value;
+        moveForm.querySelector("input[name='pageNum']").value = 1;
+        moveForm.submit();
+    }
     document.querySelector("#resetBtn").addEventListener("click", function (){
        location.href= '/lecture/list';
     });
