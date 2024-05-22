@@ -70,12 +70,12 @@
                     </div>
                     <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
-                            <li class="heart-icon"><a href="#">
+                            <li class="heart-icon"><a href="/mypage/jjim">
                                 <i class="icon_heart_alt"></i>
                                 <span>1</span>
                             </a>
                             </li>
-                            <li class="cart-icon"><a href="#">
+                            <li class="cart-icon"><a href="/mypage/cart">
                                 <i class="icon_bag_alt"></i>
                                 <span>3</span>
                             </a>
@@ -160,28 +160,28 @@
                         <li><a href="/mystudy/classList">나의 학습방</a>
                             <ul class="dropdown">
                                 <li><a href="/mystudy/classList">나의 강의실</a></li>
-                                <li><a href="/mystudy/freeList">내가 쓴 글</a></li>
-                                <li><a href="/mystudy/commentList">내가 남긴 댓글</a></li>
-                                <li><a href="/mystudy/classList">성적표</a></li>
-                                <li><a href="./register.html">학습계획표</a></li>
+                                <li><a href="/mystudy/boardList">내가 쓴 글</a></li>
+                                <li><a href="/mystudy/replyList">내가 남긴 댓글</a></li>
+                                <li><a href="/mystudy/gradeList">성적표</a></li>
+                                <li><a href="/mystudy/studyPlanList">학습계획표</a></li>
                             </ul>
                         </li>
-                        <li><a href="./contact.html">게시판</a>
+                        <li><a href="/board/list">게시판</a>
                             <ul class="dropdown">
-                                <li><a href="./blog-details.html">자유게시판</a></li>
-                                <li><a href="./shopping-cart.html">교육정보</a></li>
-                                <li><a href="./check-out.html">자료실</a></li>
-                                <li><a href="./faq.html">공지사항</a></li>
+                                <li><a href="/board/list">자유게시판</a></li>
+                                <li><a href="/board/list">교육정보</a></li>
+                                <li><a href="/board/list">자료실</a></li>
+                                <li><a href="/board/list">공지사항</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">마이페이지</a>
+                        <li><a href="/mypage/view">마이페이지</a>
                             <ul class="dropdown">
-                                <li><a href="./blog-details.html">회원정보</a></li>
-                                <li><a href="./shopping-cart.html">작성글</a></li>
-                                <li><a href="./check-out.html">결제내역</a></li>
-                                <li><a href="./faq.html">찜한 강의</a></li>
-                                <li><a href="./register.html">1:1문의</a></li>
-                                <li><a href="./login.html">장바구니</a></li>
+                                <li><a href="/mypage/view">회원정보</a></li>
+                                <li><a href="/mypage/writeList">작성글</a></li>
+                                <li><a href="/mypage/paymentList">결제내역</a></li>
+                                <li><a href="/mypage/jjim">찜한 강의</a></li>
+                                <li><a href="/mypage/qna/list">1:1문의</a></li>
+                                <li><a href="/mypage/cart">장바구니</a></li>
                             </ul>
                         </li>
                     </ul>
