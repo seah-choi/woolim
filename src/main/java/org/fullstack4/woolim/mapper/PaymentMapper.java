@@ -3,5 +3,5 @@ package org.fullstack4.woolim.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public class PaymentMapper {
+public interface PaymentMapper {
 }
