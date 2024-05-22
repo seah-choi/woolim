@@ -7,4 +7,10 @@
         INSERT INTO woo_member(member_id, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date)
         VALUES(#{member_id}, #{member_pwd}, #{member_email}, #{member_phone}, #{member_email_addr}, #{member_zonecode}, #{member_addr}, #{member_addr_detail}, #{member_category}, #{member_name}, 0, 'N', NOW() )
     </insert>
+
+    <select id="view" resultType="org.fullstack4.woolim.domain.MemberVO">
+        SELECT member_id, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date
+        FROM woo_member
+        WHERE member_id= #{member_id}
+    </select>
 </mapper>
