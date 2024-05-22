@@ -28,12 +28,16 @@ public class LectureDTO {
     private int member_idx;
     private Local lecture_reg_date;
     private String member_id;
-    private String lecture_category_name;
+
+    private String lecture_study;
+    private String lecture_content_detail;
+
+    /*    private String lecture_category_name;
     private String lecture_category_detail_name;
 
     //////////////////강의 영상 VideoVO/////////////////
     private int video_idx;
     private String video_title;
     private String video_content;
-    private String video_file;
+    private String video_file;*/
 }
