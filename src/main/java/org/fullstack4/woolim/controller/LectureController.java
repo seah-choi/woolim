@@ -21,9 +21,10 @@ public class LectureController {
     @GetMapping("/list")
     public String GETList(Model model) {
         System.out.println("#####");
-        List<LectureDTO> lectureDTOS =  lectureServiceIf.getList();
         log.info("-----------------------");
         log.info("-----LectureController-----" +"-> GETList() ");
+        List<LectureDTO> lectureDTOS =  lectureServiceIf.getList();
+
         log.info("---lectureDTOS-------" + lectureDTOS);
         log.info("-----------------------");
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -20,8 +21,8 @@ public class LectureServiceImpl implements LectureServiceIf {
 
     @Override
     public List<LectureDTO> getList() {
-        /*List<LectureDTO> list = lectureMapper.getList().stream().map(vo->modelMapper.map(vo, LectureDTO.class)).collect(Collectors.toList());
-        return list;*/
-        return null;
+        List<LectureDTO> list = lectureMapper.getList().stream().map(vo->modelMapper.map(vo, LectureDTO.class)).collect(Collectors.toList());
+        return list;
+
     }
 }
