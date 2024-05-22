@@ -56,6 +56,32 @@
             color: #fff;
         }
 
+        .fc-button-primary {
+            background-color: #68afcb !important;
+            border-color: #68afcb !important;
+        }
+
+        .fc-unthemed td.fc-today {
+            background: #bddded !important;
+        }
+
+        .fc-content {
+            background: #3da4ff !important;
+        }
+        #btn_regist{
+            border:1px solid #68afcb;
+            color: #68afcb;
+            margin-bottom: 10px;
+        }
+
+        #regist {
+            background: #68afcb;
+            color: #fff;
+        }
+
+        .date {
+            width: 150px;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
@@ -70,6 +96,17 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/resources/fonts/icomoon/style.css">
+    <link href='/resources/fullcalendar/packages/core/main.css' rel='stylesheet' />
+    <link href='/resources/fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="/resources/css/style.css">
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -93,37 +130,43 @@
             <img src="/resources/img/free-icon-report-card-5196199.png">
             <span>나의 학습계획표</span>
         </div>
-        <hr>
+        <hr style="border-top: 1px solid rgb(0 0 0);">
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" id="btn_regist">+ 학습일정 추가</button>
+        <%--        성적표 모달창--%>
+        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel1" style="font-weight: bold">학습일정 추가</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form name="frm" action="/mystudy/studyPlanList" method="post">
+                        <div class="modal-body">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                <label for="floatingTextarea">일정</label>
+                            </div>
+                            <br>
+                            <span>기간 설정</span>
+                            <div class="form-floating mb-3" style="display: flex">
+                                <input type="date" class="form-control date" style="width: 180px;">
+                                <span style="padding: 10px;">~</span>
+                                <input type="date" class="form-control date" style="width: 180px;">
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="justify-content: center;">
+                            <button type="submit" class="btn" id="regist">등록</button>
+                            <button type="button" class="btn btn-outline-secondary">취소</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <br>
-        <div>
-
+        <div class="content">
+            <div id='calendar'></div>
         </div>
 
-        <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a href="#" class="page-link" aria-label="Previous">&lt;</a>
-                </li>
-                <li class="page-item active">
-                    <a href="#" class="page-link">1</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">2</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">3</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">4</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">5</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link" aria-label="Next">&gt;</a>
-                </li>
-            </ul>
-        </nav>
     </div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
@@ -137,6 +180,101 @@
 <script src="/resources/js/jquery.dd.min.js"></script>
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
+<script src="/resources/js/main.js"></script>
+<script src="/resources/js/popper.min.js"></script>
+
+<script src='/resources/fullcalendar/packages/core/main.js'></script>
+<script src='/resources/fullcalendar/packages/interaction/main.js'></script>
+<script src='/resources/fullcalendar/packages/daygrid/main.js'></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let today = new Date();
+        let year = today.getFullYear(); // 현재 연도
+        let month = today.getMonth() + 1; // 월 (0부터 시작하므로 1을 더해줌)
+        let day = today.getDate(); // 일
+
+        month = month < 10 ? '0' + month : month;
+        day = day < 10 ? '0' + day : day;
+
+        let dateStr = year + '-' + month + '-' + day; // "년-월-일" 형식
+        console.log(dateStr);
+
+
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: [ 'interaction', 'dayGrid' ],
+            defaultDate: dateStr,
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+            events: [
+                {
+                    title: 'All Day Event',
+                    start: '2020-02-01'
+                },
+                {
+                    title: 'Long Event',
+                    start: '2020-02-07',
+                    end: '2020-02-10'
+                },
+                {
+                    groupId: 999,
+                    title: 'Repeating Event',
+                    start: '2020-02-09T16:00:00'
+                },
+                {
+                    groupId: 999,
+                    title: 'Repeating Event',
+                    start: '2020-02-16T16:00:00'
+                },
+                {
+                    title: 'Conference',
+                    start: '2020-02-11',
+                    end: '2020-02-13'
+                },
+                {
+                    title: 'Meeting',
+                    start: '2020-02-12T10:30:00',
+                    end: '2020-02-12T12:30:00'
+                },
+                {
+                    title: 'Lunch',
+                    start: '2020-02-12T12:00:00'
+                },
+                {
+                    title: 'Meeting',
+                    start: '2020-02-12T14:30:00'
+                },
+                {
+                    title: 'Happy Hour',
+                    start: '2020-02-12T17:30:00'
+                },
+                {
+                    title: 'Dinner',
+                    start: '2020-02-12T20:00:00'
+                },
+                {
+                    title: 'Birthday Party',
+                    start: '2020-02-13T07:00:00'
+                },
+                {
+                    title: 'Click for Google',
+                    url: 'http://google.com/',
+                    start: '2020-02-28'
+                },
+                {
+                    title: '중간고사',
+                    start: '2024-05-27'
+                }
+            ]
+        });
+
+        calendar.render();
+    });
+
+</script>
+
 <script src="/resources/js/main.js"></script>
 </body>
 </html>
