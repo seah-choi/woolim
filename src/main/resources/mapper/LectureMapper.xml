@@ -3,9 +3,41 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.fullstack4.woolim.mapper.LectureMapper">
-    <!--클래스가 있는 풀패키지 정보-->
+
+    <sql id="criteria">
+        <trim prefix="where (" suffix=")" prefixOverrides="OR">
+            <foreach collection="typeArr" item="type">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            lecture_title like concat('%',#{keyword},'%')
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            member_name like concat('%',#{keyword},'%' )
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            lecture_category_detail like concat('%',#{keyword},'%' )
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+    </sql>
     <select id="getList" resultType="org.fullstack4.woolim.domain.LectureVO">
         select * from woo_lecture
+
+        <if test="keyword != null">
+            <include refid="criteria"></include>
+        </if>
+
+        limit #{skip},#{amount}
     </select>
 
+    <select id="getLectureKeyword" resultType="int">
+        select count(*)
+        from woo_lecture
+        <if test="keyword != null">
+            <include refid="criteria"></include>
+        </if>
+    </select>
 </mapper>

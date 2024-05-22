@@ -32,6 +32,11 @@ public class LectureDTO {
     private String lecture_study;
     private String lecture_content_detail;
 
+    private int lecture_price;
+    private int lecture_sale;
+    private int lecture_sale_price;
+    private int lecture_count ;
+
     /*    private String lecture_category_name;
     private String lecture_category_detail_name;
 
