@@ -22,7 +22,12 @@
                     </div>
                 </div>
                 <div class="ht-right">
-                    <a href="/login/login" class="login-panel"><i class="fa fa-user"></i>Login</a>
+                    <c:if test="${sessionScope['user_id'] == null}">
+                        <a href="/login/login" class="login-panel"><i class="fa fa-user"></i>Login</a>
+                    </c:if>
+                    <c:if test="${sessionScope['user_id'] != null}">
+                        <a href="/login/logout" class="login-panel"><i class="fa fa-user"></i>Logout</a>
+                    </c:if>
                     <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="/resources/img/flag-1.jpg" data-imagecss="flag yt"
