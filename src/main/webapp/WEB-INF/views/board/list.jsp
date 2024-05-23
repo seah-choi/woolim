@@ -100,14 +100,22 @@
         </c:if>
 
         <hr>
-        <div class="input-group">
-            <button class="btn btn-outline-secondary dropdown-toggle" id="drop" type="button" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">제목</a></li>
-                <li><a class="dropdown-item" href="#">내용</a></li>
-            </ul>
-            <input type="text" class="form-control" aria-label="Text input with 2 dropdown buttons">
-            <button class="btn btn-outline-secondary" type="button" id="search" aria-expanded="false">검색</button>
+        <div class="searchBox">
+            <form role="search" id="frmSearch" class="searchForm" action="/board/list" method="get">
+                <input type="hidden" name="bbs_type" value="${responseDTO.bbs_type}">
+                <div class="mb-3 row d-flex">
+                    <div class="input-group col-md-1">
+                        <select id="schoolSelect" name="search_type" class="selectpicker form-control col-sm-1 school" data-size="5" data-style="btn-outline-info">
+                            <option>전체</option>
+                            <option value="t" ${search_type=="t" ? "selected" : ""}>제목</option>
+                            <option value="c" ${search_type=="c" ? "selected" : ""}>내용</option>
+                            <option value="u" ${search_type=="u" ? "selected" : ""}>작성자</option>
+                        </select>
+                        <input type="search" class="form-control" name="search_word"  id="search_word" value='<c:out value="${pageRequestDTO.search_word}"/>' placeholder="검색어를 입력하세요." aria-label="Text input with 2 dropdown buttons">
+                        <button class="btn btn-outline-secondary" type="submit" id="search" aria-expanded="false">검색</button>
+                    </div>
+                </div>
+            </form>
         </div>
         <br>
         <table class="table">

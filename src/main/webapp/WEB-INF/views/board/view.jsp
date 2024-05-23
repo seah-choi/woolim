@@ -114,7 +114,7 @@
         </div>
         <hr>
         <br>
-        <div style="white-space: pre-wrap;">${bbs.bbs_content}</div>
+        <div style="white-space: pre-wrap;margin-bottom: 100px;">${bbs.bbs_content}</div>
         <div style="display: flex;justify-content: center;">
             <div>
                 <button type="button" class="btn" id="btn_back" onclick="location.href='/board/list'">목록</button>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <html>
 <head>
@@ -138,7 +139,9 @@
         <hr>
         <br>
         <div>
-            <img src="/resources/upload/bbs/${file.saveFile}" width="700px" height="400px">
+            <c:if test="${not empty file}">
+                <img src="/resources/upload/bbs/${file.saveFile}" width="700px" height="400px">
+            </c:if>
         </div>
         <br>
         <div style="white-space: pre-wrap;">${bbs.bbs_content}</div>
@@ -169,10 +172,13 @@
             <form name="frm" id="frm" action="/board/delete" method="post">
                 <input type="hidden" name="bbs_idx" id="bbs_idx" value="${bbs.bbs_idx}">
                 <input type="hidden" name="bbs_category_code" value="${bbs.bbs_category_code}">
-            <div>
-                <button type="button" class="btn" id="btn_modify" onclick="location.href='/board/freeModify?bbs_idx=${bbs.bbs_idx}'">수정</button>
-                <button type="submit" class="btn btn-secondary" id="btn_delete" onclick="godelete(event)">삭제</button>
-            </div>
+
+                <c:if test="${bbs.member_id eq sessionScope.member_id}">
+                <div>
+                    <button type="button" class="btn" id="btn_modify" onclick="location.href='/board/freeModify?bbs_idx=${bbs.bbs_idx}'">수정</button>
+                    <button type="submit" class="btn btn-secondary" id="btn_delete" onclick="godelete(event)">삭제</button>
+                </div>
+                </c:if>
         </div>
     </div>
 </div>

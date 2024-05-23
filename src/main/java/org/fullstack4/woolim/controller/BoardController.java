@@ -47,6 +47,10 @@ public class BoardController {
         model.addAttribute("bbsList", bbsList);
         model.addAttribute("bbs_type",bbs_type);
 
+        if(bbsList.getSearch_types()!=null){
+            model.addAttribute("search_type", bbsList.getSearch_types()[0]);
+        }
+
         log.info("bbsList : " + bbsList);
 
         log.info("BoardController >> GETList() END");
@@ -58,7 +62,10 @@ public class BoardController {
                         ,@RequestParam(name="bbs_idx", defaultValue = "0") int bbs_idx) {
         log.info("BoardController >> GETView()");
         BbsDTO  bbsDTO = bbsServiceIf.view(bbs_idx);
+        BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
+
         model.addAttribute("bbs", bbsDTO);
+        model.addAttribute("file",boardFileDTO);
 
     }
 
@@ -200,6 +207,11 @@ public class BoardController {
           }
 
       }
+
+        if(bbsList.getSearch_types()!=null){
+            model.addAttribute("search_type", bbsList.getSearch_types()[0]);
+        }
+
         model.addAttribute("bbsList", bbsList);
         model.addAttribute("bbs_type",bbs_type);
 
@@ -207,6 +219,8 @@ public class BoardController {
 
         log.info("BoardController >> GETfreeList() END");
         log.info("============================");
+
+
     }
 
     @GetMapping("/freeRegist")
