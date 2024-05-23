@@ -155,7 +155,7 @@ public class MypageController {
             log.info("=======================");
             if(map.get("result").equals("success")) {
                 QnaFileDTO qnaFileDTO = QnaFileDTO.builder()
-                        .qna_idx(qnaDTO.getQna_idx())
+                        .qna_idx(result)
                         .orgFile(map.get("orgName"))
                         .saveFile(map.get("newName")).build();
                 qnaService.file_regist(qnaFileDTO);
@@ -173,6 +173,8 @@ public class MypageController {
     public void GETQnaView(@RequestParam(name = "qna_idx")int qna_idx,
                            Model model){
         QnaDTO qnaDTO = qnaService.view(qna_idx);
+        List<QnaFileDTO> fileList = qnaService.qnaFileList(qna_idx);
+        model.addAttribute("fileList", fileList);
         model.addAttribute("qnaDTO", qnaDTO);
     }
     @GetMapping("/qnaModify")

@@ -38,6 +38,7 @@
             </if>
         </where>
     </select>
+
     <select id="qnaListByPage" resultType="org.fullstack4.woolim.domain.QnaVO">
         SELECT *
         FROM woo_qna
@@ -60,6 +61,7 @@
                 </foreach>
             </if>
         </where>
+        ORDER BY qna_idx desc
         limit #{page_skip_count}, #{page_size}
     </select>
     <select id="view" resultType="org.fullstack4.woolim.domain.QnaVO">
@@ -78,7 +80,11 @@
             qna_content = #{qna_content}
         WHERE qna_idx = #{qna_idx}
     </update>
-
+    <select id="qnaFileList" resultType="org.fullstack4.woolim.domain.QnaFileVO">
+        SELECT idx, qna_idx, orgFile, saveFile
+        FROM woo_qna_file
+        WHERE qna_idx = #{qna_idx}
+    </select>
 
 
 </mapper>
