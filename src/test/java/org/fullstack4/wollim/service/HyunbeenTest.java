@@ -1,10 +1,13 @@
 package org.fullstack4.wollim.service;
 
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.woolim.domain.CartVO;
 import org.fullstack4.woolim.domain.MemberVO;
+import org.fullstack4.woolim.dto.CartDTO;
 import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.dto.PageRequestDTO;
 import org.fullstack4.woolim.dto.PageResponseDTO;
+import org.fullstack4.woolim.mapper.CartMapper;
 import org.fullstack4.woolim.mapper.MemberMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +26,9 @@ public class HyunbeenTest {
 
     @Autowired(required = false)
     private MemberMapper memberMapper;
+
+    @Autowired(required = false)
+    private CartMapper cartMapper;
 
     @Autowired(required = false)
     private ModelMapper modelMapper;
@@ -44,5 +50,17 @@ public class HyunbeenTest {
                 .dtoList(dtoList)
                 .build();
         log.info("responseDTO :" +responseDTO);
+    }
+
+    @Test
+    public void CartTest(){
+        CartDTO cartDTO = CartDTO.builder()
+                .member_id("test2")
+                .cart_status("Y")
+                .build();
+        List<CartVO> voList = cartMapper.cartOrJjimList(cartDTO);
+        List<CartDTO> dtolist = voList.stream().map(vo -> modelMapper.map(vo, CartDTO.class)).collect(Collectors.toList());
+
+        log.info("dtolist :" +dtolist);
     }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack4.woolim.mapper.CartMapper">
+<select id="cartOrJjimList" resultType="org.fullstack4.woolim.domain.CartVO">
+    SELECT cart_idx,wc.member_id,wl.lecture_idx,cart_reg_date, lecture_image,lecture_title,lecture_price,lecture_sale_price,lecture_start_date,lecture_end_date
+    FROM woo_cart as wc
+    INNER JOIN woo_lecture as wl ON wc.lecture_idx = wl.lecture_idx
+    WHERE cart_status=#{cart_status} AND wc.member_id = #{member_id}
+</select>
+
+    <insert id="InsertcartOrJjim">
+        INSERT INTO woo_cart(member_id,lecture_idx,cart_reg_date,cart_status)
+        VALUES( #{member_id},#{lecture_idx},#{cart_reg_date},#{cart_status})
+    </insert>
+
+</mapper>

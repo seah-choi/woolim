@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.FileUtil;
-import org.fullstack4.woolim.dto.FileDTO;
-import org.fullstack4.woolim.dto.MemberDTO;
-import org.fullstack4.woolim.dto.QnaDTO;
-import org.fullstack4.woolim.dto.QnaFileDTO;
+import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.MemberMapper;
+import org.fullstack4.woolim.service.CartServiceIf;
 import org.fullstack4.woolim.service.MemberServiceIf;
 import org.fullstack4.woolim.service.QnaServiceIf;
 import org.fullstack4.woolim.service.QnaServiceImpl;
@@ -35,6 +33,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MypageController {
     private final MemberServiceIf memberService;
+    private final CartServiceIf cartService;
     private final QnaServiceIf qnaService;
 
     @GetMapping("/view")
@@ -61,8 +60,17 @@ public class MypageController {
     }
 
     @GetMapping("/cart")
-    public void GETCartList() {
+    public void GETCartList(HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession();
+        String id = session.getAttribute("member_id").toString();
+        CartDTO cartDTO = CartDTO.builder()
+                .member_id(id)
+                .cart_status("Y")
+                .build();
+        List<CartDTO> dtoList = cartService.cartOrJjimList(cartDTO);
 
+        log.info("dtoList :" +dtoList);
+        model.addAttribute("dtoList", dtoList);
     }
 
     @GetMapping("/regist")
@@ -81,8 +89,17 @@ public class MypageController {
     }
 
     @GetMapping("/jjim")
-    public void GETJjim() {
+    public void GETJjim(HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession();
+        String id = session.getAttribute("member_id").toString();
+        CartDTO cartDTO = CartDTO.builder()
+                .member_id(id)
+                .cart_status("N")
+                .build();
+        List<CartDTO> dtoList = cartService.cartOrJjimList(cartDTO);
 
+        log.info("dtoList :" +dtoList);
+        model.addAttribute("dtoList", dtoList);
     }
     @GetMapping("/qnaList")
     public void GETQnaList(){
