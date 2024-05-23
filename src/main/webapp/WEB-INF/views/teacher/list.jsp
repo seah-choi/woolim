@@ -54,66 +54,33 @@
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
                 <div class="filter-widget">
-                    <h4 class="fw-title">학년별</h4>
+                    <h4 class="fw-title">과목</h4>
                     <div class="fw-brand-check">
                         <div class="bc-item">
                             <label for="bc-calvin">
-                                Calvin Klein
-                                <input type="radio" name ="category" id="bc-calvin">
+                                📗 국어
+                                <input type="radio" id="bc-calvin" class="subjectbtn" value="s01" name="search_type" onclick="viewSubject(this)">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="bc-item">
                             <label for="bc-diesel">
-                                Diesel
-                                <input type="radio" name ="category" id="bc-diesel">
+                                ⏲️ 수학
+                                <input type="radio" id="bc-diesel" class="subjectbtn" value="s03" name="search_type" onclick="viewSubject(this)">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="bc-item">
                             <label for="bc-polo">
-                                Polo
-                                <input type="radio" name ="category" id="bc-polo">
+                                🆖 영어
+                                <input type="radio" id="bc-polo" class="subjectbtn" value="s02" name="search_type" onclick="viewSubject(this)">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="bc-item">
                             <label for="bc-tommy">
-                                Tommy Hilfiger
-                                <input type="radio" name ="category" id="bc-tommy">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="filter-widget">
-                    <h4 class="fw-title">과목별</h4>
-                    <div class="fw-brand-check">
-                        <div class="bc-item">
-                            <label for="bc-calvin">
-                                Calvin Klein
-                                <input type="radio" name ="category" id="bc-calvin1">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="bc-item">
-                            <label for="bc-diesel">
-                                Diesel
-                                <input type="radio" name ="category" id="bc-diesel1">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="bc-item">
-                            <label for="bc-polo">
-                                Polo
-                                <input type="radio" name ="category" id="bc-polo1">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="bc-item">
-                            <label for="bc-tommy">
-                                Tommy Hilfiger
-                                <input type="radio" name ="category" id="bc-tommy1">
+                                🔎 과학
+                                <input type="radio" id="bc-tommy" class="subjectbtn" value="s07" name="search_type" onclick="viewSubject(this)">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -126,15 +93,21 @@
                         <div class="col-lg-7 col-md-7">
                             <div class="select-option">
                                 <select class="sorting">
-                                    <option value="">Default Sorting</option>
+                                    <option value="1" ${responseDTO.sort_type == '1' ? 'selected' : ''}>인기순</option>
+                                    <option value="2" ${responseDTO.sort_type == '2' ? 'selected' : ''}>최신순</option>
+                                    <option value="3" ${responseDTO.sort_type == '3' ? 'selected' : ''}>댓글순</option>
+                                    <option value="4" ${responseDTO.sort_type == '4' ? 'selected' : ''}>좋아요순</option>
                                 </select>
-                                <select class="p-show">
-                                    <option value="">Show:</option>
+                                <select class="sorting" onchange="viewSorting(this, '${responseDTO.linkParams}')">
+                                    <option value="9" ${responseDTO.page_size == '9' ? 'selected' : ''}>9개씩 보기</option>
+                                    <option value="12" ${responseDTO.page_size == '12' ? 'selected' : ''}>12개씩 보기</option>
+                                    <option value="24" ${responseDTO.page_size == '24' ? 'selected' : ''}>24개씩 보기</option>
+                                    <option value="36" ${responseDTO.page_size == '36' ? 'selected' : ''}>36개씩 보기</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-5 col-md-5 text-right">
-                            <p>Show 01- 09 Of 36 Product</p>
+                            <p>Show ${responseDTO.page_skip_count + 1} - ${responseDTO.page_skip_count +responseDTO.page_size} Of ${responseDTO.total_count} Product</p>
                         </div>
                     </div>
                 </div>
@@ -172,29 +145,21 @@
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item <c:if test="${responseDTO.prev_page_plag == 'false'}"> disabled</c:if>" >
-                                <a href="<c:if test="${responseDTO.prev_page_plag == 'true'}">${responseDTO.linked_params}&page=${responseDTO.page_block_start - responseDTO.page_block_size}</c:if>"
+                                <a href="/teacher/list?page=${responseDTO.page_block_start - responseDTO.page_block_size}${responseDTO.linkParams}"
                                    class="page-link" aria-label="Previous">&laquo;
                                 </a>
                             </li>
                             <c:forEach begin="${responseDTO.page_block_start}"
                                        end="${responseDTO.page_block_end}"
                                        var="page_num">
-                                <c:choose>
-                                    <c:when test="${responseDTO.page == page_num}">
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">${page_num}</a>
+                                        <li class="page-item <c:if test="${responseDTO.page == page_num}">active</c:if>">
+                                            <a href="/teacher/list?page=${page_num}${responseDTO.linkParams}" class="page-link">${page_num}</a>
                                         </li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li class="page-item">
-                                            <a href="${responseDTO.linked_params}&page=${page}" class="page-link">${page_num}</a>
-                                        </li>
-                                    </c:otherwise>
-                                </c:choose>
                             </c:forEach>
-                            <li class="page-item <c:if test="${responseDTO.page_block_start + responseDTO.page_block_size > responseDTO.total_page}"> disabled</c:if>">
-                                <a href="<c:if test="${responseDTO.page_block_start + responseDTO.page_block_size < responseDTO.total_page}">${responseDTO.linked_params}&page=${responseDTO.page_block_start + responseDTO.page_block_size}</c:if>
-                        " class="page-link" aria-label="Next">&raquo;</a>
+                            <li class="page-item <c:if test="${responseDTO.next_page_plag == 'false'}"> disabled</c:if>" >
+                                <a href="/teacher/list?page=${responseDTO.page_block_start + responseDTO.page_block_size}${responseDTO.linkParams}" class="page-link" aria-label="Previous">
+                                    &raquo;
+                                </a>
                             </li>
                         </ul>
                     </nav><!-- End Pagination with icons -->
@@ -240,6 +205,19 @@
 <!-- Partner Logo Section End -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    function viewSorting(item, link) {
+        let page_size = item.value;
+        let param = link;
+        console.log(page_size);
+        location.href="/teacher/list?page_size="+page_size+param;
+    }
+
+    function viewSubject(item){
+        let search_type = item.value;
+        location.href="/teacher/list?search_type=u&search_word="+search_type;
+    }
+</script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/js/jquery-ui.min.js"></script>
@@ -250,8 +228,5 @@
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
-<script>
-
-</script>
 </body>
 </html>

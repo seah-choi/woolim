@@ -68,6 +68,7 @@ public class MemberServiceImpl implements MemberServiceIf{
                 .dtoList(dtoList)
                 .build();
 
+
         return responseDTO;
     }
     @Override
