@@ -36,4 +36,5 @@ public class BbsVO {
 
     private String bbs_reply_yn;
 
+
 }

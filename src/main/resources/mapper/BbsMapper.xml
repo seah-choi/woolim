@@ -69,4 +69,36 @@
         limit #{page_skip_count}, #{page_size}
     </select>
 
+    <select id="view" resultType="org.fullstack4.woolim.domain.BbsVO">
+        select bbs_idx, member_id, bbs_title, bbs_content, bbs_reg_date, bbs_image, bbs_file_yn, bbs_category_code, bbs_read_cnt, bbs_reply_yn, bbs_like, bbs_modify_date
+        from woo_bbs
+        where bbs_idx = #{bbs_idx}
+    </select>
+
+    <insert id="regist" parameterType="org.fullstack4.woolim.domain.BbsVO" useGeneratedKeys="true" keyProperty="bbs_idx" keyColumn="bbs_idx">
+        INSERT INTO woo_bbs (member_id,bbs_title,bbs_content,bbs_image,bbs_reg_date,bbs_category_code)
+        VALUES(#{member_id},#{bbs_title},#{bbs_content},#{bbs_image}, now(),#{bbs_category_code})
+    </insert>
+
+    <update id="modify">
+        UPDATE woo_bbs SET member_id=#{member_id}, bbs_title=#{bbs_title}, bbs_image=#{bbs_image}
+        ,bbs_read_cnt=#{bbs_read_cnt}, bbs_modify_date=#{bbs_modify_date}
+        WHERE bbs_idx = #{bbs_idx}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM woo_bbs WHERE bbs_idx = #{bbs_idx}
+    </delete>
+
+    <insert id="file_regist">
+        INSERT INTO woo_bbs_file(bbs_idx, orgFile, saveFile)
+        VALUES(#{bbs_idx},#{orgFile},#{saveFile})
+    </insert>
+
+    <select id="fileView" resultType="org.fullstack4.woolim.domain.BoardFileVO">
+        select bbs_idx, orgFile, saveFile
+        from woo_bbs_file
+        where bbs_idx = #{bbs_idx}
+    </select>
+
 </mapper>

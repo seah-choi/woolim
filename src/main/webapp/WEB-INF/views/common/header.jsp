@@ -189,12 +189,12 @@
                                 <li><a href="/mystudy/studyPlanList">학습계획표</a></li>
                             </ul>
                         </li>
-                        <li><a href="/board/list">게시판</a>
+                        <li><a href="/board/freeList?bbs_type=bbs02">게시판</a>
                             <ul class="dropdown">
-                                <li><a href="/board/freeList">자유게시판</a></li>
-                                <li><a href="/board/list">교육정보</a></li>
-                                <li><a href="/board/list">자료실</a></li>
-                                <li><a href="/board/list">공지사항</a></li>
+                                <li><a href="/board/freeList?bbs_type=bbs02">자유게시판</a></li>
+                                <li><a href="/board/list?bbs_type=bbs01">교육정보</a></li>
+                                <li><a href="/board/list?bbs_type=bbs05">자료실</a></li>
+                                <li><a href="/board/list?bbs_type=bbs04">공지사항</a></li>
                             </ul>
                         </li>
                         <li><a href="/mypage/view">마이페이지</a>
