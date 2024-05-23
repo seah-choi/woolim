@@ -78,8 +78,12 @@ public class BbsServiceImpl implements BbsServiceIf{
     @Override
     public BoardFileDTO fileView(int bbs_idx) {
         BoardFileVO boardFileVO = bbsMapper.fileView(bbs_idx);
-        BoardFileDTO dto = modelMapper.map(boardFileVO, BoardFileDTO.class);
-        return dto;
+        if(boardFileVO != null){
+            BoardFileDTO dto = modelMapper.map(boardFileVO, BoardFileDTO.class);
+
+            return dto;
+        }
+        return null;
     }
 
 }

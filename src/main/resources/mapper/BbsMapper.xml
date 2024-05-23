@@ -81,8 +81,8 @@
     </insert>
 
     <update id="modify">
-        UPDATE woo_bbs SET member_id=#{member_id}, bbs_title=#{bbs_title}, bbs_image=#{bbs_image}
-        ,bbs_read_cnt=#{bbs_read_cnt}, bbs_modify_date=#{bbs_modify_date}
+        UPDATE woo_bbs SET member_id=#{member_id}, bbs_title=#{bbs_title}, bbs_content=#{bbs_content}, bbs_image=#{bbs_image}
+        ,bbs_read_cnt=#{bbs_read_cnt}, bbs_modify_date=now()
         WHERE bbs_idx = #{bbs_idx}
     </update>
 
