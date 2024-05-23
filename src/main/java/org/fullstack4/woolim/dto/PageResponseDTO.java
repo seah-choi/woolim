@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Log4j2
@@ -29,6 +30,8 @@ public class PageResponseDTO<E> {
     private String member_id;
     private String member_type;
     private String member_category;
+    private String search_date1="";
+    private String search_date2="";
 
     List<E> dtolist;
 
@@ -61,6 +64,8 @@ public class PageResponseDTO<E> {
         this.member_type = pageRequestDTO.getMember_type();
         this.bbs_type = pageRequestDTO.getBbs_type();
         this.member_category = pageRequestDTO.getMember_category();
+        this.search_date1 = pageRequestDTO.getSearch_date1();
+        this.search_date2 = pageRequestDTO.getSearch_date2();
 
         log.info("pageRequestDTO : {}", pageRequestDTO);
         log.info("dtoList : {}", dtoList);
