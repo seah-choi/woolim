@@ -181,6 +181,8 @@ public class MypageController {
     public void GETQnaModify(@RequestParam(name = "qna_idx")int qna_idx,
                            Model model){
         QnaDTO qnaDTO = qnaService.view(qna_idx);
+        List<QnaFileDTO> fileList = qnaService.qnaFileList(qnaDTO.getQna_idx());
+        model.addAttribute("fileList", fileList);
         model.addAttribute("qnaDTO", qnaDTO);
     }
     @PostMapping("/qnaModify")
@@ -188,8 +190,10 @@ public class MypageController {
                               BindingResult bindingResult,
                               MultipartHttpServletRequest files,
                               HttpServletRequest req,
-                              RedirectAttributes redirectAttributes){
+                              RedirectAttributes redirectAttributes,
+                                Model model){
         int result = qnaService.modify(qnaDTO);
+
         if(result >0){
             return "redirect:/mypage/qnaView?qna_idx="+qnaDTO.getQna_idx();
         }
