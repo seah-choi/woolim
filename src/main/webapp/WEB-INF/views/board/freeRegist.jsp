@@ -113,7 +113,7 @@
         <hr>
         <br>
         <form name="frm" id="frm" action="/board/freeRegist" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="member_id" id="member_id" value="seah">
+            <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
             <input type="hidden" name="bbs_category_code" id="bbs_category_code" value="bbs02">
             <div class="form-floating">
                 <textarea class="form-control" name="bbs_title" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
