@@ -102,6 +102,14 @@
             border: 1px solid #68afcb;
             margin-right: 5px;
         }
+
+
+         .card-box {
+             margin-right: 400px;
+             margin-left: 20px;
+             padding-bottom: 100px;
+         }
+
     </style>
 </head>
 <body>

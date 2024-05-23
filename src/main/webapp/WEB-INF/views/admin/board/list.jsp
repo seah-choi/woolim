@@ -40,7 +40,13 @@
         gtag('config', 'UA-119386393-1');
     </script>
 
-
+    <style>
+        .card-box {
+            margin-right: 400px;
+            margin-left: 20px;
+            padding-bottom: 100px;
+        }
+    </style>
 </head>
 <body>
 
@@ -70,9 +76,9 @@
                     <form role="search" id="frmSearch" class="searchForm" action="/admin/board/list" method="get">
                         <input type="hidden" name="bbs_type" value="${responseDTO.bbs_type}">
                         <div class="mb-3 row d-flex">
-                            <label class="col-sm-1 col-form-label fontWe-700">검색 범위</label>
+                            <label class="ml-3 col-form-label fontWe-700 mt-4">검색 범위</label>
 
-                            <div class="col-md-1 col-sm-12">
+                            <div class="col-md-2 col-sm-12 ml-4">
                                 <div class="form-group">
                                     <label>구분</label>
                                     <select id="schoolSelect" name="search_type" class="selectpicker form-control school" data-size="5" data-style="btn-outline-info">
@@ -91,7 +97,7 @@
 
                         <div class="mb-3 row">
                             <label class="ml-3 col-form-label fontWe-700">검색 기간</label>
-                            <div class="col-2">
+                            <div class="col-2 ml-4">
                                 <input type="date" class="form-control" name="search_date1" id="search_date1" value="">
                             </div>
                             <div class="mt-2">
@@ -100,7 +106,7 @@
                             <div class="col-2">
                                 <input type="date" class="form-control" name="search_date2" id="search_date2" value="">
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <button class="btn btn-warning" id="btnSearch" type="submit">검색</button>
                                 <button class="btn btn-warning" id="btnReset" type="reset" onclick="location.href='/data/main'">초기화</button>
                             </div>
@@ -111,9 +117,11 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th style="width: 110px;">
-                            <input type="checkbox" id="chkAll" name="chkAll"/>
-                            <label for="chkAll"><span></span>전체선택</label>
+                        <th style="width: 130px;">
+                            <div class="custom-control custom-checkbox mb-5 d-flex">
+                                <input type="checkbox" class="custom-control-input" id="chkAll" name="chkAll">
+                                <label class="custom-control-label" for="chkAll" style="font-weight: 700;">전체선택</label>
+                            </div>
                         </th>
                         <th>NO.</th>
                         <th>제목</th>
@@ -128,9 +136,10 @@
                     <c:forEach items="${bbsList.dtolist}" var="list">
                         <tr>
                             <td>
-                                <input type="checkbox" id="${list.bbs_idx}" name="bbs_idx"
-                                       value="${list.bbs_idx}"/>
-                                <label for="${list.bbs_idx}"><span></span></label>
+                                <div class="custom-control custom-checkbox mb-5">
+                                    <input type="checkbox" class="custom-control-input" value="${list.bbs_idx}" name="bbs_idx" id="${list.bbs_idx}">
+                                    <label class="custom-control-label" for="${list.bbs_idx}"><span></span></label>
+                                </div>
                             </td>
                             <td>${list.bbs_idx}</td>
                             <td><a href="/admin/board/view?bbs_idx=${list.bbs_idx}">${list.bbs_title}</a></td>
@@ -147,20 +156,33 @@
                     <a class="btn btn-primary btn-lg btn-block" href="/admin/board/regist" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
                 </div>
 
-                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
-                    <ul class="pagination">
-                        <li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous">
-                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">
-                                <i class="ion-chevron-left"></i></a></li>
-                        <li class="paginate_button page-item active">
-                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                        <li class="paginate_button page-item next" id="DataTables_Table_0_next">
-                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0" class="page-link">
-                                <i class="ion-chevron-right"></i></a></li>
-                    </ul>
+
+                <div class="d-flex justify-content-center">
+                    <!-- Pagination with icons -->
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item <c:if test="${bbsList.prev_page_plag == 'false'}"> disabled</c:if>" >
+                                <a href="/admin/board/list?page=${bbsList.page_block_start - bbsList.page_block_size}${bbsList.linkParams}"
+                                   class="page-link" aria-label="Previous">&laquo;
+                                </a>
+                            </li>
+                            <c:forEach begin="${bbsList.page_block_start}"
+                                       end="${bbsList.page_block_end}"
+                                       var="page_num">
+                                <li class="page-item <c:if test="${bbsList.page == page_num}">active</c:if>">
+                                    <a href="/admin/board/list?page=${page_num}${bbsList.linkParams}" class="page-link">${page_num}</a>
+                                </li>
+                            </c:forEach>
+                            <li class="page-item <c:if test="${bbsList.next_page_plag == 'false'}"> disabled</c:if>" >
+                                <a href="/admin/board/list?page=${bbsList.page_block_start + bbsList.page_block_size}${bbsList.linkParams}" class="page-link" aria-label="Previous">
+                                    &raquo;
+                                </a>
+                            </li>
+                        </ul>
+                    </nav><!-- End Pagination with icons -->
                 </div>
+
+
 
             </div>
 
@@ -168,6 +190,41 @@
     </div>
 </div>
 <!-- js -->
+<script>
+    let frm = document.querySelector("#frm");
+    let chkAll = document.querySelector("#chkAll");
+    // 체크박스 전체 선택/해제
+    chkAll.addEventListener("click", (e) => {
+        var check = document.querySelectorAll("input[type ='checkbox']");
+
+        check.forEach((checkbox) => {
+            checkbox.checked = chkAll.checked;
+        });
+    });
+
+    // 삭제 버튼 눌렀을 때
+    document.querySelector("#btnDelete").addEventListener("click", (e) => {
+        var check = document.querySelectorAll("input[type ='checkbox']:checked");
+        console.log(check);
+        if (check.length == 0) {
+            alert("하나 이상 선택하세요.");
+            e.preventDefault();
+            return false;
+        } else {
+            let deleteOk = confirm("삭제 하시겠습니까?");
+            if (deleteOk) {
+
+                console.log(check);
+                frm.submit();
+
+            } else {
+                e.preventDefault();
+                return false;
+            }
+        }
+    });
+</script>
+
 <script src="/resources/vendors/scripts/core.js"></script>
 <script src="/resources/vendors/scripts/script.min.js"></script>
 <script src="/resources/vendors/scripts/process.js"></script>

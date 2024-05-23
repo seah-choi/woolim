@@ -40,7 +40,13 @@
         gtag('config', 'UA-119386393-1');
     </script>
 
-
+    <style>
+        .card-box {
+            margin-right: 500px;
+            margin-left: 20px;
+            padding-bottom: 100px;
+        }
+    </style>
 </head>
 <body>
 
@@ -49,7 +55,7 @@
 <div class="main-container">
     <div class="pd-ltr-20 xs-pd-20-10">
             <!-- basic table  Start -->
-            <div class="pd-20 card-box mb-30" style="margin-bottom: 30px">
+            <div class="pd-20 card-box mb-30" style="padding-bottom: 100px">
                 <h4 class="h4">강좌 등록</h4>
                 <br>
 
@@ -112,18 +118,18 @@
                         <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강좌 시작기간</label>
 
                         <div class="col-sm-12 col-md-10 d-flex">
-                            <input type="date" class="form-control" id="search_date1" name="search_date1" value="" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            <input type="date" class="form-control w-25" id="search_date1" name="search_date1" value="" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 
                             <span class="input-group-text"></span>
                             <label class="col-md-2 col-form-label fontWe-700">강좌 끝나는기간</label>
-                            <input type="date" class="form-control" id="search_date2" name="search_date2" value="" class="form-control clearBtn" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            <input type="date" class="form-control w-25" id="search_date2" name="search_date2" value="" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                         </div>
                     </div>
 
                     <div class="d-flex align-items-start align-items-sm-center mt-5">
                         <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강좌 업로드</label>
-                        <div class="col-sm-12 col-md-10 d-flex">
-                            <input type="file" class="form-control-file form-control height-auto">
+                        <div class="col-sm-12 col-md-10 ">
+                            <input type="file" class="form-control-file form-control height-auto w-50">
                         </div>
                     </div>
 
@@ -133,7 +139,7 @@
                             <div id="image_container"></div>
                             <br>
                             <div>
-                                <input type="file" name="upload" class="form-control-file form-control height-auto" onchange="setThumbnail(event);" accept="image/png, image/jpeg"  />
+                                <input type="file" name="upload" class="form-control-file form-control height-auto w-50" onchange="setThumbnail(event);" accept="image/png, image/jpeg"  />
                                 <p class="text-muted mb-0">JPG 또는 PNG 파일만 업로드 가능합니다.</p>
                             </div>
                         </div>
@@ -142,8 +148,12 @@
 
                 </form>
 
-                <div class="d-flex justify-content-sm-end">
-                    <button type="submit" name="regisBtn" class="btn btn-primary btn-lg btn-bloc">등록</button>
+                <div class="d-flex align-items-start align-items-sm-center mt-3">
+                    <label class="col-sm-12 col-md-2 col-form-label fontWe-700"></label>
+                    <div class="col-sm-12 col-md-5 mt-3">
+                        <button type="submit" name="registBtn" class="btn btn-primary" style="width: 600px; height: 50px;">등록</button>
+
+                    </div>
                 </div>
 
 
@@ -175,39 +185,6 @@
 
         reader.readAsDataURL(e.target.files[0]);
     }
-
-
-    //분류 셀렉박스
-    const gradeOptions = {
-        elementary: ['전체', '1학년', '2학년', '3학년', '4학년', '5학년', '6학년'],
-        middle: ['전체', '1학년', '2학년', '3학년'],
-        high: ['전체', '1학년', '2학년', '3학년'],
-    };
-
-    document.getElementById('schoolSelect').addEventListener('change', function () {
-        const schoolType = this.value;
-        const gradeSelect = document.getElementById('gradeSelect');
-
-        gradeSelect.innerHTML = '';
-
-        if (schoolType in gradeOptions) {
-            gradeOptions[schoolType].forEach(grade => {
-                const option = document.createElement('option');
-                option.value = grade;
-                option.textContent = grade;
-                gradeSelect.appendChild(option);
-            });
-        } else {
-            const option = document.createElement('option');
-            option.value = 'all';
-            option.textContent = '전체';
-            gradeSelect.appendChild(option);
-        }
-
-        $('.selectpicker').selectpicker('refresh');
-    });
-
-    document.getElementById('schoolSelect').dispatchEvent(new Event('change'));
 
 </script>
 <script src="/resources/vendors/scripts/core.js"></script>

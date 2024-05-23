@@ -13,4 +13,6 @@ public interface MemberServiceIf {
     PageResponseDTO<MemberDTO> MemberList(PageRequestDTO requestDTO);
     int regist(MemberDTO memberDTO);
     MemberDTO memberView(String member_id);
+
+    PageResponseDTO<MemberDTO> adminMemberList(PageRequestDTO pageRequestDTO);
 }
