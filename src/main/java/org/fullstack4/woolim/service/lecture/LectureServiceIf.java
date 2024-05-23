@@ -8,6 +8,10 @@ import java.util.List;
 public interface LectureServiceIf {
 
     List<LectureDTO> getList(Criteria cri);
+    List<LectureDTO> getListCategory(Criteria cri);
 
     int getLectureKeyword(Criteria cri);
+    int getLectureKeywordCategory(Criteria cri);
+
+    LectureDTO lectureView(int idx);
 }

@@ -1,5 +1,6 @@
 package org.fullstack4.woolim.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
@@ -27,8 +28,18 @@ public class LectureController {
         if(cri.getViewSorting() != null) {
             cri.setAmount(Integer.parseInt(cri.getViewSorting()));
         }
-        List<LectureDTO> lectureDTOS =  lectureServiceIf.getList(cri);
-        int total = lectureServiceIf.getLectureKeyword(cri);
+        log.info("----category---" + cri.getCategory());
+        List<LectureDTO> lectureDTOS = null;
+        int total = 0;
+        if(cri.getCategory() != null && cri.getCategory() != ""){
+            lectureDTOS  = lectureServiceIf.getListCategory(cri);
+            total = lectureServiceIf.getLectureKeywordCategory(cri);
+        } else{
+            lectureDTOS =  lectureServiceIf.getList(cri);
+            total = lectureServiceIf.getLectureKeyword(cri);
+        }
+
+
         PageMakerDTO pageMakerDTO = new PageMakerDTO(cri,total);
 
         /*log.info("---lectureDTOS-------" + lectureDTOS);*/
@@ -52,5 +63,16 @@ public class LectureController {
     @GetMapping("/delete")
     public void GETDelete() {
 
+    }
+    @GetMapping("/view")
+    public String viewGET(String lecture_idx, Model model) throws Exception {
+        log.info("-----------------------");
+        log.info("-----LectureController-----" +"-> viewGET() ");
+        log.info("-----------------------");
+        int idx = Integer.parseInt(lecture_idx);
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+        log.info("-----lectureDTO--------" + lectureDTO);
+        model.addAttribute("list" , lectureDTO);
+        return "/lecture/view";
     }
 }

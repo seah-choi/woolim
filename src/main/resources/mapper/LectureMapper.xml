@@ -23,6 +23,25 @@
             </foreach>
         </trim>
     </sql>
+    <sql id="category">
+
+        <foreach collection="typeArr" item="type">
+            <trim prefix="AND">
+                <choose>
+                    <when test="type == 'T'.toString()">
+                        lecture_title like concat('%',#{keyword},'%')
+                    </when>
+                    <when test="type == 'W'.toString()">
+                        member_name like concat('%',#{keyword},'%' )
+                    </when>
+                    <when test="type == 'C'.toString()">
+                        lecture_category_school like concat('%',#{keyword},'%' )
+                    </when>
+                </choose>
+            </trim>
+        </foreach>
+    </sql>
+
     <select id="getList" resultType="org.fullstack4.woolim.domain.LectureVO">
         select * from woo_lecture
         <if test="keyword != null">
@@ -48,7 +67,31 @@
         </if>
         limit #{skip}, #{amount}
     </select>
+    <select id="getListCategory" resultType="org.fullstack4.woolim.domain.LectureVO">
+        select * from woo_lecture where lecture_category_subject = #{category}
+        <if test="keyword != null">
+            <include refid="category"></include>
+        </if>
+        <if test="sorting != null">
 
+            <choose>
+
+                <when test="sorting == '1'.toString()">
+                    order by lecture_count desc
+                </when>
+                <when test="sorting == '2'.toString()">
+                    order by lecture_reg_date desc
+                </when>
+                <when test="sorting == '3'.toString()">
+                    order by lecture_reg_date desc
+                </when>
+                <when test="sorting == '4'.toString()">
+                    order by  lecture_reg_date desc
+                </when>
+            </choose>
+        </if>
+        limit #{skip}, #{amount}
+    </select>
 
     <select id="getLectureKeyword" resultType="int">
         select count(*)
@@ -56,5 +99,18 @@
         <if test="keyword != null">
             <include refid="criteria"></include>
         </if>
+    </select>
+    <select id="getLectureKeywordCategory" resultType="int">
+        select count(*)
+        from woo_lecture
+        where lecture_category_subject = #{category}
+        <if test="keyword != null">
+            <include refid="category"></include>
+        </if>
+    </select>
+
+    <select id="lectureView" resultType="org.fullstack4.woolim.domain.LectureVO">
+        select * from woo_lecture
+        where lecture_idx = #{idx}
     </select>
 </mapper>
