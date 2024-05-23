@@ -16,6 +16,7 @@ import java.time.LocalDate;
 public class OrderDTO {
     private int order_idx;
     private String member_id;
+    private int lecture_idx;
     private LocalDate order_date;
     private int order_total;
     private String order_name;
@@ -26,7 +27,6 @@ public class OrderDTO {
     private String order_refund_response;
     private String order_num;
     private int order_detail_idx;
-    private String lecture_code;
     private LocalDate order_detail_regDate;
     private int price;
 }
