@@ -24,4 +24,6 @@ public interface MemberMapper {
     int deleteMemberList(Integer[] idxList);
 
     int adminDetail(MemberVO memberVO);
+    int login_check(String member_id);
+    int email_check(String member_id);
 }

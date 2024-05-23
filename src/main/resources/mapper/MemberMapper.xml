@@ -206,4 +206,14 @@
                               member_status = #{member_status}
         where member_id = #{member_id}
     </update>
+    <select id="login_check" resultType="int">
+        SELECT COUNT(*)
+        FROM woo_member
+        WHERE member_id = #{member_id}
+    </select>
+    <select id="email_check" resultType="int">
+        SELECT COUNT(*)
+        FROM woo_member
+        WHERE member_id = #{member_id}
+    </select>
 </mapper>
