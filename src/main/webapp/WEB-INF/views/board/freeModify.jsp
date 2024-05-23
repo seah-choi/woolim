@@ -114,7 +114,7 @@
         <br>
         <form name="frm" id="frm" action="/board/freeModify" method="post" enctype="multipart/form-data">
             <input type="hidden" name="bbs_idx" id="bbs_idx" value="${bbs.bbs_idx}">
-            <input type="hidden" name="member_id" id="member_id" value="seah">
+            <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
             <input type="hidden" name="bbs_category_code" id="bbs_category_code" value="bbs02">
             <div class="form-floating">
                 <textarea class="form-control" name="bbs_title" placeholder="Leave a comment here" id="floatingTextarea">${bbs.bbs_title}</textarea>
@@ -133,7 +133,7 @@
                 </div>
                 <div>
                     <button type="submit" class="btn" id="btn_modify">등록</button>
-                    <button type="button" class="btn btn-secondary" id="btn_delete">취소</button>
+                    <button type="reset" class="btn btn-secondary" id="btn_delete">취소</button>
                 </div>
             </div>
         </form>

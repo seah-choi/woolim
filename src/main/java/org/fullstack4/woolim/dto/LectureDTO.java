@@ -22,7 +22,7 @@ public class LectureDTO {
     private String lecture_image;
     private int lecture_star;
     private String lecture_content;
-    private String lecture_youtube_url;
+    private String lecture_video;
     private String lecture_category;
     private String lecture_category_detail;
     private int member_idx;

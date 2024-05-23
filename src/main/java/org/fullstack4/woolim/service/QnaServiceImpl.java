@@ -53,4 +53,24 @@ public class QnaServiceImpl implements QnaServiceIf{
         log.info("responseDTO :" +responseDTO);
         return responseDTO;
     }
+
+    @Override
+    public QnaDTO view(int qna_idx) {
+        QnaVO qnaVO = qnaMapper.view(qna_idx);
+        QnaDTO qnaDTO = modelMapper.map(qnaVO, QnaDTO.class);
+        return qnaDTO;
+    }
+
+    @Override
+    public int delete(int qna_idx) {
+        int result = qnaMapper.delete(qna_idx);
+        return result;
+    }
+
+    @Override
+    public int modify(QnaDTO qnaDTO) {
+        QnaVO qnaVO = modelMapper.map(qnaDTO, QnaVO.class);
+        int result = qnaMapper.modify(qnaVO);
+        return result;
+    }
 }

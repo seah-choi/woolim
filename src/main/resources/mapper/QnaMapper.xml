@@ -46,14 +46,15 @@
             <if test="search_types != null">
                 <foreach collection="search_types" item="type" >
                     <choose>
-                        <when test="type == 't'.toString()">
-                            and bbs_title like concat('%', #{search_word},'%')
+                        <when test="type == 'a'.toString()">
+                            and qna_title like concat('%', #{search_word},'%')
+                            OR qna_content like concat('%', #{search_word},'%' )
                         </when>
-                        <when test="type == 'u'.toString()">
-                            and member_id like concat('%', #{search_word},'%' )
+                        <when test="type == 't'.toString()">
+                            and qna_title like concat('%', #{search_word},'%')
                         </when>
                         <when test="type == 'c'.toString()">
-                            and bbs_content like concat('%', #{search_word},'%' )
+                            and qna_content like concat('%', #{search_word},'%' )
                         </when>
                     </choose>
                 </foreach>
@@ -61,6 +62,22 @@
         </where>
         limit #{page_skip_count}, #{page_size}
     </select>
+    <select id="view" resultType="org.fullstack4.woolim.domain.QnaVO">
+        SELECT qna_idx, member_id, qna_title, qna_content, qna_answer_YN, qna_category, qna_answer, qna_reg_date, qna_answer_date, ref_idx, qna_answer_status
+        FROM woo_qna
+        WHERE qna_idx = #{qna_idx}
+    </select>
+    <delete id="delete">
+        DELETE
+        FROM woo_qna
+        WHERE qna_idx = #{qna_idx}
+    </delete>
+    <update id="modify">
+        UPDATE woo_qna
+        SET qna_title = #{qna_title},
+            qna_content = #{qna_content}
+        WHERE qna_idx = #{qna_idx}
+    </update>
 
 
 

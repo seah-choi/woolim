@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: user
@@ -111,43 +112,45 @@
             <jsp:include page="/WEB-INF/views/common/mypageSide.jsp"/>
             <div class="col-lg-9 order-1 order-lg-2">
                 <div id="list">
-                    <h5 style="font-weight: bold">먼지가 되어</h5>
-                    <div id="se">
-                        <div>
-                            <span id="date">2024-05-07</span>
+                    <form id="frmDelete" action="/mypage/qnaDelete" method="post">
+                        <input type="hidden" name="qna_idx" value="${qnaDTO.qna_idx}">
+                        <h5 style="font-weight: bold">${qnaDTO.qna_title}</h5>
+                        <div id="se">
+                            <div>
+                                <span id="date">${qnaDTO.qna_reg_date}</span>
+                            </div>
                         </div>
-                    </div>
-                    <hr>
-                    <div style="white-space: pre-wrap;">
-                        <textarea class="form-control" rows="15" placeholder="Leave a comment here" style="resize: none">바람에 날려간 나의 노래도 휘파람 소리로 돌아 오네요.
-                            내 조그만 공간 속에 추억만 쌓이고 까닭 모를 눈물만이 아른거리네
+                        <hr>
+                        <div style="white-space: pre-wrap;">
+                            <textarea class="form-control" rows="15" placeholder="Leave a comment here" style="resize: none" readonly>${qnaDTO.qna_content}</textarea>
 
-                        </textarea>
-
-                    </div>
-                    <div style="display: flex;justify-content: center;">
-                        <div>
-                            <button type="button" class="btn" id="btn_back" onclick="location.href='/mypage/qnaList'">목록</button>
                         </div>
-                        <div>
-                            <button type="button" class="btn" id="btn_modify">수정</button>
-                            <button type="button" class="btn btn-secondary" id="btn_delete">삭제</button>
+                        <div style="display: flex;justify-content: center;">
+                            <div>
+                                <button type="button" class="btn" id="btn_back" onclick="location.href='/mypage/qnaList'">목록</button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn" id="btn_modify" onclick="location.href='/mypage/qnaModify?qna_idx='+${qnaDTO.qna_idx}">수정</button>
+                                <button type="submit" class="btn btn-secondary" id="btn_delete">삭제</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                     <br><br>
+                    <c:if test="${qnaDTO.qna_answer_status == 'Y'}">
                     <div id="comment">
                         <h5 style="font-weight: bold">답변</h5>
                         <div>
                             <div>
-                                <span>2024-05-07</span>
+                                <span>${qnaDTO.qna_reg_date}</span>
                             </div>
                         </div>
                         <hr>
                         <div class="form-floating" style="margin-top: 10px;margin-bottom: 40px;white-space: pre-wrap;">
-                            <textarea class="form-control" rows="15" style=" height:373px; resize:none" placeholder="Leave a comment here"></textarea>
+                            <textarea class="form-control" rows="15" style=" height:373px; resize:none" placeholder="Leave a comment here">${qnaDTO.answer}</textarea>
                         </div>
 
                     </div>
+                    </c:if>
 
 
                 </div>

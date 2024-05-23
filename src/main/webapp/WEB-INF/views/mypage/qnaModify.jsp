@@ -1,4 +1,11 @@
-<%@ page language="java" pageEncoding="UTF-8" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: user
+  Date: 2024-05-21
+  Time: 오후 5:24
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
@@ -78,66 +85,48 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-<div class="breacrumb-section" style="margin-top: 20px;">
+<section class="product-shop spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="breadcrumb-text product-more">
-                    <a href="/"><i class="fa fa-home"></i> Home</a>
-                    <a href="/board/list">자유게시판</a>
-                    <span style="font-weight: bold">글쓰기</span>
+            <jsp:include page="/WEB-INF/views/common/mypageSide.jsp"/>
+            <div class="col-lg-9 order-1 order-lg-2">
+                <div id="list">
+                    <h5 style="font-weight: bold">1 : 1 문의하기</h5>
+                    <hr>
+                    <br>
+                    <form action="/mypage/qnaModify" id="frmModify" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
+                        <input type="hidden" name="qna_category" value="A">
+                        <input type="hidden" name="qna_idx" value="${qnaDTO.qna_idx}" >
+                        <div class="form-floating">
+                            <textarea class="form-control" name="qna_title" placeholder="Leave a comment here" id="floatingTextarea">${qnaDTO.qna_title}</textarea>
+                            <label for="floatingTextarea">제목</label>
+                        </div>
+                        <br>
+                        <input type="file" class="form-control" name="files" id="file" multiple>
+                        <br>
+                        <div>
+                            <textarea id="summernote" name="qna_content">${qnaDTO.qna_content}</textarea>
+                        </div>
+                        <br>
+                        <div style="display: flex;justify-content: center;">
+                            <div>
+                                <button type="button" class="btn" id="btn_back" onclick="location.href='/mypage/qnaList'">목록</button>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn" id="btn_modify">수정</button>
+                                <button type="button" class="btn btn-secondary" id="btn_delete" onclick="location.href='/mypage/qnaView?qna_idx='+${qnaDTO.qna_idx}">취소</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div id="box">
-    <div id="leftNav">
-        <nav class="nav flex-column">
-            <h4>게시판</h4>
-            <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
-            <div style="padding-top: 20px; line-height: unset;">
-                <a class="nav-link" aria-current="page" href="/board/freeList?bbs_type=bbs02">자유게시판</a>
-                <a class="nav-link" href="/board/list?bbs_type=bbs01">교육정보</a>
-                <a class="nav-link" href="/board/list?bbs_type=bbs05">자료실</a>
-                <a class="nav-link" href="/board/list?bbs_type=bbs04">공지사항</a>
-            </div>
-        </nav>
-    </div>
-    <div id="list">
-        <h5 style="font-weight: bold">자유게시판</h5>
-        <hr>
-        <br>
-        <form name="frm" id="frm" action="/board/freeRegist" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
-            <input type="hidden" name="bbs_category_code" id="bbs_category_code" value="bbs02">
-            <div class="form-floating">
-                <textarea class="form-control" name="bbs_title" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                <label for="floatingTextarea">제목</label>
-            </div>
-            <br>
-            <input type="file" class="form-control" name="files" id="file" multiple>
-            <br>
-            <div>
-                <textarea id="summernote" name="bbs_content"></textarea>
-            </div>
-            <br>
-            <div style="display: flex;justify-content: center;">
-                <div>
-                    <button type="button" class="btn" id="btn_back" onclick="location.href='/board/freeList?bbs_type=bbs02'">목록</button>
-                </div>
-                <div>
-                    <button type="submit" class="btn" id="btn_modify">등록</button>
-                    <button type="button" class="btn btn-secondary" id="btn_delete">취소</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
@@ -168,8 +157,12 @@
         ]
 
     });
+    let btn_modify = document.getElementById("btn_modify");
+    btn_modify.addEventListener("click", function(e){
+       e.preventDefault();
+       let frmModify = document.getElementById("frmModify");
+        frmModify.submit();
+    });
 </script>
 </body>
 </html>
-
-

@@ -81,8 +81,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-text product-more">
                     <a href="/"><i class="fa fa-home"></i> Home</a>
-                    <a href="/board/list">공지사항</a>
-                    <span>상세</span>
+                    <a href="/board/list">게시판</a>
                 </div>
             </div>
         </div>
@@ -114,7 +113,7 @@
         </div>
         <hr>
         <br>
-        <div style="white-space: pre-wrap;">${bbs.bbs_content}</div>
+        <div style="white-space: pre-wrap;margin-bottom: 100px;">${bbs.bbs_content}</div>
         <div style="display: flex;justify-content: center;">
             <div>
                 <button type="button" class="btn" id="btn_back" onclick="location.href='/board/list'">목록</button>
