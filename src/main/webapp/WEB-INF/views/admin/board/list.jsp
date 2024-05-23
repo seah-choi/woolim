@@ -67,24 +67,24 @@
                 </c:if>
                 <br>
                 <div class="searchBox">
-                    <form role="search" id="frmSearch" class="searchForm">
+                    <form role="search" id="frmSearch" class="searchForm" action="/admin/board/list" method="get">
+                        <input type="hidden" name="bbs_type" value="${responseDTO.bbs_type}">
                         <div class="mb-3 row d-flex">
                             <label class="col-sm-1 col-form-label fontWe-700">검색 범위</label>
 
-                            <div class="mr-5 mt-2">
-                                <input class="form-check-input" type="checkbox" name="search_type" id="search_type1" value="t" <c:if test="">checked</c:if>>
-                                <label class="form-check-label" for="search_type1">강좌명</label>
-                            </div>
-                            <div class="mr-5 mt-2">
-                                <input class="form-check-input" type="checkbox" name="search_type" id="search_type3" value="c" <c:if test="">checked</c:if>>
-                                <label class="form-check-label" for="search_type3">과목명</label>
-                            </div>
-                            <div class="mr-5 mt-2">
-                                <input class="form-check-input" type="checkbox" name="search_type" id="search_type2" value="u" <c:if test="">checked</c:if>>
-                                <label for="search_type2">강사명</label>
+                            <div class="col-md-1 col-sm-12">
+                                <div class="form-group">
+                                    <label>구분</label>
+                                    <select id="schoolSelect" name="search_type" class="selectpicker form-control school" data-size="5" data-style="btn-outline-info">
+                                        <option>전체</option>
+                                        <option value="t">제목</option>
+                                        <option value="c">내용</option>
+                                        <option value="u">작성자</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="col" style="margin-top: 5px">
+                            <div class="col mt-4">
                                 <input class="searchInput" type="search" name="search_word"  id="search_word" placeholder="검색" aria-label="Search" value="">
                             </div>
                         </div>

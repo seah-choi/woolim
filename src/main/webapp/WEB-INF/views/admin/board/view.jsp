@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="/resources/css/nice-select.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         #box {
@@ -77,7 +77,7 @@
 
         #list{
             padding: 50px;
-            width: 1000px;
+            width: 100%;
             padding-top: 30px;
         }
         #date {
@@ -115,9 +115,7 @@
             width: 100px;
             border-radius: 0;
         }
-        #floatingTextarea{
-            width: 700px;
-        }
+
         #comment{
             border-bottom: 1px solid #ccc;
             padding: 10px;
@@ -129,6 +127,19 @@
         #cmDelete{
             border: none;
         }
+        body {
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            width: 100%;
+            min-height: 100%;
+            color: #031e23;
+            width: 100%;
+            height: 100%;
+            background: #ecf0f4;
+        }
     </style>
 
 
@@ -138,8 +149,9 @@
 
 <jsp:include page="/WEB-INF/views/admin/common/adminSidebar.jsp"/>
 
-    <div class="main-container">
-        <div class="pd-ltr-20 xs-pd-20-10">
+<div class="main-container">
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
             <!-- basic table  Start -->
             <div class="pd-20 card-box mb-30" style="margin-bottom: 30px">
                 <h4 class="h4">공지사항 게시판</h4>
@@ -155,7 +167,7 @@
                         </div>
                     </div>
                     <hr>
-                    <div style="white-space: pre-wrap;">
+                    <div class="align-items-start align-items-sm-center mt-3" style="white-space: pre-wrap;">
                         read버튼을 눌렀을 때 다른 항목들은 잘 찾아내나 id 1번 항목을 read할 경우 error 발생
                         GangnamguPopulationService.cs파일 안의 GetDetail함수의 else로 잡힙니다.
 
@@ -163,9 +175,9 @@
                         감사합니다.
                     </div>
                     <br><br>
-                    <div id="comment">
+                    <div id="comment" >
                         <span>답변</span>&nbsp;<span id="cmCount">1</span>
-                        <div class="form-floating" style="display: flex;margin-top: 10px;margin-bottom: 40px;">
+                        <div class="form-floating d-flex justify-content-center" style="margin-top: 10px;margin-bottom: 40px;">
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                             <label for="floatingTextarea">댓글</label>
                             <button type="button" class="btn" id="btn_comment">등록</button>
@@ -192,12 +204,10 @@
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </div>
     </div>
+</div>
     <!-- js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="/resources/js/jquery-3.3.1.min.js"></script>

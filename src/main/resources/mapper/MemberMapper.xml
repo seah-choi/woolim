@@ -29,17 +29,17 @@
                 AND member_name LIKE CONCAT('%',#{search_word}, '%')
                 AND member_Id LIKE CONCAT('%',#{search_word}, '%')
             </if>
-            <if test="search_type != null and search_type !=''">
-                <foreach collection="search_type" item="type" >
+            <if test="search_types != null and search_types !=''">
+                <foreach collection="search_types" item="type" >
                     <choose>
                         <when test="type == 't'.toString()">
-                            and member_id like concat('%', #{search_word},'%')
+                            or member_id like concat('%', #{search_word},'%')
                         </when>
                         <when test="type == 'u'.toString()">
-                            AND subject_category_code == #{search_type}
+                            or subject_category_code == #{search_type}
                         </when>
                         <when test="type == 'c'.toString()">
-                            and member_name like concat('%', #{search_word},'%' )
+                            or member_name like concat('%', #{search_word},'%' )
                         </when>
                     </choose>
                 </foreach>
@@ -51,8 +51,7 @@
 
     <select id ="total_count" resultType="int">
         SELECT count(*)
-        FROM woo_member AS wm
-        INNER JOIN woo_teacher_subject AS wts ON wm.member_idx = wts.member_idx
+        FROM woo_member
         <where>
             <if test="member_type !=null and member_type !=''">
                 member_category = #{member_type}
@@ -61,11 +60,23 @@
                 AND member_name LIKE CONCAT('%',#{search_word}, '%')
                 AND member_Id LIKE CONCAT('%',#{search_word}, '%')
             </if>
-            <if test="search_type != null and search_type !=''">
-                AND subject_category_code == #{search_type}
+            <if test="search_types != null and search_types !=''">
+                <foreach collection="search_types" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            or member_id like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'u'.toString()">
+                            or subject_category_code == #{search_type}
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            or member_name like concat('%', #{search_word},'%' )
+                        </when>
+                    </choose>
+                </foreach>
             </if>
         </where>
-        ORDER by wm.member_idx DESC
+        ORDER by member_idx DESC
         LIMIT #{page_skip_count}, #{page_size}
     </select>
 

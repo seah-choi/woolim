@@ -10,8 +10,8 @@
             <if test="bbs_type !=null and bbs_type !=''">
                 bbs_category_code=#{bbs_type}
             </if>
-            <if test="search_type != null">
-                <foreach collection="search_type" item="type" >
+            <if test="search_types != null">
+                <foreach collection="search_types" item="type" >
                     <choose>
                         <when test="type == 't'.toString()">
                             and bbs_title like concat('%', #{search_word},'%')
@@ -42,8 +42,8 @@
             <if test="bbs_type !=null and bbs_type !=''">
                 bbs_category_code=#{bbs_type}
             </if>
-            <if test="search_type != null">
-                <foreach collection="search_type" item="type" >
+            <if test="search_types != null">
+                <foreach collection="search_types" item="type" >
                     <choose>
                         <when test="type == 't'.toString()">
                             and bbs_title like concat('%', #{search_word},'%')
