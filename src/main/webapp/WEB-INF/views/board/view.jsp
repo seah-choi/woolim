@@ -94,50 +94,27 @@
             <h4>게시판</h4>
             <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
             <div style="padding-top: 20px; line-height: unset;">
-                <a class="nav-link" aria-current="page" href="/board/freeList">자유게시판</a>
-                <a class="nav-link" href="/board/list">교육정보</a>
-                <a class="nav-link" href="/board/list">자료실</a>
-                <a class="nav-link" href="/board/list">공지사항</a>
+                <a class="nav-link" aria-current="page" href="/board/freeList?bbs_type=bbs02">자유게시판</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs01">교육정보</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs05">자료실</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs04">공지사항</a>
             </div>
         </nav>
     </div>
     <div id="list">
-        <h5 style="font-weight: bold">[당첨자 발표] 3-4월 별가게 당첨자 발표</h5>
+        <h5 style="font-weight: bold">${bbs.bbs_title}</h5>
         <hr>
         <div id="se">
             <div>
-                <span style="font-weight: bold">작성일</span><span id="date">2024-05-07</span>
+                <span style="font-weight: bold">작성일</span><span id="date">${bbs.bbs_reg_date}</span>
             </div>
             <div>
-                <span style="font-weight: bold">조회수</span><span id="count">12</span>
+                <span style="font-weight: bold">조회수</span><span id="count">${bbs.bbs_read_cnt}</span>
             </div>
         </div>
         <hr>
-        <div style="white-space: pre-wrap;">
-            안녕하세요, 천재교육입니다 :D
-
-            3-4월 별가게에 참여해 주셔서 감사드리고, 당첨되신 분들 모두 축하드립니다.
-
-
-
-            ★[BBQ]황금올리브치킨+콜라 1.25L
-
-            송*남	010-****-5942
-
-            허*미	010-****-8854
-
-
-
-            ★[스타벅스]오늘도 달콤하게(ICE)
-
-            박*성	010-****-0133
-
-            강*이	010-****-8506
-
-            서*이	010-****-9358
-
-            이*경	010-****-2721
-        </div>
+        <br>
+        <div style="white-space: pre-wrap;">${bbs.bbs_content}</div>
         <div style="display: flex;justify-content: center;">
             <div>
                 <button type="button" class="btn" id="btn_back" onclick="location.href='/board/list'">목록</button>

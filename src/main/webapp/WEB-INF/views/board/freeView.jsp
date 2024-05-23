@@ -118,31 +118,30 @@
             <h4>게시판</h4>
             <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
             <div style="padding-top: 20px; line-height: unset;">
-                <a class="nav-link" aria-current="page" href="/board/freeList">자유게시판</a>
-                <a class="nav-link" href="/board/list">교육정보</a>
-                <a class="nav-link" href="/board/list">자료실</a>
-                <a class="nav-link" href="/board/list">공지사항</a>
+                <a class="nav-link" aria-current="page" href="/board/freeList?bbs_type=bbs02">자유게시판</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs01">교육정보</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs05">자료실</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs04">공지사항</a>
             </div>
         </nav>
     </div>
     <div id="list">
-        <h5 style="font-weight: bold">작업형1 모의문제2 6번</h5>
+        <h5 style="font-weight: bold">${bbs.bbs_title}</h5>
         <div id="se">
             <div>
-                <span>seahchoi</span><span id="date">2024-05-07</span>
+                <span>${bbs.member_id}</span><span id="date">${bbs.bbs_reg_date}</span>
             </div>
             <div>
-                <span style="font-weight: bold">조회수</span><span id="count">12</span>
+                <span style="font-weight: bold">조회수</span><span id="count">${bbs.bbs_read_cnt}</span>
             </div>
         </div>
         <hr>
-        <div style="white-space: pre-wrap;">
-            read버튼을 눌렀을 때 다른 항목들은 잘 찾아내나 id 1번 항목을 read할 경우 error 발생
-            GangnamguPopulationService.cs파일 안의 GetDetail함수의 else로 잡힙니다.
-
-            확인부탁드리겠습니다.
-            감사합니다.
+        <br>
+        <div>
+            <img src="/resources/upload/bbs/${file.saveFile}" width="700px" height="400px">
         </div>
+        <br>
+        <div style="white-space: pre-wrap;">${bbs.bbs_content}</div>
         <br><br>
         <div id="comment">
             <span>답변</span>&nbsp;<span id="cmCount">1</span>
@@ -167,9 +166,12 @@
             <div>
                 <button type="button" class="btn" id="btn_back" onclick="location.href='/board/freeList'">목록</button>
             </div>
+            <form name="frm" id="frm" action="/board/delete" method="post">
+                <input type="hidden" name="bbs_idx" id="bbs_idx" value="${bbs.bbs_idx}">
+                <input type="hidden" name="bbs_category_code" value="${bbs.bbs_category_code}">
             <div>
-                <button type="button" class="btn" id="btn_modify">수정</button>
-                <button type="button" class="btn btn-secondary" id="btn_delete">삭제</button>
+                <button type="button" class="btn" id="btn_modify" onclick="location.href='/board/freeModify?bbs_idx=${bbs.bbs_idx}'">수정</button>
+                <button type="submit" class="btn btn-secondary" id="btn_delete" onclick="godelete(event)">삭제</button>
             </div>
         </div>
     </div>
@@ -186,6 +188,17 @@
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
+<script>
+    function godelete(e) {
+        e.preventDefault();
+        if(confirm("해당 글을 정말 삭제하시겠습니까?")) {
+            alert("삭제되었습니다.");
+            document.getElementById("frm").submit();
+        } else {
+            return false;
+        }
+    }
+</script>
 </body>
 </html>
 

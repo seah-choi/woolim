@@ -101,10 +101,10 @@
             <h4>게시판</h4>
             <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
             <div style="padding-top: 20px; line-height: unset;">
-                <a class="nav-link" aria-current="page" href="/board/freeList">자유게시판</a>
-                <a class="nav-link" href="/board/list">교육정보</a>
-                <a class="nav-link" href="/board/list">자료실</a>
-                <a class="nav-link" href="/board/list">공지사항</a>
+                <a class="nav-link" aria-current="page" href="/board/freeList?bbs_type=bbs02">자유게시판</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs01">교육정보</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs05">자료실</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs04">공지사항</a>
             </div>
         </nav>
     </div>
@@ -112,11 +112,15 @@
         <h5 style="font-weight: bold">자유게시판</h5>
         <hr>
         <br>
-        <form action="/board/freeRegist" method="post">
+        <form name="frm" id="frm" action="/board/freeRegist" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="member_id" id="member_id" value="seah">
+            <input type="hidden" name="bbs_category_code" id="bbs_category_code" value="bbs02">
             <div class="form-floating">
                 <textarea class="form-control" name="bbs_title" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                 <label for="floatingTextarea">제목</label>
             </div>
+            <br>
+            <input type="file" class="form-control" name="files" id="file" multiple>
             <br>
             <div>
                 <textarea id="summernote" name="bbs_content"></textarea>
@@ -124,7 +128,7 @@
             <br>
             <div style="display: flex;justify-content: center;">
                 <div>
-                    <button type="button" class="btn" id="btn_back" onclick="location.href='/board/freeList'">목록</button>
+                    <button type="button" class="btn" id="btn_back" onclick="location.href='/board/freeList?bbs_type=bbs02'">목록</button>
                 </div>
                 <div>
                     <button type="submit" class="btn" id="btn_modify">등록</button>

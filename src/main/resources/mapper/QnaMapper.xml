@@ -16,6 +16,51 @@
         INSERT INTO woo_qna_file(qna_idx, orgFile, saveFile)
         VALUES(#{qna_idx},#{orgFile},#{saveFile})
     </insert>
+    <select id="total_count" resultType="int">
+        SELECT COUNT(*)
+        FROM woo_qna
+        <where>
+            member_id = #{member_id}
+            <if test="search_types != null">
+                <foreach collection="search_types" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            and bbs_title like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'u'.toString()">
+                            and member_id like concat('%', #{search_word},'%' )
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            and bbs_content like concat('%', #{search_word},'%' )
+                        </when>
+                    </choose>
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="qnaListByPage" resultType="org.fullstack4.woolim.domain.QnaVO">
+        SELECT *
+        FROM woo_qna
+        <where>
+            member_id= #{member_id}
+            <if test="search_types != null">
+                <foreach collection="search_types" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            and bbs_title like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'u'.toString()">
+                            and member_id like concat('%', #{search_word},'%' )
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            and bbs_content like concat('%', #{search_word},'%' )
+                        </when>
+                    </choose>
+                </foreach>
+            </if>
+        </where>
+        limit #{page_skip_count}, #{page_size}
+    </select>
 
 
 

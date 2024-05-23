@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <html>
 <head>
@@ -80,15 +81,24 @@
             <h4>게시판</h4>
             <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
             <div style="padding-top: 20px; line-height: unset;">
-                <a class="nav-link" aria-current="page" href="/board/freeList">자유게시판</a>
-                <a class="nav-link" href="/board/list">교육정보</a>
-                <a class="nav-link" href="/board/list">자료실</a>
-                <a class="nav-link" href="/board/list">공지사항</a>
+                <a class="nav-link" aria-current="page" href="/board/freeList?bbs_type=bbs02">자유게시판</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs01">교육정보</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs05">자료실</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs04">공지사항</a>
             </div>
         </nav>
     </div>
     <div id="list">
-        <h5 style="font-weight: bold">공지사항</h5>
+        <c:if test="${bbsList.bbs_type eq 'bbs01'}">
+            <h5 style="font-weight: bold">교육정보</h5>
+        </c:if>
+        <c:if test="${bbsList.bbs_type eq 'bbs04'}">
+            <h5 style="font-weight: bold">공지사항</h5>
+        </c:if>
+        <c:if test="${bbsList.bbs_type eq 'bbs05'}">
+            <h5 style="font-weight: bold">자료실</h5>
+        </c:if>
+
         <hr>
         <div class="input-group">
             <button class="btn btn-outline-secondary dropdown-toggle" id="drop" type="button" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
@@ -103,19 +113,29 @@
         <table class="table">
             <thead>
             <tr class="table-secondary">
-                <th scope="col">구분</th>
+                <th scope="col">#</th>
                 <th scope="col">제목</th>
                 <th scope="col">등록일</th>
                 <th scope="col">조회수</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row">공지</th>
-                <td id="title"><a href="/board/view">[당첨자 발표] 3-4월 별가게 당첨자 발표</a></td>
-                <td>2024-05-07</td>
-                <td>12</td>
-            </tr>
+            <c:choose>
+                <c:when test="${not empty bbsList.dtolist}">
+                    <c:forEach items="${bbsList.dtolist}" var="list">
+                        <tr>
+                            <th scope="row">${list.bbs_idx}</th>
+                            <td id="title"><a href="/board/view?bbs_idx=${list.bbs_idx}">${list.bbs_title}</a></td>
+                            <td>${list.bbs_reg_date}</td>
+                            <td>${list.bbs_read_cnt}</td>
+                        </tr>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    등록된 글이 없습니다.
+                </c:otherwise>
+            </c:choose>
+
             </tbody>
         </table>
             <nav class="blog-pagination justify-content-center d-flex">

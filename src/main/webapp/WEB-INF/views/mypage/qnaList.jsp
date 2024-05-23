@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: user
@@ -105,24 +106,29 @@
                         <th scope="col">답변 상태</th>
                         <th scope="col">제목</th>
                         <th scope="col">등록일</th>
-                        <th scope="col">조회수</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>N</td>
-                        <td><a href="/mypage/qnaView">김광석</a></td>
-                        <td>2024-05-07</td>
-                        <td>12</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Y</td>
-                        <td id="title"><a href="/mypage/qnaView">먼지가 되어</a></td>
-                        <td>2024-05-07</td>
-                        <td>12</td>
-                    </tr>
+                    <c:set value="${responseDTO.total_count}" var="total_count"/>
+
+                    <c:choose>
+                        <c:when test="${responseDTO.dtolist != null}">
+                            <c:forEach var="qnaDTO" items="${responseDTO.dtolist}" varStatus="i">
+                                <tr>
+                                    <th scope="row">${total_count - i.index - responseDTO.page_skip_count}</th>
+                                    <td>${qnaDTO.qna_answer_status}</td>
+                                    <td><a href="/mypage/qnaView">${qnaDTO.qna_title}</a></td>
+                                    <td>${qnaDTO.qna_reg_date}</td>
+                                </tr>
+                            </c:forEach>
+
+                        </c:when>
+                        <c:otherwise>
+                            <tr>
+                                <td colspan="4">작성한 게시글이 없습니다.</td>
+                            </tr>
+                        </c:otherwise>
+                    </c:choose>
                     </tbody>
                 </table>
                 <div class="loading-more">
@@ -133,27 +139,21 @@
                 </div>
                 <nav class="blog-pagination justify-content-center d-flex">
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a href="#" class="page-link" aria-label="Previous">&lt;</a>
-                        </li>
-                        <li class="page-item active">
-                            <a href="#" class="page-link">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a href="#" class="page-link">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a href="#" class="page-link">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a href="#" class="page-link">4</a>
-                        </li>
-                        <li class="page-item">
-                            <a href="#" class="page-link">5</a>
-                        </li>
-                        <li class="page-item">
-                            <a href="#" class="page-link" aria-label="Next">&gt;</a>
-                        </li>
+<%--                        <li class="page-item <c:if test="${!responseDTO.prev_page_flag}">disabled</c:if>">--%>
+<%--                            <a class="page-link" href="${responseDTO.linked_params}&page=${((responseDTO.page - responseDTO.page_block_size) >= 1) ? (responseDTO.page - responseDTO.page_block_size) : 1}" aria-label="Previous">--%>
+<%--                                <span aria-hidden="true">&laquo;</span>--%>
+<%--                            </a>--%>
+<%--                        </li>--%>
+                        <c:forEach var="li" begin="${responseDTO.page_block_start}" end="${responseDTO.page_block_end}">
+                            <li class="page-item <c:if test="${responseDTO.page eq li}">active</c:if> ">
+                                <a class="page-link" href="/mypage/qnaList?page=${li}${responseDTO.linkParams}">${li}</a>
+                            </li>
+                        </c:forEach>
+<%--                        <li class="page-item <c:if test="${!responseDTO.next_page_flag}">disabled</c:if>">--%>
+<%--                            <a class="page-link" href="${responseDTO.linked_params}&page=${(responseDTO.page + responseDTO.page_block_size) <= responseDTO.total_page ? (responseDTO.page + responseDTO.page_block_size) : responseDTO.total_page}" aria-label="Next">--%>
+<%--                                <span aria-hidden="true">&raquo;</span>--%>
+<%--                            </a>--%>
+<%--                        </li>--%>
                     </ul>
                 </nav>
                 <div style="display: flex;justify-content: flex-end;">
@@ -162,6 +162,7 @@
             </div>
         </div>
     </div>
+    ${responseDTO}
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
