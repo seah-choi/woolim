@@ -5,7 +5,9 @@
   Time: 오후 5:24
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
@@ -42,109 +44,39 @@
                             <th>Image</th>
                             <th class="p-name">강의 명</th>
                             <th>가격</th>
+                            <th>할인가</th>
                             <th>시작일</th>
                             <th>종료일</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><input class="checkEl" type="checkbox" onclick="sum_price();"></td>
-                            <td class="cart-pic"><img src="/resources/img/cart-page/product-1.jpg" alt=""></td>
-                            <td class="cart-title">
-                                <h5>강의 명</h5>
-                            </td>
-                            <td class="p-price">1000</td>
-                            <td class="qua-col">2024-05-23</td>
-                            <td class="qua-col">2024-05-23</td>
-                            <td class="close-td"><i class="ti-close"></i></td>
-                        </tr>
-                        <tr>
-                            <td><input class="checkEl" type="checkbox" onclick="sum_price();"></td>
-                            <td class="cart-pic"><img src="/resources/img/cart-page/product-1.jpg" alt=""></td>
-                            <td class="cart-title">
-                                <h5>Pure Pineapple</h5>
-                            </td>
-                            <td class="p-price">2000</td>
-                            <td class="qua-col">2024-05-23</td>
-                            <td class="qua-col">2024-05-23</td>
-                            <td class="close-td"><i class="ti-close"></i></td>
-                        </tr>
-                        <tr>
-                            <td><input class="checkEl" type="checkbox" onclick="sum_price();"></td>
-                            <td class="cart-pic"><img src="/resources/img/cart-page/product-1.jpg" alt=""></td>
-                            <td class="cart-title">
-                                <h5>Pure Pineapple</h5>
-                            </td>
-                            <td class="p-price">3000</td>
-                            <td class="qua-col">2024-05-23</td>
-                            <td class="qua-col">2024-05-23</td>
-                            <td class="close-td"><i class="ti-close"></i></td>
-                        </tr>
-                        <tr>
-                            <td><input class="checkEl" type="checkbox" onclick="sum_price();"></td>
-                            <td class="cart-pic"><img src="/resources/img/cart-page/product-2.jpg" alt=""></td>
-                            <td class="cart-title">
-                                <h5>American lobster</h5>
-                            </td>
-                            <td class="p-price">4000</td>
-                            <td class="qua-col">2024-05-23</td>
-                            <td class="qua-col">2024-05-23</td>
-                            <td class="close-td"><i class="ti-close"></i></td>
-                        </tr>
-                        <tr>
-                            <td><input class="checkEl" type="checkbox" onclick="sum_price();"></td>
-                            <td class="cart-pic"><img src="/resources/img/cart-page/product-3.jpg" alt=""></td>
-                            <td class="cart-title">
-                                <h5>Guangzhou sweater</h5>
-                            </td>
-                            <td class="p-price">5000</td>
-                            <td class="qua-col">2024-05-23</td>
-                            <td class="qua-col">2024-05-23</td>
-                            <td class="close-td"><i class="ti-close"></i></td>
-                        </tr>
-<%--                        <tr>--%>
-<%--                            <td><input class="checkEl" type="checkbox"></td>--%>
-<%--                            <td class="cart-pic"><img src="/resources/img/cart-page/product-3.jpg" alt=""></td>--%>
-<%--                            <td class="cart-title">--%>
-<%--                                <h5>Guangzhou sweater</h5>--%>
-<%--                            </td>--%>
-<%--                            <td class="p-price">5000</td>--%>
-<%--                            <td class="qua-col">--%>
-<%--                                <div class="quantity">--%>
-<%--                                    <div class="pro-qty">--%>
-<%--                                        <input type="text" class="cart-amount" value="1">--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </td>--%>
-<%--                            <td id="total-price" class="total-price"></td>--%>
-<%--                            <td class="close-td"><i class="ti-close"></i></td>--%>
-<%--                        </tr>--%>
+                        <c:forEach items="${dtoList}" var="list">
+                            <tr>
+                                <td><input class="checkEl" type="checkbox" onclick="sum_price();" value="${list.lecture_idx}"></td>
+                                <td class="cart-pic"><img src="/resources/img/lecture/${list.lecture_image}" alt=""></td>
+                                <td class="cart-title">
+                                    <h5>${list.lecture_title}</h5>
+                                </td>
+                                <td class="p-price1">${list.lecture_price}</td>
+                                <td class="p-price">${list.lecture_sale_price}</td>
+                                <td class="qua-col">${list.lecture_start_date}</td>
+                                <td class="qua-col">${list.lecture_end_date}</td>
+                                <td class="close-td"><i class="ti-close"></i></td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
                 <div class="row">
-<%--                    <div class="col-lg-4">--%>
-<%--                        <div class="cart-buttons">--%>
-<%--                            <a href="#" class="primary-btn continue-shop">Continue shopping</a>--%>
-<%--                            <a href="#" class="primary-btn up-cart">Update cart</a>--%>
-<%--                        </div>--%>
-<%--                        <div class="discount-coupon">--%>
-<%--                            <h6>Discount Codes</h6>--%>
-<%--                            <form action="#" class="coupon-form">--%>
-<%--                                <input type="text" placeholder="Enter your codes">--%>
-<%--                                <button type="submit" class="site-btn coupon-btn">Apply</button>--%>
-<%--                            </form>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
                     <div class="col-lg-4 offset-lg-4">
                         <div class="proceed-checkout">
                             <ul>
-                                <li class="cart-total">Total <span id="total_price"></span></li>
+                                <li class="cart-total">Total <span id="total_price">0</span></li>
                             </ul>
 <%--                            컨트롤러 전송용 전체 가격 input 태그--%>
                             <input type="hidden" id="price" name="price" value="">
-                            <a href="#" class="proceed-btn">결제</a>
+                            <button class="proceed-btn" onclick="goOrder()">결제</button>
                         </div>
                     </div>
 
@@ -182,6 +114,17 @@
         }
         document.getElementById("total_price").innerText = total_price;
         document.getElementById("price").value = total_price;
+    }
+
+    function goOrder(){
+        let param = "?lecture_idx="
+        for(let choose of checkEl){
+            if(choose.checked){
+                let lecture_idx = choose.value;
+                param = param+lecture_idx+"&lecture_idx=";
+            }
+        }
+        location.href="/order/order"+param;
     }
 
 </script>

@@ -126,9 +126,9 @@
                 <div class="filter-widget">
                     <h4 class="fw-title">카테고리</h4>
                     <ul class="filter-catagories">
-                        <li><a href="#">🧑‍🌾 초등</a></li>
-                        <li><a href="#">🕵️ 중등</a></li>
-                        <li><a href="#">👨‍🚀 고등</a></li>
+                        <li><a href="#" onclick="navigateWithSort('10000')">🧑‍🌾 초등</a></li>
+                        <li><a href="#" onclick="navigateWithSort('20000')">🕵️ 중등</a></li>
+                        <li><a href="#" onclick="navigateWithSort('30000')">👨‍🚀 고등</a></li>
                     </ul>
                 </div>
                 <div class="filter-widget">
@@ -137,113 +137,34 @@
                         <div class="bc-item">
                             <label for="bc-calvin">
                                 📗 국어
-                                <input type="checkbox" id="bc-calvin">
+                                <input type="checkbox" id="bc-calvin" name="subject"  value="A" ${pageMaker.cri.subject eq 'A' ? 'checked' : ''}>
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="bc-item">
                             <label for="bc-diesel">
                                 ⏲️ 수학
-                                <input type="checkbox" id="bc-diesel">
+                                <input type="checkbox" id="bc-diesel" name="subject" value="B" ${pageMaker.cri.subject eq 'B' ? 'checked' : ''}>
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="bc-item">
                             <label for="bc-polo">
                                 🆖 영어
-                                <input type="checkbox" id="bc-polo">
+                                <input type="checkbox" id="bc-polo" name="subject" value="C" ${pageMaker.cri.subject eq 'C' ? 'checked' : ''}>
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="bc-item">
                             <label for="bc-tommy">
                                 🔎 과학
-                                <input type="checkbox" id="bc-tommy">
+                                <input type="checkbox" id="bc-tommy" name="subject" value="D" ${pageMaker.cri.subject eq 'D' ? 'checked' : ''}>
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                     </div>
                 </div>
-                <div class="filter-widget">
-                    <h4 class="fw-title">가격</h4>
-                    <div class="filter-range-wrap">
-                        <div class="range-slider">
-                            <div class="price-input">
-                                <input type="text" id="minamount">
-                                <input type="text" id="maxamount">
-                            </div>
-                        </div>
-                        <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                             data-min="10000" data-max="300000">
-                            <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                        </div>
-                    </div>
-                    <a href="#" class="filter-btn">Filter</a>
-                </div>
-                <%--<div class="filter-widget">
-                    <h4 class="fw-title">Color</h4>
-                    <div class="fw-color-choose">
-                        <div class="cs-item">
-                            <input type="radio" id="cs-black">
-                            <label class="cs-black" for="cs-black">Black</label>
-                        </div>
-                        <div class="cs-item">
-                            <input type="radio" id="cs-violet">
-                            <label class="cs-violet" for="cs-violet">Violet</label>
-                        </div>
-                        <div class="cs-item">
-                            <input type="radio" id="cs-blue">
-                            <label class="cs-blue" for="cs-blue">Blue</label>
-                        </div>
-                        <div class="cs-item">
-                            <input type="radio" id="cs-yellow">
-                            <label class="cs-yellow" for="cs-yellow">Yellow</label>
-                        </div>
-                        <div class="cs-item">
-                            <input type="radio" id="cs-red">
-                            <label class="cs-red" for="cs-red">Red</label>
-                        </div>
-                        <div class="cs-item">
-                            <input type="radio" id="cs-green">
-                            <label class="cs-green" for="cs-green">Green</label>
-                        </div>
-                    </div>
-                </div>--%>
-                <%--<div class="filter-widget">
-                    <h4 class="fw-title">Size</h4>
-                    <div class="fw-size-choose">
-                        <div class="sc-item">
-                            <input type="radio" id="s-size">
-                            <label for="s-size">s</label>
-                        </div>
-                        <div class="sc-item">
-                            <input type="radio" id="m-size">
-                            <label for="m-size">m</label>
-                        </div>
-                        <div class="sc-item">
-                            <input type="radio" id="l-size">
-                            <label for="l-size">l</label>
-                        </div>
-                        <div class="sc-item">
-                            <input type="radio" id="xs-size">
-                            <label for="xs-size">xs</label>
-                        </div>
-                    </div>
-                </div>--%>
-                <div class="filter-widget">
-                    <h4 class="fw-title">태그</h4>
-                    <div class="fw-tags">
-                        <a href="#">Tow</a>
-                        <a href="#">Shoes</a>
-                        <a href="#">Coat</a>
-                        <a href="#">Dresses</a>
-                        <a href="#">Trousers</a>
-                        <a href="#">Men's hats</a>
-                        <a href="#">Backpack</a>
-                    </div>
-                </div>
+
             </div>
             <div class="col-lg-9 order-1 order-lg-2">
                 <div class="product-show-option">
@@ -308,7 +229,7 @@
                                         </div>
                                         <ul>
                                             <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                            <li class="quick-view"><a href="#"> 상품 상세보기</a></li>
+                                            <li class="quick-view"><a href="/lecture/view/?lecture_idx=${list.lecture_idx}"> 상품 상세보기</a></li>
                                             <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                         </ul>
                                     </div>
@@ -375,6 +296,8 @@
         <input type="hidden" name="keyword" id="key" value="${pageMaker.cri.keyword }">
         <input type="hidden" name="sorting" value="${pageMaker.cri.sorting}">
         <input type="hidden" name="viewSorting"  value="${pageMaker.cri.viewSorting}">
+        <input type="hidden" name="category"  value="${pageMaker.cri.category}">
+        <input type="hidden" name="subject"  value="${pageMaker.cri.subject}">
     </form>
 </section>
 <!-- Product Shop Section End -->
@@ -492,7 +415,11 @@
     const moveForm = document.querySelector("#moveForm");
     document.querySelector(".pageinfo")
     $(".pageInfo_area a").on("click", function(e){
+        let sort = document.getElementById("viewSorting").value;
 
+        if(sort == null) {
+            sort = 9;
+        }
         e.preventDefault();
         const key = document.querySelector("#key").value;
         console.log(key+"#");
@@ -500,7 +427,7 @@
         moveForm.querySelector("input[name='pageNum']").value = pageNum;
         moveForm.querySelector("input[name='type']").value;
         moveForm.querySelector("input[name='keyword']").value = key;
-        moveForm.querySelector("input[name='viewSorting']").value;
+        moveForm.querySelector("input[name='viewSorting']").value = sort;
         moveForm.querySelector("input[name='sorting']").value;
         moveForm.action = "/lecture/list";
         moveForm.submit();
@@ -539,7 +466,12 @@
 */
     function redirectToList() {
         let sortingValue = document.getElementById("sorting").value;
-        moveForm.querySelector("input[name='viewSorting']").value;
+        let sort = document.getElementById("viewSorting").value;
+
+        if(sort == null) {
+            sort = 9;
+        }
+        moveForm.querySelector("input[name='viewSorting']").value=sort;
         moveForm.querySelector("input[name='sorting']").value = sortingValue;
         moveForm.querySelector("input[name='type']").value;
         moveForm.querySelector("input[name='keyword']").value;
@@ -556,9 +488,50 @@
         moveForm.querySelector("input[name='pageNum']").value = 1;
         moveForm.submit();
     }
+    function  navigateWithSort(category) {
+        let sort = document.getElementById("viewSorting").value;
+
+        if(sort == null) {
+            sort = 9;
+        }
+        moveForm.querySelector("input[name='viewSorting']").value = sort;
+        moveForm.querySelector("input[name='sorting']").value ;
+        moveForm.querySelector("input[name='type']").value;
+        moveForm.querySelector("input[name='keyword']").value;
+        moveForm.querySelector("input[name='pageNum']").value = 1;
+        moveForm.querySelector("input[name='category']").value = category;
+        moveForm.submit();
+    }
     document.querySelector("#resetBtn").addEventListener("click", function (){
        location.href= '/lecture/list';
     });
+
+    document.querySelectorAll('input[name="subject"]').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            updateFormAndSubmit();
+        });
+    });
+
+    function updateFormAndSubmit() {
+        const checkboxes = document.querySelectorAll('input[name="subject"]:checked');
+        let sort = document.getElementById("viewSorting").value;
+
+        if(sort == null) {
+            sort = 9;
+        }
+        checkboxes.forEach((checkbox) => {
+            moveForm.querySelector("input[name='viewSorting']").value = checkbox.value;
+            console.log("###" + checkbox.value);
+        });
+
+ /*       moveForm.querySelector("input[name='viewSorting']").value = sort;
+        moveForm.querySelector("input[name='sorting']").value ;
+        moveForm.querySelector("input[name='type']").value;
+        moveForm.querySelector("input[name='keyword']").value;
+        moveForm.querySelector("input[name='pageNum']").value = 1;
+        moveForm.querySelector("input[name='category']").value;
+        moveForm.submit();*/
+    }
 </script>
 <!-- Js Plugins -->
 <script src="/resources/js/jquery-3.3.1.min.js"></script>

@@ -1,17 +1,19 @@
-package org.fullstack4.woolim.domain;
+package org.fullstack4.woolim.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import java.time.LocalDate;
 
+@Log4j2
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class CartVO {
+public class CartDTO {
     private int cart_idx;
     private String member_id;
     private int lecture_idx;
