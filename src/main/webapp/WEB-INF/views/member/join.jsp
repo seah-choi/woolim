@@ -36,50 +36,41 @@
                             <label for="member_id">아이디 *</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="member_id" id="member_id">
+                                <button id="id_check">id 중복 확인</button>
                             </div>
-                            <br>
+                            <small id="err_member_id" class="info text-danger">영문 소문자, 숫자를 포함한 8자리~20자리로 입력해주세요</small>
+                            <br><br>
                             <label for="member_pwd">비밀번호 *</label>
                             <div class="input-group">
                                 <input name="member_pwd" class="form-control" type="text" id="member_pwd">
                             </div>
-                            <br>
+                            <small id="err_member_pwd" class="info text-danger">영어 대소문자, 숫자, 특수 문자를 포함한 8자리~20자리로 입력해주세요</small>
+                            <br><br>
                             <label for="member_pwd2">비밀번호 확인 *</label>
                             <div class="input-group">
                                 <input type="text"  class="form-control" id="member_pwd2" name="member_pwd2">
                             </div>
-                            <br>
+                            <small id="err_member_pwd2" class="info text-danger">비밀번호가 일치하지 않습니다.</small>
+                            <br><br>
                             <label for="member_name">이름 *</label>
                             <div class="input-group">
                                 <input name="member_name" class="form-control" type="text" id="member_name">
                             </div>
-                            <br>
+                            <small id="err_member_name" class="info text-danger">이름은 한글로 2자리~20자리로 입력해주세요</small>
+                            <br><br>
                             <label for="member_email">이메일 *</label>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control"  name="member_email" id="member_email">
-                                &nbsp;&nbsp;
-                                <label> @ </label>
-                                &nbsp;&nbsp;
-                                <select class="form-control" name="member_email_addr">
-                                    <option>naver.com</option>
-                                    <option>daum.net</option>
-                                    <option>gmail.com</option>
-                                    <option>hanmail.net</option>
-                                </select>
-                            </div>
-                            <label for="member_phone2">핸드폰 *</label>
-                            <input type="hidden" name="member_phone" id="member_phone">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="member_phone1" name="member_phone1">
-                                &nbsp;&nbsp;
-                                <span>-</span>
-                                &nbsp;&nbsp;
-                                <input type="text" class="form-control" id="member_phone2" name="member_phone2">
-                                &nbsp;&nbsp;
-                                <span>-</span>
-                                &nbsp;&nbsp;
-                                <input type="text" class="form-control" id="member_phone3" name="member_phone3">
+                                <input type="text" class="form-control"  name="member_email" id="member_email">
+                                <button>email 중복 확인</button>
                             </div>
-                            <br>
+                            <small id="err_member_email" class="info text-danger">이메일주소를 확인해주세요.</small>
+                            <br><br>
+                            <label for="member_phone">핸드폰 *</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="member_phone" id="member_phone">
+                            </div>
+                            <small id="err_member_phone" class="info text-danger">핸드폰 번호를 확인해주세요.</small>
+                            <br><br>
                             <div class="group-input">
                                 <label>주소</label>
                                 <div>
@@ -100,7 +91,9 @@
                                     </div>
                                     <span id="guide" style="color:#999;display:none"></span>
                                 </div>
+                                <small id="err_member_addr" class="info text-danger">주소를 입력해주세요.</small>
                             </div>
+
                             <button type="submit" id="btnJoin" class="site-btn register-btn">회원가입</button>
                         </form>
                         <div class="switch-login">
@@ -114,6 +107,8 @@
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
+        let inputEl = document.getElementsByClassName("form-control");
+
         function sample4_execDaumPostcode() {
             new daum.Postcode({
                 oncomplete: function(data) {
@@ -156,6 +151,7 @@
                 }
             }).open();
         }
+
         let btnJoin = document.getElementById("btnJoin");
         btnJoin.addEventListener("click", function(e){
            e.preventDefault();
@@ -170,6 +166,9 @@
            let frmJoin = document.getElementById("frmJoin");
            frmJoin.submit();
         });
+        function id_check(){
+
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="/resources/js/jquery-3.3.1.min.js"></script>

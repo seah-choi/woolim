@@ -206,7 +206,7 @@
                               member_status = #{member_status}
         where member_id = #{member_id}
     </update>
-    <select id="login_check" resultType="int">
+    <select id="id_check" resultType="int">
         SELECT COUNT(*)
         FROM woo_member
         WHERE member_id = #{member_id}
