@@ -101,10 +101,10 @@
       <h4>게시판</h4>
       <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
       <div style="padding-top: 20px; line-height: unset;">
-        <a class="nav-link" aria-current="page" href="/board/freeList">자유게시판</a>
-        <a class="nav-link" href="/board/list">교육정보</a>
-        <a class="nav-link" href="/board/list">자료실</a>
-        <a class="nav-link" href="/board/list">공지사항</a>
+        <a class="nav-link" aria-current="page" href="/board/freeList?bbs_type=bbs02">자유게시판</a>
+        <a class="nav-link" href="/board/list?bbs_type=bbs01">교육정보</a>
+        <a class="nav-link" href="/board/list?bbs_type=bbs05">자료실</a>
+        <a class="nav-link" href="/board/list?bbs_type=bbs04">공지사항</a>
       </div>
     </nav>
   </div>
