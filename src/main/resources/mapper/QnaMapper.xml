@@ -46,14 +46,15 @@
             <if test="search_types != null">
                 <foreach collection="search_types" item="type" >
                     <choose>
-                        <when test="type == 't'.toString()">
-                            and bbs_title like concat('%', #{search_word},'%')
+                        <when test="type == 'a'.toString()">
+                            and qna_title like concat('%', #{search_word},'%')
+                            OR qna_content like concat('%', #{search_word},'%' )
                         </when>
-                        <when test="type == 'u'.toString()">
-                            and member_id like concat('%', #{search_word},'%' )
+                        <when test="type == 't'.toString()">
+                            and qna_title like concat('%', #{search_word},'%')
                         </when>
                         <when test="type == 'c'.toString()">
-                            and bbs_content like concat('%', #{search_word},'%' )
+                            and qna_content like concat('%', #{search_word},'%' )
                         </when>
                     </choose>
                 </foreach>
