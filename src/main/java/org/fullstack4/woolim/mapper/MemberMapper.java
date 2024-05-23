@@ -14,4 +14,8 @@ public interface MemberMapper {
     MemberVO memberView(String member_id);
     List<MemberVO> MemberListbyPage(PageRequestDTO requestDTO);
     int total_count(PageRequestDTO requestDTO);
+
+    List<MemberVO> adminMemberList(PageRequestDTO requestDTO);
+
+    int admin_total_count(PageRequestDTO requestDTO);
 }

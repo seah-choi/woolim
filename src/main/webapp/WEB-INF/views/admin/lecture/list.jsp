@@ -40,7 +40,13 @@
         gtag('config', 'UA-119386393-1');
     </script>
 
-
+    <style>
+        .card-box {
+            margin-right: 400px;
+            margin-left: 20px;
+            padding-bottom: 100px;
+        }
+    </style>
 </head>
 <body>
 
@@ -57,10 +63,10 @@
                 <div class="searchBox">
                     <form role="search" id="frmSearch" class="searchForm">
                         <div class="mb-3 row d-flex">
-                            <label class="col-sm-1 col-form-label fontWe-700 mt-4">검색 범위</label>
+                            <label class="ml-3 col-form-label fontWe-700 mt-4">검색 범위</label>
 
                             <div class="col-md-1 col-sm-12">
-                                <div class="form-group">
+                                <div class="form-group selectDiv">
                                     <label>과목</label>
                                     <select class="selectpicker form-control" name="search_type" data-size="5" data-style="btn-outline-info">
                                         <option>전체</option>
@@ -71,8 +77,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-1 col-sm-12">
-                                <div class="form-group">
+                            <div class="col-md-1 col-sm-12 ml-5" >
+                                <div class="form-group selectDiv">
                                     <label>초중고</label>
                                     <select id="schoolSelect" name="search_type" class="selectpicker form-control school" data-size="5" data-style="btn-outline-info">
                                         <option>전체</option>
@@ -82,8 +88,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-1 col-sm-12">
-                                <div class="form-group">
+                            <div class="col-md-1 col-sm-12 ml-5">
+                                <div class="form-group selectDiv">
                                     <label>학년</label>
                                     <select id="gradeSelect" name="search_type" class="selectpicker form-control grade" data-size="5" data-style="btn-outline-info">
                                         <option>전체</option>
@@ -91,8 +97,8 @@
                                 </div>
                             </div>
 
-                            <div class="mt-4 ml-5" >
-                                <input class="searchInput" type="search" name="search_word"  id="search_word" placeholder="검색" aria-label="Search" value="">
+                            <div class="mt-4 ml-5">
+                                <input class="searchInput ml-2" type="search" name="search_word"  id="search_word" placeholder="검색" aria-label="Search" value="">
                             </div>
                         </div>
 
@@ -222,6 +228,41 @@
     });
 
     document.getElementById('schoolSelect').dispatchEvent(new Event('change'));
+
+
+
+    let frm = document.querySelector("#frm");
+    let chkAll = document.querySelector("#chkAll");
+    // 체크박스 전체 선택/해제
+    chkAll.addEventListener("click", (e) => {
+        var check = document.querySelectorAll("input[type ='checkbox']");
+
+        check.forEach((checkbox) => {
+            checkbox.checked = chkAll.checked;
+        });
+    });
+
+    // 삭제 버튼 눌렀을 때
+    document.querySelector("#btnDelete").addEventListener("click", (e) => {
+        var check = document.querySelectorAll("input[type ='checkbox']:checked");
+        console.log(check);
+        if (check.length == 0) {
+            alert("하나 이상 선택하세요.");
+            e.preventDefault();
+            return false;
+        } else {
+                let deleteOk = confirm("삭제 하시겠습니까?");
+                if (deleteOk) {
+
+                console.log(check);
+                frm.submit();
+
+            } else {
+                e.preventDefault();
+                return false;
+            }
+        }
+    });
 
 </script>
 <script src="/resources/vendors/scripts/core.js"></script>
