@@ -57,8 +57,8 @@ public class PageRequestDTO {
     private String search_word ="";
     private String linkParams;
     private String sort_type;
-    private LocalDate search_date1;
-    private LocalDate search_date2;
+    private String search_date1;
+    private String search_date2;
     private String member_id;
     private String member_type;
     private String bbs_type;
@@ -96,9 +96,11 @@ public class PageRequestDTO {
 //            if(sort_type != null && !sort_type.isEmpty()){
 //                sb.append("&sort_type="+URLEncoder.encode(sort_type));
 //            }
-            if(search_date1 != null && search_date2 !=null){
-                sb.append("&search_date1="+URLEncoder.encode(String.valueOf(search_date1)));
-                sb.append("&search_date2="+URLEncoder.encode(String.valueOf(search_date2)));
+            if (search_date1 != null) {
+                sb.append("&search_date1=" + search_date1);
+            }
+            if (search_date2 != null) {
+                sb.append("&search_date2=" + search_date2);
             }
             linkParams = sb.toString();
         }
