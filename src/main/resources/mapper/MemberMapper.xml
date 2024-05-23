@@ -94,8 +94,15 @@
         SELECT member_idx, member_id, member_name ,member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_oauth,member_reg_date
         FROM woo_member
         <where>
+
             <if test="member_type !=null and member_type !=''">
                 member_category = #{member_type}
+            </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and member_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and member_reg_date <![CDATA[<=]]> #{search_date2}
             </if>
             <if test=' search_word != null and search_word != "" '>
                 AND member_name LIKE CONCAT('%',#{search_word}, '%')
@@ -106,9 +113,6 @@
                     <choose>
                         <when test="type == 't'.toString()">
                             or member_id like concat('%', #{search_word},'%')
-                        </when>
-                        <when test="type == 'u'.toString()">
-                            or subject_category_code like concat('%', #{search_word},'%')
                         </when>
                         <when test="type == 'c'.toString()">
                             or member_name like concat('%', #{search_word},'%' )
@@ -134,6 +138,7 @@
         SELECT count(*)
         FROM woo_member
         <where>
+
             <if test="member_type !=null and member_type !=''">
                 member_category = #{member_type}
             </if>
@@ -141,14 +146,17 @@
                 AND member_name LIKE CONCAT('%',#{search_word}, '%')
                 AND member_Id LIKE CONCAT('%',#{search_word}, '%')
             </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and member_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and member_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
             <if test="search_types != null and search_types !=''">
                 <foreach collection="search_types" item="type" >
                     <choose>
                         <when test="type == 't'.toString()">
                             or member_id like concat('%', #{search_word},'%')
-                        </when>
-                        <when test="type == 'u'.toString()">
-                            or subject_category_code like concat('%', #{search_word},'%')
                         </when>
                         <when test="type == 'c'.toString()">
                             or member_name like concat('%', #{search_word},'%' )
@@ -167,4 +175,8 @@
             </if>
         </where>
     </select>
+
+    <update id="changePoint">
+        Update SET woo_member point=point+#{member_point} where member_id=#{member_id}
+    </update>
 </mapper>

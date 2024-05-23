@@ -53,6 +53,7 @@
                         <tbody>
                         <c:forEach items="${dtoList}" var="list">
                             <tr>
+                                <input type="hidden" class="cart_idx" value="${list.cart_idx}">
                                 <td><input class="checkEl" type="checkbox" onclick="sum_price();" value="${list.lecture_idx}"></td>
                                 <td class="cart-pic"><img src="/resources/img/lecture/${list.lecture_image}" alt=""></td>
                                 <td class="cart-title">
@@ -92,6 +93,7 @@
     let checkAll = document.getElementById("checkAll");
     let checkEl = document.getElementsByClassName("checkEl");
     let priceEl = document.getElementsByClassName("p-price");
+    let cartAll = document.querySelectorAll(".cart_idx");
     checkAll.addEventListener("click",function(e){
         if(checkAll.checked==true){
             for(let i=0;i<checkEl.length;i++){
@@ -118,10 +120,13 @@
 
     function goOrder(){
         let param = "?lecture_idx="
+        let index = 0;
         for(let choose of checkEl){
             if(choose.checked){
                 let lecture_idx = choose.value;
-                param = param+lecture_idx+"&lecture_idx=";
+                let cart_idx = cartAll[index].value;
+                param = param+lecture_idx+"&Cart_idx="+cart_idx+"&lecture_idx=";
+                index++;
             }
         }
         location.href="/order/order"+param;

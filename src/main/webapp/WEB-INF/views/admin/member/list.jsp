@@ -62,7 +62,7 @@
                 <h4 class="h4">회원 목록</h4>
                 <br>
                 <div class="searchBox">
-                    <form role="search" id="frmSearch" class="searchForm" action="/admin/member/list">
+                    <form role="search" id="frmSearch" class="searchForm" action="/admin/member/list" onsubmit="checkBlank()">
 
                         <div class="mb-3 row d-flex">
                             <label class="ml-3 col-form-label fontWe-700 mt-4">검색 범위</label>
@@ -71,9 +71,9 @@
                                 <div class="form-group selectDiv">
                                     <label>구분</label>
                                     <select name="search_type" class="selectpicker form-control school" data-size="5" data-style="btn-outline-info">
-                                        <option>전체</option>
-                                        <option value="t">아이디</option>
-                                        <option value="c">이름</option>
+                                        <option value="">전체</option>
+                                        <option value="t" <c:if test="${memberList.search_type eq 't'}">selected</c:if>>아이디</option>
+                                        <option value="c" <c:if test="${memberList.search_type eq 'c'}">selected</c:if>>이름</option>
                                     </select>
                                 </div>
                             </div>
@@ -81,29 +81,29 @@
                                 <div class="form-group selectDiv ml-4" >
                                     <label>회원 구분</label>
                                     <select name="member_type" class="selectpicker form-control grade" data-size="5" data-style="btn-outline-info">
-                                        <option>전체</option>
-                                        <option value="admin">관리자</option>
-                                        <option value="student">학생</option>
-                                        <option value="teacher">선생님</option>
+                                        <option value="">전체</option>
+                                        <option value="admin" <c:if test="${memberList.member_type eq 'admin'}">selected</c:if>>관리자</option>
+                                        <option value="student" <c:if test="${memberList.member_type eq 'student'}">selected</c:if>>학생</option>
+                                        <option value="teacher" <c:if test="${memberList.member_type eq 'teacher'}">selected</c:if>>선생님</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="mt-4" style="margin-left: 100px">
-                                <input class="searchInput" type="search" name="search_word"  id="search_word" placeholder="검색" aria-label="Search" value="">
+                                <input class="searchInput" type="search" name="search_word"  id="search_word" placeholder="검색" aria-label="Search" value="${memberList.search_word}">
                             </div>
                         </div>
 
                         <div class="mb-3 row">
                             <label class="ml-3 col-form-label fontWe-700">검색 기간</label>
                             <div class="col-2 ml-4">
-                                <input type="date" class="form-control" name="search_date1" id="search_date1" value="">
+                                <input type="date" class="form-control" name="search_date1" id="search_date1" value="${memberList.search_date1}">
                             </div>
                             <div class="mt-2">
                                 <span class="justify-content-center">~</span>
                             </div>
                             <div class="col-2">
-                                <input type="date" class="form-control" name="search_date2" id="search_date2" value="">
+                                <input type="date" class="form-control" name="search_date2" id="search_date2" value="${memberList.search_date2}">
                             </div>
                             <div class="col-sm-3">
                                 <button class="btn btn-warning" id="btnSearch" type="submit">검색</button>
@@ -260,13 +260,19 @@
 
     }
 
-    const search_word = document.getElementById("search_word");
+    const search_type = document.getElementById("search_type");
+    const member_type = document.getElementById("member_type");
+
+
+
 
     document.getElementById('btnSearch').addEventListener('click', function(e) {
+
+
         if(search_word == null) {
             e.preventDefault();
-            alert("검색어를 입력해주세요.");
         }
+
     });
 </script>
 

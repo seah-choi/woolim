@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack4.woolim.mapper.MyStudyMapper">
+
+    <select id="total_count" resultType="int">
+        select count(*) from woo_bbs
+        <where>
+            <if test="bbs_type !=null and bbs_type !=''">
+                bbs_category_code=#{bbs_type}
+            </if>
+            <if test="search_types != null">
+                <foreach collection="search_types" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            and bbs_title like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'u'.toString()">
+                            and member_id like concat('%', #{search_word},'%' )
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            and bbs_content like concat('%', #{search_word},'%' )
+                        </when>
+                    </choose>
+                </foreach>
+            </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and bbs_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and bbs_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+        </where>
+        limit #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="bbsListByPage" resultType="org.fullstack4.woolim.domain.BbsVO">
+        select bbs_idx, member_id, bbs_title, bbs_content, bbs_reg_date, bbs_image, bbs_file_yn, bbs_category_code, bbs_read_cnt, bbs_reply_yn, bbs_like, bbs_modify_date
+        from woo_bbs
+        <where>
+            <if test="bbs_type !=null and bbs_type !=''">
+                bbs_category_code=#{bbs_type}
+            </if>
+            <if test="search_types != null">
+                <foreach collection="search_types" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            and bbs_title like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'u'.toString()">
+                            and member_id like concat('%', #{search_word},'%' )
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            and bbs_content like concat('%', #{search_word},'%' )
+                        </when>
+                    </choose>
+                </foreach>
+            </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and bbs_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and bbs_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+            AND member_id = #{member_id}
+        </where>
+
+        order by bbs_idx desc
+        limit #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="view" resultType="org.fullstack4.woolim.domain.BbsVO">
+        select bbs_idx, member_id, bbs_title, bbs_content, bbs_reg_date, bbs_image, bbs_file_yn, bbs_category_code, bbs_read_cnt, bbs_reply_yn, bbs_like, bbs_modify_date
+        from woo_bbs
+        where bbs_idx = #{bbs_idx}
+    </select>
+
+</mapper>
