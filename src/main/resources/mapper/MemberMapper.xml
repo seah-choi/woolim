@@ -175,4 +175,8 @@
             </if>
         </where>
     </select>
+
+    <update id="changePoint">
+        Update SET woo_member point=point+#{member_point} where member_id=#{member_id}
+    </update>
 </mapper>

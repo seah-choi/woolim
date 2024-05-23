@@ -14,8 +14,9 @@ import java.time.LocalDate;
 public class OrderDetailVO {
     private int order_detail_idx;
     private String order_num;
-    private String lecture_code;
+    private int lecture_idx;
     private String order_status;
     private LocalDate order_detail_regDate;
     private int price;
+    private String member_id;
 }

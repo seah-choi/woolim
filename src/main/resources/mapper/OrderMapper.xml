@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack4.woolim.mapper.OrderMapper">
+
+    <insert id="DoOrder">
+        INSERT INTO woo_order(member_id, order_date, order_total, order_name,order_cancel_yn,order_reg_date,order_status,order_refund_request,order_num)
+        VALUES(#{member_id}
+        , NOW()
+        , #{order_total}
+        , #{order_name}
+        , 'N'
+        , NOW()
+        ,#{order_status}
+        , 'N'
+        ,#{order_num})
+    </insert>
+
+    <insert id="DoOrderDetail">
+        INSERT INTO woo_order_detail(order_num,lecture_idx,order_status,order_detail_regDate,price)
+        VALUES(#{order_num}, #{lecture_idx}, #{order_status}, NOW(), #{price})
+    </insert>
+
+    <insert id="Enrolment">
+        INSERT INTO woo_class(member_id,lecture_idx)
+        VALUES(#{member_id},#{lecture_idx})
+    </insert>
+
+    <insert id="InsertPayment">
+        INSERT INTO woo_payment(payment_num,member_id,price,payment_reg_date,payment_type,payment_title)
+        VALUES(#{payment_num},#{member_id},#{price},NOW(),#{payment_type},#{payment_title})
+    </insert>
+</mapper>

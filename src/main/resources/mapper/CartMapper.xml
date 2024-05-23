@@ -15,4 +15,10 @@
         VALUES( #{member_id},#{lecture_idx},#{cart_reg_date},#{cart_status})
     </insert>
 
+    <delete id="deleteCartOrJjim">
+        DELETE FROM woo_cart
+        WHERE cart_idx= #{cart_idx}
+        AND cart_status=#{cart_status}
+    </delete>
+
 </mapper>

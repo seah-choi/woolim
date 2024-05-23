@@ -18,4 +18,6 @@ public interface MemberMapper {
     List<MemberVO> adminMemberList(PageRequestDTO requestDTO);
 
     int admin_total_count(PageRequestDTO requestDTO);
+
+    int changePoint(MemberVO memberVO);
 }
