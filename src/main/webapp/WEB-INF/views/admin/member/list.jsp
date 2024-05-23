@@ -113,71 +113,74 @@
                     </form>
                 </div>
                 <br>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>
-                            <div class="custom-control custom-checkbox mb-5">
-                                <input type="checkbox" class="custom-control-input" id="chkAll" name="chkAll">
-                                <label class="custom-control-label" for="chkAll">전체선택</label>
-                            </div>
-                        </th>
-                        <th>NO.</th>
-                        <th>이름</th>
-                        <th>아이디</th>
-                        <th>회원 구분</th>
-                        <th>가입일</th>
-                        <th>탈퇴 여부</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    <c:forEach items="${memberList.dtolist}" var="list">
+                <form action="/admin/member/delete" method="get" id="deleteForm">
+                    <table class="table table-hover">
+                        <thead>
                         <tr>
-                            <td>
+                            <th>
                                 <div class="custom-control custom-checkbox mb-5">
-                                    <input type="checkbox" class="custom-control-input" value="${list.member_idx}" name="member_idx" id="${list.member_idx}">
-                                    <label class="custom-control-label" for="${list.member_idx}"><span></span></label>
+                                    <input type="checkbox" class="custom-control-input" id="chkAll" name="chkAll">
+                                    <label class="custom-control-label" for="chkAll">전체선택</label>
                                 </div>
-                            </td>
-                            <td>${list.member_idx}</td>
-                            <td><a href="/admin/member/view?member_id=${list.member_id}">${list.member_name}</a></td>
-                            <td>${list.member_id}</td>
-                            <td style="width: 130px">
-                                <select name="member_type" class="selectpicker form-control grade" data-size="5" data-style="btn-outline-info">
-                                    <c:if test="${list.member_category eq 'admin'}">
-                                        <option value="admin">관리자</option>
-                                        <option value="student">학생</option>
-                                        <option value="teacher">선생님</option>
-                                    </c:if>
-                                    <c:if test="${list.member_category eq 'student'}">
-                                        <option value="student">학생</option>
-                                        <option value="teacher">선생님</option>
-                                        <option value="admin">관리자</option>
-                                    </c:if>
-                                    <c:if test="${list.member_category eq 'teacher'}">
-                                        <option value="teacher">선생님</option>
-                                        <option value="student">학생</option>
-                                        <option value="admin">관리자</option>
-                                    </c:if>
-                                </select>
-                            </td>
-                            <td>${list.member_reg_date}</td>
-                            <td>${list.member_status}</td>
+                            </th>
+                            <th>NO.</th>
+                            <th>이름</th>
+                            <th>아이디</th>
+                            <th>회원 구분</th>
+                            <th>가입일</th>
+                            <th>탈퇴 여부</th>
                         </tr>
-                    </c:forEach>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
+                        <c:forEach items="${memberList.dtolist}" var="list">
+                            <tr>
+                                <td>
+                                    <div class="custom-control custom-checkbox mb-5">
+                                        <input type="checkbox" class="custom-control-input" value="${list.member_idx}" name="member_idx" id="${list.member_idx}">
+                                        <label class="custom-control-label" for="${list.member_idx}"><span></span></label>
+                                    </div>
+                                </td>
+                                <td>${list.member_idx}</td>
+                                <td><a href="/admin/member/view?member_id=${list.member_id}">${list.member_name}</a></td>
+                                <td>${list.member_id}</td>
+                                <td style="width: 130px">
+                                    <select name="member_type" class="selectpicker form-control grade" data-size="5" data-style="btn-outline-info">
+                                        <c:if test="${list.member_category eq 'admin'}">
+                                            <option value="admin">관리자</option>
+                                            <option value="student">학생</option>
+                                            <option value="teacher">선생님</option>
+                                        </c:if>
+                                        <c:if test="${list.member_category eq 'student'}">
+                                            <option value="student">학생</option>
+                                            <option value="teacher">선생님</option>
+                                            <option value="admin">관리자</option>
+                                        </c:if>
+                                        <c:if test="${list.member_category eq 'teacher'}">
+                                            <option value="teacher">선생님</option>
+                                            <option value="student">학생</option>
+                                            <option value="admin">관리자</option>
+                                        </c:if>
+                                    </select>
+                                </td>
+                                <td>${list.member_reg_date}</td>
+                                <td>${list.member_status}</td>
+                            </tr>
+                        </c:forEach>
 
-                </table>
-                <div class="d-flex justify-content-sm-end mt-2">
-                    <div class="d-flex justify-content-sm-end mr-3 ">
-                        <button class="btn btn-primary btn-lg btn-block" href="#" style="width: 100px; height: 40px; font-size: 15px;" >수정하기</button>
+                        </tbody>
+
+                    </table>
+                    <div class="d-flex justify-content-sm-end mt-2">
+                        <div class="d-flex justify-content-sm-end mr-3 ">
+                            <button class="btn btn-primary btn-lg btn-block" href="#" style="width: 100px; height: 40px; font-size: 15px;" >수정하기</button>
+                        </div>
+                        <div class="d-flex justify-content-sm-end ml-2 mr-3">
+                            <button type="button" id="btnDelete" name="btnDelete" class="btn btn-primary btn-lg btn-block" onclick="godelete();" style="width: 100px; height: 40px; font-size: 15px;">강퇴</button>
+                        </div>
                     </div>
-                    <div class="d-flex justify-content-sm-end ml-2 mr-3">
-                        <button name="btnDelete" class="btn btn-primary btn-lg btn-block" style="width: 100px; height: 40px; font-size: 15px;">강퇴</button>
-                    </div>
-                </div>
+
+                </form>
 
                 <div class="d-flex justify-content-center">
                     <!-- Pagination with icons -->
@@ -221,27 +224,6 @@
         });
     });
 
-    // 삭제 버튼 눌렀을 때
-    document.querySelector("#btnDelete").addEventListener("click", (e) => {
-        var check = document.querySelectorAll("input[type ='checkbox']:checked");
-        console.log(check);
-        if (check.length == 0) {
-            alert("하나 이상 선택하세요.");
-            e.preventDefault();
-            return false;
-        } else {
-            let deleteOk = confirm("정말 강퇴하겠습니까?");
-            if (deleteOk) {
-
-                console.log(check);
-                frm.submit();
-
-            } else {
-                e.preventDefault();
-                return false;
-            }
-        }
-    });
 
     const frmSearch = document.getElementById("frmSearch");
     //검색창
@@ -249,7 +231,7 @@
 
         const frmSearch = document.getElementById("frmSearch");
         //엔터키로 검색 가능
-        document.getElementById('search_word').addEventListener('keypress', function(e) {
+        document.getElementById('search_word').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 searchMembers();
@@ -257,23 +239,50 @@
         });
 
         frmSearch.submit();
-
     }
 
-    const search_type = document.getElementById("search_type");
-    const member_type = document.getElementById("member_type");
+    function godelete() {
+            var check = document.querySelectorAll("input[type ='checkbox']:checked");
+            console.log(check);
+            if (check.length == 0) {
+                alert("하나 이상 선택하세요.");
+
+                return false;
+            } else {
+                let deleteOk = confirm("정말 강퇴하겠습니까?");
+                if (deleteOk) {
+                    console.log(check);
+                    document.getElementById("deleteForm").submit();
+                } else {
+                    return false;
+                }
+            }
+    }
 
 
+   /* function godelete(e) {
+        // 삭제 버튼 눌렀을 때
+        document.querySelector("#btnDelete").addEventListener("click", (e) => {
+            var check = document.querySelectorAll("input[type ='checkbox']:checked");
+            console.log(check);
+            if (check.length == 0) {
+                alert("하나 이상 선택하세요.");
+                e.preventDefault();
+                return false;
+            } else {
+                let deleteOk = confirm("정말 강퇴하겠습니까?");
+                if (deleteOk) {
+                    console.log(check);
+                    frm.submit();
 
+                } else {
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        });
+    }*/
 
-    document.getElementById('btnSearch').addEventListener('click', function(e) {
-
-
-        if(search_word == null) {
-            e.preventDefault();
-        }
-
-    });
 </script>
 
 <script src="/resources/vendors/scripts/core.js"></script>

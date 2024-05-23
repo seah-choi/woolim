@@ -15,4 +15,8 @@ public interface MemberServiceIf {
     MemberDTO memberView(String member_id);
 
     PageResponseDTO<MemberDTO> adminMemberList(PageRequestDTO pageRequestDTO);
+
+    int deleteMemberList(Integer[] idxList);
+
+    int adminDetail(MemberDTO memberDTO);
 }

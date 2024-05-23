@@ -20,4 +20,8 @@ public interface MemberMapper {
     int admin_total_count(PageRequestDTO requestDTO);
 
     int changePoint(MemberVO memberVO);
+
+    int deleteMemberList(Integer[] idxList);
+
+    int adminDetail(MemberVO memberVO);
 }
