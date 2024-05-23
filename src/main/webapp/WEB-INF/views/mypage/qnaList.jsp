@@ -125,7 +125,7 @@
                         </c:when>
                         <c:otherwise>
                             <tr>
-                                <td colspan="4">작성한 게시글이 없습니다.</td>
+                                <td colspan="4">작성한 게시글이 없습니다</td>
                             </tr>
                         </c:otherwise>
                     </c:choose>
