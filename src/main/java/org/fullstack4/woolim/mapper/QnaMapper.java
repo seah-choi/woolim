@@ -14,6 +14,8 @@ public interface QnaMapper {
     int ref_update(int qna_idx);
     int file_regist(QnaFileVO qnaFileVO);
     int total_count(PageRequestDTO pageRequestDTO);
-
+    int delete(int qna_idx);
+    int modify(QnaVO qnaVO);
     List<QnaVO> qnaListByPage(PageRequestDTO pageRequestDTO);
+    QnaVO view(int qna_idx);
 }

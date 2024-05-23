@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: user
@@ -29,10 +28,8 @@
         }
 
         #list a {
-            padding-left: 0;
             color: #68afcb !important;
             text-decoration: none;
-            font-weight: bold;
         }
 
         #list{
@@ -40,17 +37,29 @@
             width: 1000px;
             padding-top: 30px;
         }
-        #date {
-            color: #8b8686;
-            margin-left: 10px;
+
+        #search {
+            background: #68afcb;
+            color: #fff;
+            border: none;
         }
-        #count {
-            color: #8b8686;
-            margin-left: 10px;
+        #drop{
+            border: 1px solid #dee2e6;
         }
-        #se {
-            display: flex;
-            justify-content: space-between;
+
+        #btn_regist {
+            background: #68afcb;
+            color: #fff;
+        }
+
+        .page-item.active .page-link {
+            background-color: #68afcb !important;
+            color: #fff !important;
+            border-color : #68afcb !important;
+        }
+
+        a {
+            text-decoration: none !important;
         }
         #btn_modify{
             background: #68afcb;
@@ -62,33 +71,6 @@
             border: 1px solid #68afcb;
             margin-right: 5px;
         }
-        a {
-            text-decoration: none !important;
-        }
-        #cmCount {
-            color:#68afcb;
-            font-weight: bold;
-        }
-        #btn_comment{
-            background: #68afcb;
-            color: #fff;
-            width: 100px;
-            border-radius: 0;
-        }
-        #floatingTextarea{
-            width: 700px;
-        }
-        #comment{
-            padding: 10px;
-            margin-bottom: 50px;
-        }
-        #cmModify{
-            border: none;
-        }
-        #cmDelete{
-            border: none;
-        }
-
     </style>
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
@@ -112,47 +94,34 @@
             <jsp:include page="/WEB-INF/views/common/mypageSide.jsp"/>
             <div class="col-lg-9 order-1 order-lg-2">
                 <div id="list">
-                    <form id="frmDelete" action="/mypage/qnaDelete" method="post">
-                        <input type="hidden" name="qna_idx" value="${qnaDTO.qna_idx}">
-                        <h5 style="font-weight: bold">${qnaDTO.qna_title}</h5>
-                        <div id="se">
-                            <div>
-                                <span id="date">${qnaDTO.qna_reg_date}</span>
-                            </div>
+                    <h5 style="font-weight: bold">1 : 1 문의하기</h5>
+                    <hr>
+                    <br>
+                    <form action="/mypage/qnaModify" id="frmModify" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
+                        <input type="hidden" name="qna_category" value="A">
+                        <input type="hidden" name="qna_idx" value="${qnaDTO.qna_idx}" >
+                        <div class="form-floating">
+                            <textarea class="form-control" name="qna_title" placeholder="Leave a comment here" id="floatingTextarea">${qnaDTO.qna_title}</textarea>
+                            <label for="floatingTextarea">제목</label>
                         </div>
-                        <hr>
-                        <div style="white-space: pre-wrap;">
-                            <textarea class="form-control" rows="15" placeholder="Leave a comment here" style="resize: none" readonly>${qnaDTO.qna_content}</textarea>
-
+                        <br>
+                        <input type="file" class="form-control" name="files" id="file" multiple>
+                        <br>
+                        <div>
+                            <textarea id="summernote" name="qna_content">${qnaDTO.qna_content}</textarea>
                         </div>
+                        <br>
                         <div style="display: flex;justify-content: center;">
                             <div>
                                 <button type="button" class="btn" id="btn_back" onclick="location.href='/mypage/qnaList'">목록</button>
                             </div>
                             <div>
-                                <button type="button" class="btn" id="btn_modify" onclick="location.href='/mypage/qnaModify?qna_idx='+${qnaDTO.qna_idx}">수정</button>
-                                <button type="submit" class="btn btn-secondary" id="btn_delete">삭제</button>
+                                <button type="submit" class="btn" id="btn_modify">수정</button>
+                                <button type="button" class="btn btn-secondary" id="btn_delete" onclick="location.href='/mypage/qnaView?qna_idx='+${qnaDTO.qna_idx}">취소</button>
                             </div>
                         </div>
                     </form>
-                    <br><br>
-                    <c:if test="${qnaDTO.qna_answer_status == 'Y'}">
-                    <div id="comment">
-                        <h5 style="font-weight: bold">답변</h5>
-                        <div>
-                            <div>
-                                <span>${qnaDTO.qna_reg_date}</span>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="form-floating" style="margin-top: 10px;margin-bottom: 40px;white-space: pre-wrap;">
-                            <textarea class="form-control" rows="15" style=" height:373px; resize:none" placeholder="Leave a comment here">${qnaDTO.answer}</textarea>
-                        </div>
-
-                    </div>
-                    </c:if>
-
-
                 </div>
             </div>
         </div>
@@ -170,5 +139,30 @@
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
+<link href="/resources/css/summernote/summernote-lite.css" rel="stylesheet">
+<script src="/resources/js/summernote/summernote-lite.js"></script>
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        height: 500,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['codeview', 'help']]
+        ]
+
+    });
+    let btn_modify = document.getElementById("btn_modify");
+    btn_modify.addEventListener("click", function(e){
+       e.preventDefault();
+       let frmModify = document.getElementById("frmModify");
+        frmModify.submit();
+    });
+</script>
 </body>
 </html>

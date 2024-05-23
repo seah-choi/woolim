@@ -61,6 +61,22 @@
         </where>
         limit #{page_skip_count}, #{page_size}
     </select>
+    <select id="view" resultType="org.fullstack4.woolim.domain.QnaVO">
+        SELECT qna_idx, member_id, qna_title, qna_content, qna_answer_YN, qna_category, qna_answer, qna_reg_date, qna_answer_date, ref_idx, qna_answer_status
+        FROM woo_qna
+        WHERE qna_idx = #{qna_idx}
+    </select>
+    <delete id="delete">
+        DELETE
+        FROM woo_qna
+        WHERE qna_idx = #{qna_idx}
+    </delete>
+    <update id="modify">
+        UPDATE woo_qna
+        SET qna_title = #{qna_title},
+            qna_content = #{qna_content}
+        WHERE qna_idx = #{qna_idx}
+    </update>
 
 
 

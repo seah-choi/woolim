@@ -168,7 +168,40 @@ public class MypageController {
         }
     }
     @GetMapping("/qnaView")
-    public void GETQnaView(){
+    public void GETQnaView(@RequestParam(name = "qna_idx")int qna_idx,
+                           Model model){
+        QnaDTO qnaDTO = qnaService.view(qna_idx);
+        model.addAttribute("qnaDTO", qnaDTO);
+    }
+    @GetMapping("/qnaModify")
+    public void GETQnaModify(@RequestParam(name = "qna_idx")int qna_idx,
+                           Model model){
+        QnaDTO qnaDTO = qnaService.view(qna_idx);
+        model.addAttribute("qnaDTO", qnaDTO);
+    }
+    @PostMapping("/qnaModify")
+    public String POSTQnaModify(@Valid QnaDTO qnaDTO,
+                              BindingResult bindingResult,
+                              MultipartHttpServletRequest files,
+                              HttpServletRequest req,
+                              RedirectAttributes redirectAttributes){
+        int result = qnaService.modify(qnaDTO);
+        if(result >0){
+            return "redirect:/mypage/qnaView?qna_idx="+qnaDTO.getQna_idx();
+        }
+        else{
+            return "redirect:/mypage/qnaModify?qna_idx="+qnaDTO.getQna_idx();
+        }
+    }
 
+    @PostMapping("/qnaDelete")
+    public String POSTQnaDelete(@RequestParam(name = "qna_idx")int qna_idx){
+        int result = qnaService.delete(qna_idx);
+        if(result>0){
+            return "redirect:/mypage/qnaList";
+        }
+        else {
+            return "redirect:/mypage/qnaView?qna_idx="+qna_idx;
+        }
     }
 }

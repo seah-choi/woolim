@@ -117,7 +117,7 @@
                                 <tr>
                                     <th scope="row">${total_count - i.index - responseDTO.page_skip_count}</th>
                                     <td>${qnaDTO.qna_answer_status}</td>
-                                    <td><a href="/mypage/qnaView">${qnaDTO.qna_title}</a></td>
+                                    <td><a href="/mypage/qnaView?qna_idx=${qnaDTO.qna_idx}">${qnaDTO.qna_title}</a></td>
                                     <td>${qnaDTO.qna_reg_date}</td>
                                 </tr>
                             </c:forEach>
@@ -139,21 +139,21 @@
                 </div>
                 <nav class="blog-pagination justify-content-center d-flex">
                     <ul class="pagination">
-<%--                        <li class="page-item <c:if test="${!responseDTO.prev_page_flag}">disabled</c:if>">--%>
-<%--                            <a class="page-link" href="${responseDTO.linked_params}&page=${((responseDTO.page - responseDTO.page_block_size) >= 1) ? (responseDTO.page - responseDTO.page_block_size) : 1}" aria-label="Previous">--%>
-<%--                                <span aria-hidden="true">&laquo;</span>--%>
-<%--                            </a>--%>
-<%--                        </li>--%>
+                        <li class="page-item <c:if test="${!responseDTO.prev_page_plag}">disabled</c:if>">
+                            <a class="page-link" href="/mypage/qnaList?page=${((responseDTO.page - responseDTO.page_block_size) >= 1) ? (responseDTO.page - responseDTO.page_block_size) : 1}${responseDTO.linkParams}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
                         <c:forEach var="li" begin="${responseDTO.page_block_start}" end="${responseDTO.page_block_end}">
                             <li class="page-item <c:if test="${responseDTO.page eq li}">active</c:if> ">
                                 <a class="page-link" href="/mypage/qnaList?page=${li}${responseDTO.linkParams}">${li}</a>
                             </li>
                         </c:forEach>
-<%--                        <li class="page-item <c:if test="${!responseDTO.next_page_flag}">disabled</c:if>">--%>
-<%--                            <a class="page-link" href="${responseDTO.linked_params}&page=${(responseDTO.page + responseDTO.page_block_size) <= responseDTO.total_page ? (responseDTO.page + responseDTO.page_block_size) : responseDTO.total_page}" aria-label="Next">--%>
-<%--                                <span aria-hidden="true">&raquo;</span>--%>
-<%--                            </a>--%>
-<%--                        </li>--%>
+                        <li class="page-item <c:if test="${!responseDTO.next_page_plag}">disabled</c:if>">
+                            <a class="page-link" href="/mypage/qnaList?page=${(responseDTO.page + responseDTO.page_block_size) <= responseDTO.total_page ? (responseDTO.page + responseDTO.page_block_size) : responseDTO.total_page}${responseDTO.linkParams}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <div style="display: flex;justify-content: flex-end;">
@@ -162,7 +162,6 @@
             </div>
         </div>
     </div>
-    ${responseDTO}
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
