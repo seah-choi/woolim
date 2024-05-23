@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: user
@@ -31,41 +32,42 @@
         <div class="row">
             <jsp:include page="/WEB-INF/views/common/mypageSide.jsp"/>
             <div class="col-lg-9 order-1 order-lg-2">
+                <h5 style="font-weight: bold">회원 정보</h5>
+                <hr>
                 <div class="register-form">
-                    <h2>회원 정보 수정</h2>
                     <form action="#">
                         <input type="hidden" name="member_idx" value="">
                         <label for="member_id">아이디</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="member_id" id="member_id">
+                            <input type="text" class="form-control" name="member_id" id="member_id" value="${memberDTO.member_id}" readonly>
                         </div>
                         <br>
                         <label for="member_pwd">비밀번호</label>
                         <div class="input-group">
-                            <input name="member_pwd" class="form-control" type="text" id="member_pwd">
+                            <input name="member_pwd" class="form-control" type="password" id="member_pwd">
                         </div>
                         <br>
                         <label for="member_pwd2">비밀번호 확인</label>
                         <div class="input-group">
-                            <input type="text"  class="form-control" id="member_pwd2" name="member_pwd2">
+                            <input type="password"  class="form-control" id="member_pwd2" name="member_pwd2">
                         </div>
                         <br>
                         <label for="member_name">이름</label>
                         <div class="input-group">
-                            <input name="member_name" class="form-control" type="text" id="member_name">
+                            <input name="member_name" class="form-control" type="text" id="member_name" value="${memberDTO.member_name}" readonly>
                         </div>
                         <br>
                         <label for="member_email">이메일</label>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control"  name="member_email" id="member_email">
+                            <input type="text" class="form-control"  name="member_email" id="member_email" value="${memberDTO.member_email}">
                             &nbsp;&nbsp;
                             <label> @ </label>
                             &nbsp;&nbsp;
                             <select class="form-control" name="member_email_addr">
-                                <option>naver.com</option>
-                                <option>daum.net</option>
-                                <option>gmail.com</option>
-                                <option>hanmail.net</option>
+                                <option <c:if test="${memberDTO.member_email_addr == 'naver.com'}">selected</c:if>>naver.com</option>
+                                <option <c:if test="${memberDTO.member_email_addr == 'daum.net'}">selected</c:if> >daum.net</option>
+                                <option <c:if test="${memberDTO.member_email_addr == 'gmail.com'}">selected</c:if>>gmail.com</option>
+                                <option <c:if test="${memberDTO.member_email_addr == 'hanmail.net'}">selected</c:if>>hanmail.net</option>
                             </select>
                         </div>
                         <label for="member_phone2">핸드폰</label>
@@ -86,7 +88,7 @@
                             <div>
                                 <div class="mb-3">
                                     <div class="input-group">
-                                        <input type="text" name="member_zone_code" style="border: 1px solid #ced4da;" data-name="우편번호" class="form-control" placeholder="우편번호" value="" id="sample4_postcode" aria-label="Recipient's username" aria-describedby="button-addon2"  onclick="sample4_execDaumPostcode()">
+                                        <input type="text" name="member_zone_code" style="border: 1px solid #ced4da; width: 373px" data-name="우편번호" class="form-control" placeholder="우편번호" value="${memberDTO.member_zonecode}" id="sample4_postcode" aria-label="Recipient's username" aria-describedby="button-addon2"  onclick="sample4_execDaumPostcode()">
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-info"  type="button" id="button-addon2" onclick="">우편번호 찾기</button>
                                         </div>
@@ -94,11 +96,11 @@
                                     <small id="err_zip_code" class="info text-danger"></small>
                                 </div>
                                 <div class="input-group">
-                                    <input type="text" name="addr1" class="form-control" style="border: 1px solid #ced4da;" data-name="주소" name="member_addr" value="" id="sample4_roadAddress" placeholder="도로명주소">
+                                    <input type="text" name="addr1" class="form-control" style="border: 1px solid #ced4da;" data-name="주소" name="member_addr" value="${memberDTO.member_addr}" id="sample4_roadAddress" placeholder="도로명주소">
                                     <small id="err_addr1" class="info text-danger"></small>
                                 </div>
                                 <div class="input-group">
-                                    <input type="text" name="addr2" class="form-control" style="border: 1px solid #ced4da;" id="" data-name="member_addr_detail" placeholder="상세주소">
+                                    <input type="text" name="addr2" class="form-control" style="border: 1px solid #ced4da;" id="" data-name="member_addr_detail" placeholder="상세주소" value="${memberDTO.member_addr_detail}">
                                     <small id="err_addr2" class="info text-danger"></small>
                                 </div>
                                 <span id="guide" style="color:#999;display:none"></span>

@@ -30,6 +30,8 @@
         <div class="row">
             <jsp:include page="/WEB-INF/views/common/mypageSide.jsp"/>
             <div class="col-lg-9 order-1 order-lg-2">
+                <h5 style="font-weight: bold">찜 강의</h5>
+                <hr>
                 <div class="product-show-option">
                     <div class="row">
                         <div class="col-lg-7 col-md-7">

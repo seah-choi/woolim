@@ -38,6 +38,8 @@ public class LoginCotnroller {
             if (memberService.login(id, pwd, req)) {
                 resultMap.put("result", "success");
                 resultMap.put("msg","성공적으로 로그인되었습니다.");
+                HttpSession session = req.getSession();
+                session.setAttribute("member_id", id);
             } else {
                 resultMap.put("result", "false");
                 resultMap.put("msg","비밀번호가 틀렸습니다.");
