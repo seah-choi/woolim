@@ -31,4 +31,11 @@
         INSERT INTO woo_payment(payment_num,member_id,price,payment_reg_date,payment_type,payment_title)
         VALUES(#{payment_num},#{member_id},#{price},NOW(),#{payment_type},#{payment_title})
     </insert>
+
+    <select id="GetPayment">
+        select price,payment_reg_date,payment_type,payment_title,payment_reg_date
+        from woo_payment
+        where member_id=#{param1}
+
+    </select>
 </mapper>

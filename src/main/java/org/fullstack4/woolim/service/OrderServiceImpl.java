@@ -10,6 +10,7 @@ import org.fullstack4.woolim.mapper.MemberMapper;
 import org.fullstack4.woolim.mapper.OrderMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,29 +26,22 @@ public class OrderServiceImpl implements OrderServiceIf{
     private final CartMapper cartMapper;
 
     @Override
+    @Transactional(rollbackFor = {InsufficientStockException.class, Exception.class})
     public void DoOrder(OrderDTO orderDTO, MemberDTO memberDTO, PaymentDTO paymentDTO, List<CartDTO> cartDTO, List<LectureDTO> lectureDTOList) throws InsufficientStockException {
         OrderVO orderVO = modelMapper.map(orderDTO, OrderVO.class);
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
         List<CartVO> cartVO = cartDTO.stream().map(dto->modelMapper.map(dto,CartVO.class)).collect(Collectors.toList());
         PaymentVO paymentVO = modelMapper.map(paymentDTO, PaymentVO.class);
 
-        log.info(orderVO.toString());
-        log.info(memberVO.toString());
-        log.info(cartVO.toString());
-        log.info(paymentVO.toString());
 
-        log.info(orderDTO);
         for(LectureDTO lectureDTO : lectureDTOList){
             orderDTO.setPrice(lectureDTO.getLecture_sale_price());
             orderDTO.setLecture_idx(lectureDTO.getLecture_idx());
-            log.info(orderDTO);
             OrderDetailVO orderDetailVO = modelMapper.map(orderDTO, OrderDetailVO.class);
-            log.info(orderDetailVO);
             orderMapper.DoOrderDetail(orderDetailVO);
             orderMapper.Enrolment(orderDetailVO);
         }
 
-        log.info("OrderVO :{}", orderVO.toString());
         orderMapper.DoOrder(orderVO);
         orderMapper.InsertPayment(paymentVO);
         memberMapper.changePoint(memberVO);
@@ -60,5 +54,23 @@ public class OrderServiceImpl implements OrderServiceIf{
     @Override
     public int DoOrderDetail(OrderDTO orderDTO) {
         return 0;
+    }
+
+    @Override
+    public int PointCharge(MemberDTO memberDTO) {
+        MemberVO memberVO = modelMapper.map(memberDTO,MemberVO.class);
+        int result = memberMapper.changePoint(memberVO);
+        return result;
+    }
+
+    @Override
+    public List<PaymentDTO> getPayment(String member_id) {
+        List<PaymentVO> paymentVO = orderMapper.GetPayment(member_id);
+        log.info("paymentVO: " + paymentVO);
+        List<PaymentDTO> paymentDTO = paymentVO.stream()
+                .map(vo->modelMapper.map(vo,PaymentDTO.class))
+                .collect(Collectors.toList());
+        log.info("paymentDTO: " + paymentDTO);
+        return paymentDTO;
     }
 }

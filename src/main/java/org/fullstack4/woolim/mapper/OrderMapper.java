@@ -5,10 +5,13 @@ import org.fullstack4.woolim.domain.OrderDetailVO;
 import org.fullstack4.woolim.domain.OrderVO;
 import org.fullstack4.woolim.domain.PaymentVO;
 
+import java.util.List;
+
 @Mapper
 public interface OrderMapper {
     int DoOrder(OrderVO orderVO);
     int DoOrderDetail(OrderDetailVO orderDetailVO);
     int Enrolment(OrderDetailVO orderDetailVO);
     int InsertPayment(PaymentVO paymentVO);
+    List<PaymentVO> GetPayment(String member_id);
 }

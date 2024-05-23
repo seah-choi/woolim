@@ -96,7 +96,7 @@
         <where>
 
             <if test="member_type !=null and member_type !=''">
-                member_category = #{member_type}
+                and member_category = #{member_type}
             </if>
             <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
                 and member_reg_date >= #{search_date1}
@@ -104,30 +104,30 @@
             <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
                 and member_reg_date <![CDATA[<=]]> #{search_date2}
             </if>
-            <if test=' search_word != null and search_word != "" '>
+            <if test="search_word != null and search_word != ''">
                 AND member_name LIKE CONCAT('%',#{search_word}, '%')
-                AND member_Id LIKE CONCAT('%',#{search_word}, '%')
+                or member_Id LIKE CONCAT('%',#{search_word}, '%')
             </if>
             <if test="search_types != null and search_types !=''">
                 <foreach collection="search_types" item="type" >
                     <choose>
                         <when test="type == 't'.toString()">
-                            or member_id like concat('%', #{search_word},'%')
+                            and member_id like concat('%', #{search_word},'%')
                         </when>
                         <when test="type == 'c'.toString()">
-                            or member_name like concat('%', #{search_word},'%' )
-                        </when>
-                        <when test="type == 'admin'.toString()">
-                            or member_category like concat('%', #{search_word},'%' )
-                        </when>
-                        <when test="type == 'student'.toString()">
-                            or member_category like concat('%', #{search_word},'%' )
-                        </when>
-                        <when test="type == 'teacher'.toString()">
-                            or member_category like concat('%', #{search_word},'%' )
+                            and member_name like concat('%', #{search_word},'%' )
                         </when>
                     </choose>
                 </foreach>
+            </if>
+            <if test="member_type == 'admin'.toString()">
+                and member_category = 'admin'
+            </if>
+            <if test="member_type == 'student'.toString()">
+                and member_category = 'student'
+            </if>
+            <if test="member_type == 'teacher'.toString()">
+                and member_category = 'teacher'
             </if>
         </where>
         ORDER by member_idx DESC
@@ -140,11 +140,11 @@
         <where>
 
             <if test="member_type !=null and member_type !=''">
-                member_category = #{member_type}
+                and member_category = #{member_type}
             </if>
-            <if test=' search_word != null and search_word != "" '>
+            <if test="search_word != null and search_word != '' ">
                 AND member_name LIKE CONCAT('%',#{search_word}, '%')
-                AND member_Id LIKE CONCAT('%',#{search_word}, '%')
+                or member_Id LIKE CONCAT('%',#{search_word}, '%')
             </if>
             <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
                 and member_reg_date >= #{search_date1}
@@ -156,27 +156,54 @@
                 <foreach collection="search_types" item="type" >
                     <choose>
                         <when test="type == 't'.toString()">
-                            or member_id like concat('%', #{search_word},'%')
+                            and member_id like concat('%', #{search_word},'%')
                         </when>
                         <when test="type == 'c'.toString()">
-                            or member_name like concat('%', #{search_word},'%' )
+                            and member_name like concat('%', #{search_word},'%' )
                         </when>
-                        <when test="type == 'admin'.toString()">
-                            or member_category like concat('%', #{search_word},'%' )
-                        </when>
-                        <when test="type == 'student'.toString()">
-                            or member_category like concat('%', #{search_word},'%' )
-                        </when>
-                        <when test="type == 'teacher'.toString()">
-                            or member_category like concat('%', #{search_word},'%' )
-                        </when>
+
                     </choose>
                 </foreach>
+            </if>
+            <if test="member_type == 'admin'.toString()">
+                and member_category = 'admin'
+            </if>
+            <if test="member_type == 'student'.toString()">
+                and member_category = 'student'
+            </if>
+            <if test="member_type == 'teacher'.toString()">
+                and member_category = 'teacher'
             </if>
         </where>
     </select>
 
     <update id="changePoint">
-        Update SET woo_member point=point+#{member_point} where member_id=#{member_id}
+        Update woo_member SET member_point=member_point+#{member_point} where member_id=#{member_id}
+    </update>
+
+    <update id="deleteMemberList" parameterType="java.util.Arrays">
+        update woo_member set member_status = 'Y'
+        <where>
+            member_idx IN
+            <foreach collection="array" item="item" index="index" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </where>
+    </update>
+
+    <update id="adminMemberStatus" >
+        update woo_member set member_category = #{member_category}
+        <where>
+            member_idx IN
+            <foreach collection="array" item="item" index="index" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </where>
+    </update>
+
+    <update id="adminDetail">
+        update woo_member set member_category = #{member_category},
+                              member_status = #{member_status}
+        where member_id = #{member_id}
     </update>
 </mapper>

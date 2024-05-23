@@ -63,19 +63,19 @@
                                     <th scope="col">구분</th>
                                     <th scope="col">내용</th>
                                     <th scope="col">금액</th>
-                                    <th scope="col">사용 후 포인트</th>
                                     <th scope="col">날짜</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <th scope="row">충전</th>
-                                    <td id="title">포인트 충전</td>
-                                    <td>2024</td>
-                                    <td>2024</td>
-                                    <td>2024-05-07</td>
-                                </tr>
+                                <c:forEach items="${paymentDTO}" var="list">
+                                    <tr>
+                                        <th scope="row">${list.payment_type}</th>
+                                        <td id="title">${list.payment_title}</td>
+                                        <td>${list.price}</td>
+                                        <td>${list.payment_reg_date}</td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                             <nav class="blog-pagination justify-content-center d-flex mt-5">
@@ -112,39 +112,6 @@
 </section>
 <!-- Shopping Cart Section End -->
 
-<!-- Partner Logo Section Begin -->
-<div class="partner-logo">
-    <div class="container">
-        <div class="logo-carousel owl-carousel">
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-1.png" alt="">
-                </div>
-            </div>
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-2.png" alt="">
-                </div>
-            </div>
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-3.png" alt="">
-                </div>
-            </div>
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-4.png" alt="">
-                </div>
-            </div>
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-5.png" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Partner Logo Section End -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
@@ -160,6 +127,20 @@
 <script>
     var IMP = window.IMP;
     IMP.init("imp78587533");
+    var list;
+
+    $.ajax({
+        url:"/mypage/viewMember.dox",
+        dataType:"json",
+        type : "POST",
+        data : {
+            "member_id":"${sessionScope['member_id']}"
+        },
+        success : function(data) {
+            list = data.dto;
+            console.log(list);
+        }
+    });
 
     function requestPay() {
         // // let targetVal = parseInt(uncomma(target.value));
@@ -177,11 +158,9 @@
             merchant_uid: now+"-"+rand,
             name: '포인트',
             amount: 100,
-            // buyer_email: list.email,
-            // buyer_name: list.member_name,
-            // buyer_tel: list.phone,
-            // buyer_addr: list.addr1 +" " +list.addr2,
-            // buyer_postcode: list.zipcode
+            buyer_email: list.member_email + list.member_email_addr,
+            buyer_name: list.member_name,
+            buyer_tel: list.member_phone,
         }, function (rsp) { // callback
             if(rsp.success){
                 console.log(rsp.amount);
