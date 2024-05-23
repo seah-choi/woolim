@@ -55,7 +55,7 @@
                 <h4 class="h4">회원 목록</h4>
                 <br>
                 <div class="searchBox">
-                    <form role="search" id="frmSearch" class="searchForm">
+                    <form role="search" id="frmSearch" class="searchForm" action="/admin/member/list">
                         <div class="mb-3 row d-flex">
                             <label class="col-sm-1 col-form-label fontWe-700 mt-4">검색 범위</label>
 
@@ -123,36 +123,23 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>
-                            <div class="custom-control custom-checkbox mb-5">
-                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                <label class="custom-control-label" for="customCheck2"><span></span></label>
-                            </div>
-                        </td>
-                        <td>1</td>
-                        <td>수능특강 국어</td>
-                        <td>국어</td>
-                        <td>김철수</td>
-                        <td>2024.03.01~2024.05.21</td>
-                        <td>2024.02.15</td>
-                    </tr>
 
-
-                    <tr>
-                        <td>
-                            <div class="custom-control custom-checkbox mb-5">
-                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                <label class="custom-control-label" for="customCheck2"><span></span></label>
-                            </div>
-                        </td>
-                        <td>1</td>
-                        <td>수능특강 국어</td>
-                        <td>국어</td>
-                        <td>김철수</td>
-                        <td>2024.03.01~2024.05.21</td>
-                        <td>2024.02.15</td>
-                    </tr>
+                    <c:forEach items="${memberList.dtolist}" var="list">
+                        <tr>
+                            <td>
+                                <div class="custom-control custom-checkbox mb-5">
+                                    <input type="checkbox" class="custom-control-input" value="${list.member_idx}" name="member_idx" id="${list.member_idx}">
+                                    <label class="custom-control-label" for="${list.member_idx}"><span></span></label>
+                                </div>
+                            </td>
+                            <td>${list.member_idx}</td>
+                            <td><a href="/admin/member/view?member_idx=${list.member_idx}">${list.member_name}</a></td>
+                            <td>${list.member_id}</td>
+                            <td>${list.member_category}</td>
+                            <td>${list.member_reg_date}</td>
+                            <td>${list.member_status}</td>
+                        </tr>
+                    </c:forEach>
 
                     </tbody>
 
