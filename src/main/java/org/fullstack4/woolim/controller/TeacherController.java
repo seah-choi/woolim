@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,10 +30,11 @@ public class TeacherController {
     private final ModelMapper modelMapper;
 
     @GetMapping("/list")
-    public void GETList(Model model,PageRequestDTO pageRequestDTO) {
+    public void GETList(Model model, PageRequestDTO pageRequestDTO,@RequestParam(defaultValue = "9") int page_size) {
         String member_type = "teacher";
-        pageRequestDTO.setPage_size(9);
+        pageRequestDTO.setPage_size(page_size);
         pageRequestDTO.setMember_type(member_type);
+        log.info(pageRequestDTO);
 
         PageResponseDTO<MemberDTO> responseDTO = memberServiceIf.MemberList(pageRequestDTO);
 
