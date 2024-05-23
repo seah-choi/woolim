@@ -102,8 +102,15 @@ public class MypageController {
         model.addAttribute("dtoList", dtoList);
     }
     @GetMapping("/qnaList")
-    public void GETQnaList(){
+    public void GETQnaList(PageRequestDTO pageRequestDTO,
+                           HttpServletRequest req,
+                           Model model){
+        HttpSession session = req.getSession();
+        String member_id = (String) session.getAttribute("member_id");
 
+        pageRequestDTO.setMember_id(member_id);
+        PageResponseDTO<QnaDTO> responseDTO = qnaService.qnaListByPage(pageRequestDTO);
+        model.addAttribute("responseDTO", responseDTO);
     }
     @GetMapping("/pointcharge")
     public void GETChargePoint() {
@@ -146,7 +153,7 @@ public class MypageController {
             log.info("=======================");
             if(map.get("result").equals("success")) {
                 QnaFileDTO qnaFileDTO = QnaFileDTO.builder()
-                        .qna_idx(result)
+                        .qna_idx(qnaDTO.getQna_idx())
                         .orgFile(map.get("orgName"))
                         .saveFile(map.get("newName")).build();
                 qnaService.file_regist(qnaFileDTO);
