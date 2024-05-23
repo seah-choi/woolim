@@ -10,5 +10,5 @@ public interface OrderServiceIf {
     void DoOrder(OrderDTO orderDTO, MemberDTO memberDTO, PaymentDTO paymentDTO, List<CartDTO> cartDTO, List<LectureDTO> lectureDTOList) throws InsufficientStockException;
     int DoOrderDetail(OrderDTO orderDTO);
     int PointCharge(MemberDTO memberDTO);
-    List<PaymentDTO> getPayment(String member_id);
+    PageResponseDTO<PaymentDTO> getPayment(PageRequestDTO pageRequestDTO);
 }
