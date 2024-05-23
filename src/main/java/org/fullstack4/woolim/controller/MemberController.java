@@ -6,12 +6,12 @@ import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.service.MemberServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Log4j2
 @Controller
@@ -38,6 +38,20 @@ public class MemberController {
         int result = memberService.regist(memberDTO);
         return "redirect:/";
     }
+    @PostMapping("/idCheck")
+    @ResponseBody
+    public int idCheck(@RequestParam(name = "member_id", defaultValue = "") String member_id,
+                        HttpServletResponse response) throws IOException {
+        log.info("---------------------");
+        log.info("MemberController => idCheck()");
+
+        int result = (int) memberService.id_check(member_id);
+        log.info("result : " + result);
+        log.info("---------------------");
+        return result;
+
+    }
+
 
 
 }

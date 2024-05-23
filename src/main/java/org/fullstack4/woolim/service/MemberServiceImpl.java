@@ -118,8 +118,8 @@ public class MemberServiceImpl implements MemberServiceIf{
     }
 
     @Override
-    public int login_check(String member_id) {
-        return memberMapper.login_check(member_id);
+    public int id_check(String member_id) {
+        return memberMapper.id_check(member_id);
     }
 
     @Override
