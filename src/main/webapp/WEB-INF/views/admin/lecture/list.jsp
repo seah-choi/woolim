@@ -12,7 +12,7 @@
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
-    <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+    <title>Admin</title>
 
     <!-- Site favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/resources/vendors/images/apple-touch-icon.png">
@@ -40,428 +40,11 @@
         gtag('config', 'UA-119386393-1');
     </script>
 
-    <style>
-        .table td,
-        .table th {
-            text-align: center;
-        }
-    </style>
+
 </head>
 <body>
-<%--<div class="pre-loader">
-    <div class="pre-loader-box">
-        <div class="loader-logo"><img src="/resources/vendors/images/deskapp-logo.svg" alt=""></div>
-        <div class='loader-progress' id="progress_div">
-            <div class='bar' id='bar1'></div>
-        </div>
-        <div class='percent' id='percent1'>0%</div>
-        <div class="loading-text">
-            Loading...
-        </div>
-    </div>
-</div>--%>
 
-<div class="header">
-    <div class="header-left">
-        <div class="menu-icon dw dw-menu"></div>
-        <div class="search-toggle-icon dw dw-search2" data-toggle="header_search"></div>
-        <div class="header-search">
-            <form>
-                <div class="form-group mb-0">
-                    <i class="dw dw-search2 search-icon"></i>
-                    <input type="text" class="form-control search-input" placeholder="Search Here">
-                    <div class="dropdown">
-                        <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
-                            <i class="ion-arrow-down-c"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <div class="form-group row">
-                                <label class="col-sm-12 col-md-2 col-form-label">From</label>
-                                <div class="col-sm-12 col-md-10">
-                                    <input class="form-control form-control-sm form-control-line" type="text">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-12 col-md-2 col-form-label">To</label>
-                                <div class="col-sm-12 col-md-10">
-                                    <input class="form-control form-control-sm form-control-line" type="text">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-12 col-md-2 col-form-label">Subject</label>
-                                <div class="col-sm-12 col-md-10">
-                                    <input class="form-control form-control-sm form-control-line" type="text">
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <button class="btn btn-primary">Search</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="header-right">
-        <div class="dashboard-setting user-notification">
-            <div class="dropdown">
-                <a class="dropdown-toggle no-arrow" href="javascript:;" data-toggle="right-sidebar">
-                    <i class="dw dw-settings2"></i>
-                </a>
-            </div>
-        </div>
-        <div class="user-notification">
-            <div class="dropdown">
-                <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
-                    <i class="icon-copy dw dw-notification"></i>
-                    <span class="badge notification-active"></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="notification-list mx-h-350 customscroll">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <img src="/resources/vendors/images/img.jpg" alt="">
-                                    <h3>John Doe</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/resources/vendors/images/photo1.jpg" alt="">
-                                    <h3>Lea R. Frith</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/resources/vendors/images/photo2.jpg" alt="">
-                                    <h3>Erik L. Richards</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/resources/vendors/images/photo3.jpg" alt="">
-                                    <h3>John Doe</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/resources/vendors/images/photo4.jpg" alt="">
-                                    <h3>Renee I. Hansen</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/resources/vendors/images/img.jpg" alt="">
-                                    <h3>Vicki M. Coleman</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="user-info-dropdown">
-            <div class="dropdown">
-                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-						<span class="user-icon">
-							<img src="/resources/vendors/images/photo1.jpg" alt="">
-						</span>
-                    <span class="user-name">Ross C. Lopez</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                    <a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
-                    <a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
-                    <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
-                    <a class="dropdown-item" href="login.html"><i class="dw dw-logout"></i> Log Out</a>
-                </div>
-            </div>
-        </div>
-        <div class="github-link">
-            <a href="https://github.com/dropways/deskapp" target="_blank"><img src="/resources/vendors/images/github.svg" alt=""></a>
-        </div>
-    </div>
-</div>
-
-<div class="right-sidebar">
-    <div class="sidebar-title">
-        <h3 class="weight-600 font-16 text-blue">
-            Layout Settings
-            <span class="btn-block font-weight-400 font-12">User Interface Settings</span>
-        </h3>
-        <div class="close-sidebar" data-toggle="right-sidebar-close">
-            <i class="icon-copy ion-close-round"></i>
-        </div>
-    </div>
-    <div class="right-sidebar-body customscroll">
-        <div class="right-sidebar-body-content">
-            <h4 class="weight-600 font-18 pb-10">Header Background</h4>
-            <div class="sidebar-btn-group pb-30 mb-10">
-                <a href="javascript:void(0);" class="btn btn-outline-primary header-white active">White</a>
-                <a href="javascript:void(0);" class="btn btn-outline-primary header-dark">Dark</a>
-            </div>
-
-            <h4 class="weight-600 font-18 pb-10">Sidebar Background</h4>
-            <div class="sidebar-btn-group pb-30 mb-10">
-                <a href="javascript:void(0);" class="btn btn-outline-primary sidebar-light ">White</a>
-                <a href="javascript:void(0);" class="btn btn-outline-primary sidebar-dark active">Dark</a>
-            </div>
-
-            <h4 class="weight-600 font-18 pb-10">Menu Dropdown Icon</h4>
-            <div class="sidebar-radio-group pb-10 mb-10">
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="sidebaricon-1" name="menu-dropdown-icon" class="custom-control-input" value="icon-style-1" checked="">
-                    <label class="custom-control-label" for="sidebaricon-1"><i class="fa fa-angle-down"></i></label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="sidebaricon-2" name="menu-dropdown-icon" class="custom-control-input" value="icon-style-2">
-                    <label class="custom-control-label" for="sidebaricon-2"><i class="ion-plus-round"></i></label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="sidebaricon-3" name="menu-dropdown-icon" class="custom-control-input" value="icon-style-3">
-                    <label class="custom-control-label" for="sidebaricon-3"><i class="fa fa-angle-double-right"></i></label>
-                </div>
-            </div>
-
-            <h4 class="weight-600 font-18 pb-10">Menu List Icon</h4>
-            <div class="sidebar-radio-group pb-30 mb-10">
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="sidebariconlist-1" name="menu-list-icon" class="custom-control-input" value="icon-list-style-1" checked="">
-                    <label class="custom-control-label" for="sidebariconlist-1"><i class="ion-minus-round"></i></label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="sidebariconlist-2" name="menu-list-icon" class="custom-control-input" value="icon-list-style-2">
-                    <label class="custom-control-label" for="sidebariconlist-2"><i class="fa fa-circle-o" aria-hidden="true"></i></label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="sidebariconlist-3" name="menu-list-icon" class="custom-control-input" value="icon-list-style-3">
-                    <label class="custom-control-label" for="sidebariconlist-3"><i class="dw dw-check"></i></label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="sidebariconlist-4" name="menu-list-icon" class="custom-control-input" value="icon-list-style-4" checked="">
-                    <label class="custom-control-label" for="sidebariconlist-4"><i class="icon-copy dw dw-next-2"></i></label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="sidebariconlist-5" name="menu-list-icon" class="custom-control-input" value="icon-list-style-5">
-                    <label class="custom-control-label" for="sidebariconlist-5"><i class="dw dw-fast-forward-1"></i></label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="sidebariconlist-6" name="menu-list-icon" class="custom-control-input" value="icon-list-style-6">
-                    <label class="custom-control-label" for="sidebariconlist-6"><i class="dw dw-next"></i></label>
-                </div>
-            </div>
-
-            <div class="reset-options pt-30 text-center">
-                <button class="btn btn-danger" id="reset-settings">Reset Settings</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="left-side-bar">
-    <div class="brand-logo">
-        <a href="index.html">
-            <img src="/resources/img/logo.png" alt="">
-        </a>
-        <div class="close-sidebar" data-toggle="left-sidebar-close">
-            <i class="ion-close-round"></i>
-        </div>
-    </div>
-    <div class="menu-block customscroll">
-        <div class="sidebar-menu">
-            <ul id="accordion-menu">
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="index.html">Dashboard style 1</a></li>
-                        <li><a href="index2.html">Dashboard style 2</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-edit2"></span><span class="mtext">Forms</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="form-basic.html">Form Basic</a></li>
-                        <li><a href="advanced-components.html">Advanced Components</a></li>
-                        <li><a href="form-wizard.html">Form Wizard</a></li>
-                        <li><a href="html5-editor.html">HTML5 Editor</a></li>
-                        <li><a href="form-pickers.html">Form Pickers</a></li>
-                        <li><a href="image-cropper.html">Image Cropper</a></li>
-                        <li><a href="image-dropzone.html">Image Dropzone</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-library"></span><span class="mtext">Tables</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="basic-table.html">Basic Tables</a></li>
-                        <li><a href="datatable.html">DataTables</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="calendar.html" class="dropdown-toggle no-arrow">
-                        <span class="micon dw dw-calendar1"></span><span class="mtext">Calendar</span>
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-apartment"></span><span class="mtext"> UI Elements </span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="ui-buttons.html">Buttons</a></li>
-                        <li><a href="ui-cards.html">Cards</a></li>
-                        <li><a href="ui-cards-hover.html">Cards Hover</a></li>
-                        <li><a href="ui-modals.html">Modals</a></li>
-                        <li><a href="ui-tabs.html">Tabs</a></li>
-                        <li><a href="ui-tooltip-popover.html">Tooltip &amp; Popover</a></li>
-                        <li><a href="ui-sweet-alert.html">Sweet Alert</a></li>
-                        <li><a href="ui-notification.html">Notification</a></li>
-                        <li><a href="ui-timeline.html">Timeline</a></li>
-                        <li><a href="ui-progressbar.html">Progressbar</a></li>
-                        <li><a href="ui-typography.html">Typography</a></li>
-                        <li><a href="ui-list-group.html">List group</a></li>
-                        <li><a href="ui-range-slider.html">Range slider</a></li>
-                        <li><a href="ui-carousel.html">Carousel</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-paint-brush"></span><span class="mtext">Icons</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="font-awesome.html">FontAwesome Icons</a></li>
-                        <li><a href="foundation.html">Foundation Icons</a></li>
-                        <li><a href="ionicons.html">Ionicons Icons</a></li>
-                        <li><a href="themify.html">Themify Icons</a></li>
-                        <li><a href="custom-icon.html">Custom Icons</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-analytics-21"></span><span class="mtext">Charts</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="highchart.html">Highchart</a></li>
-                        <li><a href="knob-chart.html">jQuery Knob</a></li>
-                        <li><a href="jvectormap.html">jvectormap</a></li>
-                        <li><a href="apexcharts.html">Apexcharts</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-right-arrow1"></span><span class="mtext">Additional Pages</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="video-player.html">Video Player</a></li>
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="forgot-password.html">Forgot Password</a></li>
-                        <li><a href="reset-password.html">Reset Password</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-browser2"></span><span class="mtext">Error Pages</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="400.html">400</a></li>
-                        <li><a href="403.html">403</a></li>
-                        <li><a href="404.html">404</a></li>
-                        <li><a href="500.html">500</a></li>
-                        <li><a href="503.html">503</a></li>
-                    </ul>
-                </li>
-
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-copy"></span><span class="mtext">Extra Pages</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="blank.html">Blank</a></li>
-                        <li><a href="contact-directory.html">Contact Directory</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="blog-detail.html">Blog Detail</a></li>
-                        <li><a href="product.html">Product</a></li>
-                        <li><a href="product-detail.html">Product Detail</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                        <li><a href="gallery.html">Gallery</a></li>
-                        <li><a href="pricing-table.html">Pricing Tables</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-list3"></span><span class="mtext">Multi Level Menu</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="javascript:;">Level 1</a></li>
-                        <li><a href="javascript:;">Level 1</a></li>
-                        <li><a href="javascript:;">Level 1</a></li>
-                        <li class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle">
-                                <span class="micon fa fa-plug"></span><span class="mtext">Level 2</span>
-                            </a>
-                            <ul class="submenu child">
-                                <li><a href="javascript:;">Level 2</a></li>
-                                <li><a href="javascript:;">Level 2</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="javascript:;">Level 1</a></li>
-                        <li><a href="javascript:;">Level 1</a></li>
-                        <li><a href="javascript:;">Level 1</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="sitemap.html" class="dropdown-toggle no-arrow">
-                        <span class="micon dw dw-diagram"></span><span class="mtext">Sitemap</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html" class="dropdown-toggle no-arrow">
-                        <span class="micon dw dw-chat3"></span><span class="mtext">Chat</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="invoice.html" class="dropdown-toggle no-arrow">
-                        <span class="micon dw dw-invoice"></span><span class="mtext">Invoice</span>
-                    </a>
-                </li>
-                <li>
-                    <div class="dropdown-divider"></div>
-                </li>
-                <li>
-                    <div class="sidebar-small-cap">Extra</div>
-                </li>
-                <li>
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon dw dw-edit-2"></span><span class="mtext">Documentation</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="introduction.html">Introduction</a></li>
-                        <li><a href="getting-started.html">Getting Started</a></li>
-                        <li><a href="color-settings.html">Color Settings</a></li>
-                        <li><a href="third-party-plugins.html">Third Party Plugins</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="https://dropways.github.io/deskapp-free-single-page-website-template/" target="_blank" class="dropdown-toggle no-arrow">
-                        <span class="micon dw dw-paper-plane1"></span>
-                        <span class="mtext">Landing Page <img src="/resources/vendors/images/coming-soon.png" alt="" width="25"></span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="mobile-menu-overlay"></div>
+<jsp:include page="/WEB-INF/views/admin/common/adminSidebar.jsp"/>
 
 <div class="main-container">
     <div class="pd-ltr-20 xs-pd-20-10">
@@ -471,11 +54,79 @@
             <div class="pd-20 card-box mb-30">
                 <h4 class="h4">강좌 목록</h4>
                 <br>
+                <div class="searchBox">
+                    <form role="search" id="frmSearch" class="searchForm">
+                        <div class="mb-3 row d-flex">
+                            <label class="col-sm-1 col-form-label fontWe-700 mt-4">검색 범위</label>
+
+                            <div class="col-md-1 col-sm-12">
+                                <div class="form-group">
+                                    <label>과목</label>
+                                    <select class="selectpicker form-control" name="search_type" data-size="5" data-style="btn-outline-info">
+                                        <option>전체</option>
+                                        <option>국어</option>
+                                        <option>영어</option>
+                                        <option>수학</option>
+                                        <option>과학</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-12">
+                                <div class="form-group">
+                                    <label>초중고</label>
+                                    <select id="schoolSelect" name="search_type" class="selectpicker form-control school" data-size="5" data-style="btn-outline-info">
+                                        <option>전체</option>
+                                        <option value="elementary">초등</option>
+                                        <option value="middle">중등</option>
+                                        <option value="high">고등</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-12">
+                                <div class="form-group">
+                                    <label>학년</label>
+                                    <select id="gradeSelect" name="search_type" class="selectpicker form-control grade" data-size="5" data-style="btn-outline-info">
+                                        <option>전체</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 ml-5" >
+                                <input class="searchInput" type="search" name="search_word"  id="search_word" placeholder="검색" aria-label="Search" value="">
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label class="ml-3 col-form-label fontWe-700">검색 기간</label>
+                            <div class="col-2">
+                                <input type="date" class="form-control" name="search_date1" id="search_date1" value="">
+                            </div>
+                            <div class="mt-2">
+                                <span class="justify-content-center">~</span>
+                            </div>
+                            <div class="col-2">
+                                <input type="date" class="form-control" name="search_date2" id="search_date2" value="">
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-warning" id="btnSearch" type="submit">검색</button>
+                                <button class="btn btn-warning" id="btnReset" type="reset" onclick="location.href='/data/main'">초기화</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <br>
                 <table class="table table-hover">
                     <thead>
                     <tr>
+                        <th>
+                            <div class="custom-control custom-checkbox mb-5">
+                                <input type="checkbox" class="custom-control-input" id="chkAll" name="chkAll">
+                                <label class="custom-control-label" for="chkAll">전체선택</label>
+                            </div>
+                        </th>
                         <th>NO.</th>
                         <th>강좌명</th>
+                        <th>과목명</th>
                         <th>강사명</th>
                         <th>강좌 기간</th>
                         <th>강좌 등록일</th>
@@ -483,29 +134,96 @@
                     </thead>
                     <tbody>
                     <tr>
+                        <td>
+                            <div class="custom-control custom-checkbox mb-5">
+                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                <label class="custom-control-label" for="customCheck2"><span></span></label>
+                            </div>
+                        </td>
                         <td>1</td>
                         <td>수능특강 국어</td>
+                        <td>국어</td>
                         <td>김철수</td>
                         <td>2024.03.01~2024.05.21</td>
                         <td>2024.02.15</td>
                     </tr>
                     <tr>
+                        <td>
+                            <input type="checkbox" id="${dto.comu_idx}" name="comu_idx"
+                                   value="${dto.comu_idx }"/>
+                            <label for="${dto.comu_idx }"><span></span></label>
+                        </td>
                         <td>2</td>
                         <td>수능특강 국어</td>
+                        <td>국어</td>
                         <td>김철수</td>
                         <td>2024.03.01~2024.05.21</td>
                         <td>2024.02.15</td>
                     </tr>
 
                     </tbody>
+
                 </table>
+                <div class="d-flex justify-content-sm-end">
+                    <a class="btn btn-primary btn-lg btn-block" href="/admin/lecture/regist" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
+                </div>
+
+                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                    <ul class="pagination">
+                        <li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous">
+                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">
+                                <i class="ion-chevron-left"></i></a></li>
+                        <li class="paginate_button page-item active">
+                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                        <li class="paginate_button page-item ">
+                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
+                        <li class="paginate_button page-item next" id="DataTables_Table_0_next">
+                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0" class="page-link">
+                                <i class="ion-chevron-right"></i></a></li>
+                    </ul>
+                </div>
+
             </div>
 
         </div>
-
     </div>
 </div>
 <!-- js -->
+<script>
+
+    //분류 셀렉박스
+    const gradeOptions = {
+        elementary: ['전체', '1학년', '2학년', '3학년', '4학년', '5학년', '6학년'],
+        middle: ['전체', '1학년', '2학년', '3학년'],
+        high: ['전체', '1학년', '2학년', '3학년'],
+    };
+
+    document.getElementById('schoolSelect').addEventListener('change', function () {
+        const schoolType = this.value;
+        const gradeSelect = document.getElementById('gradeSelect');
+
+        gradeSelect.innerHTML = '';
+
+        if (schoolType in gradeOptions) {
+            gradeOptions[schoolType].forEach(grade => {
+                const option = document.createElement('option');
+                option.value = grade;
+                option.textContent = grade;
+                gradeSelect.appendChild(option);
+            });
+        } else {
+            const option = document.createElement('option');
+            option.value = 'all';
+            option.textContent = '전체';
+            gradeSelect.appendChild(option);
+        }
+
+        $('.selectpicker').selectpicker('refresh');
+    });
+
+    document.getElementById('schoolSelect').dispatchEvent(new Event('change'));
+
+</script>
 <script src="/resources/vendors/scripts/core.js"></script>
 <script src="/resources/vendors/scripts/script.min.js"></script>
 <script src="/resources/vendors/scripts/process.js"></script>

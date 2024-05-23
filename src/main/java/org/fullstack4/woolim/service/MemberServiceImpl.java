@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class MemberServiceImpl implements MemberServiceIf{
 
     private final MemberMapper memberMapper;
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     @Override
     @Transactional(rollbackFor = {InsufficientStockException.class, Exception.class})

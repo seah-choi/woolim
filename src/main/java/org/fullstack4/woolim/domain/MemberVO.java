@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class MemberVO {
+
     private int member_idx;
 
     private String member_id;

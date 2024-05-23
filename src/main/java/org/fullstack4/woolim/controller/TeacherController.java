@@ -8,6 +8,8 @@ import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.dto.PageRequestDTO;
 import org.fullstack4.woolim.dto.PageResponseDTO;
 import org.fullstack4.woolim.mapper.MemberMapper;
+import org.fullstack4.woolim.service.MemberServiceIf;
+import org.fullstack4.woolim.service.MemberServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +25,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TeacherController {
 
-    private final MemberMapper memberMapper;
+    private final MemberServiceIf memberServiceIf;
     private final ModelMapper modelMapper;
 
     @GetMapping("/list")
@@ -31,17 +33,16 @@ public class TeacherController {
         String member_type = "teacher";
         pageRequestDTO.setPage_size(9);
         pageRequestDTO.setMember_type(member_type);
-        List<MemberVO> voList = memberMapper.MemberListbyPage(pageRequestDTO);
-        List<MemberDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo,MemberDTO.class)).collect(Collectors.toList());
-        int total_count = memberMapper.total_count(pageRequestDTO);
-        PageResponseDTO<MemberDTO> responseDTO = PageResponseDTO.<MemberDTO>withAll()
-                .total_count(total_count)
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
-                .build();
+
+        PageResponseDTO<MemberDTO> responseDTO = memberServiceIf.MemberList(pageRequestDTO);
 
         log.info(responseDTO);
         model.addAttribute("responseDTO", responseDTO);
+    }
+
+    @GetMapping("/view")
+    public void GETView() {
+
     }
 
     @GetMapping("/regist")

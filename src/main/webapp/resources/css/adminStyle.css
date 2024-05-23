@@ -479,7 +479,7 @@ textarea.form-control{
 }
 .form-control:focus , .custom-select:focus, .custom-file-input:focus{
     color: #131e22;
-    border-color: #1b00ff;
+    border-color: #68afcb;
     -webkit-box-shadow: 0px 0px 28px rgba(0, 0, 0, .1);
     -moz-box-shadow: 0px 0px 28px rgba(0, 0, 0, .1);
     box-shadow: 0px 0px 28px rgba(0, 0, 0, .1);
@@ -661,7 +661,7 @@ textarea.form-control{
     top: 2px;
     left: -30px;
     background-color: transparent;
-    border: 2px solid #1b00ff;
+    border: 2px solid #68afcb;
 }
 .custom-control-label::after{
     width: 20px;
@@ -675,20 +675,19 @@ textarea.form-control{
     background-color: none;
 }
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before{
-    background-color: #1b00ff;
+    background-color: #68afcb;
 }
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after{
-    background-image: url(../images/check-mark.png);
+    background-image: url(/resources/vendors/images/check-mark.png);
     background-repeat: no-repeat;
     background-position: center center;
 }
 .custom-radio .custom-control-input:checked ~ .custom-control-label::before{
-    background-color: #1b00ff;
+    background-color: #68afcb;
 }
 .custom-checkbox .custom-control-input:disabled:checked ~ .custom-control-label::before{
-    border: 2px solid rgba(0, 123, 255, 0);
+    border: 2px solid #68afcb;
 }
-
 
 
 .select2-container .select2-selection--single{
@@ -711,9 +710,9 @@ textarea.form-control{
     height: 43px;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice{
-    background-color: #1b00ff;
+    background-color: #4631ff;
     color: #ffffff;
-    border-color: #1b00ff;
+    border-color: #4631ff;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
     color: #000;
@@ -939,8 +938,8 @@ div.dataTables_wrapper div.dataTables_filter,
     transition: all 0.3s ease-in-out;
 }
 .dt-checkbox input:checked ~ span{
-    background: #1b00ff;
-    border-color: #1b00ff;
+    background: #68afcb;
+    border-color: #68afcb;
     color: #ffffff;
 }
 .dt-checkbox input:checked ~ span:before{
@@ -1296,6 +1295,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
     width: 280px;
     height: 70px;
     border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 5px;
 }
 .brand-logo a{
     display: flex;
@@ -1341,14 +1341,15 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
     width: 280px;
     height: 100vh;
     z-index: 1000;
-    background: #0b132b;
+    /*background: #0b132b;*/
+    background-color: white;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 .left-side-bar .mCS-dark-2.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
-    background: #ecf0f4;
+    background: #264d52;
 }
 .left-side-bar:before{
     content: "";
@@ -1387,8 +1388,9 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
     display: block;
     padding: 18px 15px 18px 67px;
     font-size: 16px;
-    color: #ffffff;
-    font-weight: 300;
+    /*color: #ffffff;*/
+    color: #2d79c8;
+    font-weight: 500;
     letter-spacing: 0.030em;
     position: relative;
     font-family: 'Inter', sans-serif;
@@ -1397,11 +1399,35 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
+
 .sidebar-menu .dropdown-toggle:after{
     position: absolute;
     right: 15px;
     font-size: 18px;
 }
+
+.sidebar-menu .noDropdown {
+    display: block;
+    padding: 18px 15px 18px 67px;
+    font-size: 16px;
+    /*color: #ffffff;*/
+    color: #2d79c8;
+    font-weight: 500;
+    letter-spacing: 0.030em;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar-menu .noDropdown:after {
+    position: absolute;
+    right: 15px;
+    font-size: 18px;
+}
+
 .sidebar-menu.icon-style-2 .dropdown-toggle:after{
     content: "\f217";
     font-family: Ionicons;
@@ -1421,6 +1447,12 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
     background: rgba(0, 0, 0, .4);
     color: #ffffff;
 }
+
+.sidebar-menu .noDropdown:hover {
+    background: rgba(0, 0, 0, .4);
+    color: #ffffff;
+}
+
 .sidebar-menu .dropdown-toggle .micon{
     position: absolute;
     left: 10px;
@@ -1430,7 +1462,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ffffff;
+    /*color: #ffffff;*/
     background-color: rgba(255,255,255,0);
     top: 50%;
     text-align: center;
@@ -1447,6 +1479,35 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
     -ms-transform: translate(0px, -50%);
     transform: translate(0px, -50%);
 }
+
+.sidebar-menu .noDropdown .micon {
+    position: absolute;
+    left: 10px;
+    width: 42px;
+    height: 42px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*color: #ffffff;*/
+    background-color: rgba(255,255,255,0);
+    top: 50%;
+    text-align: center;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-transform: translate(0px, -50%);
+    -moz-transform: translate(0px, -50%);
+    -o-transform: translate(0px, -50%);
+    -ms-transform: translate(0px, -50%);
+    transform: translate(0px, -50%);
+}
+
+
 .sidebar-menu .dropdown-toggle:hover .micon, .sidebar-menu .show > .dropdown-toggle .micon{
     color: #ffffff;
 }
@@ -1523,8 +1584,8 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td:first-child:before, tabl
     display: block;
     padding: 18px 15px 18px 60px;
     font-size: 14px;
-    color: #ffffff;
-    font-weight: 300;
+    color: #2d79c8;
+    font-weight: 500;
     letter-spacing: 0.030em;
     position: relative;
     font-family: 'Inter', sans-serif;
@@ -1873,7 +1934,7 @@ body.IE .register-page-wrap .container{
 	Register Page End
 ==============================================================*/
 .main-container{
-    padding: 80px 20px 0px 300px;
+    padding: 80px 20px 80px 300px;
 }
 .page-header .dropdown-menu{
     -webkit-border-radius: 5px;
@@ -3977,6 +4038,43 @@ body.IE .register-page-wrap .container{
     background: #1b00ff;
     color: #ebecef;
     font-weight: 500;
+}
+
+input.searchInput {
+    margin-top: 2px;
+    border-radius: 10px;
+    height: 45px;
+    border: 1px solid #54545480;
+
+}
+
+input.searchInput:hover{
+    color: #131e22;
+    border-color: #68afcb;
+    -webkit-box-shadow: 0px 0px 28px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0px 0px 28px rgba(0, 0, 0, .1);
+    box-shadow: 0px 0px 28px rgba(0, 0, 0, .1);
+}
+
+.table td,
+.table th {
+    text-align: center;
+}
+
+div.searchBox {
+    padding-top: 30px;
+    width: 100%;
+    height: 25%;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+}
+
+form.searchForm {
+    margin-left: 30px;
+}
+
+label.fontWe-700 {
+    font-weight: 700;
 }
 /*==============================================================
 	Documentation End

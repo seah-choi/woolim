@@ -10,6 +10,22 @@
 <html>
 <head>
 
+    <!-- Site favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/resources/vendors/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/resources/vendors/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/resources/vendors/images/favicon-16x16.png">
+
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/resources/vendors/styles/core.css">
+    <link rel="stylesheet" type="text/css" href="/resources/vendors/styles/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/adminStyle.css">
+
+
 </head>
 <body>
 
@@ -36,12 +52,12 @@
                         <span class="micon icon-copy fa fa-video-camera"></span><span class="mtext">강좌 관리</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="basic-table.html">강좌 목록</a></li>
-                        <li><a href="datatable.html">강좌 추가</a></li>
+                        <li><a href="/admin/lecture/list">강좌 목록</a></li>
+                        <li><a href="/admin/lecture/regist">강좌 등록</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="noDropdown">
+                    <a href="/admin/member/list" class="noDropdown">
                         <span class="micon icon-copy fa fa-user-circle"></span><span class="mtext">회원 관리</span>
                     </a>
                 </li>
@@ -50,10 +66,10 @@
                         <span class="micon icon-copy fa fa-calendar-minus-o"></span><span class="mtext">게시판 관리</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="ui-cards.html">공지사항 게시판</a></li>
-                        <li><a href="ui-buttons.html">교육정보 게시판</a></li>
-                        <li><a href="ui-cards.html">자료실 게시판</a></li>
-                        <li><a href="ui-cards.html">자유게시판</a></li>
+                        <li><a href="/admin/board/list?bbs_type=bbs04">공지사항 게시판</a></li>
+                        <li><a href="/admin/board/list?bbs_type=bbs01">교육정보 게시판</a></li>
+                        <li><a href="/admin/board/list?bbs_type=bbs05">자료실</a></li>
+                        <li><a href="/admin/board/list?bbs_type=bbs02">자유게시판</a></li>
                     </ul>
                 </li>
 
