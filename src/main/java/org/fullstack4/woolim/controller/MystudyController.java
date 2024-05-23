@@ -6,6 +6,7 @@ import org.fullstack4.woolim.dto.BbsDTO;
 import org.fullstack4.woolim.dto.PageRequestDTO;
 import org.fullstack4.woolim.dto.PageResponseDTO;
 import org.fullstack4.woolim.service.BbsServiceIf;
+import org.fullstack4.woolim.service.MyStudyServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping(value="/mystudy")
 @RequiredArgsConstructor
 public class MystudyController {
-    private final BbsServiceIf bbsServiceIf;
+    private final MyStudyServiceIf myStudyService;
 
     @GetMapping("/classList")
     public void GETClassList() {
@@ -88,9 +89,10 @@ public class MystudyController {
         log.info("bbs_type" + bbs_type);
 
         HttpSession session = req.getSession();
-        pageRequestDTO.setMember_id((String) session.getAttribute("member_id"));
+        String id = (String) session.getAttribute("member_id");
+        pageRequestDTO.setMember_id(id);
 
-        PageResponseDTO<BbsDTO> bbsList = bbsServiceIf.bbsListByPage(pageRequestDTO);
+        PageResponseDTO<BbsDTO> bbsList = myStudyService.bbsListByPage(pageRequestDTO);
 
         model.addAttribute("bbsList", bbsList);
         model.addAttribute("bbs_type",bbs_type);
@@ -98,6 +100,8 @@ public class MystudyController {
         if(bbsList.getSearch_types()!=null){
             model.addAttribute("search_type", bbsList.getSearch_types()[0]);
         }
+
+        log.info("GETfreeList >> member_id :"+id);
 
         log.info("bbsList : " + bbsList);
 
