@@ -22,12 +22,13 @@ public class LectureVO {
     private String lecture_image;
     private int lecture_star;
     private String lecture_content;
-    private String lecture_youtube_url;
+    private String lecture_video;
     private String lecture_category;
     private String lecture_category_detail;
     private int member_idx;
     private LocalDate lecture_reg_date;
     private String member_id;
+
 
     private String lecture_study;
     private String lecture_content_detail;
