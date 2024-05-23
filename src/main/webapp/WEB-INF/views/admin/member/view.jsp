@@ -56,138 +56,142 @@
 <div class="main-container">
     <div class="pd-ltr-20 xs-pd-20-10 pb-5">
         <!-- basic table  Start -->
-        <div class="pd-20 card-box mb-30" style="padding-bottom: 80px">
-            <h4 class="h4">회원 상세</h4>
-            <br>
-            <div class="pl-30">
-                <form>
-                    <div class="d-flex align-items-start align-items-sm-center mt-3">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">아이디</label>
-                        <div class="col-sm-12 col-md-5">
-                            <input class="form-control" type="text" value="${memberList.member_id}" name="member_id" id="member_id" readonly>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-start align-items-sm-center mt-3">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">이름</label>
-                        <div class="col-sm-12 col-md-5">
-                            <input class="form-control" type="text" value="${memberList.member_name}" name="member_name" id="member_name" readonly>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-start align-items-sm-center mt-3">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">소셜 타입</label>
-                        <div class="col-sm-12 col-md-5">
-                            <input class="form-control" type="text" value="${memberList.member_oauth}" name="member_oauth" id="member_oauth" readonly>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-start align-items-sm-center mt-3">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">이메일</label>
-                        <div class="col-sm-12 col-md-5">
-                            <input class="form-control" type="text" value="${memberList.member_email}" name="member_email_addr" id="member_email_addr" readonly>
-                        </div>
-                    </div>
+        <form id="frmModify" method="post" action="/admin/member/view">
+            <div class="pd-20 card-box mb-30" style="padding-bottom: 80px">
+                <h4 class="h4">회원 상세</h4>
+                <br>
+                <div class="pl-30">
 
-                    <div class="d-flex align-items-start align-items-sm-center mt-3">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">휴대폰 번호</label>
-                        <div class="col-sm-12 col-md-5">
-                            <div class="form-control" name="member_phone" id="member_phone" readonly>
-                                ${fn:substring(memberList.member_phone, 0, 3)}-${fn:substring(memberList.member_phone, 3, 7)}-${fn:substring(memberList.member_phone, 7, 11)}
+                        <div class="d-flex align-items-start align-items-sm-center mt-3">
+                            <label class="col-sm-12 col-md-2 col-form-label fontWe-700">아이디</label>
+                            <div class="col-sm-12 col-md-5">
+                                <input class="form-control" type="text" value="${memberList.member_id}" name="member_id" id="member_id" readonly>
                             </div>
                         </div>
-                    </div>
-
-
-                    <div class="d-flex align-items-start align-items-sm-center mt-3">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">주소</label>
-                        <div class="col-sm-12 col-md-5">
-                            <input class="form-control" type="text" value="${memberList.member_addr}" name="member_addr" id="member_addr" readonly>
-                        </div>
-                    </div>
-
-                    <div class="d-flex align-items-start align-items-sm-center mt-3">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">상세 주소</label>
-                        <div class="col-sm-12 col-md-5">
-                            <input class="form-control" type="text" value="${memberList.member_addr_detail}" name="member_addr_detail" id="member_addr_detail" readonly>
-                        </div>
-                    </div>
-
-                    <div class="d-flex align-items-start align-items-sm-center mt-4">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700 mb-3">회원 구분</label>
-                        <div class="col-md-2 col-sm-12">
-                            <div class="form-group">
-                                <select class="selectpicker form-control" name="member_category" data-size="5" data-style="btn-outline-info">
-                                    <c:if test="${memberList.member_category eq 'admin'}">
-                                        <option value="admin">관리자</option>
-                                        <option value="student">학생</option>
-                                        <option value="teacher">선생님</option>
-                                    </c:if>
-                                    <c:if test="${memberList.member_category eq 'student'}">
-                                        <option value="student">학생</option>
-                                        <option value="teacher">선생님</option>
-                                        <option value="admin">관리자</option>
-                                    </c:if>
-                                    <c:if test="${memberList.member_category eq 'teacher'}">
-                                        <option value="teacher">선생님</option>
-                                        <option value="student">학생</option>
-                                        <option value="admin">관리자</option>
-                                    </c:if>
-                                </select>
+                        <div class="d-flex align-items-start align-items-sm-center mt-3">
+                            <label class="col-sm-12 col-md-2 col-form-label fontWe-700">이름</label>
+                            <div class="col-sm-12 col-md-5">
+                                <input class="form-control" type="text" value="${memberList.member_name}" name="member_name" id="member_name" readonly>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="d-flex align-items-start align-items-sm-center mt-3">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">포인트</label>
-                        <div class="col-sm-12 col-md-5">
-                            <input class="form-control" type="text" value="${memberList.member_point}" name="member_point" id="member_point" readonly>
-                        </div>
-                    </div>
-
-                    <div class="input-group mb-3 mt-3">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">가입 날짜</label>
-
-                        <div class="col-sm-12 col-md-3 d-flex">
-                            <input type="date" class="form-control" id="member_reg_date" name="member_reg_date" value="${memberList.member_reg_date}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
-                        </div>
-                    </div>
-
-                    <div class="d-flex align-items-start align-items-sm-center mt-4" style="margin-bottom: 30px">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700 mb-3">탈퇴 상태</label>
-                        <div class="col-md-2 col-sm-12">
-                            <div class="form-group">
-                                <select class="selectpicker form-control" name="member_status" data-size="5" data-style="btn-outline-info">
-                                    <c:if test="${memberList.member_status eq 'N'}">
-                                        <option value="N">N</option>
-                                        <option value="Y">Y</option>
-                                    </c:if>
-                                    <c:if test="${memberList.member_status eq 'Y'}">
-                                        <option value="Y">Y</option>
-                                        <option value="N">N</option>
-                                    </c:if>
-                                </select>
+                        <div class="d-flex align-items-start align-items-sm-center mt-3">
+                            <label class="col-sm-12 col-md-2 col-form-label fontWe-700">소셜 타입</label>
+                            <div class="col-sm-12 col-md-5">
+                                <input class="form-control" type="text" value="${memberList.member_oauth}" name="member_oauth" id="member_oauth" readonly>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="input-group mb-3 mt-3">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">탈퇴 날짜</label>
-
-                        <div class="col-sm-12 col-md-3 d-flex">
-                            <input type="date" class="form-control" id="member_leave_date" name="member_leave_date" value="${memberList.member_leave_date}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
+                        <div class="d-flex align-items-start align-items-sm-center mt-3">
+                            <label class="col-sm-12 col-md-2 col-form-label fontWe-700">이메일</label>
+                            <div class="col-sm-12 col-md-5">
+                                <input class="form-control" type="text" value="${memberList.member_email}" name="member_email_addr" id="member_email_addr" readonly>
+                            </div>
                         </div>
-                    </div>
 
-                </form>
-            </div>
+                        <div class="d-flex align-items-start align-items-sm-center mt-3">
+                            <label class="col-sm-12 col-md-2 col-form-label fontWe-700">휴대폰 번호</label>
+                            <div class="col-sm-12 col-md-5">
+                                <div class="form-control" name="member_phone" id="member_phone" readonly>
+                                    ${fn:substring(memberList.member_phone, 0, 3)}-${fn:substring(memberList.member_phone, 3, 7)}-${fn:substring(memberList.member_phone, 7, 11)}
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="d-flex align-items-start align-items-sm-center mt-3">
-                <label class="col-sm-12 col-md-2 col-form-label fontWe-700"></label>
-                <div class="col-sm-12 col-md-5 mt-3">
-                    <button type="submit" name="modifyBtn" class="btn btn-primary" style="width: 600px; height: 50px; margin-left: 22px;">수정</button>
+
+                        <div class="d-flex align-items-start align-items-sm-center mt-3">
+                            <label class="col-sm-12 col-md-2 col-form-label fontWe-700">주소</label>
+                            <div class="col-sm-12 col-md-5">
+                                <input class="form-control" type="text" value="${memberList.member_addr}" name="member_addr" id="member_addr" readonly>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start align-items-sm-center mt-3">
+                            <label class="col-sm-12 col-md-2 col-form-label fontWe-700">상세 주소</label>
+                            <div class="col-sm-12 col-md-5">
+                                <input class="form-control" type="text" value="${memberList.member_addr_detail}" name="member_addr_detail" id="member_addr_detail" readonly>
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex align-items-start align-items-sm-center mt-4">
+                            <label class="col-sm-12 col-md-2 col-form-label fontWe-700 mb-3">회원 구분</label>
+                            <div class="col-md-2 col-sm-12">
+                                <div class="form-group">
+                                    <select class="selectpicker form-control" name="member_category" data-size="5" data-style="btn-outline-info">
+                                        <c:if test="${memberList.member_category eq 'admin'}">
+                                            <option value="admin">관리자</option>
+                                            <option value="student">학생</option>
+                                            <option value="teacher">선생님</option>
+                                        </c:if>
+                                        <c:if test="${memberList.member_category eq 'student'}">
+                                            <option value="student">학생</option>
+                                            <option value="teacher">선생님</option>
+                                            <option value="admin">관리자</option>
+                                        </c:if>
+                                        <c:if test="${memberList.member_category eq 'teacher'}">
+                                            <option value="teacher">선생님</option>
+                                            <option value="student">학생</option>
+                                            <option value="admin">관리자</option>
+                                        </c:if>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start align-items-sm-center mt-3">
+                            <label class="col-sm-12 col-md-2 col-form-label fontWe-700">포인트</label>
+                            <div class="col-sm-12 col-md-5">
+                                <input class="form-control" type="text" value="${memberList.member_point}" name="member_point" id="member_point" readonly>
+                            </div>
+                        </div>
+
+                        <div class="input-group mb-3 mt-3">
+                            <label class="col-sm-12 col-md-2 col-form-label fontWe-700">가입 날짜</label>
+
+                            <div class="col-sm-12 col-md-3 d-flex">
+                                <input type="date" class="form-control" id="member_reg_date" name="member_reg_date" value="${memberList.member_reg_date}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-start align-items-sm-center mt-4" style="margin-bottom: 30px">
+                            <label class="col-sm-12 col-md-2 col-form-label fontWe-700 mb-3">탈퇴 상태</label>
+                            <div class="col-md-2 col-sm-12">
+                                <div class="form-group">
+                                    <select class="selectpicker form-control" name="member_status" data-size="5" data-style="btn-outline-info">
+                                        <c:if test="${memberList.member_status eq 'N'}">
+                                            <option value="N">N</option>
+                                            <option value="Y">Y</option>
+                                        </c:if>
+                                        <c:if test="${memberList.member_status eq 'Y'}">
+                                            <option value="Y">Y</option>
+                                            <option value="N">N</option>
+                                        </c:if>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group mb-3 mt-3">
+                            <label class="col-sm-12 col-md-2 col-form-label fontWe-700">탈퇴 날짜</label>
+
+                            <div class="col-sm-12 col-md-3 d-flex">
+                                <input type="date" class="form-control" id="member_leave_date" name="member_leave_date" value="${memberList.member_leave_date}" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" readonly>
+                            </div>
+                        </div>
+
 
                 </div>
+
+                <div class="d-flex align-items-start align-items-sm-center mt-3">
+                    <label class="col-sm-12 col-md-2 col-form-label fontWe-700"></label>
+                    <div class="col-sm-12 col-md-5 mt-3 d-flex">
+                        <button type="submit" name="modifyBtn" class="btn btn-primary" style="width: 300px; height: 50px; margin-left: 22px;">수정</button>
+                        <button type="button" name="listBtn" class="btn btn-primary" onclick="location.href='/admin/member/list'" style="width: 300px; height: 50px; margin-left: 22px;">목록</button>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
+
 </div>
 <!-- js -->
 <script>

@@ -98,7 +98,22 @@ public class MemberServiceImpl implements MemberServiceIf{
                 .dtoList(dtoList)
                 .build();
 
-
         return responseDTO;
+    }
+    @Override
+    public int deleteMemberList(Integer[] idxList) {
+        int result = memberMapper.deleteMemberList(idxList);
+        log.info("MemberServiceImpl >> deleteMemberList : " + idxList);
+        return result;
+    }
+
+    @Override
+    public int adminDetail(MemberDTO memberDTO) {
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+        int result = memberMapper.adminDetail(memberVO);
+
+        log.info("MemberServiceImpl >> memberVO : " + memberVO.toString());
+        log.info("MemberServiceImpl >> adminDetail : " + result);
+        return result;
     }
 }
