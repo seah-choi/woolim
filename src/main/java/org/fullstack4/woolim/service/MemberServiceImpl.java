@@ -86,4 +86,19 @@ public class MemberServiceImpl implements MemberServiceIf{
         MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
         return memberDTO;
     }
+
+    @Override
+    public PageResponseDTO<MemberDTO> adminMemberList(PageRequestDTO pageRequestDTO) {
+        List<MemberVO> voList = memberMapper.adminMemberList(pageRequestDTO);
+        List<MemberDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo,MemberDTO.class)).collect(Collectors.toList());
+        int total_count = memberMapper.admin_total_count(pageRequestDTO);
+        PageResponseDTO<MemberDTO> responseDTO = PageResponseDTO.<MemberDTO>withAll()
+                .total_count(total_count)
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .build();
+
+
+        return responseDTO;
+    }
 }

@@ -28,6 +28,7 @@ public class PageResponseDTO<E> {
     private String sort_type;
     private String member_id;
     private String member_type;
+    private String member_category;
 
     List<E> dtolist;
 
@@ -59,6 +60,7 @@ public class PageResponseDTO<E> {
         this.sort_type = pageRequestDTO.getSort_type();
         this.member_type = pageRequestDTO.getMember_type();
         this.bbs_type = pageRequestDTO.getBbs_type();
+        this.member_category = pageRequestDTO.getMember_category();
 
         log.info("pageRequestDTO : {}", pageRequestDTO);
         log.info("dtoList : {}", dtoList);

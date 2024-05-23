@@ -116,7 +116,7 @@
             border-radius: 0;
         }
 
-        #comment{
+        .bottomLine{
             border-bottom: 1px solid #ccc;
             padding: 10px;
             margin-bottom: 50px;
@@ -140,6 +140,14 @@
             height: 100%;
             background: #ecf0f4;
         }
+
+
+         .card-box {
+             margin-right: 600px;
+             margin-left: 20px;
+             padding-bottom: 100px;
+         }
+
     </style>
 
 
@@ -157,16 +165,18 @@
                 <h4 class="h4">공지사항 게시판</h4>
 
                 <div id="list">
-                    <h5 style="font-weight: bold">작업형1 모의문제2 6번</h5>
-                    <div id="se">
-                        <div>
-                            <span>seahchoi</span><span id="date">2024-05-07</span>
-                        </div>
-                        <div>
-                            <span style="font-weight: bold">조회수</span><span id="count">12</span>
+                    <div class="bottomLine">
+                        <h5 style="font-weight: bold">작업형1 모의문제2 6번</h5>
+                        <div id="se">
+                            <div>
+                                <span>seahchoi</span><span id="date">2024-05-07</span>
+                            </div>
+                            <div>
+                                <span style="font-weight: bold">조회수</span><span id="count">12</span>
+                            </div>
                         </div>
                     </div>
-                    <hr>
+
                     <div class="align-items-start align-items-sm-center mt-3" style="white-space: pre-wrap;">
                         read버튼을 눌렀을 때 다른 항목들은 잘 찾아내나 id 1번 항목을 read할 경우 error 발생
                         GangnamguPopulationService.cs파일 안의 GetDetail함수의 else로 잡힙니다.
@@ -175,22 +185,24 @@
                         감사합니다.
                     </div>
                     <br><br>
-                    <div id="comment" >
-                        <span>답변</span>&nbsp;<span id="cmCount">1</span>
-                        <div class="form-floating d-flex justify-content-center" style="margin-top: 10px;margin-bottom: 40px;">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                            <label for="floatingTextarea">댓글</label>
-                            <button type="button" class="btn" id="btn_comment">등록</button>
-                        </div>
-                        <div>
-                            <span style="font-weight: bold">babori</span>&nbsp;<span>2024-05-10</span>
-                            <br>
-                            <p>강의에서 알려드린 판다스로 진행 바랍니다.</p>
-                        </div>
-                        <div style="display: flex;justify-content: flex-end;">
-                            <button type="button" id="cmModify">수정</button>
-                            <span>&nbsp;|&nbsp;</span>
-                            <button type="button" id="cmDelete">삭제</button>
+                    <div class="bottomLine">
+                        <div class="ml-5">
+                            <span>답변</span>&nbsp;<span id="cmCount">1</span>
+                            <div class="form-floating d-flex justify-content-center w-75" style="margin-top: 10px;margin-bottom: 40px;">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                <label for="floatingTextarea">댓글</label>
+                                <button type="button" class="btn" id="btn_comment">등록</button>
+                            </div>
+                            <div class="w-75">
+                                <span style="font-weight: bold">babori</span>&nbsp;<span>2024-05-10</span>
+                                <br>
+                                <p>강의에서 알려드린 판다스로 진행 바랍니다.</p>
+                            </div>
+                            <div class="w-75" style="display: flex;justify-content: flex-end;">
+                                <button type="button" id="cmModify">수정</button>
+                                <span>&nbsp;|&nbsp;</span>
+                                <button type="button" id="cmDelete">삭제</button>
+                            </div>
                         </div>
                     </div>
 
