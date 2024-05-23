@@ -11,6 +11,7 @@ import java.util.List;
 public interface MemberMapper {
     int regist(MemberVO memberVO);
     MemberVO view(MemberDTO memberDTO);
+    MemberVO memberView(String member_id);
     List<MemberVO> MemberListbyPage(PageRequestDTO requestDTO);
     int total_count(PageRequestDTO requestDTO);
 }

@@ -97,14 +97,18 @@
                     <h5 style="font-weight: bold">1 : 1 문의하기</h5>
                     <hr>
                     <br>
-                    <form action="/board/freeRegist" method="post">
+                    <form action="/mypage/qnaRegist" id="frmRegist" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
+                        <input type="hidden" name="qna_category" value="A">
                         <div class="form-floating">
-                            <textarea class="form-control" name="bbs_title" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                            <textarea class="form-control" name="qna_title" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                             <label for="floatingTextarea">제목</label>
                         </div>
                         <br>
+                        <input type="file" class="form-control" name="files" id="file" multiple>
+                        <br>
                         <div>
-                            <textarea id="summernote" name="bbs_content"></textarea>
+                            <textarea id="summernote" name="qna_content"></textarea>
                         </div>
                         <br>
                         <div style="display: flex;justify-content: center;">
@@ -112,7 +116,7 @@
                                 <button type="button" class="btn" id="btn_back" onclick="location.href='/mypage/qnaList'">목록</button>
                             </div>
                             <div>
-                                <button type="submit" class="btn" id="btn_modify">등록</button>
+                                <button type="submit" class="btn" id="btn_regist">등록</button>
                                 <button type="button" class="btn btn-secondary" id="btn_delete" onclick="location.href='/mypage/qnaList'">취소</button>
                             </div>
                         </div>
@@ -151,6 +155,12 @@
             ['view', ['codeview', 'help']]
         ]
 
+    });
+    let btn_regist = document.getElementById("btn_regist");
+    btn_regist.addEventListener("click", function(e){
+       e.preventDefault();
+       let frmRegist = document.getElementById("frmRegist");
+        frmRegist.submit();
     });
 </script>
 </body>

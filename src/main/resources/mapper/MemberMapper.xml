@@ -11,7 +11,12 @@
     </insert>
 
     <select id="view" resultType="org.fullstack4.woolim.domain.MemberVO">
-        SELECT member_id,member_name member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date
+        SELECT member_id,member_name, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date
+        FROM woo_member
+        WHERE member_id= #{member_id}
+    </select>
+    <select id="memberView" resultType="org.fullstack4.woolim.domain.MemberVO">
+        SELECT member_id,member_name, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date
         FROM woo_member
         WHERE member_id= #{member_id}
     </select>

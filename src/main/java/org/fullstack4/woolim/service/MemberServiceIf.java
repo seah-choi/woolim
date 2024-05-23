@@ -11,4 +11,6 @@ import java.util.List;
 public interface MemberServiceIf {
     boolean login(String id, String pwd, HttpServletRequest req) throws InsufficientStockException;
     PageResponseDTO<MemberDTO> MemberList(PageRequestDTO requestDTO);
+    int regist(MemberDTO memberDTO);
+    MemberDTO memberView(String member_id);
 }

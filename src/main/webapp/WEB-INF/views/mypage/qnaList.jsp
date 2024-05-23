@@ -27,7 +27,7 @@
             color: #212529 !important;
         }
 
-        #list a {
+        td a {
             color: #000 !important;
             text-decoration: none;
         }
@@ -86,48 +86,45 @@
         <div class="row">
             <jsp:include page="/WEB-INF/views/common/mypageSide.jsp"/>
             <div class="col-lg-9 order-1 order-lg-2">
-                <div id="list">
-                    <h5 style="font-weight: bold">1 : 1 문의하기</h5>
-                    <hr>
-                    <div class="input-group">
-                        <button class="btn btn-outline-secondary dropdown-toggle" id="drop" type="button" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">제목</a></li>
-                            <li><a class="dropdown-item" href="#">내용</a></li>
-                        </ul>
-                        <input type="text" class="form-control" aria-label="Text input with 2 dropdown buttons">
-                        <button class="btn btn-outline-secondary" type="button" id="search" aria-expanded="false">검색</button>
-                    </div>
-                    <br>
-                    <table class="table">
-                        <thead>
-                        <tr class="table-secondary">
-                            <th scope="col">no</th>
-                            <th scope="col">답변 상태</th>
-                            <th scope="col">제목</th>
-                            <th scope="col">등록일</th>
-                            <th scope="col">조회수</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>N</td>
-                            <td><a href="/mypage/qnaView">김광석</a></td>
-                            <td>2024-05-07</td>
-                            <td>12</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Y</td>
-                            <td id="title"><a href="/mypage/qnaView">먼지가 되어</a></td>
-                            <td>2024-05-07</td>
-                            <td>12</td>
-                        </tr>
-                        </tbody>
-                    </table>
-
+                <h5 style="font-weight: bold">1 : 1 문의하기</h5>
+                <hr>
+                <div class="input-group">
+                    <button class="btn btn-outline-secondary dropdown-toggle" id="drop" type="button" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">제목</a></li>
+                        <li><a class="dropdown-item" href="#">내용</a></li>
+                    </ul>
+                    <input type="text" class="form-control" aria-label="Text input with 2 dropdown buttons">
+                    <button class="btn btn-outline-secondary" type="button" id="search" aria-expanded="false">검색</button>
                 </div>
+                <br>
+                <table class="table">
+                    <thead>
+                    <tr class="table-secondary">
+                        <th scope="col">no</th>
+                        <th scope="col">답변 상태</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">등록일</th>
+                        <th scope="col">조회수</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>N</td>
+                        <td><a href="/mypage/qnaView">김광석</a></td>
+                        <td>2024-05-07</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Y</td>
+                        <td id="title"><a href="/mypage/qnaView">먼지가 되어</a></td>
+                        <td>2024-05-07</td>
+                        <td>12</td>
+                    </tr>
+                    </tbody>
+                </table>
                 <div class="loading-more">
                     <!-- <i class="icon_loading"></i>
                     <a href="#">

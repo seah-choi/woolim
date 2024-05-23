@@ -25,7 +25,7 @@ public class MemberDTO {
     private String member_addr;
     private String member_addr_detail;
     private String member_category;
-    private int point;
+    private int member_point;
     private String member_oauth;
     private LocalDate member_reg_date;
     private LocalDate member_modify_date;

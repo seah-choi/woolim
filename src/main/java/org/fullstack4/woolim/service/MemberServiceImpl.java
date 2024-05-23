@@ -70,4 +70,19 @@ public class MemberServiceImpl implements MemberServiceIf{
 
         return responseDTO;
     }
+    @Override
+    public int regist(MemberDTO memberDTO) {
+
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+        log.info(memberVO);
+        int result = memberMapper.regist(memberVO);
+        return result;
+    }
+
+    @Override
+    public MemberDTO memberView(String member_id) {
+        MemberVO memberVO = memberMapper.memberView(member_id);
+        MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
+        return memberDTO;
+    }
 }
