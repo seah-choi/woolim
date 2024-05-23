@@ -33,9 +33,55 @@
     </insert>
 
     <select id="GetPayment">
-        select price,payment_reg_date,payment_type,payment_title,payment_reg_date
+        select payment_idx,price,payment_reg_date,payment_type,payment_title,payment_reg_date
         from woo_payment
-        where member_id=#{param1}
+        <where>
+            member_id=#{member_id}
+            <if test="search_type != null and search_type != ''">
+                <if test="search_type == '포인트 충전'.toString()">
+                    and payment_title = '포인트 충전'
+                </if>
+                <if test="search_type == '포인트 사용'.toString()">
+                    and payment_title = '포인트 사용'
+                </if>
+                <if test="search_type == '포인트 환불'.toString()">
+                    and payment_title = '포인트 환불'
+                </if>
+            </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and member_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and member_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+        </where>
+        ORDER by payment_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
 
+    </select>
+
+    <select id="total_count" resultType="int">
+        select count(*)
+        from woo_payment
+        <where>
+            member_id=#{member_id}
+            <if test="search_type != null and search_type != ''">
+                <if test="search_type == '포인트 충전'.toString()">
+                    and payment_title = '포인트 충전'
+                </if>
+                <if test="search_type == '포인트 사용'.toString()">
+                and payment_title = '포인트 사용'
+                </if>
+                <if test="search_type == '포인트 환불'.toString()">
+                and payment_title = '포인트 환불'
+                </if>
+            </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+            and member_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+            and member_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+        </where>
     </select>
 </mapper>
