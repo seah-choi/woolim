@@ -4,6 +4,8 @@ import org.fullstack4.woolim.domain.QnaFileVO;
 import org.fullstack4.woolim.domain.QnaVO;
 import org.fullstack4.woolim.dto.*;
 
+import java.util.List;
+
 public interface QnaServiceIf {
     int regist(QnaDTO qnaDTO);
     int file_regist(QnaFileDTO qnaFileDTO);
@@ -11,4 +13,5 @@ public interface QnaServiceIf {
     QnaDTO view(int qna_idx);
     int delete(int qna_idx);
     int modify(QnaDTO qnaDTO);
+    List<QnaFileDTO> qnaFileList(int qna_idx);
 }

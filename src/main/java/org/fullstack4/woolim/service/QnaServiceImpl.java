@@ -73,4 +73,16 @@ public class QnaServiceImpl implements QnaServiceIf{
         int result = qnaMapper.modify(qnaVO);
         return result;
     }
+
+    @Override
+    public List<QnaFileDTO> qnaFileList(int qna_idx) {
+        List<QnaFileVO> voList =qnaMapper.qnaFileList(qna_idx);
+        if(voList != null) {
+            List<QnaFileDTO> dtoList = voList.stream().map(vo -> modelMapper.map(vo, QnaFileDTO.class)).collect(Collectors.toList());
+            return dtoList;
+        }
+        else{
+            return null;
+        }
+    }
 }

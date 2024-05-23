@@ -19,4 +19,6 @@ public interface MemberServiceIf {
     int deleteMemberList(Integer[] idxList);
 
     int adminDetail(MemberDTO memberDTO);
+    int login_check(String member_id);
+    int email_check(String member_id);
 }
