@@ -105,6 +105,7 @@ public class OrderController {
         for(int i = 0; i<cartlist.length; i++) {
             CartDTO dto1 = CartDTO.builder()
                     .cart_idx(Integer.parseInt(cartlist[i]))
+                    .cart_status("Y")
                     .build();
             cartdtolist.add(dto1);
         }

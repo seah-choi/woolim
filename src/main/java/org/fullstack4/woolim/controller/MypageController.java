@@ -1,22 +1,17 @@
 package org.fullstack4.woolim.controller;
 
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.FileUtil;
 import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.MemberMapper;
-import org.fullstack4.woolim.service.CartServiceIf;
-import org.fullstack4.woolim.service.MemberServiceIf;
-import org.fullstack4.woolim.service.QnaServiceIf;
-import org.fullstack4.woolim.service.QnaServiceImpl;
+import org.fullstack4.woolim.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -24,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +31,8 @@ public class MypageController {
     private final MemberServiceIf memberService;
     private final CartServiceIf cartService;
     private final QnaServiceIf qnaService;
-
+    private final OrderServiceIf orderService;
+    
     @GetMapping("/view")
     public void GETView(HttpServletRequest req,
                         Model model){
@@ -113,8 +110,13 @@ public class MypageController {
         model.addAttribute("responseDTO", responseDTO);
     }
     @GetMapping("/pointcharge")
-    public void GETChargePoint() {
+    public void GETChargePoint(HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession();
+        String member_id = (String) session.getAttribute("member_id");
+        List<PaymentDTO> paymentDTO = orderService.getPayment(member_id);
 
+        log.info("paymentDTO########## : {}", paymentDTO);
+        model.addAttribute("paymentDTO", paymentDTO);
     }
     @GetMapping("/qnaRegist")
     public void GETQnaRegist(){
@@ -203,5 +205,25 @@ public class MypageController {
         else {
             return "redirect:/mypage/qnaView?qna_idx="+qna_idx;
         }
+    }
+
+    @RequestMapping(value = "/point.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String PointCharge(){
+        MemberDTO memberDTO = MemberDTO.builder().build();
+        orderService.PointCharge(memberDTO);
+        return null;
+    }
+
+    @RequestMapping(value = "/viewMember.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String memberInfo(@RequestParam HashMap<String, String> map){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        String id = map.get("member_id");
+        MemberDTO memberDTO = memberService.memberView(id);
+
+        resultMap.put("dto", memberDTO);
+
+        return new Gson().toJson(resultMap);
     }
 }

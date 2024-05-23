@@ -177,6 +177,6 @@
     </select>
 
     <update id="changePoint">
-        Update SET woo_member point=point+#{member_point} where member_id=#{member_id}
+        Update woo_member SET member_point=member_point+#{member_point} where member_id=#{member_id}
     </update>
 </mapper>

@@ -18,7 +18,7 @@ public class PaymentDTO {
     private String payment_num;
     private String member_id;
     private int price;
-    private LocalDate order_date;
+    private LocalDate payment_reg_date;
     private String payment_type;
     private String payment_title;
 }
