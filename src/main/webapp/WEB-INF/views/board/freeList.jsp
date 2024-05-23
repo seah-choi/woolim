@@ -82,10 +82,10 @@
             <h4>게시판</h4>
             <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
             <div style="padding-top: 20px; line-height: unset;">
-                <a class="nav-link" aria-current="page" href="/board/freeList">자유게시판</a>
-                <a class="nav-link" href="/board/list">교육정보</a>
-                <a class="nav-link" href="/board/list">자료실</a>
-                <a class="nav-link" href="/board/list">공지사항</a>
+                <a class="nav-link" aria-current="page" href="/board/freeList?bbs_type=bbs02">자유게시판</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs01">교육정보</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs05">자료실</a>
+                <a class="nav-link" href="/board/list?bbs_type=bbs04">공지사항</a>
             </div>
         </nav>
     </div>
@@ -102,19 +102,26 @@
             <button class="btn btn-outline-secondary" type="button" id="search" aria-expanded="false">검색</button>
         </div>
         <br>
-        <div style="border-bottom: 1px solid #ccc;padding: 20px;">
-            <p style="font-weight: bold">작업형1 모의문제2 6번</p>
-            <a href="/board/freeView">
-            <c:out value="${fn:substring('루키스님 강의 잘 듣고 여러가지 연동을 시도해서 컨텐츠를 만드는 중인데요 지금은 데이터나 오브젝트들이 많지 않아서 별',0,40)}"/>
-            <c:if test="${fn:length('루키스님 강의 잘 듣고 여러가지 연동을 시도해서 컨텐츠를 만드는 중인데요 지금은 데이터나 오브젝트들이 많지 않아서 별') > 40}"> ...</c:if></a>
-            <div style="display: flex;justify-content: space-between;">
-                <div style="color: #76767f;padding-top: 5px;"><span>seahchoi</span>•<span>2시간 전</span></div>
-                <div>
-                    <img src="/resources/img/free-icon-heart-1077035.png" width="12px" height="12px">1
-                    <img src="/resources/img/free-icon-chat-9256384.png" width="12px" height="12px"> 5
-                </div>
-            </div>
-        </div>
+        <c:choose>
+            <c:when test="${not empty bbsList.dtolist}">
+                <c:forEach items="${bbsList.dtolist}" var="list">
+                    <div style="border-bottom: 1px solid #ccc;padding: 20px;">
+                        <p style="font-weight: bold">${list.bbs_title}</p>
+                        <a href="/board/freeView?bbs_idx=${list.bbs_idx}">${list.bbs_content}</a>
+                        <div style="display: flex;justify-content: space-between;">
+                            <div style="color: #76767f;padding-top: 5px;"><span>seahchoi</span>•<span>${list.bbs_reg_date}</span></div>
+                            <div>
+                                <img src="/resources/img/free-icon-heart-1077035.png" width="12px" height="12px">${list.bbs_like}
+                                <img src="/resources/img/free-icon-chat-9256384.png" width="12px" height="12px"> 5
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                등록된 글이 없습니다.
+            </c:otherwise>
+        </c:choose>
         <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">
             <ul class="pagination">
                 <li class="page-item">
