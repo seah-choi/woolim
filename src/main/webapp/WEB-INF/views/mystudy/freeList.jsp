@@ -145,9 +145,6 @@
                 </li>
             </ul>
         </nav>
-        <div style="display: flex;justify-content: flex-end;">
-            <button type="button" class="btn" id="btn_regist" onclick="location.href='/board/freeRegist'">글쓰기</button>
-        </div>
     </div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
