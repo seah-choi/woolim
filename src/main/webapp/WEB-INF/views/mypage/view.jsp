@@ -35,8 +35,8 @@
                 <h5 style="font-weight: bold">회원 정보</h5>
                 <hr>
                 <div class="register-form">
-                    <form action="#">
-                        <input type="hidden" name="member_idx" value="">
+                    <form id="frm" action="/mypage/view" method="post">
+                        <input type="hidden" name="member_idx" value="${memberDTO.member_idx}">
                         <label for="member_id">아이디</label>
                         <div class="input-group">
                             <input type="text" class="form-control" name="member_id" id="member_id" value="${memberDTO.member_id}" readonly>
@@ -46,11 +46,14 @@
                         <div class="input-group">
                             <input name="member_pwd" class="form-control" type="password" id="member_pwd">
                         </div>
+                        <div class="result"></div>
                         <br>
                         <label for="member_pwd2">비밀번호 확인</label>
                         <div class="input-group">
                             <input type="password"  class="form-control" id="member_pwd2" name="member_pwd2">
                         </div>
+                        <div class="result"></div>
+                        <div id="result2"></div>
                         <br>
                         <label for="member_name">이름</label>
                         <div class="input-group">
@@ -60,28 +63,13 @@
                         <label for="member_email">이메일</label>
                         <div class="input-group mb-3">
                             <input type="text" class="form-control"  name="member_email" id="member_email" value="${memberDTO.member_email}">
-                            &nbsp;&nbsp;
-                            <label> @ </label>
-                            &nbsp;&nbsp;
-                            <select class="form-control" name="member_email_addr">
-                                <option <c:if test="${memberDTO.member_email_addr == 'naver.com'}">selected</c:if>>naver.com</option>
-                                <option <c:if test="${memberDTO.member_email_addr == 'daum.net'}">selected</c:if> >daum.net</option>
-                                <option <c:if test="${memberDTO.member_email_addr == 'gmail.com'}">selected</c:if>>gmail.com</option>
-                                <option <c:if test="${memberDTO.member_email_addr == 'hanmail.net'}">selected</c:if>>hanmail.net</option>
-                            </select>
                         </div>
-                        <label for="member_phone2">핸드폰</label>
+                        <div class="result"></div>
+                        <label for="member_phone">핸드폰</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="member_phone1" name="member_phone">
-                            &nbsp;&nbsp;
-                            <span>-</span>
-                            &nbsp;&nbsp;
-                            <input type="text" class="form-control" id="member_phone2" name="member_phone">
-                            &nbsp;&nbsp;
-                            <span>-</span>
-                            &nbsp;&nbsp;
-                            <input type="text" class="form-control" id="member_phone3" name="member_phone">
+                            <input type="text" class="form-control" id="member_phone" name="member_phone">
                         </div>
+                        <div class="result"></div>
                         <br>
                         <div class="group-input">
                             <label>주소</label>
@@ -106,7 +94,7 @@
                                 <span id="guide" style="color:#999;display:none"></span>
                             </div>
                         </div>
-                        <button type="submit" class="site-btn register-btn">회원 정보 수정</button>
+                        <button type="submit" class="site-btn register-btn" id="regist">회원 정보 수정</button>
                     </form>
                     <div class="switch-login">
                         <a href="./login.html" class="or-login">회원 탈퇴</a>
@@ -129,5 +117,71 @@
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
+<script>
+    let member_pwd = document.getElementById("member_pwd");
+    let member_pwd2 = document.getElementById("member_pwd2");
+    let member_email = document.getElementById("member_email");
+    let member_phone = document.getElementById("member_phone");
+    let result = document.querySelectorAll(".result");
+    let frm = document.getElementById("frm");
+
+    document.getElementById("regist").addEventListener("click", function (e){
+        e.preventDefault();
+
+        if(member_pwd.value == null || member_pwd.value ==""){
+            result[0].innerHTML = "비밀번호를 입력해주세요.";
+            result[0].style.color = "red";
+            return false;
+        } else{
+            result[0].innerHTML ="";
+        }
+        if(member_pwd2.value == null || member_pwd2.value ==""){
+            result[1].innerHTML = "비밀번호를 입력해주세요.";
+            result[1].style.color = "red";
+            return false;
+        } else{
+            result[1].innerHTML ="";
+        }
+        if(member_email.value == null || member_email.value ==""){
+            result[2].innerHTML = "이메일을 입력해주세요.";
+            result[2].style.color = "red";
+            return false;
+        } else{
+            result[2].innerHTML ="";
+        }
+        if(member_phone.value == null || member_phone.value ==""){
+            result[3].innerHTML = "전화번호를 입력해주세요.";
+            result[3].style.color = "red";
+            return false;
+        } else{
+            result[3].innerHTML ="";
+        }
+        alert("수정이 완료되었습니다.");
+        frm.submit();
+
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const pwd1 = document.querySelector("#member_pwd");
+        const pwd2 = document.querySelector("#member_pwd2");
+        const result = document.querySelector("#result2");
+
+        function checkPasswords() {
+            const member_pwd = pwd1.value;
+            const member_pwd2 = pwd2.value;
+
+            if (member_pwd === member_pwd2) {
+                result.innerHTML = "비밀번호가 일치합니다.";
+                result.style.color = "green";
+            } else {
+                result.innerHTML = "비밀번호가 동일하지 않습니다.";
+                result.style.color = "red";
+            }
+        }
+
+        pwd1.addEventListener("keyup", checkPasswords);
+        pwd2.addEventListener("keyup", checkPasswords);
+    });
+</script>
 </body>
 </html>

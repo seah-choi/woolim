@@ -222,37 +222,59 @@
             let study_content = document.getElementById("study_content").value;
             let start_date = document.getElementById("start_date").value;
             let end_date = document.getElementById("end_date").value || start;
-
+            console.log(study_content);
+            console.log(start_date);
+            console.log(end_date);
             if(study_content && start_date){
-                // AJAX 요청을 통해 데이터를 서버로 전송
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/events/addEvent", true);
-                xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                            alert("일정이 성공적으로 추가되었습니다.");
-                            // 일정 추가 성공 시 캘린더에도 추가
-                            calendar.addEvent({
-                                title: study_content,
-                                start: start_date,
-                                end: end_date
-                            });
-                            // 모달 닫기
+                $.ajax({
+                    url: "/events/addEvent",
+                    method: 'post',
+                    dataType : 'text',
+                    data : {
+                        "study_content" : study_content,
+                        "start_date" : start_date,
+                        "end_date" : end_date
+                    },
+                    success: function (response){
+                        console.log(response);
+                        if(response == 1){
+                            alert("추가 성공");
                             $('#exampleModal1').modal('hide');
-                            // 폼 리셋
-                            document.getElementById('scheduleForm').reset();
-                        } else {
-                            alert("일정 추가에 실패했습니다.");
+                        }
+                        else{
+                            alert("추가 실패");
                         }
                     }
-                };
-                var data = {
-                    title: study_content,
-                    start: start_date,
-                    end: end_date
-                };
-                xhr.send(JSON.stringify(data));
+                })
+                // AJAX 요청을 통해 데이터를 서버로 전송
+                // var xhr = new XMLHttpRequest();
+                // xhr.open("POST", "/events/addEvent", true);
+                // xhr.setRequestHeader("Content-Type", "application/json");
+                // xhr.onreadystatechange = function() {
+                //     if (xhr.readyState === 4) {
+                //         if (xhr.status === 200) {
+                //             alert("일정이 성공적으로 추가되었습니다.");
+                //             // 일정 추가 성공 시 캘린더에도 추가
+                //             calendar.addEvent({
+                //                 title: study_content,
+                //                 start: start_date,
+                //                 end: end_date
+                //             });
+                //             // 모달 닫기
+                //             $('#exampleModal1').modal('hide');
+                //             // 폼 리셋
+                //             document.getElementById('scheduleForm').reset();
+                //         } else {
+                //             alert("일정 추가에 실패했습니다.");
+                //         }
+                //     }
+                // };
+                // var data = {
+                //     study_content: study_content,
+                //     start_date: start_date,
+                //     end_date: end_date
+                // };
+                // xhr.send(JSON.stringify(data));
             } else {
                 alert("일정과 시작 날짜는 필수입니다.");
             }

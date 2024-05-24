@@ -144,4 +144,11 @@ public class MemberServiceImpl implements MemberServiceIf{
     public int email_check(String member_id) {
         return memberMapper.email_check(member_id);
     }
+
+    @Override
+    public int modify(MemberDTO memberDTO) {
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+        int result = memberMapper.modify(memberVO);
+        return result;
+    }
 }
