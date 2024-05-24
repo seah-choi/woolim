@@ -34,7 +34,14 @@
             <div class="col-lg-9 order-1 order-lg-2">
                 <h5 style="font-weight: bold">장바구니</h5>
                 <hr>
-                <input type="date"style="width: 30%" class="form-control">
+                <form action="/mypage/cart">
+                    <div class="d-flex justify-content-end">
+                        <input type="date" style="width: 20%" name="search_date1" class="form-control me-3">
+                            <span class="me-3">~</span>
+                        <input type="date" style="width: 20%" name="search_date2" class="me-3 form-control">
+                        <button type="submit" class="btn btn-primary" >검색</button>
+                    </div>
+                </form>
                 <br>
                 <div class="cart-table">
                     <table>
@@ -51,6 +58,11 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <c:if test="${dtoList.size()==0}">
+                            <tr>
+                                <td colspan="4"><p class="d-flex justify-content-center">기록이 없습니다.</p></td>
+                            </tr>
+                        </c:if>
                         <c:forEach items="${dtoList}" var="list">
                             <tr>
                                 <input type="hidden" class="cart_idx" value="${list.cart_idx}">

@@ -83,6 +83,23 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        div.searchBox {
+            padding: 30px;
+            width: 100%;
+            background-color: #f3f3f3;
+            border-radius: 10px;
+        }
+
+        input.searchInput {
+            width: 300px;
+            margin-top: 2px;
+            border-radius: 10px;
+            height: 45px;
+            border: 1px solid #54545480;
+
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -107,49 +124,83 @@
             <span>수강 중인 강좌</span>
         </div>
         <hr>
-        <div class="input-group">
-            <button class="btn btn-outline-secondary dropdown-toggle" id="drop" type="button" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">강의명</a></li>
-                <li><a class="dropdown-item" href="#">강사명</a></li>
-            </ul>
-            <input type="text" class="form-control" aria-label="Text input with 2 dropdown buttons">
-            <button class="btn btn-outline-secondary" type="button" id="search" aria-expanded="false">검색</button>
+        <div class="searchBox">
+            <form role="search" id="frmSearch" class="searchForm" action="/mystudy/classList" method="get">
+
+                <div class="mb-3 d-flex">
+                    <label class="ml-3 col-form-label fontWe-700 mt-4">검색 범위</label>
+
+                    <div class="col-md-2 col-sm-12 ml-4">
+                        <div class="form-group">
+                            <label>구분</label>
+                            <select id="schoolSelect" name="search_type" class="form-control" data-size="5" data-style="btn-outline-info">
+                                <option value="">전체</option>
+                                <option value="t">제목</option>
+                                <option value="u">강사명</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col mt-4">
+                        <input class="searchInput form-control" type="search" name="search_word"  id="search_word" placeholder="검색" aria-label="Search" value="">
+                    </div>
+                </div>
+
+                <div class="mb-3 d-flex">
+                    <label class="ml-3 col-form-label fontWe-700">검색 기간</label>
+                    <div class="col-2 ml-4">
+                        <input type="date" class="form-control searchDate" name="search_date1" id="search_date1" value="">
+                    </div>
+                    <div class="mt-2">
+                        <span class="justify-content-center">~</span>
+                    </div>
+                    <div class="col-2">
+                        <input type="date" class="form-control searchDate" name="search_date2" id="search_date2" value="">
+                    </div>
+                    <div class="col-sm-3 ml-5">
+                        <button class="btn btn-warning" id="btnSearch" type="submit">검색</button>
+                        <button class="btn btn-warning" id="btnReset" type="reset" onclick="location.href='/data/main'">초기화</button>
+                    </div>
+                </div>
+            </form>
         </div>
         <br>
+        <c:if test="${responseDTO.dtolist.size() == 0}">
+            <div id="lecture">
+                <p class="d-flex justify-content-center">수강중인 강좌가 없습니다.</p>
+            </div>
+        </c:if>
+        <c:forEach items="${responseDTO.dtolist}" var="list">
         <div id="lecture">
-            <div><a href="/lecture/view"><img src="/resources/img/lecture.png"></a></div>
+            <div><a href="/lecture/view?lecture_idx=${list.lecture_idx}"><img src="/resources/img/lecture/${list.lecture_image}"></a></div>
             <div style="display: flex;flex-direction: column;margin-left: 20px;width: 1000px;">
-                <h5>[초등] Touch ! 초등 영어 - 파닉스</h5>
-                <span>강사 : 최세아 </span>
-                <span>수강기간 : 2024-04-01 ~ 2024-06-31</span>
+                <h5>${list.lecture_title}</h5>
+                <span>강사 : ${list.member_name} </span>
+                <span>수강기간 : ${list.lecture_start_date} ~ ${list.lecture_end_date}</span>
                 <div style="display: flex;justify-content: flex-end;">
                     <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/view'">학습하러 가기</button>
                 </div>
             </div>
         </div>
+        </c:forEach>
         <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">
             <ul class="pagination">
-                <li class="page-item">
-                    <a href="#" class="page-link" aria-label="Previous">&lt;</a>
+                <li class="page-item <c:if test="${responseDTO.prev_page_plag == 'false'}"> disabled</c:if>" >
+                    <a href="/mystudy/classList?page=${responseDTO.page_block_start - responseDTO.page_block_size}${responseDTO.linkParams}"
+                       class="page-link" aria-label="Previous">&laquo;
+                    </a>
                 </li>
-                <li class="page-item active">
-                    <a href="#" class="page-link">1</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">2</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">3</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">4</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">5</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link" aria-label="Next">&gt;</a>
+                <c:forEach begin="${responseDTO.page_block_start}"
+                           end="${responseDTO.page_block_end}"
+                           var="page_num">
+                    <li class="page-item <c:if test="${responseDTO.page == page_num}">active</c:if>">
+                        <a href="/mystudy/classList?page=${page_num}${responseDTO.linkParams}" class="page-link">${page_num}</a>
+                    </li>
+                </c:forEach>
+                <li class="page-item <c:if test="${responseDTO.next_page_plag == 'false'}"> disabled</c:if>" >
+                    <a href="/mystudy/classList?page=${responseDTO.page_block_start + responseDTO.page_block_size}${responseDTO.linkParams}" class="page-link" aria-label="Previous">
+                        &raquo;
+                    </a>
                 </li>
             </ul>
         </nav>

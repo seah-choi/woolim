@@ -25,7 +25,10 @@
         background: #dde5e7 !important;
     }
     .nav-item .nav-menu li .dropdown li a {
-        color: #000000;
+        color: #000000 !important;
+    }
+    .headerBtn {
+        border-radius: 5px !important;
     }
 </style>
     <header class="header-section">
@@ -87,7 +90,7 @@
 
                             <form action="/lecture/list" method="get" class="input-group">
                                 <input type="text" name="search_word" placeholder="What do you need?">
-                                <button type="submit"><i class="ti-search"></i></button>
+                                <button type="submit" class="headerBtn"><i class="ti-search"></i></button>
                             </form>
                         </div>
                     </div>

@@ -26,4 +26,11 @@ public class CartServiceImpl implements CartServiceIf{
 
         return dtolist;
     }
+
+    @Override
+    public int insertCartOrJjim(CartDTO cartDTO) {
+        CartVO cartVO = modelMapper.map(cartDTO, CartVO.class);
+        int result = cartMapper.insertCartOrJjim(cartVO);
+        return result;
+    }
 }
