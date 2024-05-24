@@ -53,7 +53,16 @@
                 <div class="col-lg-12">
                     <div class="place-order">
                         <div class="order-total">
-                            <h4>포인트 충전하기</h4>
+                            <form action="/mypage/pointcharge">
+                                <div class="d-flex justify-content-end">
+                                    <input type="date" style="width: 20%" name="search_date1" class="form-control me-3">
+                                    <span class="me-3">~</span>
+                                    <input type="date" style="width: 20%" name="search_date2" class="me-3 form-control">
+                                    <button type="submit" class="btn btn-primary" >검색</button>
+                                </div>
+                            </form>
+                            <hr>
+                            <h4 class="d-flex justify-content-center">포인트 사용 내역</h4>
                             <div class="order-btn">
                                 <a class="site-btn place-btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">충전하기</a>
                             </div>

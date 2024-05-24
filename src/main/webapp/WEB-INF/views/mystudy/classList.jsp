@@ -117,39 +117,37 @@
             <button class="btn btn-outline-secondary" type="button" id="search" aria-expanded="false">검색</button>
         </div>
         <br>
+        <c:forEach items="${responseDTO.dtolist}" var="list">
         <div id="lecture">
-            <div><a href="/lecture/view"><img src="/resources/img/lecture.png"></a></div>
+            <div><a href="/lecture/view?lecture_idx=${list.lecture_idx}"><img src="/resources/img/lecture/${list.lecture_image}"></a></div>
             <div style="display: flex;flex-direction: column;margin-left: 20px;width: 1000px;">
-                <h5>[초등] Touch ! 초등 영어 - 파닉스</h5>
-                <span>강사 : 최세아 </span>
-                <span>수강기간 : 2024-04-01 ~ 2024-06-31</span>
+                <h5>${list.lecture_title}</h5>
+                <span>강사 : ${list.member_name} </span>
+                <span>수강기간 : ${list.lecture_start_date} ~ ${list.lecture_end_date}</span>
                 <div style="display: flex;justify-content: flex-end;">
                     <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/view'">학습하러 가기</button>
                 </div>
             </div>
         </div>
+        </c:forEach>
         <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">
             <ul class="pagination">
-                <li class="page-item">
-                    <a href="#" class="page-link" aria-label="Previous">&lt;</a>
+                <li class="page-item <c:if test="${responseDTO.prev_page_plag == 'false'}"> disabled</c:if>" >
+                    <a href="/mystudy/classList?page=${responseDTO.page_block_start - responseDTO.page_block_size}${responseDTO.linkParams}"
+                       class="page-link" aria-label="Previous">&laquo;
+                    </a>
                 </li>
-                <li class="page-item active">
-                    <a href="#" class="page-link">1</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">2</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">3</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">4</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">5</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link" aria-label="Next">&gt;</a>
+                <c:forEach begin="${responseDTO.page_block_start}"
+                           end="${responseDTO.page_block_end}"
+                           var="page_num">
+                    <li class="page-item <c:if test="${responseDTO.page == page_num}">active</c:if>">
+                        <a href="/mystudy/classList?page=${page_num}${responseDTO.linkParams}" class="page-link">${page_num}</a>
+                    </li>
+                </c:forEach>
+                <li class="page-item <c:if test="${responseDTO.next_page_plag == 'false'}"> disabled</c:if>" >
+                    <a href="/mystudy/classList?page=${responseDTO.page_block_start + responseDTO.page_block_size}${responseDTO.linkParams}" class="page-link" aria-label="Previous">
+                        &raquo;
+                    </a>
                 </li>
             </ul>
         </nav>

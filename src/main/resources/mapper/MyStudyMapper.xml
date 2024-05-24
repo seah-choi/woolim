@@ -77,4 +77,61 @@
         where bbs_idx = #{bbs_idx}
     </select>
 
+    <select id="LectureListByPage" resultType="org.fullstack4.woolim.domain.LectureVO">
+        SELECT wl.lecture_idx,lecture_title,member_name,lecture_start_date,lecture_end_date,lecture_image
+        FROM woo_lecture as wl
+        INNER JOIN woo_order_detail as wod ON wl.lecture_idx = wod.lecture_idx
+        <where>
+            wod.member_id =#{member_id}
+            <if test="search_types != null">
+                <foreach collection="search_types" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            and lecture_title like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'u'.toString()">
+                            and member_name like concat('%', #{search_word},'%' )
+                        </when>
+                    </choose>
+                </foreach>
+            </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and bbs_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and bbs_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+        </where>
+
+        order by wod.order_detail_idx desc
+        limit #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="LectureCount" resultType="int">
+        SELECT count(*)
+        FROM woo_lecture as wl
+        INNER JOIN woo_order_detail as wod ON wl.lecture_idx = wod.lecture_idx
+        <where>
+            wod.member_id =#{member_id}
+            <if test="search_types != null">
+                <foreach collection="search_types" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            and lecture_title like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'u'.toString()">
+                            and member_name like concat('%', #{search_word},'%' )
+                        </when>
+                    </choose>
+                </foreach>
+            </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and bbs_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and bbs_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+        </where>
+    </select>
+
 </mapper>

@@ -49,10 +49,10 @@
                 </if>
             </if>
             <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
-                and member_reg_date >= #{search_date1}
+                and payment_reg_date >= #{search_date1}
             </if>
             <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
-                and member_reg_date <![CDATA[<=]]> #{search_date2}
+                and payment_reg_date <![CDATA[<=]]> #{search_date2}
             </if>
         </where>
         ORDER by payment_idx DESC
@@ -77,10 +77,10 @@
                 </if>
             </if>
             <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
-            and member_reg_date >= #{search_date1}
+                and payment_reg_date >= #{search_date1}
             </if>
             <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
-            and member_reg_date <![CDATA[<=]]> #{search_date2}
+                and payment_reg_date <![CDATA[<=]]> #{search_date2}
             </if>
         </where>
     </select>
