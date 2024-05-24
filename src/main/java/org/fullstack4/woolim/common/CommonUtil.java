@@ -46,7 +46,7 @@ public class CommonUtil {
 
     public static boolean loginCheck(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        return session.getAttribute("user_id") != null;
+        return session.getAttribute("member_id") != null;
     }
 
     public static boolean autologincheck(HttpServletRequest req) {

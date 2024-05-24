@@ -1,4 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>Title</title>
@@ -112,6 +114,12 @@
             </div>
         </div>
         <hr>
+        <br>
+        <div>
+            <c:if test="${not empty file}">
+                <img src="/resources/upload/bbs/${file.saveFile}" width="700px" height="400px">
+            </c:if>
+        </div>
         <br>
         <div style="white-space: pre-wrap;margin-bottom: 100px;">${bbs.bbs_content}</div>
         <div style="display: flex;justify-content: center;">

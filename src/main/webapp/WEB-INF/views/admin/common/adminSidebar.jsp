@@ -72,6 +72,11 @@
                         <li><a href="/admin/board/list?bbs_type=bbs02">자유게시판</a></li>
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a href="/" class="noDropdown">
+                        <span class="micon icon-copy fa fa-mail-reply"></span><span class="mtext">사이트로 돌아가기</span>
+                    </a>
+                </li>
 
             </ul>
         </div>
