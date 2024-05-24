@@ -31,6 +31,7 @@
             <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
                 and bbs_reg_date <![CDATA[<=]]> #{search_date2}
             </if>
+            AND member_id = #{member_id}
         </where>
         limit #{page_skip_count}, #{page_size}
     </select>

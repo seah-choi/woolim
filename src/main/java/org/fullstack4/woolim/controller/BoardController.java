@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.FileUtil;
 import org.fullstack4.woolim.dto.*;
+import org.fullstack4.woolim.service.BbsReplyServiceIf;
 import org.fullstack4.woolim.service.BbsServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,7 @@ import java.util.UUID;
 public class BoardController {
 
     private final BbsServiceIf bbsServiceIf;
+    private final BbsReplyServiceIf bbsReplyServiceIf;
 
     @GetMapping("/list")
     public void GETList(@RequestParam(defaultValue = "") String bbs_type,
@@ -63,9 +65,12 @@ public class BoardController {
         log.info("BoardController >> GETView()");
         BbsDTO  bbsDTO = bbsServiceIf.view(bbs_idx);
         BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
+        List<BbsReplyDTO> bbsReplyDTOList = bbsReplyServiceIf.list(bbs_idx);
 
+        log.info("view >> reply" + bbsReplyDTOList);
         model.addAttribute("bbs", bbsDTO);
         model.addAttribute("file",boardFileDTO);
+        model.addAttribute("reply", bbsReplyDTOList);
 
     }
 

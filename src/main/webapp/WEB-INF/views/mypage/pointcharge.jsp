@@ -55,7 +55,7 @@
                         <div class="order-total">
                             <h4>포인트 충전하기</h4>
                             <div class="order-btn">
-                                <button type="button" class="site-btn place-btn" onclick="requestPay()">충전하기</button>
+                                <a class="site-btn place-btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">충전하기</a>
                             </div>
                             <table class="table mt-5">
                                 <thead>
@@ -63,43 +63,39 @@
                                     <th scope="col">구분</th>
                                     <th scope="col">내용</th>
                                     <th scope="col">금액</th>
-                                    <th scope="col">사용 후 포인트</th>
                                     <th scope="col">날짜</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <th scope="row">충전</th>
-                                    <td id="title">포인트 충전</td>
-                                    <td>2024</td>
-                                    <td>2024</td>
-                                    <td>2024-05-07</td>
-                                </tr>
+                                <c:forEach items="${paymentDTO}" var="list">
+                                    <tr>
+                                        <th scope="row">${list.payment_type}</th>
+                                        <td id="title">${list.payment_title}</td>
+                                        <td>${list.price}</td>
+                                        <td>${list.payment_reg_date}</td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                             <nav class="blog-pagination justify-content-center d-flex mt-5">
                                 <ul class="pagination">
-                                    <li class="page-item">
-                                        <a href="#" class="page-link" aria-label="Previous">&lt;</a>
+                                    <li class="page-item <c:if test="${responseDTO.prev_page_plag == 'false'}"> disabled</c:if>" >
+                                        <a href="/mypage/pointcharge?page=${responseDTO.page_block_start - responseDTO.page_block_size}${responseDTO.linkParams}"
+                                           class="page-link" aria-label="Previous">&laquo;
+                                        </a>
                                     </li>
-                                    <li class="page-item active">
-                                        <a href="#" class="page-link">1</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">4</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">5</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link" aria-label="Next">&gt;</a>
+                                    <c:forEach begin="${responseDTO.page_block_start}"
+                                               end="${responseDTO.page_block_end}"
+                                               var="page_num">
+                                        <li class="page-item <c:if test="${responseDTO.page == page_num}">active</c:if>">
+                                            <a href="/mypage/pointcharge?page=${page_num}${responseDTO.linkParams}" class="page-link">${page_num}</a>
+                                        </li>
+                                    </c:forEach>
+                                    <li class="page-item <c:if test="${responseDTO.next_page_plag == 'false'}"> disabled</c:if>" >
+                                        <a href="/mypage/pointcharge?page=${responseDTO.page_block_start + responseDTO.page_block_size}${responseDTO.linkParams}" class="page-link" aria-label="Previous">
+                                            &raquo;
+                                        </a>
                                     </li>
                                 </ul>
                             </nav>
@@ -108,43 +104,68 @@
                 </div>
             </div>
         </form>
-    </div>
-</section>
-<!-- Shopping Cart Section End -->
-
-<!-- Partner Logo Section Begin -->
-<div class="partner-logo">
-    <div class="container">
-        <div class="logo-carousel owl-carousel">
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-1.png" alt="">
-                </div>
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">충전 하기</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-2.png" alt="">
+            <div class="offcanvas-body">
+                <div>
+                    충전하실 금액을 선택해 주세요.
                 </div>
-            </div>
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-3.png" alt="">
-                </div>
-            </div>
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-4.png" alt="">
-                </div>
-            </div>
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-5.png" alt="">
+                <div class="fw-brand-check">
+                    <div class="bc-item">
+                        <label for="bc-calvin">
+                            1,000원
+                            <input type="radio" id="bc-calvin" class="subjectbtn" value="1000" name="pay">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="bc-item">
+                        <label for="bc-diesel">
+                            3,000원
+                            <input type="radio" id="bc-diesel" class="subjectbtn" value="3000" name="pay">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="bc-item">
+                        <label for="bc-polo">
+                            5,000원
+                            <input type="radio" id="bc-polo" class="subjectbtn" value="5000" name="pay">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="bc-item">
+                        <label for="bc-tommy">
+                            10,000원
+                            <input type="radio" id="bc-tommy" class="subjectbtn" value="10000" name="pay">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="bc-item">
+                        <label for="bc-tommy2">
+                            30,000원
+                            <input type="radio" id="bc-tommy2" class="subjectbtn" value="30000" name="pay">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="bc-item">
+                        <label for="bc-tommy1">
+                            50,000원
+                            <input type="radio" id="bc-tommy1" class="subjectbtn" value="50000" name="pay">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" onclick="requestPay()">충전하기</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Partner Logo Section End -->
+</section>
+<!-- Shopping Cart Section End -->
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
@@ -160,53 +181,86 @@
 <script>
     var IMP = window.IMP;
     IMP.init("imp78587533");
+    var list;
+
+    $.ajax({
+        url:"/mypage/viewMember.dox",
+        dataType:"json",
+        type : "POST",
+        data : {
+            "member_id":"${sessionScope['member_id']}"
+        },
+        success : function(data) {
+            list = data.dto;
+            console.log(list);
+        }
+    });
 
     function requestPay() {
-        // // let targetVal = parseInt(uncomma(target.value));
-        // let targetVal = target.value;
-        let today = new Date();
-        let rand = Math.floor(Math.random()*(1000000-0)+1);
-        let hours = today.getHours(); // 시
-        let minutes = today.getMinutes();  // 분
-        let seconds = today.getSeconds();  // 초
-        let milliseconds = today.getMilliseconds();
-        let now = hours+minutes+seconds+milliseconds;
-        IMP.request_pay({
-            pg: 'html5_inicis',
-            pay_method: 'card',
-            merchant_uid: now+"-"+rand,
-            name: '포인트',
-            amount: 100,
-            // buyer_email: list.email,
-            // buyer_name: list.member_name,
-            // buyer_tel: list.phone,
-            // buyer_addr: list.addr1 +" " +list.addr2,
-            // buyer_postcode: list.zipcode
-        }, function (rsp) { // callback
-            if(rsp.success){
-                console.log(rsp.amount);
-                $.ajax({
-                    url:"/mypage/point.dox",
-                    dataType:"json",
-                    type : "POST",
-                    data : {
-                        "payment_num":rsp.merchant_uid
-                        ,"member_id":"${sessionScope['member_id']}"
-                        ,"price":rsp.paid_amount
-                        ,"method":rsp.pay_method
-                        ,"company":rsp.pg_provider
-                    },
-                    success : function(data) {
-                        alert("포인트 충전 성공");
-                        location.href="/mypage/point";
-                    }
-                });
-                console.log(rsp);
-            }else {
-                console.log(rsp);
+
+        var radios = document.getElementsByName('pay');
+
+        // 선택된 라디오 버튼의 값을 저장할 변수
+        var selectedValue = '';
+
+        // 모든 라디오 버튼에 대해 반복
+        for (var i = 0; i < radios.length; i++) {
+            // 라디오 버튼이 선택되었는지 확인
+            if (radios[i].checked) {
+                // 선택된 라디오 버튼의 값을 변수에 할당
+                selectedValue = radios[i].value;
+                break; // 선택된 값이 있으면 반복 중지
             }
-            //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
-        });
+        }
+
+        // 선택된 값이 존재하는지 확인 후 출력
+        if (selectedValue !== '') {
+            // // let targetVal = parseInt(uncomma(target.value));
+            // let targetVal = target.value;
+            let today = new Date();
+            let rand = Math.floor(Math.random()*(1000000-0)+1);
+            let hours = today.getHours(); // 시
+            let minutes = today.getMinutes();  // 분
+            let seconds = today.getSeconds();  // 초
+            let milliseconds = today.getMilliseconds();
+            let now = hours+minutes+seconds+milliseconds;
+            IMP.request_pay({
+                pg: 'html5_inicis',
+                pay_method: 'card',
+                merchant_uid: now+"-"+rand,
+                name: '포인트',
+                amount: selectedValue,
+                buyer_email: list.member_email + list.member_email_addr,
+                buyer_name: list.member_name,
+                buyer_tel: list.member_phone,
+            }, function (rsp) { // callback
+                if(rsp.success){
+                    console.log(rsp.amount);
+                    $.ajax({
+                        url:"/mypage/point.dox",
+                        dataType:"json",
+                        type : "POST",
+                        data : {
+                            "payment_num":rsp.merchant_uid
+                            ,"member_id":"${sessionScope['member_id']}"
+                            ,"price":rsp.paid_amount
+                            ,"payment_type":"충전"
+                            ,"payment_title":"포인트 충전"
+                        },
+                        success : function(data) {
+                            alert("포인트 충전 성공");
+                            location.replace("/mypage/pointcharge");
+                        }
+                    });
+                    console.log(rsp);
+                }else {
+                    console.log(rsp);
+                }
+                //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+            });
+        } else {
+            alert('충전할 금액을 선택해주세요.');
+        }
     }
 </script>
 </body>

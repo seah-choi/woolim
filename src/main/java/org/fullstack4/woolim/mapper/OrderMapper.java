@@ -4,6 +4,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.fullstack4.woolim.domain.OrderDetailVO;
 import org.fullstack4.woolim.domain.OrderVO;
 import org.fullstack4.woolim.domain.PaymentVO;
+import org.fullstack4.woolim.dto.PageRequestDTO;
+
+import java.util.List;
 
 @Mapper
 public interface OrderMapper {
@@ -11,4 +14,6 @@ public interface OrderMapper {
     int DoOrderDetail(OrderDetailVO orderDetailVO);
     int Enrolment(OrderDetailVO orderDetailVO);
     int InsertPayment(PaymentVO paymentVO);
+    List<PaymentVO> GetPayment(PageRequestDTO pageRequestDTO);
+    int total_count(PageRequestDTO pageRequestDTO);
 }

@@ -106,7 +106,7 @@
                     <div class="checkout-content">
                         <a href="#" class="content-btn"> 수강 취소하기</a>
                     </div>
-                    <div class="place-order">
+                    <div class="place-order" style="position:sticky; bottom:200px; top:250px">
                         <h4>구매 리스트</h4>
                         <div class="order-total">
                             <div class="tab-item">

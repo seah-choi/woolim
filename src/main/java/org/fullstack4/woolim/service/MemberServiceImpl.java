@@ -116,4 +116,14 @@ public class MemberServiceImpl implements MemberServiceIf{
         log.info("MemberServiceImpl >> adminDetail : " + result);
         return result;
     }
+
+    @Override
+    public int id_check(String member_id) {
+        return memberMapper.id_check(member_id);
+    }
+
+    @Override
+    public int email_check(String member_id) {
+        return memberMapper.email_check(member_id);
+    }
 }

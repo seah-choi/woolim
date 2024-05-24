@@ -18,4 +18,5 @@ public interface QnaMapper {
     int modify(QnaVO qnaVO);
     List<QnaVO> qnaListByPage(PageRequestDTO pageRequestDTO);
     QnaVO view(int qna_idx);
+    List<QnaFileVO> qnaFileList(int qna_idx);
 }

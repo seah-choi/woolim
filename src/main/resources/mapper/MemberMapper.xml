@@ -178,7 +178,7 @@
     </select>
 
     <update id="changePoint">
-        Update SET woo_member point=point+#{member_point} where member_id=#{member_id}
+        Update woo_member SET member_point=member_point+#{member_point} where member_id=#{member_id}
     </update>
 
     <update id="deleteMemberList" parameterType="java.util.Arrays">
@@ -206,4 +206,14 @@
                               member_status = #{member_status}
         where member_id = #{member_id}
     </update>
+    <select id="id_check" resultType="int">
+        SELECT COUNT(*)
+        FROM woo_member
+        WHERE member_id = #{member_id}
+    </select>
+    <select id="email_check" resultType="int">
+        SELECT COUNT(*)
+        FROM woo_member
+        WHERE member_id = #{member_id}
+    </select>
 </mapper>

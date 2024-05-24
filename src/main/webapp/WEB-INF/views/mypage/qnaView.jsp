@@ -121,9 +121,20 @@
                             </div>
                         </div>
                         <hr>
-                        <div style="white-space: pre-wrap;">
-                            <textarea class="form-control" rows="15" placeholder="Leave a comment here" style="resize: none" readonly>${qnaDTO.qna_content}</textarea>
-
+                        <div class="row mb-3">
+                            <label class="col-md-4 col-lg-2 col-form-label label">파일</label>
+                            <div class="col-md-8 col-lg-9">
+                                <ul id="org-file-list" class="form-group d-flex flex-column m-0 p-0" style="gap:5px">
+                                    <c:forEach items="${fileList}" var="file">
+                                        <li class="card mb-1 shadow-none border border-gray d-flex flex-row justify-content-between p-2 fileListNodes">
+                                            <span><a href="/admin/qna/qnaFileDownload?file_idx=${file.idx}&qna_idx=${qnaDTO.qna_idx}" >${file.orgFile}</a></span>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                        </div>
+                        <div style="white-space: pre-wrap; height: 500px; border: 1px solid #dddddd;padding: 20px;margin-bottom: 20px">
+                            ${qnaDTO.qna_content}
                         </div>
                         <div style="display: flex;justify-content: center;">
                             <div>
