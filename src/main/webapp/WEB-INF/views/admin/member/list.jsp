@@ -46,6 +46,7 @@
             margin-left: 20px;
             padding-bottom: 100px;
         }
+
     </style>
 
 </head>
@@ -117,10 +118,10 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>
+                            <th >
                                 <div class="custom-control custom-checkbox mb-5">
                                     <input type="checkbox" class="custom-control-input" id="chkAll" name="chkAll">
-                                    <label class="custom-control-label" for="chkAll">전체선택</label>
+                                    <label class="custom-control-label" for="chkAll"></label>
                                 </div>
                             </th>
                             <th>NO.</th>

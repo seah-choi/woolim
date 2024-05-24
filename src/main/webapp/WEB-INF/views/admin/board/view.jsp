@@ -162,60 +162,75 @@
         <div class="min-height-200px">
             <!-- basic table  Start -->
             <div class="pd-20 card-box mb-30" style="margin-bottom: 30px">
-                <h4 class="h4">공지사항 게시판</h4>
+                <c:if test="${bbsList.bbs_type eq 'bbs01'}">
+                    <h4 class="h4">교육정보 게시판</h4>
+                </c:if>
+                <c:if test="${bbsList.bbs_type eq 'bbs02'}">
+                    <h4 class="h4">자유 게시판</h4>
+                </c:if>
+                <c:if test="${bbsList.bbs_type eq 'bbs04'}">
+                    <h4 class="h4">공지사항 게시판</h4>
+                </c:if>
+                <c:if test="${bbsList.bbs_type eq 'bbs05'}">
+                    <h4 class="h4">자료실</h4>
+                </c:if>
 
-                <div id="list">
-                    <div class="bottomLine">
-                        <h5 style="font-weight: bold">작업형1 모의문제2 6번</h5>
-                        <div id="se">
+                <input type="text" name="bbs_category_code" value="${bbsList.bbs_type}">
+
+                <form>
+                    <div id="list">
+                        <div class="bottomLine">
+                            <h5 style="font-weight: bold">${bbs.bbs_title}</h5>
+                            <div id="se">
+                                <div>
+                                    <span>${bbs.member_id}</span><span id="date">${bbs.bbs_reg_date}</span>
+                                </div>
+                                <div>
+                                    <span style="font-weight: bold">조회수</span><span id="count">${bbs.bbs_read_cnt}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="align-items-start align-items-sm-center mt-3" style="white-space: pre-wrap;">
+                            ${bbs.bbs_content}
+                        </div>
+                        <br><br>
+                        <c:if test="${bbsList.bbs_type eq 'bbs02'}">
+                            <h4 class="h4">자료실</h4>
+
+                            <div class="bottomLine">
+                                <div class="ml-5">
+                                    <span>답변</span>&nbsp;<span id="cmCount">1</span>
+                                    <div class="form-floating d-flex justify-content-center w-75" style="margin-top: 10px;margin-bottom: 40px;">
+                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                        <label for="floatingTextarea">댓글</label>
+                                        <button type="button" class="btn" id="btn_comment">등록</button>
+                                    </div>
+                                    <div class="w-75">
+                                        <span style="font-weight: bold">babori</span>&nbsp;<span>2024-05-10</span>
+                                        <br>
+                                        <p>강의에서 알려드린 판다스로 진행 바랍니다.</p>
+                                    </div>
+                                    <div class="w-75" style="display: flex;justify-content: flex-end;">
+                                        <button type="button" id="cmModify">수정</button>
+                                        <span>&nbsp;|&nbsp;</span>
+                                        <button type="button" id="cmDelete">삭제</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+
+                        <div style="display: flex;justify-content: center;">
                             <div>
-                                <span>seahchoi</span><span id="date">2024-05-07</span>
+                                <button type="button" class="btn" id="btn_back" onclick="location.href='/admin/board/list'">목록</button>
                             </div>
                             <div>
-                                <span style="font-weight: bold">조회수</span><span id="count">12</span>
+                                <button type="button" class="btn" id="btn_modify" onclick="location.href='/admin/board/modify'">수정</button>
+                                <button type="button" class="btn btn-secondary" id="btn_delete">삭제</button>
                             </div>
                         </div>
                     </div>
-
-                    <div class="align-items-start align-items-sm-center mt-3" style="white-space: pre-wrap;">
-                        read버튼을 눌렀을 때 다른 항목들은 잘 찾아내나 id 1번 항목을 read할 경우 error 발생
-                        GangnamguPopulationService.cs파일 안의 GetDetail함수의 else로 잡힙니다.
-
-                        확인부탁드리겠습니다.
-                        감사합니다.
-                    </div>
-                    <br><br>
-                    <div class="bottomLine">
-                        <div class="ml-5">
-                            <span>답변</span>&nbsp;<span id="cmCount">1</span>
-                            <div class="form-floating d-flex justify-content-center w-75" style="margin-top: 10px;margin-bottom: 40px;">
-                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                <label for="floatingTextarea">댓글</label>
-                                <button type="button" class="btn" id="btn_comment">등록</button>
-                            </div>
-                            <div class="w-75">
-                                <span style="font-weight: bold">babori</span>&nbsp;<span>2024-05-10</span>
-                                <br>
-                                <p>강의에서 알려드린 판다스로 진행 바랍니다.</p>
-                            </div>
-                            <div class="w-75" style="display: flex;justify-content: flex-end;">
-                                <button type="button" id="cmModify">수정</button>
-                                <span>&nbsp;|&nbsp;</span>
-                                <button type="button" id="cmDelete">삭제</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="display: flex;justify-content: center;">
-                        <div>
-                            <button type="button" class="btn" id="btn_back" onclick="location.href='/admin/board/list'">목록</button>
-                        </div>
-                        <div>
-                            <button type="button" class="btn" id="btn_modify" onclick="location.href='/admin/board/modify'">수정</button>
-                            <button type="button" class="btn btn-secondary" id="btn_delete">삭제</button>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

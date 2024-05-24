@@ -116,7 +116,7 @@
             <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
             <input type="hidden" name="bbs_category_code" id="bbs_category_code" value="bbs02">
             <div class="form-floating">
-                <textarea class="form-control" name="bbs_title" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <textarea class="form-control" name="bbs_title" placeholder="Leave a comment here" id="floatingTextarea" style="resize: none"></textarea>
                 <label for="floatingTextarea">제목</label>
             </div>
             <br>
