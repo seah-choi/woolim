@@ -83,6 +83,10 @@
         INNER JOIN woo_order_detail as wod ON wl.lecture_idx = wod.lecture_idx
         <where>
             wod.member_id =#{member_id}
+            <if test="search_types == null">
+                and (lecture_title like concat('%', #{search_word},'%')
+                or member_name like concat('%', #{search_word},'%' ))
+            </if>
             <if test="search_types != null">
                 <foreach collection="search_types" item="type" >
                     <choose>
@@ -113,6 +117,10 @@
         INNER JOIN woo_order_detail as wod ON wl.lecture_idx = wod.lecture_idx
         <where>
             wod.member_id =#{member_id}
+            <if test="search_types == null">
+                and (lecture_title like concat('%', #{search_word},'%')
+                or member_name like concat('%', #{search_word},'%' ))
+            </if>
             <if test="search_types != null">
                 <foreach collection="search_types" item="type" >
                     <choose>

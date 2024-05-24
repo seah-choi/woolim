@@ -83,6 +83,23 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        div.searchBox {
+            padding: 30px;
+            width: 100%;
+            background-color: #f3f3f3;
+            border-radius: 10px;
+        }
+
+        input.searchInput {
+            width: 300px;
+            margin-top: 2px;
+            border-radius: 10px;
+            height: 45px;
+            border: 1px solid #54545480;
+
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -107,16 +124,52 @@
             <span>수강 중인 강좌</span>
         </div>
         <hr>
-        <div class="input-group">
-            <button class="btn btn-outline-secondary dropdown-toggle" id="drop" type="button" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">강의명</a></li>
-                <li><a class="dropdown-item" href="#">강사명</a></li>
-            </ul>
-            <input type="text" class="form-control" aria-label="Text input with 2 dropdown buttons">
-            <button class="btn btn-outline-secondary" type="button" id="search" aria-expanded="false">검색</button>
+        <div class="searchBox">
+            <form role="search" id="frmSearch" class="searchForm" action="/mystudy/classList" method="get">
+
+                <div class="mb-3 d-flex">
+                    <label class="ml-3 col-form-label fontWe-700 mt-4">검색 범위</label>
+
+                    <div class="col-md-2 col-sm-12 ml-4">
+                        <div class="form-group">
+                            <label>구분</label>
+                            <select id="schoolSelect" name="search_type" class="form-control" data-size="5" data-style="btn-outline-info">
+                                <option value="">전체</option>
+                                <option value="t">제목</option>
+                                <option value="u">강사명</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col mt-4">
+                        <input class="searchInput form-control" type="search" name="search_word"  id="search_word" placeholder="검색" aria-label="Search" value="">
+                    </div>
+                </div>
+
+                <div class="mb-3 d-flex">
+                    <label class="ml-3 col-form-label fontWe-700">검색 기간</label>
+                    <div class="col-2 ml-4">
+                        <input type="date" class="form-control searchDate" name="search_date1" id="search_date1" value="">
+                    </div>
+                    <div class="mt-2">
+                        <span class="justify-content-center">~</span>
+                    </div>
+                    <div class="col-2">
+                        <input type="date" class="form-control searchDate" name="search_date2" id="search_date2" value="">
+                    </div>
+                    <div class="col-sm-3 ml-5">
+                        <button class="btn btn-warning" id="btnSearch" type="submit">검색</button>
+                        <button class="btn btn-warning" id="btnReset" type="reset" onclick="location.href='/data/main'">초기화</button>
+                    </div>
+                </div>
+            </form>
         </div>
         <br>
+        <c:if test="${responseDTO.dtolist.size() == 0}">
+            <div id="lecture">
+                <p class="d-flex justify-content-center">수강중인 강좌가 없습니다.</p>
+            </div>
+        </c:if>
         <c:forEach items="${responseDTO.dtolist}" var="list">
         <div id="lecture">
             <div><a href="/lecture/view?lecture_idx=${list.lecture_idx}"><img src="/resources/img/lecture/${list.lecture_image}"></a></div>
