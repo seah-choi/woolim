@@ -133,7 +133,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div style="white-space: pre-wrap; height: 500px; border: 1px solid #dddddd;padding: 20px;margin-bottom: 20px">
+                        <div style="white-space: pre-wrap; height: 300px; border: 1px solid #dddddd;padding: 20px;margin-bottom: 20px">
                             ${qnaDTO.qna_content}
                         </div>
                         <div style="display: flex;justify-content: center;">
@@ -162,6 +162,27 @@
 
                     </div>
                     </c:if>
+
+                    <div id="comment">
+                        <form>
+                            <span>답변</span>&nbsp;<span id="cmCount">1</span>
+                            <div class="form-floating" style="display: flex;margin-top: 10px;margin-bottom: 40px;">
+                                <textarea class="form-control" placeholder="Leave a comment here" name="reply_content" id="floatingTextarea"></textarea>
+                                <label for="floatingTextarea">댓글</label>
+                                <button type="submit" class="btn" id="btn_comment">등록</button>
+                            </div>
+                        </form>
+                        <div style="border-bottom: solid 1px #ccc; padding-bottom: 10px;">
+                            <span style="font-weight: bold">seahchoi</span>&nbsp;<span>2024-02-13</span>
+                            <br>
+                            <p>댓글입니다.</p>
+                                <div style="display: flex;justify-content: flex-end;">
+                                    <button type="button" id="cmModify" onclick="location.href='/bbsReply/modify?reply_idx=${reply.reply_idx}'">수정</button>
+                                    <span>&nbsp;|&nbsp;</span>
+                                    <button type="submit" id="cmDelete" onclick="cmDelete(event)">삭제</button>
+                                </div>
+                        </div>
+                    </div>
 
 
                 </div>

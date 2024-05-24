@@ -1,4 +1,4 @@
-package org.fullstack4.woolim.domain;
+package org.fullstack4.woolim.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StudyScheduleVO {
+public class StudyScheduleDTO {
     private int study_idx;
     private String study_content;
     private int member_idx;
