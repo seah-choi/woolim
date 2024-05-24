@@ -44,13 +44,39 @@ public class MypageController {
         MemberDTO memberDTO = memberService.memberView(member_id);
         model.addAttribute("memberDTO", memberDTO);
     }
+
+    @PostMapping("/view")
+    public String POSTView(MemberDTO memberDTO){
+        int result = memberService.modify(memberDTO);
+        if(result > 0) {
+            return "redirect:/mypage/view";
+        } else{
+            return "redirect:/mypage/view";
+        }
+    }
+
     @GetMapping("/writeList")
     public void GETWriteList() {
 
     }
 
     @GetMapping("/paymentList")
-    public void GETPaymentList() {
+    public void GETPaymentList(HttpServletRequest req, Model model,PageRequestDTO pageRequestDTO) {
+        HttpSession session = req.getSession();
+        String member_id = (String) session.getAttribute("member_id");
+
+        pageRequestDTO.setMember_id(member_id);
+        PageResponseDTO<OrderDTO> responseDTO = orderService.viewOrderList(pageRequestDTO);
+        List<List<OrderDTO>> detailList = new ArrayList<>();
+
+        for(int i = 0; i<responseDTO.getDtolist().size(); i++){
+            detailList.add(orderService.viewOrderDetailList(responseDTO.getDtolist().get(i)));
+        }
+        log.info("detailList: " + detailList);
+        log.info("responseDTO: " + responseDTO);
+
+        model.addAttribute("detailList", detailList);
+        model.addAttribute("responseDTO", responseDTO);
 
     }
 

@@ -29,7 +29,6 @@
     <link rel="stylesheet" type="text/css" href="/resources/vendors/styles/icon-font.min.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/adminStyle.css">
 
-
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
     <script>
@@ -92,7 +91,7 @@
         a {
             text-decoration: none !important;
         }
-        #btn_modify{
+        #btn_regist{
             background: #68afcb;
             color: #fff;
         }
@@ -116,34 +115,56 @@
 
 <jsp:include page="/WEB-INF/views/admin/common/adminSidebar.jsp"/>
 
+
 <div class="main-container">
     <div class="pd-ltr-20 xs-pd-20-10">
         <!-- basic table  Start -->
         <div class="pd-20 card-box mb-30" style="margin-bottom: 30px">
 
             <div id="list">
-                <h5 style="font-weight: bold">공지사항 게시판</h5>
+                <c:if test="${bbsList.bbs_type eq 'bbs01'}">
+                    <h4 class="h4">교육정보 게시판</h4>
+                </c:if>
+                <c:if test="${bbsList.bbs_type eq 'bbs02'}">
+                    <h4 class="h4">자유 게시판</h4>
+                </c:if>
+                <c:if test="${bbsList.bbs_type eq 'bbs04'}">
+                    <h4 class="h4">공지사항 게시판</h4>
+                </c:if>
+                <c:if test="${bbsList.bbs_type eq 'bbs05'}">
+                    <h4 class="h4">자료실</h4>
+                </c:if>
+
                 <hr>
                 <br>
-                <h6>제목</h6>
-                <div class="d-flex align-items-start align-items-sm-center mt-3 w-50">
-                    <input class="form-control" type="text" placeholder="제목을 입력해주세요.">
-                </div>
-                <br>
-                <h6>내용</h6>
-                <div>
-                    <textarea id="summernote"></textarea>
-                </div>
-                <div style="display: flex;justify-content: center; margin-top: 50px">
-                    <div>
-                        <button type="button" class="btn" id="btn_back" onclick="location.href='/board/list'">목록</button>
+                <form name="frmRegist" action="/admin/board/regist" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="bbs_category_code" value="${bbsList.bbs_type}">
+                    <input type="hidden" name="member_id" value="${sessionScope.member_id}">
+                    <input type="hidden" name="bbs_teacher_yn" value="N">
+
+                    <h6>제목</h6>
+                    <div class="d-flex align-items-start align-items-sm-center mt-3 w-50">
+                        <input class="form-control" name="bbs_title" type="text" placeholder="제목을 입력해주세요.">
                     </div>
+                    <br>
+                    <input type="file" class="form-control w-50" name="files" id="file" multiple>
+                    <br>
+                    <h6>내용</h6>
                     <div>
-                        <button type="button" class="btn" id="btn_modify">등록</button>
-                        <button type="button" class="btn btn-secondary" id="btn_delete">취소</button>
+                        <textarea id="summernote" name="bbs_content"></textarea>
                     </div>
-                </div>
+                    <div style="display: flex;justify-content: center; margin-top: 50px">
+                        <div>
+                            <button type="button" class="btn" id="btn_back" onclick="location.href='/admin/board/list?bbs_type=${bbsList.bbs_type}'">목록</button>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn" id="btn_regist">등록</button>
+                            <button type="button" class="btn btn-secondary" id="btn_delete">취소</button>
+                        </div>
+                    </div>
+                </form>
             </div>
+
 
 
 
@@ -180,6 +201,8 @@
         ]
 
     });
+
+
 </script>
 <script src="/resources/vendors/scripts/core.js"></script>
 <script src="/resources/vendors/scripts/script.min.js"></script>

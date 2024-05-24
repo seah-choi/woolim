@@ -28,12 +28,15 @@ public class LoginController {
     @RequestMapping(value = "/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String Login(@RequestParam HashMap<String, Object> map, HttpServletRequest req, HttpServletResponse resp) throws Exception{
-
+        log.info("LoginController >>>>>>>>>>>>>>>>>>>>>> start ");
         HashMap<String, Object> resultMap = new HashMap<>();
         String id = req.getParameter("member_id").trim();
         String pwd = req.getParameter("member_pwd").trim();
 
         String name = memberService.memberView(id).getMember_name();
+        String member_category = memberService.memberView(id).getMember_category();
+
+
 
         boolean save_id = req.getParameter("save_id") ==null?false:true;
         try {
@@ -43,6 +46,8 @@ public class LoginController {
                 HttpSession session = req.getSession();
                 session.setAttribute("member_id", id);
                 session.setAttribute("member_name", name);
+                session.setAttribute("member_category", member_category);
+                log.info("member_category : " +member_category);
             } else {
                 resultMap.put("result", "false");
                 resultMap.put("msg","비밀번호가 틀렸습니다.");
@@ -51,6 +56,7 @@ public class LoginController {
             resultMap.put("result", "false");
             resultMap.put("msg", e.getMessage());
         }
+        log.info("LoginController >>>>>>>>>>>>>>>>>>>>>> end ");
         return new Gson().toJson(resultMap);
     }
 

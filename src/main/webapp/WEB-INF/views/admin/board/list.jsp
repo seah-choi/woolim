@@ -46,6 +46,7 @@
             margin-left: 20px;
             padding-bottom: 100px;
         }
+
     </style>
 </head>
 <body>
@@ -119,10 +120,10 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th style="width: 130px;">
-                                <div class="custom-control custom-checkbox mb-5 d-flex">
+                            <th >
+                                <div class="custom-control custom-checkbox mb-5">
                                     <input type="checkbox" class="custom-control-input" id="chkAll" name="chkAll">
-                                    <label class="custom-control-label" for="chkAll" style="font-weight: 700;">전체선택</label>
+                                    <label class="custom-control-label" for="chkAll"></label>
                                 </div>
                             </th>
                             <th>NO.</th>
@@ -135,7 +136,7 @@
 
                         <tbody>
 
-                        <c:forEach items="${bbsList.dtolist}" var="list" varStatus="status">
+                        <c:forEach items="${bbsList.dtolist}" var="list" >
                             <tr>
                                 <td>
                                     <div class="custom-control custom-checkbox mb-5">
@@ -155,7 +156,7 @@
 
                     </table>
                     <div class="d-flex justify-content-sm-end">
-                        <a class="btn btn-primary btn-lg btn-block" href="/admin/board/regist" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
+                        <a class="btn btn-primary btn-lg btn-block" href="/admin/board/regist?bbs_type=${bbsList.bbs_type}" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
                         <div class="d-flex justify-content-sm-end ml-2 mr-3">
                             <button type="button" id="btnDelete" name="btnDelete" class="btn btn-primary btn-lg btn-block" onclick="godelete();" style="width: 100px; height: 40px; font-size: 15px;">삭제하기</button>
                         </div>

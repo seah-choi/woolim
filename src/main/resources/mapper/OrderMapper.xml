@@ -93,7 +93,7 @@
 
     <select id="viewOrderList" resultType="org.fullstack4.woolim.domain.OrderVO">
         SELECT order_date,order_total,order_cancel_yn
-               ,order_reg_date,order_status,order_refund_request,order_refund_response
+               ,order_reg_date,order_status,order_refund_request,order_refund_response,order_num
         FROM woo_order
         <where>
             member_id =#{member_id}
@@ -125,9 +125,10 @@
     </select>
 
     <select id="viewOrderDetailList" resultType="org.fullstack4.woolim.domain.OrderDetailVO">
-        SELECT lecture_idx,order_status,price,member_id
-        FROM woo_order_detail
-        INNER JOIN
+        SELECT WOD.lecture_idx,order_status,price,lecture_image,lecture_title,lecture_start_date,lecture_end_date
+        FROM woo_order_detail as WOD
+        INNER JOIN woo_lecture as WL ON WOD.lecture_idx = WL.lecture_idx
+        WHERE order_num = #{order_num}
         ORDER by order_detail_idx DESC
     </select>
 </mapper>
