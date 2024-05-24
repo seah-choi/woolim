@@ -154,9 +154,18 @@
                 <button type="button" class="btn" id="btn_comment">등록</button>
             </div>
             <div>
-                <span style="font-weight: bold">babori</span>&nbsp;<span>2024-05-10</span>
-                <br>
-                <p>강의에서 알려드린 판다스로 진행 바랍니다.</p>
+            <c:choose>
+                <c:when test="${not empty reply}">
+                    <c:forEach items="${reply}" var="reply">
+                        <span style="font-weight: bold">${reply.member_id}</span>&nbsp;<span>${reply.reply_reg_date}</span>
+                        <br>
+                        <p>${reply.reply_content}</p>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    등록된 댓글이 없습니다.
+                </c:otherwise>
+            </c:choose>
             </div>
             <div style="display: flex;justify-content: flex-end;">
                 <button type="button" id="cmModify">수정</button>

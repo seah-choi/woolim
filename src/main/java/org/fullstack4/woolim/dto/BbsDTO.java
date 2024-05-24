@@ -25,6 +25,7 @@ public class BbsDTO {
     private int bbs_read_cnt;
     private int bbs_like;
     private String bbs_reply_yn;
+    private int bbs_reply_cnt;
 
     //////////////////////// 댓글영역/////////////////////////
     private int reply_idx;
