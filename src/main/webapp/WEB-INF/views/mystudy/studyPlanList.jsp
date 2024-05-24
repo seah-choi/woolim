@@ -140,22 +140,22 @@
                         <h1 class="modal-title fs-5" id="exampleModalLabel1" style="font-weight: bold">학습일정 추가</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form name="frm" action="/mystudy/studyPlanList" method="post">
+                    <form name="frm" id="scheduleForm">
                         <div class="modal-body">
                             <div class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                <label for="floatingTextarea">일정</label>
+                                <textarea class="form-control" placeholder="Leave a comment here" name="study_content" id="study_content"></textarea>
+                                <label for="study_content">일정</label>
                             </div>
                             <br>
                             <span>기간 설정</span>
                             <div class="form-floating mb-3" style="display: flex">
-                                <input type="date" class="form-control date" style="width: 180px;">
+                                <input type="date" class="form-control date" id="start_date" name="start_date" style="width: 180px;">
                                 <span style="padding: 10px;">~</span>
-                                <input type="date" class="form-control date" style="width: 180px;">
+                                <input type="date" class="form-control date" id="end_date" name="end_date" style="width: 180px;">
                             </div>
                         </div>
                         <div class="modal-footer" style="justify-content: center;">
-                            <button type="submit" class="btn" id="regist">등록</button>
+                            <button type="button" class="btn" id="regist">등록</button>
                             <button type="button" class="btn btn-outline-secondary">취소</button>
                         </div>
                     </form>
@@ -210,60 +210,6 @@
             eventLimit: true, // allow "more" link when too many events
             events: [
                 {
-                    title: 'All Day Event',
-                    start: '2020-02-01'
-                },
-                {
-                    title: 'Long Event',
-                    start: '2020-02-07',
-                    end: '2020-02-10'
-                },
-                {
-                    groupId: 999,
-                    title: 'Repeating Event',
-                    start: '2020-02-09T16:00:00'
-                },
-                {
-                    groupId: 999,
-                    title: 'Repeating Event',
-                    start: '2020-02-16T16:00:00'
-                },
-                {
-                    title: 'Conference',
-                    start: '2020-02-11',
-                    end: '2020-02-13'
-                },
-                {
-                    title: 'Meeting',
-                    start: '2020-02-12T10:30:00',
-                    end: '2020-02-12T12:30:00'
-                },
-                {
-                    title: 'Lunch',
-                    start: '2020-02-12T12:00:00'
-                },
-                {
-                    title: 'Meeting',
-                    start: '2020-02-12T14:30:00'
-                },
-                {
-                    title: 'Happy Hour',
-                    start: '2020-02-12T17:30:00'
-                },
-                {
-                    title: 'Dinner',
-                    start: '2020-02-12T20:00:00'
-                },
-                {
-                    title: 'Birthday Party',
-                    start: '2020-02-13T07:00:00'
-                },
-                {
-                    title: 'Click for Google',
-                    url: 'http://google.com/',
-                    start: '2020-02-28'
-                },
-                {
                     title: '중간고사',
                     start: '2024-05-27'
                 }
@@ -271,6 +217,46 @@
         });
 
         calendar.render();
+
+        document.querySelector("#regist").addEventListener("click", function (){
+            let study_content = document.getElementById("study_content").value;
+            let start_date = document.getElementById("start_date").value;
+            let end_date = document.getElementById("end_date").value || start;
+
+            if(study_content && start_date){
+                // AJAX 요청을 통해 데이터를 서버로 전송
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/events/addEvent", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            alert("일정이 성공적으로 추가되었습니다.");
+                            // 일정 추가 성공 시 캘린더에도 추가
+                            calendar.addEvent({
+                                title: study_content,
+                                start: start_date,
+                                end: end_date
+                            });
+                            // 모달 닫기
+                            $('#exampleModal1').modal('hide');
+                            // 폼 리셋
+                            document.getElementById('scheduleForm').reset();
+                        } else {
+                            alert("일정 추가에 실패했습니다.");
+                        }
+                    }
+                };
+                var data = {
+                    title: study_content,
+                    start: start_date,
+                    end: end_date
+                };
+                xhr.send(JSON.stringify(data));
+            } else {
+                alert("일정과 시작 날짜는 필수입니다.");
+            }
+        });
     });
 
 </script>
