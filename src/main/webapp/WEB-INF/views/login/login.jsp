@@ -27,6 +27,11 @@
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+    <c:if test="${param.joinOK == '1'}">
+        <script>
+            alert("회원가입 성공");
+        </script>
+    </c:if>
     <div class="register-login-section spad">
         <div class="container">
             <div class="row">
