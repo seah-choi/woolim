@@ -10,4 +10,5 @@ public interface BbsReplyMapper {
     int modify(BbsReplyVO bbsReplyVO);
     int delete(int reply_idx);
     int reply_cnt_update(int reply_idx);
+    int reply_cnt_delete(int reply_idx);
 }

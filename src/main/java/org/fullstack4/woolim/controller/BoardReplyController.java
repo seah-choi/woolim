@@ -36,7 +36,7 @@ public class BoardReplyController {
 
     @PostMapping("/delete")
     public String deletePOST(@RequestParam(name="reply_idx", defaultValue = "0") int reply_idx, BbsDTO bbsDTO){
-        int result = bbsReplyService.delete(reply_idx);
+        int result = bbsReplyService.delete(reply_idx, bbsDTO.getBbs_idx());
 
         log.info("result : " + result);
         log.info("reply_idx : " + reply_idx);
@@ -52,6 +52,7 @@ public class BoardReplyController {
     @PostMapping("/modify")
     public String modifyPost(BbsReplyDTO bbsReplyDTO) {
         int result = bbsReplyService.modify(bbsReplyDTO);
+        log.info(result);
         return "redirect:/board/freeView?bbs_idx=" + bbsReplyDTO.getBbs_idx();
     }
 }
