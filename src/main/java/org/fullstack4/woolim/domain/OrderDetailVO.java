@@ -19,4 +19,8 @@ public class OrderDetailVO {
     private LocalDate order_detail_regDate;
     private int price;
     private String member_id;
+    private String lecture_image;
+    private String lecture_title;
+    private LocalDate lecture_start_date;
+    private LocalDate lecture_end_date;
 }

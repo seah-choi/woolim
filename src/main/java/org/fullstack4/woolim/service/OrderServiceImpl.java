@@ -89,8 +89,25 @@ public class OrderServiceImpl implements OrderServiceIf{
     @Override
     public PageResponseDTO<OrderDTO> viewOrderList(PageRequestDTO pageRequestDTO) {
         List<OrderVO> orderDTO = orderMapper.viewOrderList(pageRequestDTO);
+        int total_count = orderMapper.OrderCount(pageRequestDTO);
         log.info("orderDTO: " + orderDTO);
 
-        return null;
+        List<OrderDTO> dtoList = orderDTO.stream().map(vo->modelMapper.map(vo,OrderDTO.class)).collect(Collectors.toList());
+        PageResponseDTO<OrderDTO> responseDTO = PageResponseDTO.<OrderDTO>withAll()
+                .total_count(total_count)
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .build();
+
+        return responseDTO;
+    }
+
+    @Override
+    public List<OrderDTO> viewOrderDetailList(OrderDTO orderDTO) {
+        OrderDetailVO orderDetailVO = modelMapper.map(orderDTO, OrderDetailVO.class);
+        List<OrderDetailVO> voList = orderMapper.viewOrderDetailList(orderDetailVO);
+        List<OrderDTO> orderDTOList = voList.stream().map(vo->modelMapper.map(vo,OrderDTO.class)).collect(Collectors.toList());
+
+        return orderDTOList;
     }
 }
