@@ -3,7 +3,9 @@ package org.fullstack4.woolim.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.common.InsufficientStockException;
+import org.fullstack4.woolim.domain.LectureVO;
 import org.fullstack4.woolim.domain.MemberVO;
+import org.fullstack4.woolim.dto.LectureDTO;
 import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.dto.PageRequestDTO;
 import org.fullstack4.woolim.dto.PageResponseDTO;
@@ -100,6 +102,22 @@ public class MemberServiceImpl implements MemberServiceIf{
 
         return responseDTO;
     }
+
+    @Override
+    public PageResponseDTO<LectureDTO> LectureListbyTeacherpage(PageRequestDTO pageRequestDTO) {
+        List<LectureVO> voList = memberMapper.LectureListbyTeacherpage(pageRequestDTO);
+        List<LectureDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo,LectureDTO.class)).collect(Collectors.toList());
+        int total_count = memberMapper.LectureListCountByT(pageRequestDTO);
+
+        PageResponseDTO<LectureDTO> responseDTO = PageResponseDTO.<LectureDTO>withAll()
+                .total_count(total_count)
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .build();
+
+        return responseDTO;
+    }
+
     @Override
     public int deleteMemberList(Integer[] idxList) {
         int result = memberMapper.deleteMemberList(idxList);

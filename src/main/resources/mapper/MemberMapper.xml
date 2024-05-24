@@ -4,7 +4,6 @@
         "http://mybatis.org/schema/mybatis-3-mapper.dtd">
 <mapper namespace="org.fullstack4.woolim.mapper.MemberMapper">
 
-
     <insert id="regist">
         INSERT INTO woo_member(member_id, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date)
         VALUES(#{member_id}, #{member_pwd}, #{member_email}, #{member_phone}, #{member_email_addr}, #{member_zonecode}, #{member_addr}, #{member_addr_detail}, #{member_category}, #{member_name}, 0, 'N', NOW() )
@@ -13,7 +12,14 @@
     <select id="view" resultType="org.fullstack4.woolim.domain.MemberVO">
         SELECT member_id,member_name, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date
         FROM woo_member
-        WHERE member_id= #{member_id}
+        <where>
+            <if test="member_id !=null and member_id !=''">
+                member_id= #{member_id}
+            </if>
+            <if test="member_idx !=null and member_idx !=''">
+                or member_idx = #{member_idx}
+            </if>
+        </where>
     </select>
     <select id="memberView" resultType="org.fullstack4.woolim.domain.MemberVO">
         SELECT member_id,member_name, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date
@@ -215,5 +221,70 @@
         SELECT COUNT(*)
         FROM woo_member
         WHERE CONCAT(member_email,'@',member_email_addr) = #{member_email}
+    </select>
+
+    <select id="LectureListbyTeacherpage" resultType="org.fullstack4.woolim.domain.LectureVO">
+        SELECT lecture_idx,lecture_title,member_name,lecture_start_date,lecture_end_date,lecture_image,lecture_price,lecture_sale_price,member_id
+        FROM woo_lecture
+        <where>
+            member_idx = #{member_idx}
+            <if test="search_word != null and search_word != '' ">
+                AND (lecture_title LIKE CONCAT('%',#{search_word}, '%')
+                or member_name LIKE CONCAT('%',#{search_word}, '%'))
+            </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and member_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and member_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+            <if test="search_types != null and search_types !=''">
+                <foreach collection="search_types" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            and lecture_title like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            and member_name like concat('%', #{search_word},'%' )
+                        </when>
+
+                    </choose>
+                </foreach>
+            </if>
+        </where>
+        ORDER by lecture_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="LectureListCountByT" resultType="int">
+        select count(*)
+        FROM woo_lecture
+        <where>
+            member_idx = #{member_idx}
+            <if test="search_word != null and search_word != '' ">
+                AND (lecture_title LIKE CONCAT('%',#{search_word}, '%')
+                or member_name LIKE CONCAT('%',#{search_word}, '%'))
+            </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and member_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and member_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+            <if test="search_types != null and search_types !=''">
+                <foreach collection="search_types" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            and lecture_title like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            and member_name like concat('%', #{search_word},'%' )
+                        </when>
+
+                    </choose>
+                </foreach>
+            </if>
+        </where>
+
     </select>
 </mapper>

@@ -28,6 +28,7 @@ public class PageResponseDTO<E> {
     private String linkParams;
     private String sort_type;
     private String member_id;
+    private int member_idx;
     private String member_type;
     private String member_category;
     private String search_date1="";
@@ -68,6 +69,9 @@ public class PageResponseDTO<E> {
         this.member_category = pageRequestDTO.getMember_category();
         this.search_date1 = pageRequestDTO.getSearch_date1();
         this.search_date2 = pageRequestDTO.getSearch_date2();
+        this.bbs_teacher_yn = pageRequestDTO.getBbs_teacher_yn();
+        this.qna_teacher_yn = pageRequestDTO.getQna_teacher_yn();
+        this.member_idx = pageRequestDTO.getMember_idx();
 
         log.info("pageRequestDTO : {}", pageRequestDTO);
         log.info("dtoList : {}", dtoList);

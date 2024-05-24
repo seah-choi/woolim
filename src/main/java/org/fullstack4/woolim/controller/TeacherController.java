@@ -4,10 +4,9 @@ package org.fullstack4.woolim.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.domain.MemberVO;
-import org.fullstack4.woolim.dto.MemberDTO;
-import org.fullstack4.woolim.dto.PageRequestDTO;
-import org.fullstack4.woolim.dto.PageResponseDTO;
+import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.MemberMapper;
+import org.fullstack4.woolim.service.BbsServiceIf;
 import org.fullstack4.woolim.service.MemberServiceIf;
 import org.fullstack4.woolim.service.MemberServiceImpl;
 import org.modelmapper.ModelMapper;
@@ -27,7 +26,9 @@ import java.util.stream.Collectors;
 public class TeacherController {
 
     private final MemberServiceIf memberServiceIf;
+    private final BbsServiceIf bbsServiceIf;
     private final ModelMapper modelMapper;
+    private final MemberMapper memberMapper;
 
     @GetMapping("/list")
     public void GETList(Model model, PageRequestDTO pageRequestDTO,@RequestParam(defaultValue = "9") int page_size) {
@@ -43,8 +44,39 @@ public class TeacherController {
     }
 
     @GetMapping("/view")
-    public void GETView() {
+    public void GETView(Model model, PageRequestDTO pageRequestDTO,@RequestParam(name="member_idx") int member_idx,@RequestParam(defaultValue = "9") int page_size) {
+        pageRequestDTO.setMember_idx(member_idx);
+        pageRequestDTO.setPage_size(page_size);
+        pageRequestDTO.setBbs_teacher_yn("Y");
 
+        MemberDTO IdDTO = MemberDTO.builder()
+                .member_idx(pageRequestDTO.getMember_idx())
+                .build();
+        String member_id = memberMapper.view(IdDTO).getMember_id();
+
+        pageRequestDTO.setMember_id(member_id);
+        PageResponseDTO<LectureDTO> responseDTO = memberServiceIf.LectureListbyTeacherpage(pageRequestDTO);
+        MemberDTO memberDTO = memberServiceIf.memberView(member_id);
+
+        pageRequestDTO.setBbs_type("bbs04");
+        PageResponseDTO<BbsDTO> noticeListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
+        pageRequestDTO.setBbs_type("bbs03");
+        PageResponseDTO<BbsDTO> faqListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
+        pageRequestDTO.setBbs_type("bbs05");
+        PageResponseDTO<BbsDTO> invenListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
+
+        log.info("noticeList:{}", noticeListDTO);
+        log.info("faqList:{}", faqListDTO);
+        log.info("invenList:{}", invenListDTO);
+
+        log.info(responseDTO);
+        log.info(memberDTO);
+
+        model.addAttribute("noticeListDTO", noticeListDTO);
+        model.addAttribute("faqListDTO", faqListDTO);
+        model.addAttribute("invenListDTO", invenListDTO);
+        model.addAttribute("memberDTO", memberDTO);
+        model.addAttribute("responseDTO", responseDTO);
     }
 
     @GetMapping("/regist")

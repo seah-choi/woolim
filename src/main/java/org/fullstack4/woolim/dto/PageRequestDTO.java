@@ -60,6 +60,7 @@ public class PageRequestDTO {
     private String search_date1;
     private String search_date2;
     private String member_id;
+    private int member_idx;
     private String member_type;
     private String bbs_type;
     private String member_category;

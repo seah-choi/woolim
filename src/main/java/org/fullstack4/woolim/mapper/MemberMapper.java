@@ -1,7 +1,9 @@
 package org.fullstack4.woolim.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.fullstack4.woolim.domain.LectureVO;
 import org.fullstack4.woolim.domain.MemberVO;
+import org.fullstack4.woolim.dto.LectureDTO;
 import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.dto.PageRequestDTO;
 
@@ -16,6 +18,8 @@ public interface MemberMapper {
     int total_count(PageRequestDTO requestDTO);
 
     List<MemberVO> adminMemberList(PageRequestDTO requestDTO);
+    List<LectureVO> LectureListbyTeacherpage(PageRequestDTO requestDTO);
+    int LectureListCountByT(PageRequestDTO requestDTO);
 
     int admin_total_count(PageRequestDTO requestDTO);
 
