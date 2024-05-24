@@ -90,7 +90,7 @@
                             <div class="product-details">
                                 <div class="pd-title">
                                     <span>국어 성적 향상의 핵심 키워드</span>
-                                    <h3>박리나 선생님</h3>
+                                    <h3>${memberDTO.member_name} 선생님</h3>
                                 </div>
 
                                 <div class="teacher_intro">
@@ -180,34 +180,57 @@
                                                 </div>
                                                 <div class="product-list">
                                                     <div class="row">
-                                                        <div class="col-lg-5 col-sm-6">
-                                                            <div class="product-item">
-                                                                <div class="pi-pic">
-                                                                    <img src="/resources/img/lecture/1.png" alt="">
-                                                                    <div class="sale pp-sale">Sale</div>
-                                                                    <div class="icon">
-                                                                        <i class="icon_heart_alt"></i>
+                                                        <c:forEach items="${responseDTO.dtolist}" var="list">
+                                                        <div class="col-lg-4 col-sm-6">
+                                                                <div class="product-item">
+                                                                    <div class="pi-pic">
+                                                                        <img src="/resources/img/lecture/${list.lecture_image}" alt="">
+                                                                        <div class="sale pp-sale">Sale</div>
+                                                                        <div class="icon">
+                                                                            <i class="icon_heart_alt"></i>
+                                                                        </div>
+                                                                        <ul>
+                                                                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                                            <li class="quick-view"><a href="/lecture/view/?lecture_idx=${list.lecture_idx}"> 상품 상세보기</a></li>
+                                                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                                                        </ul>
                                                                     </div>
-                                                                    <ul>
-                                                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                                        <li class="quick-view"><a href="/lecture/view/?lecture_idx=1"> 상품 상세보기</a></li>
-                                                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="pi-text">
-                                                                    <div class="catagory-name">국어</div>
-                                                                    <a href="#">
-                                                                        <h5>수능특강 기출 문풀</h5>
-                                                                    </a>
-                                                                    <div class="product-price">
-                                                                        ₩25,000
-                                                                        <span>₩23,000</span>
+                                                                    <div class="pi-text">
+                                                                        <div class="catagory-name">국어</div>
+                                                                        <a href="/lecture/view/?lecture_idx=${list.lecture_idx}">
+                                                                            <h5>${list.lecture_title}</h5>
+                                                                        </a>
+                                                                        <div class="product-price">
+                                                                            ₩${list.lecture_price}
+                                                                            <span>₩${list.lecture_price}</span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
                                                         </div>
+                                                        </c:forEach>
                                                     </div>
                                                 </div>
+                                                <nav class="blog-pagination justify-content-center d-flex mt-5">
+                                                    <ul class="pagination">
+                                                        <li class="page-item <c:if test="${responseDTO.prev_page_plag == 'false'}"> disabled</c:if>" >
+                                                            <a href="/teacher/view?member_idx=${responseDTO.member_idx}&page=${responseDTO.page_block_start - responseDTO.page_block_size}${responseDTO.linkParams}"
+                                                               class="page-link" aria-label="Previous">&laquo;
+                                                            </a>
+                                                        </li>
+                                                        <c:forEach begin="${responseDTO.page_block_start}"
+                                                                   end="${responseDTO.page_block_end}"
+                                                                   var="page_num">
+                                                            <li class="page-item <c:if test="${responseDTO.page == page_num}">active</c:if>">
+                                                                <a href="/teacher/view?member_idx=${responseDTO.member_idx}&page=${page_num}${responseDTO.linkParams}" class="page-link">${page_num}</a>
+                                                            </li>
+                                                        </c:forEach>
+                                                        <li class="page-item <c:if test="${responseDTO.next_page_plag == 'false'}"> disabled</c:if>" >
+                                                            <a href="/teacher/view?member_idx=${responseDTO.member_idx}&page=${responseDTO.page_block_start + responseDTO.page_block_size}${responseDTO.linkParams}" class="page-link" aria-label="Previous">
+                                                                &raquo;
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
                                             </div>
                                         </div>
                                     </div>

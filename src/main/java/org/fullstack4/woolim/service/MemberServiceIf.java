@@ -1,6 +1,7 @@
 package org.fullstack4.woolim.service;
 
 import org.fullstack4.woolim.common.InsufficientStockException;
+import org.fullstack4.woolim.dto.LectureDTO;
 import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.dto.PageRequestDTO;
 import org.fullstack4.woolim.dto.PageResponseDTO;
@@ -15,7 +16,7 @@ public interface MemberServiceIf {
     MemberDTO memberView(String member_id);
 
     PageResponseDTO<MemberDTO> adminMemberList(PageRequestDTO pageRequestDTO);
-
+    PageResponseDTO<LectureDTO> LectureListbyTeacherpage(PageRequestDTO pageRequestDTO);
     int deleteMemberList(Integer[] idxList);
 
     int adminDetail(MemberDTO memberDTO);

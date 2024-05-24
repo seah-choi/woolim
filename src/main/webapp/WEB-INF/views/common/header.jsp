@@ -30,40 +30,63 @@
     .headerBtn {
         border-radius: 5px !important;
     }
+    .adminA {
+        font-size: 30px;
+        color: #0c5460;
+    }
+    .adminA:hover {
+        color: #197281;
+    }
+    .lan-selector {
+        margin-top: 8px !important;
+        margin-right: 25px;
+    }
+    a.login-panel {
+        font-size: 18px !important;
+        text-decoration: none !important;
+    }
+    .loginComment {
+        width: 200px;
+        margin-top: 18px;
+        margin-right: 20px;
+    }
+    .inner-header .logo {
+        padding: 0 0 !important;
+    }
 </style>
     <header class="header-section">
         <div class="header-top">
             <div class="container">
                 <div class="ht-left">
-                    <div class="mail-service">
+                    <%--<div class="mail-service">
                         <i class=" fa fa-envelope"></i>
                         hello.colorlib@gmail.com
-                    </div>
-                    <div class="phone-service">
-                        <i class=" fa fa-phone"></i>
-                        +65 11.188.888
-                    </div>
+                    </div>--%>
+
+                </div>
+                <div>
+
                 </div>
                 <div class="ht-right">
+
                     <c:if test="${sessionScope['user_id'] == null}">
                         <a href="/login/login" class="login-panel"><i class="fa fa-user"></i>Login</a>
                     </c:if>
                     <c:if test="${sessionScope['user_id'] != null}">
                         <a href="/login/logout" class="login-panel"><i class="fa fa-user"></i>Logout</a>
                     </c:if>
-                    <div class="lan-selector">
-                        <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                            <option value='yt' data-image="/resources/img/flag-1.jpg" data-imagecss="flag yt"
-                                    data-title="English">English</option>
-                            <option value='yu' data-image="/resources/img/flag-2.jpg" data-imagecss="flag yu"
-                                    data-title="Bangladesh">German </option>
-                        </select>
-                    </div>
-                    <div class="top-social">
-                        <a href="#"><i class="ti-facebook"></i></a>
-                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                        <a href="#"><i class="ti-linkedin"></i></a>
-                        <a href="#"><i class="ti-pinterest"></i></a>
+                    <div class="d-flex">
+                        <c:if test="${sessionScope['user_id'] == 'admin'}">
+                            <div class="lan-selector">
+                                <a href="/admin/member/list" class="adminA panel" ><i class="icon-copy fa fa-cog" aria-hidden="true"></i>︎</a>
+                            </div>
+                        </c:if>
+                        <c:if test="${sessionScope['user_id'] != null}">
+                            <div class="loginComment">
+                                <div>🤗${sessionScope.member_name}님 환영합니다.</div>
+                            </div>
+                        </c:if>
+
                     </div>
                 </div>
             </div>
@@ -71,8 +94,8 @@
         <div class="container">
             <div class="inner-header">
                 <div class="row">
-                    <div class="col-lg-2 col-md-2">
-                        <div class="logo">
+                    <div class="col-lg-2 col-md-2 ">
+                        <div class="logo" style="margin-bottom: 30px">
                             <a href="/">
                                 <img src="/resources/img/logo.png" alt="">
                             </a>
