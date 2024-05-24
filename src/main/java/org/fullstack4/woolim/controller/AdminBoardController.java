@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.stream.Stream;
 
 @Log4j2
 @Controller
@@ -31,6 +32,7 @@ public class AdminBoardController {
         log.info("AdminBoardController >> GETList() START");
 
         pageRequestDTO.setBbs_type(bbs_type);
+        pageRequestDTO.setBbs_teacher_yn("N");
         log.info("bbs_type" + bbs_type);
 
         PageResponseDTO<BbsDTO> bbsList = bbsServiceIf.bbsListByPage(pageRequestDTO);
@@ -59,7 +61,12 @@ public class AdminBoardController {
     }
 
     @GetMapping("/delete")
-    public void GETDelete() {
+    public String GETDelete(@RequestParam(name="bbs_idx", required=false) String idxList) {
+        String[] arrIdx = idxList.split(",");
+        Integer[] newArr = Stream.of(arrIdx).mapToInt(Integer::parseInt).boxed().toArray(Integer[]::new);
+        bbsServiceIf.deleteList(newArr);
 
+        log.info("idxList : " + idxList);
+        return "redirect:/admin/board/list";
     }
 }

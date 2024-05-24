@@ -14,4 +14,5 @@ public interface BbsServiceIf {
     int delete(int bbs_idx);
     int file_regist(BoardFileDTO boardFileDTO);
     BoardFileDTO fileView(int bbs_idx);
+    int deleteList(Integer[] idxList);
 }

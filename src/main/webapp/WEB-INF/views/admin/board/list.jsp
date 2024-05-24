@@ -71,10 +71,11 @@
                 <c:if test="${bbsList.bbs_type eq 'bbs05'}">
                     <h4 class="h4">자료실</h4>
                 </c:if>
+
                 <br>
                 <div class="searchBox">
                     <form role="search" id="frmSearch" class="searchForm" action="/admin/board/list" method="get">
-                        <input type="hidden" name="bbs_type" value="${responseDTO.bbs_type}">
+                        <input type="hidden" name="bbs_type" value="${bbsList.bbs_type}">
                         <div class="mb-3 row d-flex">
                             <label class="ml-3 col-form-label fontWe-700 mt-4">검색 범위</label>
 
@@ -82,10 +83,10 @@
                                 <div class="form-group">
                                     <label>구분</label>
                                     <select id="schoolSelect" name="search_type" class="selectpicker form-control school" data-size="5" data-style="btn-outline-info">
-                                        <option>전체</option>
-                                        <option value="t">제목</option>
-                                        <option value="c">내용</option>
-                                        <option value="u">작성자</option>
+                                        <option value="">전체</option>
+                                        <option value="t" <c:forEach var="type" items="${bbsList.search_types}"><c:if test="${type eq 't'}">selected</c:if></c:forEach>>제목</option>
+                                        <option value="c" <c:forEach var="type" items="${bbsList.search_types}"><c:if test="${type eq 'c'}">selected</c:if></c:forEach>>내용</option>
+                                        <option value="u" <c:forEach var="type" items="${bbsList.search_types}"><c:if test="${type eq 'u'}">selected</c:if></c:forEach>>작성자</option>
                                     </select>
                                 </div>
                             </div>
@@ -108,53 +109,58 @@
                             </div>
                             <div class="col-sm-3">
                                 <button class="btn btn-warning" id="btnSearch" type="submit">검색</button>
-                                <button class="btn btn-warning" id="btnReset" type="reset" onclick="location.href='/data/main'">초기화</button>
+                                <button class="btn btn-warning" id="btnReset" type="reset" onclick="location.href='/admin/board/list?bbs_type=${bbsList.bbs_type}'">초기화</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <br>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th style="width: 130px;">
-                            <div class="custom-control custom-checkbox mb-5 d-flex">
-                                <input type="checkbox" class="custom-control-input" id="chkAll" name="chkAll">
-                                <label class="custom-control-label" for="chkAll" style="font-weight: 700;">전체선택</label>
-                            </div>
-                        </th>
-                        <th>NO.</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>등록일</th>
-                        <th>조회수</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-
-                    <c:forEach items="${bbsList.dtolist}" var="list">
+                <form action="/admin/board/delete" method="get" id="deleteForm">
+                    <table class="table table-hover">
+                        <thead>
                         <tr>
-                            <td>
-                                <div class="custom-control custom-checkbox mb-5">
-                                    <input type="checkbox" class="custom-control-input" value="${list.bbs_idx}" name="bbs_idx" id="${list.bbs_idx}">
-                                    <label class="custom-control-label" for="${list.bbs_idx}"><span></span></label>
+                            <th style="width: 130px;">
+                                <div class="custom-control custom-checkbox mb-5 d-flex">
+                                    <input type="checkbox" class="custom-control-input" id="chkAll" name="chkAll">
+                                    <label class="custom-control-label" for="chkAll" style="font-weight: 700;">전체선택</label>
                                 </div>
-                            </td>
-                            <td>${list.bbs_idx}</td>
-                            <td><a href="/admin/board/view?bbs_idx=${list.bbs_idx}">${list.bbs_title}</a></td>
-                            <td>${list.member_id}</td>
-                            <td>${list.bbs_reg_date}</td>
-                            <td>${list.bbs_read_cnt}</td>
+                            </th>
+                            <th>NO.</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>등록일</th>
+                            <th>조회수</th>
                         </tr>
-                    </c:forEach>
+                        </thead>
 
-                    </tbody>
+                        <tbody>
 
-                </table>
-                <div class="d-flex justify-content-sm-end">
-                    <a class="btn btn-primary btn-lg btn-block" href="/admin/board/regist" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
-                </div>
+                        <c:forEach items="${bbsList.dtolist}" var="list" varStatus="status">
+                            <tr>
+                                <td>
+                                    <div class="custom-control custom-checkbox mb-5">
+                                        <input type="checkbox" class="custom-control-input" value="${list.bbs_idx}" name="bbs_idx" id="${list.bbs_idx}">
+                                        <label class="custom-control-label" for="${list.bbs_idx}"><span></span></label>
+                                    </div>
+                                </td>
+                                <td>${list.bbs_idx}</td>
+                                <td><a href="/admin/board/view?bbs_idx=${list.bbs_idx}">${list.bbs_title}</a></td>
+                                <td>${list.member_id}</td>
+                                <td>${list.bbs_reg_date}</td>
+                                <td>${list.bbs_read_cnt}</td>
+                            </tr>
+                        </c:forEach>
+
+                        </tbody>
+
+                    </table>
+                    <div class="d-flex justify-content-sm-end">
+                        <a class="btn btn-primary btn-lg btn-block" href="/admin/board/regist" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
+                        <div class="d-flex justify-content-sm-end ml-2 mr-3">
+                            <button type="button" id="btnDelete" name="btnDelete" class="btn btn-primary btn-lg btn-block" onclick="godelete();" style="width: 100px; height: 40px; font-size: 15px;">삭제하기</button>
+                        </div>
+                    </div>
+                </form>
 
 
                 <div class="d-flex justify-content-center">
@@ -203,26 +209,23 @@
     });
 
     // 삭제 버튼 눌렀을 때
-    document.querySelector("#btnDelete").addEventListener("click", (e) => {
+    function godelete() {
         var check = document.querySelectorAll("input[type ='checkbox']:checked");
         console.log(check);
         if (check.length == 0) {
-            alert("하나 이상 선택하세요.");
-            e.preventDefault();
+            alert("체크박스를 한 개 이상 선택하세요.");
+
             return false;
         } else {
-            let deleteOk = confirm("삭제 하시겠습니까?");
+            let deleteOk = confirm("정말 삭제하겠습니까?");
             if (deleteOk) {
-
                 console.log(check);
-                frm.submit();
-
+                document.getElementById("deleteForm").submit();
             } else {
-                e.preventDefault();
-                return false;
+                return '/admin/board/list?bbs_type=${list.bbs_title}';
             }
         }
-    });
+    }
 </script>
 
 <script src="/resources/vendors/scripts/core.js"></script>

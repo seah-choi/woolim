@@ -87,4 +87,10 @@ public class BbsServiceImpl implements BbsServiceIf{
         return null;
     }
 
+    @Override
+    public int deleteList(Integer[] idxList) {
+        int result = bbsMapper.deleteList(idxList);
+        return result;
+    }
+
 }
