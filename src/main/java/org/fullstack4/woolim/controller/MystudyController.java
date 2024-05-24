@@ -10,9 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Log4j2
 @Controller
@@ -65,19 +68,17 @@ public class MystudyController {
     }
 
     @GetMapping("/gradeList")
-    public void GETGradeList() {
+    public void GETGradeList(PageRequestDTO pageRequestDTO, Model model,HttpServletRequest req) {
+
+        HttpSession session = req.getSession();
+        String id = (String) session.getAttribute("member_id");
+        pageRequestDTO.setMember_id(id);
+
+        PageResponseDTO<GradeDTO> bbsList = myStudyService.gradeListByPage(pageRequestDTO);
+        model.addAttribute("bbsList", bbsList);
 
     }
 
-    @GetMapping("/gradeView")
-    public void GETGradePlanView() {
-
-    }
-
-    @GetMapping("/gradeModify")
-    public void GETGradeModify() {
-
-    }
 
     @GetMapping("/freeList")
     public void GETfreeList(@RequestParam(defaultValue = "") String bbs_type,
@@ -120,7 +121,16 @@ public class MystudyController {
         PageResponseDTO<BbsReplyDTO> bbsList = myStudyService.replyListByPage(pageRequestDTO);
         model.addAttribute("reply", bbsList);
 
+    }
+    @GetMapping("/getGrade")
+    @ResponseBody
+    public GradeDTO getGrade(@RequestParam(name = "grade_idx", defaultValue = "") int grade_idx) throws IOException {
+        log.info("---------------------");
+        log.info("MemberController => idCheck()");
 
+        GradeDTO dto = myStudyService.getGrade(grade_idx);
+
+        return dto;
 
     }
 }

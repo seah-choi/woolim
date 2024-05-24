@@ -145,15 +145,21 @@
         </div>
         <br>
         <div style="white-space: pre-wrap;">${bbs.bbs_content}</div>
+        <c:if test="${not empty file}">
+        <div style="display: flex;justify-content: flex-end;">
+            <span style="padding-top: 8px;">첨부파일 : </span>
+            <a download href="/resources/upload/bbs/${file.saveFile}" class="btn rounded-pill px-2 py-2 mb-4 text-primary"><i class="me-2 text-primary"></i>${file.orgFile}</a>
+        </div>
+        </c:if>
         <br><br>
         <div id="comment">
-            <form name="frm" action="/bbsReply/regist" method="post">
+            <form name="frm" id="frm_comment" action="/bbsReply/regist" method="post">
                 <input type="hidden" name="member_id" value="${sessionScope.member_id}">
                 <input type="hidden" name="bbs_idx" value="${bbs.bbs_idx}">
-            <span>답변</span>&nbsp;<span id="cmCount">1</span>
+            <span>답변</span>&nbsp;<span id="cmCount">${bbs.bbs_reply_cnt}</span>
             <div class="form-floating" style="display: flex;margin-top: 10px;margin-bottom: 40px;">
-                <textarea class="form-control" placeholder="Leave a comment here" name="reply_content" id="floatingTextarea"></textarea>
-                <label for="floatingTextarea">댓글</label>
+                <textarea class="form-control" placeholder="Leave a comment here" name="reply_content" id="replyContent"></textarea>
+                <label for="reply_content">댓글</label>
                 <button type="submit" class="btn" id="btn_comment">등록</button>
             </div>
             </form>
@@ -267,6 +273,46 @@
             return false;
         }
     }
+
+
+    document.querySelector("#btn_comment").addEventListener("click", function (e){
+        e.preventDefault();
+
+        let member_id = `${member_id}`;
+        let frm = document.querySelector("#frm_comment");
+        let replyContent = document.querySelector("#replyContent");
+
+        if(member_id == "") {
+            alert("로그인 후 이용하세요.");
+            return false;
+        }
+
+        if(replyContent.value == "" ||  replyContent.value.length < 2 || replyContent.value == null ){
+            alert("댓글은 2자 이상 입력해주세요.");
+            return false;
+        }
+
+        frm.submit();
+    });
+
+    // function cmDelete(e) {
+    //     e.preventDefault();
+    //     if(confirm("해당 댓글을 삭제하시겠습니까?")) {
+    //         alert("삭제되었습니다.");
+    //         document.getElementById("cmFrm").submit();
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+    // document.querySelector("#cmDelete").addEventListener("click", function (){
+    //     if(confirm("해당 댓글을 삭제하시겠습니까?")) {
+    //         alert("삭제되었습니다.");
+    //         document.getElementById("cmFrm").submit();
+    //     } else {
+    //         return false;
+    //     }
+    // })
 
 </script>
 </body>

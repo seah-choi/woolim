@@ -1,6 +1,7 @@
 package org.fullstack4.woolim.service;
 
 import org.fullstack4.woolim.domain.BbsReplyVO;
+import org.fullstack4.woolim.domain.GradeVO;
 import org.fullstack4.woolim.dto.*;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface MyStudyServiceIf {
     BbsDTO view(int bbs_idx);
     PageResponseDTO<LectureDTO> LectureListByPage(PageRequestDTO pageRequestDTO);
     PageResponseDTO<BbsReplyDTO> replyListByPage(PageRequestDTO pageRequestDTO);
+    PageResponseDTO<GradeDTO> gradeListByPage(PageRequestDTO pageRequestDTO);
+    GradeDTO getGrade(int grade_idx);
 }

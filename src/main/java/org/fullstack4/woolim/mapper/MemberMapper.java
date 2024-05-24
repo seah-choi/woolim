@@ -30,4 +30,6 @@ public interface MemberMapper {
     int adminDetail(MemberVO memberVO);
     int id_check(String member_id);
     int email_check(String member_id);
+
+    int modify(MemberVO memberVO);
 }

@@ -44,6 +44,17 @@ public class MypageController {
         MemberDTO memberDTO = memberService.memberView(member_id);
         model.addAttribute("memberDTO", memberDTO);
     }
+
+    @PostMapping("/view")
+    public String POSTView(MemberDTO memberDTO){
+        int result = memberService.modify(memberDTO);
+        if(result > 0) {
+            return "redirect:/mypage/view";
+        } else{
+            return "redirect:/mypage/view";
+        }
+    }
+
     @GetMapping("/writeList")
     public void GETWriteList() {
 
