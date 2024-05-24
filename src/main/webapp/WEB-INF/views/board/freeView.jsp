@@ -163,16 +163,16 @@
                     <c:forEach items="${reply}" var="reply">
                         <span style="font-weight: bold">${reply.member_id}</span>&nbsp;<span>${reply.reply_reg_date}</span>
                         <br>
-                        <form name="frm" id="cmFrm" action="/bbsReply/delete" method="post">
-                        <p><input type="text" name="reply_content" style="border: 0" value="${reply.reply_content}" id="reply_content" readonly></p>
+                        <form name="frm" id="cmFrm" class="cmFrm" action="/bbsReply/delete" method="post">
+                        <p><input type="text" name="reply_content"  class="reply_content" style="border: 0" value="${reply.reply_content}" id="reply_content" readonly></p>
                         <c:if test="${reply.member_id == sessionScope.member_id}">
                                 <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
                                 <input type="hidden" name="bbs_idx" value="${reply.bbs_idx}">
                                 <div style="display: flex;justify-content: flex-end;">
-                                    <button type="button" id="btnModify">수정</button>
+                                    <button type="button" class="btnModify" id="btnModify">수정</button>
                                     <span>&nbsp;|&nbsp;</span>
 <%--                                    <button type="submit" id="cmDelete" onclick="cmDelete(event)">삭제</button>--%>
-                                    <button type="button" id="cmDelete">삭제</button>
+                                    <button type="button" class="cmDelete" id="cmDelete">삭제</button>
                                 </div>
                             </form>
                         </c:if>
@@ -191,7 +191,7 @@
             <div>
                 <button type="button" class="btn" id="btn_back" onclick="location.href='/board/freeList'">목록</button>
             </div>
-            <form name="frm" id="frm" action="/board/delete" method="post">
+            <form name="frm" id="frm"  action="/board/delete" method="post">
                 <input type="hidden" name="bbs_idx" id="bbs_idx" value="${bbs.bbs_idx}">
                 <input type="hidden" name="bbs_category_code" value="${bbs.bbs_category_code}">
 
@@ -217,43 +217,47 @@
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
 <script>
-    let btnModify = document.getElementById("btnModify");
-    let cmDelete = document.getElementById("cmDelete");
-    let reply_content = document.getElementById("reply_content");
-    btnModify.addEventListener("click",function(e){
-        e.preventDefault();
-        if(this.textContent=="수정"){
-            this.textContent="등록";
-            reply_content.readOnly = false;
-            reply_content.focus();
-            reply_content.style.border = "1px solid black";
-            document.getElementById("cmDelete").textContent="취소";
-            return;
-        }
-        if(this.textContent=="등록"){
-            let cmFrm = document.getElementById("cmFrm");
-            cmFrm.action = "/bbsReply/modify";
-            cmFrm.submit();
-        }
-    });
-    cmDelete.addEventListener("click",function(e){
-       e.preventDefault();
-       if(this.textContent == "취소"){
-           console.log(11);
-           reply_content.readOnly = true;
-           this.textContent = "삭제";
-           reply_content.style.border = "0";
-           document.getElementById("btnModify").textContent="수정";
-           return;
-       }
-       if(this.textContent == "삭제"){
-           if(confirm("해당 댓글을 삭제하시겠습니까?")){
-               let cmFrm = document.getElementById("cmFrm");
-               cmFrm.action = "/bbsReply/delete";
-               cmFrm.submit();
-           }
-       }
-    });
+    let btnModify = document.getElementsByClassName("btnModify");
+    let cmDelete = document.getElementsByClassName("cmDelete");
+    let reply_content = document.getElementsByClassName("reply_content");
+    for(let i=0;i<btnModify.length;i++){
+        btnModify[i].addEventListener("click",function(e){
+            e.preventDefault();
+            if(this.textContent=="수정"){
+                this.textContent="등록";
+                reply_content[i].readOnly = false;
+                reply_content[i].focus();
+                reply_content[i].style.border = "1px solid black";
+                cmDelete[i].textContent="취소";
+                return;
+            }
+            if(this.textContent=="등록"){
+                let cmFrm = document.getElementsByClassName("cmFrm");
+                cmFrm[i].action = "/bbsReply/modify";
+                cmFrm[i].submit();
+            }
+        });
+    }
+    for(let i=0;i<cmDelete.length;i++) {
+        cmDelete[i].addEventListener("click", function (e) {
+            e.preventDefault();
+            if (this.textContent == "취소") {
+                console.log(11);
+                reply_content[i].readOnly = true;
+                this.textContent = "삭제";
+                reply_content[i].style.border = "0";
+                btnModify[i].textContent = "수정";
+                return;
+            }
+            if (this.textContent == "삭제") {
+                if (confirm("해당 댓글을 삭제하시겠습니까?")) {
+                    let cmFrm = document.getElementsByClassName("cmFrm");
+                    cmFrm[i].action = "/bbsReply/delete";
+                    cmFrm[i].submit();
+                }
+            }
+        });
+    }
     function godelete(e) {
         e.preventDefault();
         if(confirm("해당 글을 정말 삭제하시겠습니까?")) {

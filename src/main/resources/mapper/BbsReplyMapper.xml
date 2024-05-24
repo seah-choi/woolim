@@ -26,5 +26,7 @@
     <update id="reply_cnt_update">
         update woo_bbs set bbs_reply_cnt = bbs_reply_cnt+1 where bbs_idx=#{bbs_idx}
     </update>
-
+    <update id="reply_cnt_delete">
+        update woo_bbs set bbs_reply_cnt = bbs_reply_cnt-1 where bbs_idx=#{bbs_idx}
+    </update>
 </mapper>

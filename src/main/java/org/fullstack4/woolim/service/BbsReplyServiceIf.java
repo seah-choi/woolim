@@ -9,6 +9,6 @@ public interface BbsReplyServiceIf {
     List<BbsReplyDTO> list(int bbs_idx);
     int regist(BbsReplyDTO bbsReplyDTO);
     int modify(BbsReplyDTO bbsReplyDTO);
-    int delete(int reply_idx);
+    int delete(int reply_idx, int bbs_idx);
 
 }
