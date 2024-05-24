@@ -64,6 +64,9 @@ public class MypageController {
         log.info("detailList: " + detailList);
         log.info("responseDTO: " + responseDTO);
 
+        model.addAttribute("detailList", detailList);
+        model.addAttribute("responseDTO", responseDTO);
+
     }
 
     @GetMapping("/BoardList")
