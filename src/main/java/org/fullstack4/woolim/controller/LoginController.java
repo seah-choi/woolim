@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.common.InsufficientStockException;
-import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.service.MemberServiceIf;
-import org.fullstack4.woolim.service.MemberServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +17,7 @@ import java.util.HashMap;
 @Controller
 @RequestMapping(value="/login")
 @RequiredArgsConstructor
-public class LoginCotnroller {
+public class LoginController {
 
     private final MemberServiceIf memberService;
     @GetMapping("/login")
@@ -30,9 +28,15 @@ public class LoginCotnroller {
     @RequestMapping(value = "/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String Login(@RequestParam HashMap<String, Object> map, HttpServletRequest req, HttpServletResponse resp) throws Exception{
+        log.info("LoginController >>>>>>>>>>>>>>>");
+
         HashMap<String, Object> resultMap = new HashMap<>();
         String id = req.getParameter("member_id").trim();
         String pwd = req.getParameter("member_pwd").trim();
+
+        String name = memberService.memberView(id).getMember_name();
+
+        log.info("resultMap : " + resultMap);
         boolean save_id = req.getParameter("save_id") ==null?false:true;
         try {
             if (memberService.login(id, pwd, req)) {
@@ -40,6 +44,7 @@ public class LoginCotnroller {
                 resultMap.put("msg","성공적으로 로그인되었습니다.");
                 HttpSession session = req.getSession();
                 session.setAttribute("member_id", id);
+                session.setAttribute("member_name", name);
             } else {
                 resultMap.put("result", "false");
                 resultMap.put("msg","비밀번호가 틀렸습니다.");
