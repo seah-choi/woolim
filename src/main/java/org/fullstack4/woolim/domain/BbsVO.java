@@ -38,5 +38,7 @@ public class BbsVO {
 
     private int bbs_reply_cnt;
 
+    private String bbs_teacher_yn;
+
 
 }
