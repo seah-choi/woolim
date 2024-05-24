@@ -274,6 +274,7 @@
         }
     }
 
+
     document.querySelector("#btn_comment").addEventListener("click", function (e){
         e.preventDefault();
 
@@ -312,6 +313,7 @@
     //         return false;
     //     }
     // })
+
 </script>
 </body>
 </html>

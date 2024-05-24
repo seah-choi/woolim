@@ -116,9 +116,15 @@
             border-radius: 0;
         }
 
+        .topLine{
+            border-top: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 30px;
+        }
         .bottomLine{
             border-bottom: 1px solid #ccc;
             padding: 10px;
+            margin-top: 30px;
             margin-bottom: 50px;
         }
         #cmModify{
@@ -162,26 +168,26 @@
         <div class="min-height-200px">
             <!-- basic table  Start -->
             <div class="pd-20 card-box mb-30" style="margin-bottom: 30px">
-                <c:if test="${bbsList.bbs_type eq 'bbs01'}">
+                <c:if test="${bbs.bbs_category_code eq 'bbs01'}">
                     <h4 class="h4">교육정보 게시판</h4>
                 </c:if>
-                <c:if test="${bbsList.bbs_type eq 'bbs02'}">
+                <c:if test="${bbs.bbs_category_code eq 'bbs02'}">
                     <h4 class="h4">자유 게시판</h4>
                 </c:if>
-                <c:if test="${bbsList.bbs_type eq 'bbs04'}">
+                <c:if test="${bbs.bbs_category_code eq 'bbs04'}">
                     <h4 class="h4">공지사항 게시판</h4>
                 </c:if>
-                <c:if test="${bbsList.bbs_type eq 'bbs05'}">
+                <c:if test="${bbs.bbs_category_code eq 'bbs05'}">
                     <h4 class="h4">자료실</h4>
                 </c:if>
 
-                <input type="text" name="bbs_category_code" value="${bbsList.bbs_type}">
 
-                <form>
+                <form name="frm" >
+
                     <div id="list">
                         <div class="bottomLine">
                             <h5 style="font-weight: bold">${bbs.bbs_title}</h5>
-                            <div id="se">
+                            <div id="se" class="mt-3">
                                 <div>
                                     <span>${bbs.member_id}</span><span id="date">${bbs.bbs_reg_date}</span>
                                 </div>
@@ -195,37 +201,64 @@
                             ${bbs.bbs_content}
                         </div>
                         <br><br>
-                        <c:if test="${bbsList.bbs_type eq 'bbs02'}">
-                            <h4 class="h4">자료실</h4>
+                        <c:if test="${not empty file}">
+                            <div class="d-flex topLine pt-4">
+                                <a download href="/resources/upload/bbs/${file.saveFile}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="me-2 text-primary"></i>파일 다운로드</a>
+                                <div class="px-4 py-2 mb-4">${file.saveFile}</div>
+                            </div>
+                        </c:if>
 
-                            <div class="bottomLine">
-                                <div class="ml-5">
-                                    <span>답변</span>&nbsp;<span id="cmCount">1</span>
-                                    <div class="form-floating d-flex justify-content-center w-75" style="margin-top: 10px;margin-bottom: 40px;">
-                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                        <label for="floatingTextarea">댓글</label>
-                                        <button type="button" class="btn" id="btn_comment">등록</button>
-                                    </div>
-                                    <div class="w-75">
-                                        <span style="font-weight: bold">babori</span>&nbsp;<span>2024-05-10</span>
-                                        <br>
-                                        <p>강의에서 알려드린 판다스로 진행 바랍니다.</p>
-                                    </div>
-                                    <div class="w-75" style="display: flex;justify-content: flex-end;">
-                                        <button type="button" id="cmModify">수정</button>
-                                        <span>&nbsp;|&nbsp;</span>
-                                        <button type="button" id="cmDelete">삭제</button>
+                        <c:if test="${bbs.bbs_category_code eq 'bbs02'}">
+                            <div>
+                                <div id="comment">
+                                    <form name="frm" action="/adminBbsReply/regist" method="post">
+                                        <input type="hidden" name="member_id" value="${sessionScope.member_id}">
+                                        <input type="hidden" name="bbs_idx" value="${bbs.bbs_idx}">
+                                        <span>답변</span>&nbsp;<span id="cmCount">1</span>
+                                        <div class="form-floating" style="display: flex;margin-top: 10px;margin-bottom: 40px;">
+                                            <textarea class="form-control" placeholder="Leave a comment here" name="reply_content" id="floatingTextarea"></textarea>
+                                            <label for="floatingTextarea">댓글</label>
+                                            <button type="submit" class="btn" id="btn_comment">등록</button>
+                                        </div>
+                                    </form>
+                                    <div>
+                                        <c:choose>
+                                            <c:when test="${not empty reply}">
+                                                <c:forEach items="${reply}" var="reply">
+                                                    <span style="font-weight: bold">${reply.member_id}</span>&nbsp;<span>${reply.reply_reg_date}</span>
+                                                    <br>
+                                                    <form name="frm" id="cmFrm" class="cmFrm" action="/adminBbsReply/delete" method="post">
+                                                    <p><input type="text" name="reply_content"  class="reply_content" style="border: 0" value="${reply.reply_content}" id="reply_content" readonly></p>
+                                                    <c:if test="${reply.member_id == sessionScope.member_id}">
+                                                        <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
+                                                        <input type="hidden" name="bbs_idx" value="${reply.bbs_idx}">
+                                                        <div style="display: flex;justify-content: flex-end;">
+                                                            <button type="button" class="btnModify" id="btnModify">수정</button>
+                                                            <span>&nbsp;|&nbsp;</span>
+                                                                <%--                                    <button type="submit" id="cmDelete" onclick="cmDelete(event)">삭제</button>--%>
+                                                            <button type="button" class="cmDelete" id="cmDelete">삭제</button>
+                                                        </div>
+                                                        </form>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div style="padding: 10px;">
+                                                    등록된 댓글이 없습니다.
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>
                         </c:if>
 
-                        <div style="display: flex;justify-content: center;">
+                        <div class="topLine" style="display: flex;justify-content: center;">
                             <div>
-                                <button type="button" class="btn" id="btn_back" onclick="location.href='/admin/board/list'">목록</button>
+                                <button type="button" class="btn" id="btn_back" onclick="location.href='/admin/board/list?bbs_type=${bbs.bbs_category_code}'">목록</button>
                             </div>
                             <div>
-                                <button type="button" class="btn" id="btn_modify" onclick="location.href='/admin/board/modify'">수정</button>
+                                <button type="button" class="btn" id="btn_modify" onclick="location.href='/admin/board/modify?bbs_idx=${bbs.bbs_idx}'">수정</button>
                                 <button type="button" class="btn btn-secondary" id="btn_delete">삭제</button>
                             </div>
                         </div>
@@ -236,6 +269,59 @@
     </div>
 </div>
     <!-- js -->
+    <script>
+        let btnModify = document.getElementsByClassName("btnModify");
+        let cmDelete = document.getElementsByClassName("cmDelete");
+        let reply_content = document.getElementsByClassName("reply_content");
+        for(let i=0;i<btnModify.length;i++){
+            btnModify[i].addEventListener("click",function(e){
+                e.preventDefault();
+                if(this.textContent=="수정"){
+                    this.textContent="등록";
+                    reply_content[i].readOnly = false;
+                    reply_content[i].focus();
+                    reply_content[i].style.border = "1px solid black";
+                    cmDelete[i].textContent="취소";
+                    return;
+                }
+                if(this.textContent=="등록"){
+                    let cmFrm = document.getElementsByClassName("cmFrm");
+                    cmFrm[i].action = "/bbsReply/modify";
+                    cmFrm[i].submit();
+                }
+            });
+        }
+        for(let i=0;i<cmDelete.length;i++) {
+            cmDelete[i].addEventListener("click", function (e) {
+                e.preventDefault();
+                if (this.textContent == "취소") {
+                    console.log(11);
+                    reply_content[i].readOnly = true;
+                    this.textContent = "삭제";
+                    reply_content[i].style.border = "0";
+                    btnModify[i].textContent = "수정";
+                    return;
+                }
+                if (this.textContent == "삭제") {
+                    if (confirm("해당 댓글을 삭제하시겠습니까?")) {
+                        let cmFrm = document.getElementsByClassName("cmFrm");
+                        cmFrm[i].action = "/bbsReply/delete";
+                        cmFrm[i].submit();
+                    }
+                }
+            });
+        }
+        function godelete(e) {
+            e.preventDefault();
+            if(confirm("해당 글을 정말 삭제하시겠습니까?")) {
+                alert("삭제되었습니다.");
+                document.getElementById("frm").submit();
+            } else {
+                return false;
+            }
+        }
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="/resources/js/jquery-3.3.1.min.js"></script>
     <script src="/resources/js/bootstrap.min.js"></script>
