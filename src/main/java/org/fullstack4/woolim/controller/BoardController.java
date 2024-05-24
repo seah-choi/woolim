@@ -66,12 +66,9 @@ public class BoardController {
         log.info("BoardController >> GETView()");
         BbsDTO  bbsDTO = bbsServiceIf.view(bbs_idx);
         BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
-        List<BbsReplyDTO> bbsReplyDTOList = bbsReplyServiceIf.list(bbs_idx);
 
-        log.info("view >> reply" + bbsReplyDTOList);
         model.addAttribute("bbs", bbsDTO);
         model.addAttribute("file",boardFileDTO);
-        model.addAttribute("reply", bbsReplyDTOList);
 
     }
 
@@ -326,8 +323,6 @@ public class BoardController {
             }
         }
 
-
-
         if(result > 0) {
             return "redirect:/board/freeView?bbs_idx=" + bbsDTO.getBbs_idx();
         } else {
@@ -341,9 +336,11 @@ public class BoardController {
         log.info("BoardController >> GETView()");
         BbsDTO  bbsDTO = bbsServiceIf.view(bbs_idx);
         BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
+        List<BbsReplyDTO> bbsReplyDTOList = bbsReplyServiceIf.list(bbs_idx);
 
         model.addAttribute("bbs", bbsDTO);
         model.addAttribute("file",boardFileDTO);
+        model.addAttribute("reply", bbsReplyDTOList);
 
     }
 
