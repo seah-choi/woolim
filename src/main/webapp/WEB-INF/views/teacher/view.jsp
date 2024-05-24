@@ -34,7 +34,7 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="/resources/vendors/styles/core.css">
+
     <link rel="stylesheet" type="text/css" href="/resources/vendors/styles/icon-font.min.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/teacherView.css">
 
@@ -153,7 +153,7 @@
                                                             <div class="advanced-search">
                                                                 <div class="flex-container">
                                                                     <form action="/lecture/list" method="get" class="input-group" style="width: 500px;">
-                                                                        <select class="category-btn" name="type" id="search_area">
+                                                                        <select class="gubunBtn" name="type" id="search_area">
                                                                             <option value="" ${pageMaker.cri.type == null ? 'selected' : ''}>전체</option>
                                                                             <option value="T" ${pageMaker.cri.type eq 'T' ? 'selected' : ''}>제목</option>
                                                                             <option value="W" ${pageMaker.cri.type eq 'W' ? 'selected' : ''}>강사</option>
@@ -291,7 +291,7 @@
                                                         </div>
                                                     </td>
                                                     <td>1</td>
-                                                    <td><a href="/teacher/view?">제목</a></td>
+                                                    <td><a href="/teacher/view?" class="aTag">제목</a></td>
                                                     <td>test1</td>
                                                     <td>2024-05-24</td>
                                                     <td>12</td>
