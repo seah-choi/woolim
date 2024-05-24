@@ -59,15 +59,12 @@ public class HyunbeenTest {
     @Test
     public void CartTest(){
         PageRequestDTO pageRequestDTO = new PageRequestDTO();
-        pageRequestDTO.setMember_id("test2");
-        log.info(pageRequestDTO);
-        List<LectureVO> voList = myStudyMapper.LectureListByPage(pageRequestDTO);
-        log.info(voList);
-        List<LectureDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo, LectureDTO.class)).collect(Collectors.toList());
-        int lecture_count = myStudyMapper.LectureCount(pageRequestDTO);
-
+        pageRequestDTO.setMember_idx(2);
+        List<LectureVO> voList = memberMapper.LectureListbyTeacherpage(pageRequestDTO);
+        List<LectureDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo,LectureDTO.class)).collect(Collectors.toList());
+        int total_count = memberMapper.LectureListCountByT(pageRequestDTO);
         PageResponseDTO<LectureDTO> responseDTO = PageResponseDTO.<LectureDTO>withAll()
-                .total_count(lecture_count)
+                .total_count(total_count)
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList)
                 .build();

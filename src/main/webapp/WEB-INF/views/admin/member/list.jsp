@@ -62,7 +62,7 @@
                 <h4 class="h4">회원 목록</h4>
                 <br>
                 <div class="searchBox">
-                    <form role="search" id="frmSearch" class="searchForm" action="/admin/member/list" onsubmit="checkBlank()">
+                    <form role="search" id="frmSearch" class="searchForm" action="/admin/member/list">
 
                         <div class="mb-3 row d-flex">
                             <label class="ml-3 col-form-label fontWe-700 mt-4">검색 범위</label>
@@ -72,8 +72,8 @@
                                     <label>구분</label>
                                     <select name="search_type" class="selectpicker form-control school" data-size="5" data-style="btn-outline-info">
                                         <option value="">전체</option>
-                                        <option value="t" <c:if test="${memberList.search_type eq 't'}">selected</c:if>>아이디</option>
-                                        <option value="c" <c:if test="${memberList.search_type eq 'c'}">selected</c:if>>이름</option>
+                                        <option value="t" <c:forEach var="type" items="${memberList.search_types}"><c:if test="${type eq 't'}">selected</c:if></c:forEach>>아이디</option>
+                                        <option value="c" <c:forEach var="type" items="${memberList.search_types}"><c:if test="${type eq 'c'}">selected</c:if></c:forEach>>이름</option>
                                     </select>
                                 </div>
                             </div>
@@ -176,7 +176,7 @@
                             <button class="btn btn-primary btn-lg btn-block" href="#" style="width: 100px; height: 40px; font-size: 15px;" >수정하기</button>
                         </div>
                         <div class="d-flex justify-content-sm-end ml-2 mr-3">
-                            <button type="button" id="btnDelete" name="btnDelete" class="btn btn-primary btn-lg btn-block" onclick="godelete();" style="width: 100px; height: 40px; font-size: 15px;">강퇴</button>
+                            <button type="button" id="btnDelete" name="btnDelete" class="btn btn-primary btn-lg btn-block" onclick="godelete();" style="width: 100px; height: 40px; font-size: 15px;">강퇴하기</button>
                         </div>
                     </div>
 
@@ -245,7 +245,7 @@
             var check = document.querySelectorAll("input[type ='checkbox']:checked");
             console.log(check);
             if (check.length == 0) {
-                alert("하나 이상 선택하세요.");
+                alert("체크박스를 한 개 이상 선택하세요.");
 
                 return false;
             } else {

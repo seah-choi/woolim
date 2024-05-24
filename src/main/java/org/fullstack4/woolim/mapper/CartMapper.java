@@ -11,4 +11,5 @@ public interface CartMapper {
     List<CartVO> cartOrJjimList(CartDTO cartDTO);
     int insertCartOrJjim(CartVO cartVO);
     int deleteCartOrJjim(CartVO cartVO);
+    int InsertCartFromJjim(CartVO cartVO);
 }

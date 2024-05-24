@@ -31,6 +31,7 @@ public class BbsServiceImpl implements BbsServiceIf{
 
         int total_count = bbsMapper.total_count(pageRequestDTO);
         log.info("total_count" + total_count);
+
         PageResponseDTO<BbsDTO> responseDTO = PageResponseDTO.<BbsDTO>withAll()
                 .total_count(total_count)
                 .pageRequestDTO(pageRequestDTO)
@@ -84,6 +85,12 @@ public class BbsServiceImpl implements BbsServiceIf{
             return dto;
         }
         return null;
+    }
+
+    @Override
+    public int deleteList(Integer[] idxList) {
+        int result = bbsMapper.deleteList(idxList);
+        return result;
     }
 
 }

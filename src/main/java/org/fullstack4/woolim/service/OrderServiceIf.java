@@ -11,4 +11,5 @@ public interface OrderServiceIf {
     int DoOrderDetail(OrderDTO orderDTO);
     int PointCharge(MemberDTO memberDTO);
     PageResponseDTO<PaymentDTO> getPayment(PageRequestDTO pageRequestDTO);
+    PageResponseDTO<OrderDTO> viewOrderList(PageRequestDTO pageRequestDTO);
 }

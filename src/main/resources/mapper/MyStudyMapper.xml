@@ -142,4 +142,71 @@
         </where>
     </select>
 
+    <select id="comment_count" resultType="int">
+        SELECT count(*)
+        FROM woo_bbs_reply
+        <where>
+            <if test="bbs_type !=null and bbs_type !=''">
+                bbs_category_code=#{bbs_type}
+            </if>
+            <if test="search_types != null">
+                <foreach collection="search_types" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            and bbs_title like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'u'.toString()">
+                            and member_id like concat('%', #{search_word},'%' )
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            and bbs_content like concat('%', #{search_word},'%' )
+                        </when>
+                    </choose>
+                </foreach>
+            </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and bbs_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and bbs_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+            and member_id =#{member_id}
+        </where>
+    </select>
+
+    <select id="replyListByPage" resultType="org.fullstack4.woolim.domain.BbsReplyVO">
+        SELECT br.reply_idx,br.member_id,br.reply_content,br.reply_reg_date, br.bbs_idx, wb.bbs_title
+        FROM woo_bbs_reply AS br
+        INNER JOIN woo_bbs AS wb ON wb.bbs_idx = br.bbs_idx
+        <where>
+            <if test="bbs_type !=null and bbs_type !=''">
+                bbs_category_code=#{bbs_type}
+            </if>
+            <if test="search_types != null">
+                <foreach collection="search_types" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            and bbs_title like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'u'.toString()">
+                            and member_id like concat('%', #{search_word},'%' )
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            and bbs_content like concat('%', #{search_word},'%' )
+                        </when>
+                    </choose>
+                </foreach>
+            </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and bbs_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and bbs_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+            AND br.member_id = #{member_id}
+        </where>
+
+        order by bbs_idx desc
+<!--        limit #{page_skip_count}, #{page_size}-->
+    </select>
 </mapper>

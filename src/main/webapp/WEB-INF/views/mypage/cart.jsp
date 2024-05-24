@@ -83,7 +83,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4 offset-lg-4">
-                        <div class="proceed-checkout">
+                        <div class="proceed-checkout d-flex justify-content-center">
                             <ul>
                                 <li class="cart-total">Total <span id="total_price">0</span></li>
                             </ul>

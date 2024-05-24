@@ -1,12 +1,13 @@
 package org.fullstack4.woolim.service;
 
-import org.fullstack4.woolim.dto.BbsDTO;
-import org.fullstack4.woolim.dto.LectureDTO;
-import org.fullstack4.woolim.dto.PageRequestDTO;
-import org.fullstack4.woolim.dto.PageResponseDTO;
+import org.fullstack4.woolim.domain.BbsReplyVO;
+import org.fullstack4.woolim.dto.*;
+
+import java.util.List;
 
 public interface MyStudyServiceIf {
     PageResponseDTO<BbsDTO> bbsListByPage(PageRequestDTO pageRequestDTO);
     BbsDTO view(int bbs_idx);
     PageResponseDTO<LectureDTO> LectureListByPage(PageRequestDTO pageRequestDTO);
+    PageResponseDTO<BbsReplyDTO> replyListByPage(PageRequestDTO pageRequestDTO);
 }

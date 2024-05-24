@@ -90,4 +90,44 @@
         FROM woo_order_detail
         WHERE lecture_idx=#{lecture_idx} AND member_id=#{member_id}
     </select>
+
+    <select id="viewOrderList" resultType="org.fullstack4.woolim.domain.OrderVO">
+        SELECT order_date,order_total,order_cancel_yn
+               ,order_reg_date,order_status,order_refund_request,order_refund_response
+        FROM woo_order
+        <where>
+            member_id =#{member_id}
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and payment_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and payment_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+        </where>
+        ORDER by order_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+
+
+    </select>
+
+    <select id="OrderCount" resultType="int">
+        SELECT count(*)
+        FROM woo_order
+        <where>
+            member_id =#{member_id}
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and payment_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and payment_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+        </where>
+    </select>
+
+    <select id="viewOrderDetailList" resultType="org.fullstack4.woolim.domain.OrderDetailVO">
+        SELECT lecture_idx,order_status,price,member_id
+        FROM woo_order_detail
+        INNER JOIN
+        ORDER by order_detail_idx DESC
+    </select>
 </mapper>

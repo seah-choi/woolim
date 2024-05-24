@@ -2,11 +2,13 @@ package org.fullstack4.woolim.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.woolim.common.InsufficientStockException;
 import org.fullstack4.woolim.domain.CartVO;
 import org.fullstack4.woolim.dto.CartDTO;
 import org.fullstack4.woolim.mapper.CartMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,5 +34,22 @@ public class CartServiceImpl implements CartServiceIf{
         CartVO cartVO = modelMapper.map(cartDTO, CartVO.class);
         int result = cartMapper.insertCartOrJjim(cartVO);
         return result;
+    }
+
+    @Override
+    @Transactional(rollbackFor = {InsufficientStockException.class, Exception.class})
+    public int InsertCartFromJjim(List<CartDTO> cartDTO) throws InsufficientStockException {
+        int total_result =0;
+        for(int i = 0; i < cartDTO.size(); i++){
+            CartVO cartVO = modelMapper.map(cartDTO.get(i), CartVO.class);
+            int result = cartMapper.InsertCartFromJjim(cartVO);
+            if(result>0){
+                total_result ++;
+            }else{
+                throw new InsufficientStockException("실패했습니다.");
+            }
+        }
+
+        return total_result;
     }
 }

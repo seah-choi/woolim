@@ -19,4 +19,5 @@ public class BbsReplyDTO {
     private LocalDate reply_reg_date;
     private int sort_idx;
     private LocalDate reply_modify_date;
+    private String bbs_title;
 }

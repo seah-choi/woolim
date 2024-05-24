@@ -48,136 +48,91 @@
     <div class="container">
         <form action="#" class="checkout-form">
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="checkout-content">
-                        <a href="#" class="content-btn">Click Here To Login</a>
-                    </div>
-                    <h4>Biiling Details</h4>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <label for="fir">First Name<span>*</span></label>
-                            <input type="text" id="fir">
-                        </div>
-                        <div class="col-lg-6">
-                            <label for="last">Last Name<span>*</span></label>
-                            <input type="text" id="last">
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="cun-name">Company Name</label>
-                            <input type="text" id="cun-name">
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="cun">Country<span>*</span></label>
-                            <input type="text" id="cun">
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="street">Street Address<span>*</span></label>
-                            <input type="text" id="street" class="street-first">
-                            <input type="text">
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="zip">Postcode / ZIP (optional)</label>
-                            <input type="text" id="zip">
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="town">Town / City<span>*</span></label>
-                            <input type="text" id="town">
-                        </div>
-                        <div class="col-lg-6">
-                            <label for="email">Email Address<span>*</span></label>
-                            <input type="text" id="email">
-                        </div>
-                        <div class="col-lg-6">
-                            <label for="phone">Phone<span>*</span></label>
-                            <input type="text" id="phone">
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="create-item">
-                                <label for="acc-create">
-                                    Create an account?
-                                    <input type="checkbox" id="acc-create">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="checkout-content">
-                        <input type="text" placeholder="Enter Your Coupon Code">
-                    </div>
+                <jsp:include page="/WEB-INF/views/common/mypageSide.jsp"/>
+                <div class="col-lg-9 order-1 order-lg-2">
                     <div class="place-order">
-                        <h4>Your Order</h4>
                         <div class="order-total">
-                            <ul class="order-table">
-                                <li>Product <span>Total</span></li>
-                                <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                <li class="fw-normal">Combination x 1 <span>$60.00</span></li>
-                                <li class="fw-normal">Combination x 1 <span>$120.00</span></li>
-                                <li class="fw-normal">Subtotal <span>$240.00</span></li>
-                                <li class="total-price">Total <span>$240.00</span></li>
-                            </ul>
-                            <div class="payment-check">
-                                <div class="pc-item">
-                                    <label for="pc-check">
-                                        Cheque Payment
-                                        <input type="checkbox" id="pc-check">
-                                        <span class="checkmark"></span>
-                                    </label>
+                            <form action="/mypage/pointcharge">
+                                <div class="d-flex justify-content-end">
+                                    <input type="date" style="width: 20%" name="search_date1" class="form-control me-3">
+                                    <span class="me-3">~</span>
+                                    <input type="date" style="width: 20%" name="search_date2" class="me-3 form-control">
+                                    <button type="submit" class="btn btn-primary" >검색</button>
                                 </div>
-                                <div class="pc-item">
-                                    <label for="pc-paypal">
-                                        Paypal
-                                        <input type="checkbox" id="pc-paypal">
-                                        <span class="checkmark"></span>
-                                    </label>
+                            </form>
+                            <hr>
+                            <h4 class="d-flex justify-content-center">결제 내역</h4>
+                            <table class="table mt-5">
+                                <thead>
+                                <tr class="table-secondary">
+                                    <th scope="col">구분</th>
+                                    <th scope="col">내용</th>
+                                    <th scope="col">금액</th>
+                                    <th scope="col">날짜</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:if test="${responseDTO.dtolist.size()==0}">
+                                    <tr>
+                                        <td colspan="4"><p class="d-flex justify-content-center">기록이 없습니다.</p></td>
+                                    </tr>
+                                </c:if>
+                                <c:forEach items="${responseDTO.dtolist}" var="list">
+                                    <tr>
+                                        <th scope="row">${list.payment_type}</th>
+                                        <td id="title">${list.payment_title}</td>
+                                        <td>${list.price}</td>
+                                        <td>${list.payment_reg_date}</td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                            <div class="accordion" id="accordionPanelsStayOpenExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                            Accordion Item #1
+                                        </button>
+                                    </h2>
+                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                                        <div class="accordion-body">
+                                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="order-btn">
-                                <button type="submit" class="site-btn place-btn">Place Order</button>
-                            </div>
+                            <nav class="blog-pagination justify-content-center d-flex mt-5">
+                                <ul class="pagination">
+                                    <li class="page-item <c:if test="${responseDTO.prev_page_plag == 'false'}"> disabled</c:if>" >
+                                        <a href="/mypage/pointcharge?page=${responseDTO.page_block_start - responseDTO.page_block_size}${responseDTO.linkParams}"
+                                           class="page-link" aria-label="Previous">&laquo;
+                                        </a>
+                                    </li>
+                                    <c:forEach begin="${responseDTO.page_block_start}"
+                                               end="${responseDTO.page_block_end}"
+                                               var="page_num">
+                                        <li class="page-item <c:if test="${responseDTO.page == page_num}">active</c:if>">
+                                            <a href="/mypage/pointcharge?page=${page_num}${responseDTO.linkParams}" class="page-link">${page_num}</a>
+                                        </li>
+                                    </c:forEach>
+                                    <li class="page-item <c:if test="${responseDTO.next_page_plag == 'false'}"> disabled</c:if>" >
+                                        <a href="/mypage/pointcharge?page=${responseDTO.page_block_start + responseDTO.page_block_size}${responseDTO.linkParams}" class="page-link" aria-label="Previous">
+                                            &raquo;
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
+
     </div>
 </section>
 <!-- Shopping Cart Section End -->
 
-<!-- Partner Logo Section Begin -->
-<div class="partner-logo">
-    <div class="container">
-        <div class="logo-carousel owl-carousel">
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-1.png" alt="">
-                </div>
-            </div>
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-2.png" alt="">
-                </div>
-            </div>
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-3.png" alt="">
-                </div>
-            </div>
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-4.png" alt="">
-                </div>
-            </div>
-            <div class="logo-item">
-                <div class="tablecell-inner">
-                    <img src="img/logo-carousel/logo-5.png" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Partner Logo Section End -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>

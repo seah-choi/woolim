@@ -59,7 +59,7 @@
                 <h4 class="h4">강좌 등록</h4>
                 <br>
 
-                <form>
+                <form name="frm" id="frm">
 
                     <div class="d-flex align-items-start align-items-sm-center mt-3">
                         <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강좌명</label>
@@ -68,11 +68,19 @@
                         </div>
                     </div>
                     <div class="d-flex align-items-start align-items-sm-center mt-3">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강사명</label>
+                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강사 아이디</label>
                         <div class="col-sm-12 col-md-5">
-                            <input class="form-control" type="text" placeholder="강사명을 입력해주세요.">
+                            <input class="form-control" type="text" placeholder="강사 아이디를 입력해주세요." readonly>
+                        </div>
+                        <button id="searchTeacher" type="button" style="width: 100px; height: 50px;"  class="btn btn-primary">찾기</button>
+                    </div>
+                    <div class="d-flex align-items-start align-items-sm-center mt-3">
+                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700" >강사명</label>
+                        <div class="col-sm-12 col-md-5">
+                            <input class="form-control" type="text" placeholder="강사명을 입력해주세요." readonly>
                         </div>
                     </div>
+
                     <div class="d-flex align-items-start align-items-sm-center mt-3">
                         <label class="col-sm-12 col-md-2 col-form-label fontWe-700">수업내용 및 목표</label>
                         <div class="contentBox col-sm-12 col-md-8">
@@ -164,6 +172,20 @@
 </div>
 <!-- js -->
 <script>
+    document.querySelector("#searchTeacher").addEventListener("click", function (e) {
+        e.preventDefault();
+
+
+        let popupUrl = "/admin/lecture/teacherList"; // 팝업 창에 표시할 내용에 대한 URL을 여기에 설정합니다.
+
+        // 팝업 창 옵션 설정
+        let popupOption = "width=900,height=400,scrollbars=yes,resizable=yes";
+
+        // 팝업 창 열기
+        window.open(popupUrl, "", popupOption);
+
+    });
+
     //이미지 프리뷰
     function setThumbnail(e){
         var reader = new FileReader();
