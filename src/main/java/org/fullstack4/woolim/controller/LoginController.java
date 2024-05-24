@@ -28,15 +28,13 @@ public class LoginController {
     @RequestMapping(value = "/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String Login(@RequestParam HashMap<String, Object> map, HttpServletRequest req, HttpServletResponse resp) throws Exception{
-        log.info("LoginController >>>>>>>>>>>>>>>");
 
         HashMap<String, Object> resultMap = new HashMap<>();
         String id = req.getParameter("member_id").trim();
         String pwd = req.getParameter("member_pwd").trim();
 
         String name = memberService.memberView(id).getMember_name();
-
-        log.info("resultMap : " + resultMap);
+        
         boolean save_id = req.getParameter("save_id") ==null?false:true;
         try {
             if (memberService.login(id, pwd, req)) {
