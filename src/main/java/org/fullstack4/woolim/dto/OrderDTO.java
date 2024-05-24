@@ -29,4 +29,8 @@ public class OrderDTO {
     private int order_detail_idx;
     private LocalDate order_detail_regDate;
     private int price;
+    private String lecture_image;
+    private String lecture_title;
+    private LocalDate lecture_start_date;
+    private LocalDate lecture_end_date;
 }

@@ -2,6 +2,7 @@ package org.fullstack4.woolim.service;
 
 import org.fullstack4.woolim.common.InsufficientStockException;
 import org.fullstack4.woolim.domain.MemberVO;
+import org.fullstack4.woolim.domain.OrderDetailVO;
 import org.fullstack4.woolim.dto.*;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface OrderServiceIf {
     int PointCharge(MemberDTO memberDTO);
     PageResponseDTO<PaymentDTO> getPayment(PageRequestDTO pageRequestDTO);
     PageResponseDTO<OrderDTO> viewOrderList(PageRequestDTO pageRequestDTO);
+    List<OrderDTO> viewOrderDetailList(OrderDTO orderDTO);
 }

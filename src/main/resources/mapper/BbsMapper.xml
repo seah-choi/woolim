@@ -36,7 +36,6 @@
                 and bbs_reg_date <![CDATA[<=]]> #{search_date2}
             </if>
         </where>
-        limit #{page_skip_count}, #{page_size}
     </select>
 
     <select id="bbsListByPage" resultType="org.fullstack4.woolim.domain.BbsVO">

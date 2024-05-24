@@ -44,7 +44,8 @@ public class TeacherController {
     }
 
     @GetMapping("/view")
-    public void GETView(Model model, PageRequestDTO pageRequestDTO,@RequestParam(name="member_idx") int member_idx,@RequestParam(defaultValue = "9") int page_size) {
+    public void GETView(Model model, PageRequestDTO pageRequestDTO,@RequestParam(name="member_idx") int member_idx,@RequestParam(defaultValue = "9") int page_size
+    ,@RequestParam(defaultValue="") String bbs_type) {
         pageRequestDTO.setMember_idx(member_idx);
         pageRequestDTO.setPage_size(page_size);
         pageRequestDTO.setBbs_teacher_yn("Y");
@@ -54,7 +55,7 @@ public class TeacherController {
                 .member_idx(pageRequestDTO.getMember_idx())
                 .build();
         String member_id = memberMapper.view(IdDTO).getMember_id();
-        
+
 
         pageRequestDTO.setMember_id(member_id);
         PageResponseDTO<LectureDTO> responseDTO = memberServiceIf.LectureListbyTeacherpage(pageRequestDTO);
@@ -62,23 +63,27 @@ public class TeacherController {
 
 
         pageRequestDTO.setTeacher_id(member_id);
-        pageRequestDTO.setBbs_type("bbs04");
-        PageResponseDTO<BbsDTO> noticeListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
-        pageRequestDTO.setBbs_type("bbs03");
-        PageResponseDTO<BbsDTO> faqListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
-        pageRequestDTO.setBbs_type("bbs05");
-        PageResponseDTO<BbsDTO> invenListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
+        pageRequestDTO.setBbs_type(bbs_type);
+        PageResponseDTO<BbsDTO> bbsList = bbsServiceIf.bbsListByPage(pageRequestDTO);
+//        pageRequestDTO.setBbs_type("bbs04");
+//        PageResponseDTO<BbsDTO> noticeListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
+//        pageRequestDTO.setBbs_type("bbs03");
+//        PageResponseDTO<BbsDTO> faqListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
+//        pageRequestDTO.setBbs_type("bbs05");
+//        PageResponseDTO<BbsDTO> invenListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
 
-        log.info("noticeList:{}", noticeListDTO);
-        log.info("faqList:{}", faqListDTO);
-        log.info("invenList:{}", invenListDTO);
+//        log.info("noticeList:{}", noticeListDTO);
+//        log.info("faqList:{}", faqListDTO);
+//        log.info("invenList:{}", invenListDTO);
 
         log.info(responseDTO);
         log.info(memberDTO);
+        log.info("bbsList:{}",bbsList);
 
-        model.addAttribute("noticeListDTO", noticeListDTO);
-        model.addAttribute("faqListDTO", faqListDTO);
-        model.addAttribute("invenListDTO", invenListDTO);
+//        model.addAttribute("noticeListDTO", noticeListDTO);
+//        model.addAttribute("faqListDTO", faqListDTO);
+//        model.addAttribute("invenListDTO", invenListDTO);
+        model.addAttribute("bbsList", bbsList);
         model.addAttribute("memberDTO", memberDTO);
         model.addAttribute("responseDTO", responseDTO);
     }
