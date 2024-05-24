@@ -2,13 +2,11 @@ package org.fullstack4.woolim.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.woolim.domain.BbsReplyVO;
 import org.fullstack4.woolim.domain.BbsVO;
 import org.fullstack4.woolim.domain.LectureDetailVO;
 import org.fullstack4.woolim.domain.LectureVO;
-import org.fullstack4.woolim.dto.BbsDTO;
-import org.fullstack4.woolim.dto.LectureDTO;
-import org.fullstack4.woolim.dto.PageRequestDTO;
-import org.fullstack4.woolim.dto.PageResponseDTO;
+import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.BbsMapper;
 import org.fullstack4.woolim.mapper.MyStudyMapper;
 import org.modelmapper.ModelMapper;
@@ -62,6 +60,22 @@ public class MyStudyServiceImpl implements MyStudyServiceIf{
                 .dtoList(dtoList)
                 .build();
 
+        return responseDTO;
+    }
+
+    @Override
+    public PageResponseDTO<BbsReplyDTO> replyListByPage(PageRequestDTO pageRequestDTO) {
+        List<BbsReplyVO> voList =myStudyMapper.replyListByPage(pageRequestDTO);
+        List<BbsReplyDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo, BbsReplyDTO.class)).collect(Collectors.toList());
+
+        int comment_count = myStudyMapper.comment_count(pageRequestDTO);
+        PageResponseDTO<BbsReplyDTO> responseDTO = PageResponseDTO.<BbsReplyDTO>withAll()
+                .total_count(comment_count)
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .build();
+
+        log.info("responseDTO :" +responseDTO);
         return responseDTO;
     }
 }

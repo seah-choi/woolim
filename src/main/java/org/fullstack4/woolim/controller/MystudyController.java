@@ -2,10 +2,7 @@ package org.fullstack4.woolim.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.fullstack4.woolim.dto.BbsDTO;
-import org.fullstack4.woolim.dto.LectureDTO;
-import org.fullstack4.woolim.dto.PageRequestDTO;
-import org.fullstack4.woolim.dto.PageResponseDTO;
+import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.service.BbsServiceIf;
 import org.fullstack4.woolim.service.MyStudyServiceIf;
 import org.springframework.stereotype.Controller;
@@ -36,10 +33,6 @@ public class MystudyController {
         model.addAttribute("responseDTO", responseDTO);
     }
 
-    @GetMapping("/classView")
-    public void GETClassView() {
-
-    }
 
     @GetMapping("/boardList")
     public void GETBoardList() {
@@ -118,7 +111,16 @@ public class MystudyController {
     }
 
     @GetMapping("/commentList")
-    public void GETcommentList() {
+    public void GETcommentList(PageRequestDTO pageRequestDTO, Model model,HttpServletRequest req) {
+
+        HttpSession session = req.getSession();
+        String id = (String) session.getAttribute("member_id");
+        pageRequestDTO.setMember_id(id);
+
+        PageResponseDTO<BbsReplyDTO> bbsList = myStudyService.replyListByPage(pageRequestDTO);
+        model.addAttribute("reply", bbsList);
+
+
 
     }
 }

@@ -115,34 +115,39 @@
         </div>
         <br>
         <div style="border-bottom: 1px solid #ccc;padding: 20px;">
-            <a href="/board/freeView"><p style="font-weight: 700;">[제목] 질문드려요 ~~ </p></a>
-            <div style="display: flex;justify-content: space-between;">
-                <span style="color: #68afcb;font-weight: bold;">→ 안녕하세요. 댓글 남깁니다. </span>
-                <button type="button" class="btn" id="btn_regist" onclick="location.href='/board/freeView'">원문보기</button>
-            </div>
+        <c:choose>
+            <c:when test="${not empty reply.dtolist}">
+                <c:forEach items="${reply.dtolist}" var="list">
+                    <a href="/board/freeView?bbs_idx=${list.bbs_idx}"><p style="font-weight: 700;">[원문] ${list.bbs_title} </p></a>
+                    <div style="display: flex;justify-content: space-between;">
+                        <span style="color: #68afcb;font-weight: bold;">→ ${list.reply_content} </span>
+                        <button type="button" class="btn" id="btn_regist" onclick="location.href='/board/freeView?bbs_idx=${list.bbs_idx}'">원문보기</button>
+                    </div>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                남긴 댓글이 없습니다.
+            </c:otherwise>
+        </c:choose>
         </div>
         <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">
             <ul class="pagination">
-                <li class="page-item">
-                    <a href="#" class="page-link" aria-label="Previous">&lt;</a>
+                <li class="page-item <c:if test="${reply.prev_page_plag == 'false'}"> disabled</c:if>" >
+                    <a href="/mystudy/commentList?page=${responseDTO.page_block_start - responseDTO.page_block_size}${responseDTO.linkParams}"
+                       class="page-link" aria-label="Previous">&laquo;
+                    </a>
                 </li>
-                <li class="page-item active">
-                    <a href="#" class="page-link">1</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">2</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">3</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">4</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">5</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link" aria-label="Next">&gt;</a>
+                <c:forEach begin="${reply.page_block_start}"
+                           end="${reply.page_block_end}"
+                           var="page_num">
+                    <li class="page-item <c:if test="${reply.page == page_num}">active</c:if>">
+                        <a href="/mystudy/commentList?page=${page_num}${reply.linkParams}" class="page-link">${page_num}</a>
+                    </li>
+                </c:forEach>
+                <li class="page-item <c:if test="${reply.next_page_plag == 'false'}"> disabled</c:if>" >
+                    <a href="/mystudy/commentList?page=${reply.page_block_start + reply.page_block_size}${reply.linkParams}" class="page-link" aria-label="Previous">
+                        &raquo;
+                    </a>
                 </li>
             </ul>
         </nav>

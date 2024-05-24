@@ -76,7 +76,7 @@
             padding: 10px;
             margin-bottom: 50px;
         }
-        #cmModify{
+        #btnModify{
             border: none;
         }
         #cmDelete{
@@ -163,15 +163,16 @@
                     <c:forEach items="${reply}" var="reply">
                         <span style="font-weight: bold">${reply.member_id}</span>&nbsp;<span>${reply.reply_reg_date}</span>
                         <br>
-                        <p>${reply.reply_content}</p>
+                        <form name="frm" id="cmFrm" action="/bbsReply/delete" method="post">
+                        <p><input type="text" name="reply_content" style="border: 0" value="${reply.reply_content}" id="reply_content" readonly></p>
                         <c:if test="${reply.member_id == sessionScope.member_id}">
-                            <form name="frm" id="cmFrm" action="/bbsReply/delete" method="post">
                                 <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
                                 <input type="hidden" name="bbs_idx" value="${reply.bbs_idx}">
                                 <div style="display: flex;justify-content: flex-end;">
-                                    <button type="button" id="cmModify" onclick="location.href='/bbsReply/modify?reply_idx=${reply.reply_idx}'">수정</button>
+                                    <button type="button" id="btnModify">수정</button>
                                     <span>&nbsp;|&nbsp;</span>
-                                    <button type="submit" id="cmDelete" onclick="cmDelete(event)">삭제</button>
+<%--                                    <button type="submit" id="cmDelete" onclick="cmDelete(event)">삭제</button>--%>
+                                    <button type="button" id="cmDelete">삭제</button>
                                 </div>
                             </form>
                         </c:if>
@@ -216,6 +217,43 @@
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
 <script>
+    let btnModify = document.getElementById("btnModify");
+    let cmDelete = document.getElementById("cmDelete");
+    let reply_content = document.getElementById("reply_content");
+    btnModify.addEventListener("click",function(e){
+        e.preventDefault();
+        if(this.textContent=="수정"){
+            this.textContent="등록";
+            reply_content.readOnly = false;
+            reply_content.focus();
+            reply_content.style.border = "1px solid black";
+            document.getElementById("cmDelete").textContent="취소";
+            return;
+        }
+        if(this.textContent=="등록"){
+            let cmFrm = document.getElementById("cmFrm");
+            cmFrm.action = "/bbsReply/modify";
+            cmFrm.submit();
+        }
+    });
+    cmDelete.addEventListener("click",function(e){
+       e.preventDefault();
+       if(this.textContent == "취소"){
+           console.log(11);
+           reply_content.readOnly = true;
+           this.textContent = "삭제";
+           reply_content.style.border = "0";
+           document.getElementById("btnModify").textContent="수정";
+           return;
+       }
+       if(this.textContent == "삭제"){
+           if(confirm("해당 댓글을 삭제하시겠습니까?")){
+               let cmFrm = document.getElementById("cmFrm");
+               cmFrm.action = "/bbsReply/delete";
+               cmFrm.submit();
+           }
+       }
+    });
     function godelete(e) {
         e.preventDefault();
         if(confirm("해당 글을 정말 삭제하시겠습니까?")) {
@@ -236,14 +274,14 @@
     //     }
     // }
 
-    document.querySelector("#cmDelete").addEventListener("click", function (){
-        if(confirm("해당 댓글을 삭제하시겠습니까?")) {
-            alert("삭제되었습니다.");
-            document.getElementById("cmFrm").submit();
-        } else {
-            return false;
-        }
-    })
+    // document.querySelector("#cmDelete").addEventListener("click", function (){
+    //     if(confirm("해당 댓글을 삭제하시겠습니까?")) {
+    //         alert("삭제되었습니다.");
+    //         document.getElementById("cmFrm").submit();
+    //     } else {
+    //         return false;
+    //     }
+    // })
 </script>
 </body>
 </html>

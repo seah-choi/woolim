@@ -52,6 +52,7 @@ public class BoardReplyController {
     @PostMapping("/modify")
     public String modifyPost(BbsReplyDTO bbsReplyDTO) {
         int result = bbsReplyService.modify(bbsReplyDTO);
+        log.info(result);
         return "redirect:/board/freeView?bbs_idx=" + bbsReplyDTO.getBbs_idx();
     }
 }

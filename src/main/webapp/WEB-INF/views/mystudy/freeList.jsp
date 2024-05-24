@@ -137,26 +137,22 @@
         </c:choose>
         <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">
             <ul class="pagination">
-                <li class="page-item">
-                    <a href="#" class="page-link" aria-label="Previous">&lt;</a>
+                <li class="page-item <c:if test="${bbsList.prev_page_plag == 'false'}"> disabled</c:if>" >
+                    <a href="/mystudy/freeList?page=${bbsList.page_block_start - bbsList.page_block_size}${bbsList.linkParams}"
+                       class="page-link" aria-label="Previous">&laquo;
+                    </a>
                 </li>
-                <li class="page-item active">
-                    <a href="#" class="page-link">1</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">2</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">3</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">4</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">5</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link" aria-label="Next">&gt;</a>
+                <c:forEach begin="${bbsList.page_block_start}"
+                           end="${bbsList.page_block_end}"
+                           var="page_num">
+                    <li class="page-item <c:if test="${bbsList.page == page_num}">active</c:if>">
+                        <a href="/mystudy/freeList?page=${page_num}${bbsList.linkParams}" class="page-link">${page_num}</a>
+                    </li>
+                </c:forEach>
+                <li class="page-item <c:if test="${bbsList.next_page_plag == 'false'}"> disabled</c:if>" >
+                    <a href="/mystudy/freeList?page=${bbsList.page_block_start + bbsList.page_block_size}${bbsList.linkParams}" class="page-link" aria-label="Previous">
+                        &raquo;
+                    </a>
                 </li>
             </ul>
         </nav>
