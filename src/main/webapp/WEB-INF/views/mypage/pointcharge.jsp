@@ -50,7 +50,8 @@
     <div class="container">
         <form action="#" class="checkout-form">
             <div class="row">
-                <div class="col-lg-12">
+                <jsp:include page="/WEB-INF/views/common/mypageSide.jsp"/>
+                <div class="col-lg-9 order-1 order-lg-2">
                     <div class="place-order">
                         <div class="order-total">
                             <form action="/mypage/pointcharge">

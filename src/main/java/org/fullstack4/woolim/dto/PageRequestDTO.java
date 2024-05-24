@@ -60,6 +60,7 @@ public class PageRequestDTO {
     private String search_date1;
     private String search_date2;
     private String member_id;
+    private String teacher_id;
     private int member_idx;
     private String member_type;
     private String bbs_type;
@@ -119,6 +120,9 @@ public class PageRequestDTO {
             }
             if(qna_teacher_yn != null && !qna_teacher_yn.isEmpty()){
                 sb.append("&qna_teacher_yn=" + qna_teacher_yn);
+            }
+            if(teacher_id != null && !teacher_id.isEmpty()){
+                sb.append("&teacher_id=" + teacher_id);
             }
             linkParams = sb.toString();
         }

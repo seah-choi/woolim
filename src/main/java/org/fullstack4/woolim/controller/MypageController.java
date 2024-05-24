@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.FileUtil;
+import org.fullstack4.woolim.common.InsufficientStockException;
 import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.MemberMapper;
 import org.fullstack4.woolim.service.*;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -263,6 +265,41 @@ public class MypageController {
         MemberDTO memberDTO = memberService.memberView(id);
 
         resultMap.put("dto", memberDTO);
+
+        return new Gson().toJson(resultMap);
+    }
+
+    @RequestMapping(value = "/addcart.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String Addcart(@RequestParam HashMap<String, Object> map){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        String JjimList = map.get("JjimList").toString();
+        JjimList = JjimList.replace("\"","");
+        JjimList = JjimList.replace("[","");
+        JjimList = JjimList.replace("]","");
+        String[] JJimList = JjimList.split(",");
+        List<CartDTO> dtoList = new ArrayList<CartDTO>();
+        for(int i = 0; i < JJimList.length; i++){
+            CartDTO cartDTO = CartDTO.builder()
+                    .cart_idx(Integer.parseInt(JJimList[i]))
+                    .build();
+            dtoList.add(cartDTO);
+
+        }
+
+        try {
+            int total_result = cartService.InsertCartFromJjim(dtoList);
+            if(total_result == dtoList.size()){
+                resultMap.put("result", "success");
+                resultMap.put("msg", "성공적으로 옮겼습니다.");
+            }else{
+                resultMap.put("result", "fail");
+                resultMap.put("msg", "실패했습니다.");
+            }
+        }catch(InsufficientStockException e){
+            resultMap.put("result", "fail");
+            resultMap.put("msg",e.getMessage());
+        }
 
         return new Gson().toJson(resultMap);
     }

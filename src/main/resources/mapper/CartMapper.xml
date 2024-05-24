@@ -21,4 +21,9 @@
         AND cart_status=#{cart_status}
     </delete>
 
+    <update id="InsertCartFromJjim">
+        UPDATE woo_cart SET cart_status='Y'
+        WHERE cart_idx=#{cart_idx}
+    </update>
+
 </mapper>
