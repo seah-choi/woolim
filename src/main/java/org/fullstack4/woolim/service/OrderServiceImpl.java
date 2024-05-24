@@ -64,13 +64,20 @@ public class OrderServiceImpl implements OrderServiceIf{
     }
 
     @Override
-    public List<PaymentDTO> getPayment(String member_id) {
-        List<PaymentVO> paymentVO = orderMapper.GetPayment(member_id);
+    public PageResponseDTO<PaymentDTO> getPayment(PageRequestDTO pageRequestDTO) {
+        List<PaymentVO> paymentVO = orderMapper.GetPayment(pageRequestDTO);
         log.info("paymentVO: " + paymentVO);
         List<PaymentDTO> paymentDTO = paymentVO.stream()
                 .map(vo->modelMapper.map(vo,PaymentDTO.class))
                 .collect(Collectors.toList());
-        log.info("paymentDTO: " + paymentDTO);
-        return paymentDTO;
+
+        int total_count = orderMapper.total_count(pageRequestDTO);
+        PageResponseDTO<PaymentDTO> responseDTO = PageResponseDTO.<PaymentDTO>withAll()
+                .total_count(total_count)
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(paymentDTO)
+                .build();
+
+        return responseDTO;
     }
 }

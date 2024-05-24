@@ -32,7 +32,8 @@ public class MypageController {
     private final CartServiceIf cartService;
     private final QnaServiceIf qnaService;
     private final OrderServiceIf orderService;
-    
+    private final PaymentServiceIf paymentService;
+
     @GetMapping("/view")
     public void GETView(HttpServletRequest req,
                         Model model){
@@ -110,13 +111,17 @@ public class MypageController {
         model.addAttribute("responseDTO", responseDTO);
     }
     @GetMapping("/pointcharge")
-    public void GETChargePoint(HttpServletRequest req, Model model) {
+    public void GETChargePoint(HttpServletRequest req, Model model,PageRequestDTO pageRequestDTO) {
         HttpSession session = req.getSession();
         String member_id = (String) session.getAttribute("member_id");
-        List<PaymentDTO> paymentDTO = orderService.getPayment(member_id);
+        pageRequestDTO.setMember_id(member_id);
+        log.info("pageRequestDTO :" +pageRequestDTO);
+        PageResponseDTO<PaymentDTO> responseDTO = orderService.getPayment(pageRequestDTO);
 
-        log.info("paymentDTO########## : {}", paymentDTO);
-        model.addAttribute("paymentDTO", paymentDTO);
+        log.info("responseDTO:{}", responseDTO);
+
+        model.addAttribute("paymentDTO", responseDTO.getDtolist());
+        model.addAttribute("responseDTO", responseDTO);
     }
     @GetMapping("/qnaRegist")
     public void GETQnaRegist(){
@@ -179,21 +184,17 @@ public class MypageController {
     }
     @GetMapping("/qnaModify")
     public void GETQnaModify(@RequestParam(name = "qna_idx")int qna_idx,
-                           Model model){
+                             Model model){
         QnaDTO qnaDTO = qnaService.view(qna_idx);
-        List<QnaFileDTO> fileList = qnaService.qnaFileList(qnaDTO.getQna_idx());
-        model.addAttribute("fileList", fileList);
         model.addAttribute("qnaDTO", qnaDTO);
     }
     @PostMapping("/qnaModify")
     public String POSTQnaModify(@Valid QnaDTO qnaDTO,
-                              BindingResult bindingResult,
-                              MultipartHttpServletRequest files,
-                              HttpServletRequest req,
-                              RedirectAttributes redirectAttributes,
-                                Model model){
+                                BindingResult bindingResult,
+                                MultipartHttpServletRequest files,
+                                HttpServletRequest req,
+                                RedirectAttributes redirectAttributes){
         int result = qnaService.modify(qnaDTO);
-
         if(result >0){
             return "redirect:/mypage/qnaView?qna_idx="+qnaDTO.getQna_idx();
         }
@@ -215,17 +216,50 @@ public class MypageController {
 
     @RequestMapping(value = "/point.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String PointCharge(){
-        MemberDTO memberDTO = MemberDTO.builder().build();
-        orderService.PointCharge(memberDTO);
-        return null;
+    public String PointCharge(@RequestParam HashMap<String,Object> map){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        int price = Integer.parseInt(map.get("price").toString());
+        String payment_num = map.get("payment_num").toString();
+        String member_id= map.get("member_id").toString();
+        String payment_type = map.get("payment_type").toString();
+        String payment_title = map.get("payment_title").toString();
+
+        MemberDTO memberDTO = MemberDTO.builder()
+                .member_id(member_id)
+                .member_point(price)
+                .build();
+
+        PaymentDTO paymentDTO = PaymentDTO.builder()
+                .payment_num(payment_num)
+                .payment_type(payment_type)
+                .payment_title(payment_title)
+                .price(price)
+                .member_id(member_id)
+                .build();
+
+        int result1=orderService.PointCharge(memberDTO);
+        if(result1>0){
+            int result = paymentService.InsertPayment(paymentDTO);
+            if(result>0) {
+                resultMap.put("result", "success");
+                resultMap.put("msg", "충전 성공");
+            }else{
+                resultMap.put("result", "fail");
+                resultMap.put("msg", "충전 실패");
+            }
+        }else{
+            resultMap.put("result", "fail");
+            resultMap.put("msg", "충전 실패");
+        }
+
+        return new Gson().toJson(resultMap);
     }
 
     @RequestMapping(value = "/viewMember.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String memberInfo(@RequestParam HashMap<String, String> map){
+    public String memberInfo(@RequestParam HashMap<String, Object> map){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
-        String id = map.get("member_id");
+        String id = map.get("member_id").toString();
         MemberDTO memberDTO = memberService.memberView(id);
 
         resultMap.put("dto", memberDTO);
