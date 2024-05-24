@@ -35,8 +35,11 @@
         <!--        <property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/woolim"></property>-->
         <!--        <property name="jdbcUrl" value="jdbc:mariadb://10.41.1.62:3306/woolim"></property>-->
         <!--각자 로컬용-->
+
 <!--                        <property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/woolim"></property>-->
+
         <property name="username" value="woolim"></property>
+
         <property name="password" value="1234"></property>
         <property name="dataSourceProperties">
             <props>
