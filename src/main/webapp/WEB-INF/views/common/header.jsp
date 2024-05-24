@@ -76,7 +76,7 @@
                         <a href="/login/logout" class="login-panel"><i class="fa fa-user"></i>Logout</a>
                     </c:if>
                     <div class="d-flex">
-                        <c:if test="${sessionScope['user_id'] == 'admin'}">
+                        <c:if test="${sessionScope.member_category == 'admin'}">
                             <div class="lan-selector">
                                 <a href="/admin/member/list" class="adminA panel" ><i class="icon-copy fa fa-cog" aria-hidden="true"></i>︎</a>
                             </div>
