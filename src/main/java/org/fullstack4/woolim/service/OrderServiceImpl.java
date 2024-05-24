@@ -85,4 +85,12 @@ public class OrderServiceImpl implements OrderServiceIf{
 
         return responseDTO;
     }
+
+    @Override
+    public PageResponseDTO<OrderDTO> viewOrderList(PageRequestDTO pageRequestDTO) {
+        List<OrderVO> orderDTO = orderMapper.viewOrderList(pageRequestDTO);
+        log.info("orderDTO: " + orderDTO);
+
+        return null;
+    }
 }

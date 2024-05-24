@@ -49,15 +49,19 @@ public class TeacherController {
         pageRequestDTO.setPage_size(page_size);
         pageRequestDTO.setBbs_teacher_yn("Y");
 
+        log.info("member_idx :" +member_idx);
         MemberDTO IdDTO = MemberDTO.builder()
                 .member_idx(pageRequestDTO.getMember_idx())
                 .build();
         String member_id = memberMapper.view(IdDTO).getMember_id();
+        
 
         pageRequestDTO.setMember_id(member_id);
         PageResponseDTO<LectureDTO> responseDTO = memberServiceIf.LectureListbyTeacherpage(pageRequestDTO);
         MemberDTO memberDTO = memberServiceIf.memberView(member_id);
 
+
+        pageRequestDTO.setTeacher_id(member_id);
         pageRequestDTO.setBbs_type("bbs04");
         PageResponseDTO<BbsDTO> noticeListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
         pageRequestDTO.setBbs_type("bbs03");
