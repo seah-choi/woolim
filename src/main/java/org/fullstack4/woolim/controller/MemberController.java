@@ -36,7 +36,14 @@ public class MemberController {
         }
         log.info(memberDTO);
         int result = memberService.regist(memberDTO);
-        return "redirect:/";
+        if(result>0){
+            redirectAttributes.addAttribute("joinOK", "1");
+            return "redirect:/login/login";
+        }
+        else{
+            redirectAttributes.addAttribute("joinOK", "0");
+            return "redirect:/member/join";
+        }
     }
     @GetMapping("/idCheck")
     @ResponseBody

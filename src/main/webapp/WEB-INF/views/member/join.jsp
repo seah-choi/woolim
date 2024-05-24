@@ -42,13 +42,13 @@
                             <br><br>
                             <label for="member_pwd">비밀번호 *</label>
                             <div class="input-group">
-                                <input name="member_pwd" data-name="비밀번호" class="form-control" type="text" id="member_pwd">
+                                <input type="password" name="member_pwd" data-name="비밀번호" class="form-control" id="member_pwd">
                             </div>
                             <small id="err_member_pwd" class="info text-danger err-text" style="display: none">영어 대소문자, 숫자, 특수 문자를 포함한 8자리~20자리로 입력해주세요</small>
                             <br><br>
                             <label for="member_pwd2">비밀번호 확인 *</label>
                             <div class="input-group">
-                                <input type="text" data-name="비밀번호" class="form-control" id="member_pwd2" name="member_pwd2">
+                                <input type="password" data-name="비밀번호" class="form-control" id="member_pwd2" name="member_pwd2">
                             </div>
                             <small id="err_member_pwd2" class="info text-danger err-text" style="display: none">비밀번호가 일치하지 않습니다.</small>
                             <br><br>
@@ -60,7 +60,7 @@
                             <br><br>
                             <label for="member_email">이메일 *</label>
                             <div class="input-group">
-                                <input type="text" data-name="이메일" data-emailCheck="N" class="form-control"  name="member_email" id="member_email1">
+                                <input type="text" data-name="이메일" data-emailCheck="N" class="form-control" id="member_email1">
                                 <input type="hidden" id="member_email" name="member_email">
                                 <input type="hidden" id="member_email_addr" name="member_email_addr">
                                 <button onclick="emailCheck(document.getElementById('member_email1').value, event)">email 중복 확인</button>
@@ -95,7 +95,7 @@
                                 </div>
                                 <small id="err_member_addr" class="info text-danger err-text"  style="display: none">주소를 입력해주세요.</small>
                             </div>
-
+                            <input type="hidden" name="member_category" value="student">
                             <button type="submit" id="btnJoin" class="site-btn register-btn">회원가입</button>
                         </form>
                         <div class="switch-login">
@@ -177,7 +177,7 @@
         });
         function idCheck(str, event){
             event.preventDefault();
-            if(errMsg[0].style.display==="block"|| !nullCheck(str)){
+            if(errMsg[0].style.display==="block"|| !nullCheck(inputEl[0])){
                 alert("영문 소문자, 숫자를 포함한 8자리~20자리로 입력해주세요.");
                 return;
             }else {
@@ -205,7 +205,8 @@
         }
         function emailCheck(str, event){
             event.preventDefault();
-            if(errMsg[4].style.display==="block" || !nullCheck(str)){
+            console.log(str);
+            if(errMsg[4].style.display==="block" || !nullCheck(inputEl[4])){
                 alert("이메일주소를 확인해주세요.");
                 return;
             } else {
@@ -305,11 +306,13 @@
                 return;
             }
 
-           let member_phone = document.getElementById("member_phone");
-           member_phone.value = member_phone1.value + member_phone2.value + member_phone3.value;
+            let member_email = document.getElementById("member_email");
+            member_email.value = inputEl[4].value.split('@')[0];
+            let member_email_addr = document.getElementById("member_email_addr");
+            member_email_addr.value = inputEl[4].value.split('@')[1];
 
-           let frmJoin = document.getElementById("frmJoin");
-           frmJoin.submit();
+            let frmJoin = document.getElementById("frmJoin");
+            frmJoin.submit();
         });
         function nullCheck(str) {
             if ($(str).val()) {
