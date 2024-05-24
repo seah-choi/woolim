@@ -32,6 +32,8 @@ public class PageResponseDTO<E> {
     private String member_category;
     private String search_date1="";
     private String search_date2="";
+    private String bbs_teacher_yn;
+    private String qna_teacher_yn;
 
     List<E> dtolist;
 

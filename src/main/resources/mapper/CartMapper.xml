@@ -10,7 +10,7 @@
     WHERE cart_status=#{cart_status} AND wc.member_id = #{member_id}
 </select>
 
-    <insert id="InsertcartOrJjim">
+    <insert id="InsertCartOrJjim">
         INSERT INTO woo_cart(member_id,lecture_idx,cart_reg_date,cart_status)
         VALUES( #{member_id},#{lecture_idx},#{cart_reg_date},#{cart_status})
     </insert>

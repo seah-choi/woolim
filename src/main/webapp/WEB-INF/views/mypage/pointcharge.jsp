@@ -68,6 +68,11 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <c:if test="${paymentDTO.size()==0}">
+                                    <tr>
+                                        <td colspan="4"><p class="d-flex justify-content-center">기록이 없습니다.</p></td>
+                                    </tr>
+                                </c:if>
                                 <c:forEach items="${paymentDTO}" var="list">
                                     <tr>
                                         <th scope="row">${list.payment_type}</th>
