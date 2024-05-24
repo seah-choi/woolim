@@ -147,12 +147,16 @@
         <div style="white-space: pre-wrap;">${bbs.bbs_content}</div>
         <br><br>
         <div id="comment">
+            <form name="frm" action="/bbsReply/regist" method="post">
+                <input type="hidden" name="member_id" value="${sessionScope.member_id}">
+                <input type="hidden" name="bbs_idx" value="${bbs.bbs_idx}">
             <span>답변</span>&nbsp;<span id="cmCount">1</span>
             <div class="form-floating" style="display: flex;margin-top: 10px;margin-bottom: 40px;">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <textarea class="form-control" placeholder="Leave a comment here" name="reply_content" id="floatingTextarea"></textarea>
                 <label for="floatingTextarea">댓글</label>
-                <button type="button" class="btn" id="btn_comment">등록</button>
+                <button type="submit" class="btn" id="btn_comment">등록</button>
             </div>
+            </form>
             <div>
             <c:choose>
                 <c:when test="${not empty reply}">
@@ -160,17 +164,25 @@
                         <span style="font-weight: bold">${reply.member_id}</span>&nbsp;<span>${reply.reply_reg_date}</span>
                         <br>
                         <p>${reply.reply_content}</p>
+                        <c:if test="${reply.member_id == sessionScope.member_id}">
+                            <form name="frm" id="cmFrm" action="/bbsReply/delete" method="post">
+                                <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
+                                <input type="hidden" name="bbs_idx" value="${reply.bbs_idx}">
+                                <div style="display: flex;justify-content: flex-end;">
+                                    <button type="button" id="cmModify" onclick="location.href='/bbsReply/modify?reply_idx=${reply.reply_idx}'">수정</button>
+                                    <span>&nbsp;|&nbsp;</span>
+                                    <button type="submit" id="cmDelete" onclick="cmDelete(event)">삭제</button>
+                                </div>
+                            </form>
+                        </c:if>
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    등록된 댓글이 없습니다.
+                    <div style="padding: 10px;">
+                        등록된 댓글이 없습니다.
+                    </div>
                 </c:otherwise>
             </c:choose>
-            </div>
-            <div style="display: flex;justify-content: flex-end;">
-                <button type="button" id="cmModify">수정</button>
-                <span>&nbsp;|&nbsp;</span>
-                <button type="button" id="cmDelete">삭제</button>
             </div>
         </div>
 
@@ -213,6 +225,25 @@
             return false;
         }
     }
+
+    // function cmDelete(e) {
+    //     e.preventDefault();
+    //     if(confirm("해당 댓글을 삭제하시겠습니까?")) {
+    //         alert("삭제되었습니다.");
+    //         document.getElementById("cmFrm").submit();
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+    document.querySelector("#cmDelete").addEventListener("click", function (){
+        if(confirm("해당 댓글을 삭제하시겠습니까?")) {
+            alert("삭제되었습니다.");
+            document.getElementById("cmFrm").submit();
+        } else {
+            return false;
+        }
+    })
 </script>
 </body>
 </html>
