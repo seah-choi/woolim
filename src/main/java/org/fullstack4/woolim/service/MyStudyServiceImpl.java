@@ -2,10 +2,7 @@ package org.fullstack4.woolim.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.fullstack4.woolim.domain.BbsReplyVO;
-import org.fullstack4.woolim.domain.BbsVO;
-import org.fullstack4.woolim.domain.LectureDetailVO;
-import org.fullstack4.woolim.domain.LectureVO;
+import org.fullstack4.woolim.domain.*;
 import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.BbsMapper;
 import org.fullstack4.woolim.mapper.MyStudyMapper;
@@ -77,5 +74,28 @@ public class MyStudyServiceImpl implements MyStudyServiceIf{
 
         log.info("responseDTO :" +responseDTO);
         return responseDTO;
+    }
+
+    @Override
+    public PageResponseDTO<GradeDTO> gradeListByPage(PageRequestDTO pageRequestDTO) {
+        List<GradeVO> voList =myStudyMapper.gradeListByPage(pageRequestDTO);
+        List<GradeDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo, GradeDTO.class)).collect(Collectors.toList());
+
+        int grade_count = myStudyMapper.grade_count(pageRequestDTO);
+        PageResponseDTO<GradeDTO> responseDTO = PageResponseDTO.<GradeDTO>withAll()
+                .total_count(grade_count)
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .build();
+
+        log.info("responseDTO :" +responseDTO);
+        return responseDTO;
+    }
+
+    @Override
+    public GradeDTO getGrade(int grade_idx) {
+        GradeVO vo = myStudyMapper.getGrade(grade_idx);
+        GradeDTO dto = modelMapper.map(vo, GradeDTO.class);
+        return dto;
     }
 }
