@@ -209,4 +209,84 @@
         order by bbs_idx desc
 <!--        limit #{page_skip_count}, #{page_size}-->
     </select>
+
+    <select id="grade_count" resultType="int">
+        SELECT count(*)
+        FROM woo_grade AS wg
+        INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wg.lecture_idx
+        INNER JOIN woo_subject AS ws ON ws.subject_category_code = wl.lecture_category_subject
+        INNER JOIN woo_member AS wm ON wm.member_idx = wg.member_idx
+        <where>
+            <if test="bbs_type !=null and bbs_type !=''">
+                bbs_category_code=#{bbs_type}
+            </if>
+            <if test="search_types != null">
+                <foreach collection="search_types" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            and bbs_title like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'u'.toString()">
+                            and member_id like concat('%', #{search_word},'%' )
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            and bbs_content like concat('%', #{search_word},'%' )
+                        </when>
+                    </choose>
+                </foreach>
+            </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and bbs_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and bbs_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+            and wm.member_id =#{member_id}
+        </where>
+    </select>
+    <select id="getGrade" resultType="org.fullstack4.woolim.domain.GradeVO">
+        SELECT wg.grade_idx, wg.grade, wl.lecture_title, ws.subject_name, wm.member_name
+        FROM woo_grade AS wg
+        INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wg.lecture_idx
+        INNER JOIN woo_subject AS ws ON ws.subject_category_code = wl.lecture_category_subject
+        INNER JOIN woo_member AS wm ON wm.member_idx = wg.member_idx
+        WHERE wg.grade_idx = #{grade_idx}
+    </select>
+
+    <select id="gradeListByPage" resultType="org.fullstack4.woolim.domain.GradeVO">
+        SELECT wg.grade_idx, wg.grade, wl.lecture_title, ws.subject_name, wm.member_name
+        FROM woo_grade AS wg
+        INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wg.lecture_idx
+        INNER JOIN woo_subject AS ws ON ws.subject_category_code = wl.lecture_category_subject
+        INNER JOIN woo_member AS wm ON wm.member_idx = wg.member_idx
+        <where>
+            <if test="bbs_type !=null and bbs_type !=''">
+                bbs_category_code=#{bbs_type}
+            </if>
+            <if test="search_types != null">
+                <foreach collection="search_types" item="type" >
+                    <choose>
+                        <when test="type == 't'.toString()">
+                            and bbs_title like concat('%', #{search_word},'%')
+                        </when>
+                        <when test="type == 'u'.toString()">
+                            and member_id like concat('%', #{search_word},'%' )
+                        </when>
+                        <when test="type == 'c'.toString()">
+                            and bbs_content like concat('%', #{search_word},'%' )
+                        </when>
+                    </choose>
+                </foreach>
+            </if>
+            <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+                and bbs_reg_date >= #{search_date1}
+            </if>
+            <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+                and bbs_reg_date <![CDATA[<=]]> #{search_date2}
+            </if>
+            AND wm.member_id = #{member_id}
+        </where>
+
+        <!--        limit #{page_skip_count}, #{page_size}-->
+    </select>
 </mapper>

@@ -105,42 +105,7 @@
             <span>나의 성적표</span>
         </div>
         <hr>
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" id="btn_regist">성적표 입력</button>
-        <br>
-        <%--        성적표 모달창--%>
-        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel1" style="font-weight: bold">성적표 입력</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form name="frm" action="" method="post">
-                        <div class="modal-body">
-                            <span>과목</span>
-                            <select class="form-select form-select-sm" aria-label="Small select example" name="lecture_category_subject">
-                                <option value="국어">국어</option>
-                                <option value="수학">수학</option>
-                                <option value="영어">영어</option>
-                                <option value="과학">과학</option>
-                            </select>
-                            <br>
-                            <span>강의명</span>
-                            <select class="form-select form-select-sm" aria-label="Small select example" name="lecture_title">
-                                <option value="만점왕 국어">만점왕 국어</option>
-                            </select>
-                            <br>
-                            <span>점수 : </span>
-                            <input type="text" name="grade" value="" style="width: 35px;color: #b80f0f">점
-                        </div>
-                        <div class="modal-footer" style="justify-content: center;">
-                            <button type="button" class="btn" id="regist">등록</button>
-                            <button type="button" class="btn btn-outline-secondary">취소</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+
         <br>
         <div>
             <table class="table">
@@ -153,12 +118,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">국어</th>
-                    <td colspan="2">만점왕 국어 6-1</td>
-                    <td>90</td>
-                    <td style="width: 150px;"><button type="button" class="btn" id="view" data-bs-toggle="modal" data-bs-target="#exampleModal">상세보기</button></td>
-                </tr>
+                <c:choose>
+                    <c:when test="${not empty bbsList.dtolist}">
+                        <c:forEach items="${bbsList.dtolist}" var="list">
+                            <tr>
+                                <th scope="row">${list.subject_name}</th>
+                                <td colspan="2">${list.lecture_title}</td>
+                                <td>${list.grade}</td>
+                                <td style="width: 150px;"><button type="button" class="btn" data-idx="${list.grade_idx}" id="view" data-bs-toggle="modal" data-bs-target="#exampleModal">상세보기</button></td>
+                            </tr>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        입력된 성적표가 없습니다.
+                    </c:otherwise>
+                </c:choose>
                 </tbody>
             </table>
         </div>
@@ -167,49 +141,42 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold">성적표 상세보기</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold">님의 성적표</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form name="frm" id="frm" action="" method="post">
                         <div class="modal-body">
-                            <span>[국어] 만점왕 국어 6-1</span>
+                            <input type="hidden" id="grade_idx" name="grade_idx" value="">
+                            <span id="grade_title"></span>
                             <br>
                             <span>점수 : </span>
-                            <input type="text" id="grade" name="grade" value="90" style="width: 35px;color: #b80f0f">점
+                            <input type="text" id="grade" name="grade" readonly value="" style="width: 35px;border:0;color: #b80f0f">점
                         </div>
                         <div class="modal-footer" style="justify-content: center;">
-                            <button type="button" class="btn" id="modify">수정</button>
-                            <button type="button" class="btn btn-outline-secondary" id="delete">취소</button>
                             <button type="reset" class="btn" id="check" data-bs-dismiss="modal">확인</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-
         <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">
             <ul class="pagination">
-                <li class="page-item">
-                    <a href="#" class="page-link" aria-label="Previous">&lt;</a>
+                <li class="page-item <c:if test="${bbsList.prev_page_plag == 'false'}"> disabled</c:if>" >
+                    <a href="/mystudy/gradeList?page=${bbsList.page_block_start - bbsList.page_block_size}${bbsList.linkParams}"
+                       class="page-link" aria-label="Previous">&laquo;
+                    </a>
                 </li>
-                <li class="page-item active">
-                    <a href="#" class="page-link">1</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">2</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">3</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">4</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link">5</a>
-                </li>
-                <li class="page-item">
-                    <a href="#" class="page-link" aria-label="Next">&gt;</a>
+                <c:forEach begin="${bbsList.page_block_start}"
+                           end="${bbsList.page_block_end}"
+                           var="page_num">
+                    <li class="page-item <c:if test="${bbsList.page == page_num}">active</c:if>">
+                        <a href="/mystudy/gradeList?page=${page_num}${bbsList.linkParams}" class="page-link">${page_num}</a>
+                    </li>
+                </c:forEach>
+                <li class="page-item <c:if test="${bbsList.next_page_plag == 'false'}"> disabled</c:if>" >
+                    <a href="/mystudy/gradeList?page=${bbsList.page_block_start + bbsList.page_block_size}${bbsList.linkParams}" class="page-link" aria-label="Previous">
+                        &raquo;
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -228,12 +195,31 @@
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
 <script>
-    const myModal = document.getElementById('myModal')
-    const myInput = document.getElementById('myInput')
+    const myModal = document.getElementById('myModal');
+    const myInput = document.getElementById('myInput');
+    let btnView = document.getElementById('view');
 
-    myModal.addEventListener('shown.bs.modal', () => {
-        myInput.focus()
-    })
+    btnView.addEventListener('click',function(e){
+        $.ajax({
+            url: "/mystudy/getGrade",
+            method: 'get',
+            dataType : 'text',
+            data : {
+                "grade_idx" : this.getAttribute("data-idx")
+            },
+            success: function (response){
+                var data = JSON.parse(response)
+                console.log(data);
+                document.getElementById("exampleModalLabel").textContent = data.member_name + "님의 성적표"
+                document.getElementById("grade_idx").value = data.grade_idx;
+                document.getElementById("grade_title").textContent = '[' + data.subject_name + '] '+ data.lecture_title;
+                document.getElementById("grade").value = data.grade;
+            }
+        })
+    });
+    // myModal.addEventListener('shown.bs.modal', () => {
+    //     myInput.focus()
+    // })
 
     document.querySelector("#modify").addEventListener("click", function(e) {
         e.preventDefault();
