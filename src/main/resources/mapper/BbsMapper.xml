@@ -103,4 +103,14 @@
         where bbs_idx = #{bbs_idx}
     </select>
 
+    <delete id="deleteList" parameterType="java.util.Arrays">
+        DELETE FROM woo_bbs
+        <where>
+            bbs_idx IN
+            <foreach collection="array" item="item" index="index" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </where>
+    </delete>
+
 </mapper>

@@ -34,7 +34,7 @@ public class LoginController {
         String pwd = req.getParameter("member_pwd").trim();
 
         String name = memberService.memberView(id).getMember_name();
-        
+
         boolean save_id = req.getParameter("save_id") ==null?false:true;
         try {
             if (memberService.login(id, pwd, req)) {

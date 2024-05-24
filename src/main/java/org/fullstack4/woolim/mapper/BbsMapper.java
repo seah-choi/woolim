@@ -20,5 +20,6 @@ public interface BbsMapper {
     int delete(int bbs_idx);
     int file_regist(BoardFileVO boardFileVO);
     BoardFileVO fileView(int bbs_idx);
+    int deleteList(Integer[] idxList);
 
 }
