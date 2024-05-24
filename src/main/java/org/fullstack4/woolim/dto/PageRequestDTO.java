@@ -63,6 +63,8 @@ public class PageRequestDTO {
     private String member_type;
     private String bbs_type;
     private String member_category;
+    private String bbs_teacher_yn;
+    private String qna_teacher_yn;
 
     public void setTotal_count(int total_count) {
         this.total_count = total_count;
@@ -101,6 +103,21 @@ public class PageRequestDTO {
             }
             if (search_date2 != null) {
                 sb.append("&search_date2=" + search_date2);
+            }
+            if (member_type != null && !member_type.isEmpty()){
+                sb.append("&member_type=" + member_type);
+            }
+            if(member_category != null && !member_category.isEmpty()){
+                sb.append("&member_category=" + member_category);
+            }
+            if(bbs_type != null && !bbs_type.isEmpty()){
+                sb.append("&bbs_type=" + bbs_type);
+            }
+            if(bbs_teacher_yn != null && !bbs_teacher_yn.isEmpty()){
+                sb.append("&bbs_teacher_yn=" + bbs_teacher_yn);
+            }
+            if(qna_teacher_yn != null && !qna_teacher_yn.isEmpty()){
+                sb.append("&qna_teacher_yn=" + qna_teacher_yn);
             }
             linkParams = sb.toString();
         }

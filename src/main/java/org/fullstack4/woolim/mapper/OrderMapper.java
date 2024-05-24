@@ -16,4 +16,5 @@ public interface OrderMapper {
     int InsertPayment(PaymentVO paymentVO);
     List<PaymentVO> GetPayment(PageRequestDTO pageRequestDTO);
     int total_count(PageRequestDTO pageRequestDTO);
+    int exist(OrderDetailVO orderDetailVO);
 }

@@ -25,5 +25,6 @@ public class QnaDTO {
     private LocalDate qna_answer_date;
     private int ref_idx;
     private String qna_answer_status;
+    private String qna_teacher_yn;
 
 }

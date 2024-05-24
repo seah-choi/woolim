@@ -3,6 +3,7 @@ package org.fullstack4.woolim.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.dto.BbsDTO;
+import org.fullstack4.woolim.dto.LectureDTO;
 import org.fullstack4.woolim.dto.PageRequestDTO;
 import org.fullstack4.woolim.dto.PageResponseDTO;
 import org.fullstack4.woolim.service.BbsServiceIf;
@@ -24,8 +25,15 @@ public class MystudyController {
     private final MyStudyServiceIf myStudyService;
 
     @GetMapping("/classList")
-    public void GETClassList() {
+    public void GETClassList(PageRequestDTO pageRequestDTO, Model model,HttpServletRequest req) {
 
+        HttpSession session = req.getSession();
+        String id = (String) session.getAttribute("member_id");
+        pageRequestDTO.setMember_id(id);
+
+        PageResponseDTO<LectureDTO> responseDTO = myStudyService.LectureListByPage(pageRequestDTO);
+        log.info("responseDTO:{}",responseDTO);
+        model.addAttribute("responseDTO", responseDTO);
     }
 
     @GetMapping("/classView")

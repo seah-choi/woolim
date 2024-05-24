@@ -1,12 +1,11 @@
 package org.fullstack4.wollim.service;
 
 import lombok.extern.log4j.Log4j2;
-import org.fullstack4.woolim.domain.CartVO;
-import org.fullstack4.woolim.domain.MemberVO;
-import org.fullstack4.woolim.domain.PaymentVO;
+import org.fullstack4.woolim.domain.*;
 import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.CartMapper;
 import org.fullstack4.woolim.mapper.MemberMapper;
+import org.fullstack4.woolim.mapper.MyStudyMapper;
 import org.fullstack4.woolim.mapper.OrderMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +34,8 @@ public class HyunbeenTest {
     @Autowired(required = false)
     private OrderMapper orderMapper;
 
+    @Autowired(required = false)
+    private MyStudyMapper myStudyMapper;
 
     @Test
     public void HyunbeenTest() {
@@ -59,19 +60,18 @@ public class HyunbeenTest {
     public void CartTest(){
         PageRequestDTO pageRequestDTO = new PageRequestDTO();
         pageRequestDTO.setMember_id("test2");
-        List<PaymentVO> paymentVO = orderMapper.GetPayment(pageRequestDTO);
-        log.info("paymentVO: " + paymentVO);
-        List<PaymentDTO> paymentDTO = paymentVO.stream()
-                .map(vo->modelMapper.map(vo,PaymentDTO.class))
-                .collect(Collectors.toList());
+        log.info(pageRequestDTO);
+        List<LectureVO> voList = myStudyMapper.LectureListByPage(pageRequestDTO);
+        log.info(voList);
+        List<LectureDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo, LectureDTO.class)).collect(Collectors.toList());
+        int lecture_count = myStudyMapper.LectureCount(pageRequestDTO);
 
-        int total_count = orderMapper.total_count(pageRequestDTO);
-        PageResponseDTO<PaymentDTO> responseDTO = PageResponseDTO.<PaymentDTO>withAll()
-                .total_count(total_count)
+        PageResponseDTO<LectureDTO> responseDTO = PageResponseDTO.<LectureDTO>withAll()
+                .total_count(lecture_count)
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(paymentDTO)
+                .dtoList(dtoList)
                 .build();
 
-        log.info("responseDTO :" +responseDTO);
+        log.info(responseDTO);
     }
 }

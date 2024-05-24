@@ -42,6 +42,7 @@ public class BoardController {
         log.info("BoardController >> GETList() START");
 
         pageRequestDTO.setBbs_type(bbs_type);
+        pageRequestDTO.setBbs_teacher_yn("N");
         log.info("bbs_type" + bbs_type);
 
         PageResponseDTO<BbsDTO> bbsList = bbsServiceIf.bbsListByPage(pageRequestDTO);
@@ -83,6 +84,8 @@ public class BoardController {
     public String POSTRegist(BbsDTO bbsDTO, BindingResult bindingResult,MultipartHttpServletRequest files
             ,HttpServletRequest req, RedirectAttributes redirectAttributes) {
 
+
+        bbsDTO.setBbs_teacher_yn("N");
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("bbsDTO", bbsDTO);
@@ -199,6 +202,7 @@ public class BoardController {
         log.info("BoardController >> GETfreeList() START");
 
         pageRequestDTO.setBbs_type(bbs_type);
+        pageRequestDTO.setBbs_teacher_yn("N");
         log.info("bbs_type" + bbs_type);
 
         PageResponseDTO<BbsDTO> bbsList = bbsServiceIf.bbsListByPage(pageRequestDTO);
@@ -237,6 +241,7 @@ public class BoardController {
     public String POSTfreeRegist(BbsDTO bbsDTO, BindingResult bindingResult,MultipartHttpServletRequest files
             ,HttpServletRequest req, RedirectAttributes redirectAttributes) {
 
+        bbsDTO.setBbs_teacher_yn("N");
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("bbsDTO", bbsDTO);

@@ -18,8 +18,8 @@
     </insert>
 
     <insert id="DoOrderDetail">
-        INSERT INTO woo_order_detail(order_num,lecture_idx,order_status,order_detail_regDate,price)
-        VALUES(#{order_num}, #{lecture_idx}, #{order_status}, NOW(), #{price})
+        INSERT INTO woo_order_detail(order_num,lecture_idx,order_status,order_detail_regDate,price,member_id)
+        VALUES(#{order_num}, #{lecture_idx}, #{order_status}, NOW(), #{price},#{member_id})
     </insert>
 
     <insert id="Enrolment">
@@ -49,10 +49,10 @@
                 </if>
             </if>
             <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
-                and member_reg_date >= #{search_date1}
+                and payment_reg_date >= #{search_date1}
             </if>
             <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
-                and member_reg_date <![CDATA[<=]]> #{search_date2}
+                and payment_reg_date <![CDATA[<=]]> #{search_date2}
             </if>
         </where>
         ORDER by payment_idx DESC
@@ -77,11 +77,17 @@
                 </if>
             </if>
             <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
-            and member_reg_date >= #{search_date1}
+                and payment_reg_date >= #{search_date1}
             </if>
             <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
-            and member_reg_date <![CDATA[<=]]> #{search_date2}
+                and payment_reg_date <![CDATA[<=]]> #{search_date2}
             </if>
         </where>
+    </select>
+
+    <select id="exist" resultType="int">
+        SELECT count(*)
+        FROM woo_order_detail
+        WHERE lecture_idx=#{lecture_idx} AND member_id=#{member_id}
     </select>
 </mapper>

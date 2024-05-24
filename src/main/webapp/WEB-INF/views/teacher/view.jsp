@@ -29,97 +29,19 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CSS -->
+
+    <link rel="stylesheet" type="text/css" href="/resources/vendors/styles/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="/resources/css/teacherView.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <style>
-        /* 전체 컨테이너를 플렉스 컨테이너로 설정 */
-        .advanced-search {
-            display: flex;
-            align-items: center;
-        }
 
-        /* 카테고리 선택 버튼 스타일 */
-        .category-btn {
-            height: 40px;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            padding: 0 15px;
-            font-size: 16px;
-            color: #495057;
-            background-color: #fff;
-            outline: none;
-            transition: border-color 0.3s ease-in-out;
-        }
-
-        .category-btn:focus {
-            border-color: #80bdff;
-        }
-
-        /* 입력 그룹 컨테이너 스타일 */
-        .input-group {
-            display: flex;
-            align-items: center;
-        }
-
-        /* 텍스트 입력 스타일 */
-        .input-group input[type="text"] {
-            height: 40px;
-            padding: 0 15px;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            font-size: 16px;
-            color: #495057;
-            outline: none;
-            transition: border-color 0.3s ease-in-out;
-        }
-
-        .input-group input[type="text"]:focus {
-            border-color: #80bdff;
-        }
-
-        /* 버튼 스타일 */
-        .input-group button {
-            height: 40px;
-            padding: 0 20px;
-            border: 1px solid #ced4da;
-            background-color: #68afcb;
-            color: #fff;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        .input-group button i {
-            font-size: 16px;
-        }
-
-        .input-group button:hover {
-            background-color: #0056b3;
-        }
-
-        .filter-catagories li a {
-            text-decoration: none;
-            font-size: 20px !important;
-        }
-
-        div.produts-sidebar-filter {
-            border-right: 1px solid #ebebeb;
-        }
-
-        .teacherView {
-            padding-bottom: 80px;
-        }
-
-        div.produts-sidebar-filter {
-            padding-top: 80px;
-        }
-        div.imgDiv {
-            padding-top: 80px;
-        }
-
-        div.teacher_intro {
-            margin-top: 30px;
-        }
 
     </style>
 </head>
@@ -182,13 +104,7 @@
                                     </h5>
 
                                 </div>
-                                <div class="pd-share">
-                                    <div class="pd-social">
-                                        <a href="#"><i class="ti-facebook"></i></a>
-                                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                                        <a href="#"><i class="ti-linkedin"></i></a>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -202,7 +118,7 @@
                                     <a data-toggle="tab" href="#tab-2" role="tab">공지사항</a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab" href="#tab-3" role="tab">선생님 Q&A</a>
+                                    <a data-toggle="tab" href="#tab-3" role="tab">Q&A</a>
                                 </li>
                                 <li>
                                     <a data-toggle="tab" href="#tab-4" role="tab">자료실</a>
@@ -212,25 +128,210 @@
                         <div class="tab-item-content">
                             <div class="tab-content">
                                 <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
-                                    <div class="product-content">
+                                    <div class="product-content ml-5 mt-3">
                                         <div class="row">
-                                            <div class="col-lg-7">
-                                                <h5>Introduction</h5>
-                                            </div>
-                                            <div class="col-lg-5">
-                                                <img src="img/product-single/tab-desc.jpg" alt="">
+                                            <div class="col-lg-9 order-1 order-lg-2">
+                                                <div class="product-show-option">
+                                                    <div class="row">
+                                                        <div class="col-lg-7 col-md-7">
+                                                            <div class="select-option">
+                                                                <select class="sorting" id="sorting" onchange="redirectToList()">
+                                                                    <option value="1" ${pageMaker.cri.sorting == '1' ? 'selected' : ''}>인기순</option>
+                                                                    <option value="2" ${pageMaker.cri.sorting == '2' ? 'selected' : ''}>최신순</option>
+                                                                    <option value="3" ${pageMaker.cri.sorting == '3' ? 'selected' : ''}>댓글순</option>
+                                                                    <option value="4" ${pageMaker.cri.sorting == '4' ? 'selected' : ''}>좋아요순</option>
+                                                                </select>
+                                                                <select class="sorting" id="viewSorting" onchange="viewSorting()">
+                                                                    <option value="9" ${pageMaker.cri.viewSorting == '9' ? 'selected' : ''}>9개씩 보기</option>
+                                                                    <option value="12" ${pageMaker.cri.viewSorting == '12' ? 'selected' : ''}>12개씩 보기</option>
+                                                                    <option value="24" ${pageMaker.cri.viewSorting == '24' ? 'selected' : ''}>24개씩 보기</option>
+                                                                    <option value="36" ${pageMaker.cri.viewSorting == '36' ? 'selected' : ''}>36개씩 보기</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-5 col-md-5 text-right" >
+                                                            <div class="advanced-search">
+                                                                <div class="flex-container">
+                                                                    <form action="/lecture/list" method="get" class="input-group" style="width: 500px;">
+                                                                        <select class="gubunBtn" name="type" id="search_area">
+                                                                            <option value="" ${pageMaker.cri.type == null ? 'selected' : ''}>전체</option>
+                                                                            <option value="T" ${pageMaker.cri.type eq 'T' ? 'selected' : ''}>제목</option>
+                                                                            <option value="W" ${pageMaker.cri.type eq 'W' ? 'selected' : ''}>강사</option>
+                                                                            <option value="C" ${pageMaker.cri.type eq 'C' ? 'selected' : ''}>과목</option>
+                                                                        </select>
+                                                                        <c:choose>
+                                                                            <c:when test="${pageMaker.cri.keyword != null && pageMaker.cri.keyword != ''}">
+                                                                                <input type="text" name="keyword" id="keyword" value="${pageMaker.cri.keyword}"/>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <input type="text" name="keyword" id="keyword" placeholder="검색어를 입력하세요.">
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+
+                                                                        <button type="button" id="searchBtn"><i class="ti-search"></i></button>
+                                                                        <button type="button" id="resetBtn">초기화</button>
+                                                                    </form>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="product-list">
+                                                    <div class="row">
+                                                        <div class="col-lg-5 col-sm-6">
+                                                            <div class="product-item">
+                                                                <div class="pi-pic">
+                                                                    <img src="/resources/img/lecture/1.png" alt="">
+                                                                    <div class="sale pp-sale">Sale</div>
+                                                                    <div class="icon">
+                                                                        <i class="icon_heart_alt"></i>
+                                                                    </div>
+                                                                    <ul>
+                                                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                                        <li class="quick-view"><a href="/lecture/view/?lecture_idx=1"> 상품 상세보기</a></li>
+                                                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="pi-text">
+                                                                    <div class="catagory-name">국어</div>
+                                                                    <a href="#">
+                                                                        <h5>수능특강 기출 문풀</h5>
+                                                                    </a>
+                                                                    <div class="product-price">
+                                                                        ₩25,000
+                                                                        <span>₩23,000</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="tab-2" role="tabpanel">
-                                    <div class="specification-table">
-                                        <table>
-                                            <tr>
-                                                <td class="p-catagory">Customer Rating</td>
+                                    <!-- basic table  Start -->
+                                    <div class="pd-20 card-box mb-30">
 
+                                        <c:if test="${bbsList.bbs_type eq 'bbs04'}">
+                                            <h4 class="h4">공지사항 게시판</h4>
+                                        </c:if>
+
+                                        <br>
+                                        <div class="searchBox">
+                                            <form role="search" id="frmSearch" class="searchForm" action="" method="get">
+
+                                                <div class="mb-3 d-flex">
+                                                    <label class="ml-3 col-form-label fontWe-700 mt-4">검색 범위</label>
+
+                                                    <div class="col-md-2 col-sm-12 ml-4">
+                                                        <div class="form-group">
+                                                            <label>구분</label>
+                                                            <select id="schoolSelect" name="search_type" class="form-control" data-size="5" data-style="btn-outline-info">
+                                                                <option>전체</option>
+                                                                <option value="t">제목</option>
+                                                                <option value="c">내용</option>
+                                                                <option value="u">작성자</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col mt-4">
+                                                        <input class="searchInput" type="search" name="search_word"  id="search_word" placeholder="검색" aria-label="Search" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3 d-flex">
+                                                    <label class="ml-3 col-form-label fontWe-700">검색 기간</label>
+                                                    <div class="col-2 ml-4">
+                                                        <input type="date" class="form-control searchDate" name="search_date1" id="search_date1" value="">
+                                                    </div>
+                                                    <div class="mt-2">
+                                                        <span class="justify-content-center">~</span>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <input type="date" class="form-control searchDate" name="search_date2" id="search_date2" value="">
+                                                    </div>
+                                                    <div class="col-sm-3 ml-5">
+                                                        <button class="btn btn-warning" id="btnSearch" type="submit">검색</button>
+                                                        <button class="btn btn-warning" id="btnReset" type="reset" onclick="location.href='/data/main'">초기화</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <br>
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 130px;">
+                                                    <div class="custom-control custom-checkbox d-flex">
+                                                        <input type="checkbox" class="custom-control-input" id="chkAll" name="chkAll">
+                                                        <label class="custom-control-label" for="chkAll" style="font-weight: 700;">전체선택</label>
+                                                    </div>
+                                                </th>
+                                                <th>NO.</th>
+                                                <th>제목</th>
+                                                <th>작성자</th>
+                                                <th>등록일</th>
+                                                <th>조회수</th>
                                             </tr>
+                                            </thead>
+
+                                            <tbody>
+
+
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox ">
+                                                            <input type="checkbox" class="custom-control-input" value="${list.bbs_idx}" name="bbs_idx" id="${list.bbs_idx}">
+                                                            <label class="custom-control-label" for="${list.bbs_idx}"><span></span></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>1</td>
+                                                    <td><a href="/teacher/view?" class="aTag">제목</a></td>
+                                                    <td>test1</td>
+                                                    <td>2024-05-24</td>
+                                                    <td>12</td>
+                                                </tr>
+
+                                            </tbody>
+
                                         </table>
+                                        <div class="d-flex justify-content-sm-end">
+                                            <a class="btn btn-primary btn-lg btn-block" href="/admin/board/regist" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
+                                        </div>
+
+
+                                        <div class="d-flex justify-content-center">
+                                            <!-- Pagination with icons -->
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination">
+                                                    <li class="page-item <c:if test="${bbsList.prev_page_plag == 'false'}"> disabled</c:if>" >
+                                                        <a href="/admin/board/list?page=${bbsList.page_block_start - bbsList.page_block_size}${bbsList.linkParams}"
+                                                           class="page-link" aria-label="Previous">&laquo;
+                                                        </a>
+                                                    </li>
+                                                    <c:forEach begin="${bbsList.page_block_start}"
+                                                               end="${bbsList.page_block_end}"
+                                                               var="page_num">
+                                                        <li class="page-item <c:if test="${bbsList.page == page_num}">active</c:if>">
+                                                            <a href="/admin/board/list?page=${page_num}${bbsList.linkParams}" class="page-link">${page_num}</a>
+                                                        </li>
+                                                    </c:forEach>
+                                                    <li class="page-item <c:if test="${bbsList.next_page_plag == 'false'}"> disabled</c:if>" >
+                                                        <a href="/admin/board/list?page=${bbsList.page_block_start + bbsList.page_block_size}${bbsList.linkParams}" class="page-link" aria-label="Previous">
+                                                            &raquo;
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav><!-- End Pagination with icons -->
+                                        </div>
+
+
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="tab-3" role="tabpanel">
@@ -310,23 +411,36 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    //카테고리 탭 이동
     $(document).ready(function(){
-        // 카테고리 클릭 이벤트
         $(".filter-catagories li a").click(function(e){
-            e.preventDefault(); // 기본 이벤트 방지
+            e.preventDefault();
 
             // 활성화된 탭의 클래스를 제거
             $(".tab-item .nav li a").removeClass('active');
-            $(".tab-pane").removeClass('active show'); // 'fade-in' 대신 'show' 클래스를 사용
+            $(".tab-pane").removeClass('active show');
 
-            // 클릭된 카테고리의 인덱스를 가져옴
             var index = $(this).parent().index();
 
             // 해당하는 탭 활성화
             $(".tab-item .nav li").eq(index).find("a").addClass('active');
-            $(".tab-content .tab-pane").eq(index).addClass('active show'); // 'fade-in' 대신 'show' 클래스를 사용하여 내용을 활성화하고 보여줌
+            $(".tab-content .tab-pane").eq(index).addClass('active show');
         });
     });
+
+
+    // 체크박스 전체 선택/해제
+    let frm = document.querySelector("#frm");
+    let chkAll = document.querySelector("#chkAll");
+
+    chkAll.addEventListener("click", (e) => {
+        var check = document.querySelectorAll("input[type ='checkbox']");
+
+        check.forEach((checkbox) => {
+            checkbox.checked = chkAll.checked;
+        });
+    });
+
 </script>
 
 
@@ -343,5 +457,8 @@
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
+
+
+
 </body>
 </html>
