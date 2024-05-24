@@ -38,14 +38,28 @@ public class MemberController {
         int result = memberService.regist(memberDTO);
         return "redirect:/";
     }
-    @PostMapping("/idCheck")
+    @GetMapping("/idCheck")
     @ResponseBody
     public int idCheck(@RequestParam(name = "member_id", defaultValue = "") String member_id,
                         HttpServletResponse response) throws IOException {
         log.info("---------------------");
         log.info("MemberController => idCheck()");
 
-        int result = (int) memberService.id_check(member_id);
+        int result = memberService.id_check(member_id);
+        log.info("result : " + result);
+        log.info("---------------------");
+        return result;
+
+    }
+    @GetMapping("/emailCheck")
+    @ResponseBody
+    public int emailCheck(@RequestParam(name = "member_email", defaultValue = "") String member_email,
+                       HttpServletResponse response) throws IOException {
+        log.info("---------------------");
+        log.info("MemberController => idCheck()");
+
+        int result = memberService.email_check(member_email);
+        log.info("member_email : " + member_email);
         log.info("result : " + result);
         log.info("---------------------");
         return result;
