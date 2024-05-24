@@ -36,21 +36,14 @@ public class AdminBoardController {
     public void GETList(@RequestParam(defaultValue = "") String bbs_type,
                         PageRequestDTO pageRequestDTO,
                         Model model) {
-        log.info("============================");
-        log.info("AdminBoardController >> GETList() START");
 
         pageRequestDTO.setBbs_type(bbs_type);
         pageRequestDTO.setBbs_teacher_yn("N");
-        log.info("bbs_type" + bbs_type);
 
         PageResponseDTO<BbsDTO> bbsList = bbsServiceIf.bbsListByPage(pageRequestDTO);
 
         model.addAttribute("bbsList", bbsList);
 
-        log.info("bbsList : " + bbsList);
-
-        log.info("AdminBoardController >> GETList() END");
-        log.info("============================");
     }
 
     @GetMapping("/regist")
@@ -94,9 +87,7 @@ public class AdminBoardController {
                     .file(list.get(i))
                     .uploadFolder(uploadFoler)
                     .build();
-            log.info("========================");
-            log.info("AdminBoardController >> bbsDTO" + bbsDTO);
-            log.info("========================");
+
             Map<String, String> map = FileUtil.FileUpload(fileDTO);
             log.info("=======================");
             log.info("upload : " + map);
@@ -126,24 +117,75 @@ public class AdminBoardController {
         pageRequestDTO.setBbs_type(bbs_type);
         pageRequestDTO.setBbs_teacher_yn("N");
 
-        PageResponseDTO<BbsDTO> bbsList = bbsServiceIf.bbsListByPage(pageRequestDTO);
 
         BbsDTO  bbsDTO = bbsServiceIf.view(bbs_idx);
         BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
 
-        log.info("");
+        log.info("bbs_type : "+bbsDTO.getBbs_category_code());
 
-        model.addAttribute("bbsList", bbsList);
         model.addAttribute("bbs", bbsDTO);
         model.addAttribute("file",boardFileDTO);
+
+        log.info("bbs : " + bbsDTO);
+        log.info("file : "+ boardFileDTO);
 
         log.info("AdminBoardController >>> GETView END");
 
     }
 
     @GetMapping("/modify")
-    public void GETModify() {
+    public void GETModify(@RequestParam(name="bbs_idx", defaultValue = "0") int bbs_idx,
+                          Model model) {
 
+        BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
+        model.addAttribute("bbs", bbsDTO);
+
+    }
+
+    @PostMapping("/modify")
+    public String POSTModify(BbsDTO bbsDTO,
+                             MultipartHttpServletRequest files,
+                             HttpServletRequest req,
+                             RedirectAttributes redirectAttributes,
+                             @RequestParam(defaultValue = "") String bbs_type,
+                             PageRequestDTO pageRequestDTO){
+        pageRequestDTO.setBbs_type(bbs_type);
+        pageRequestDTO.setBbs_teacher_yn("N");
+
+        List<MultipartFile> list = files.getFiles("files");
+        String uploadFoler = CommonUtil.getUploadFolder(req,"bbs");
+
+        int result = bbsServiceIf.modify(bbsDTO);
+
+        for(int i=0;i<list.size();i++) {
+            if (list.get(i).getSize() == 0) {
+                break;
+            }
+            FileDTO fileDTO = FileDTO.builder()
+                    .file(list.get(i))
+                    .uploadFolder(uploadFoler)
+                    .build();
+            log.info("========================");
+            log.info("PostfreeModify >> bbsDTO" + bbsDTO);
+            log.info("========================");
+            Map<String, String> map = FileUtil.FileUpload(fileDTO);
+            log.info("=======================");
+            log.info("upload : " + map);
+            log.info("=======================");
+            if (map.get("result").equals("success")) {
+                BoardFileDTO boardFileDTO = BoardFileDTO.builder()
+                        .bbs_idx(result)
+                        .orgFile(map.get("orgName"))
+                        .saveFile(map.get("newName")).build();
+                bbsServiceIf.file_regist(boardFileDTO);
+            }
+        }
+
+        if(result > 0) {
+            return "redirect:/admin/board/view?bbs_idx=" + bbsDTO.getBbs_idx();
+        } else {
+            return "/admin/board/modify?bbs_idx=" + bbsDTO.getBbs_idx();
+        }
     }
 
     @GetMapping("/delete")

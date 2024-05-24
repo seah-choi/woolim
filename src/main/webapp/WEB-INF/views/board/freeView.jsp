@@ -268,24 +268,6 @@
         }
     }
 
-    // function cmDelete(e) {
-    //     e.preventDefault();
-    //     if(confirm("해당 댓글을 삭제하시겠습니까?")) {
-    //         alert("삭제되었습니다.");
-    //         document.getElementById("cmFrm").submit();
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-    // document.querySelector("#cmDelete").addEventListener("click", function (){
-    //     if(confirm("해당 댓글을 삭제하시겠습니까?")) {
-    //         alert("삭제되었습니다.");
-    //         document.getElementById("cmFrm").submit();
-    //     } else {
-    //         return false;
-    //     }
-    // })
 </script>
 </body>
 </html>
