@@ -214,6 +214,6 @@
     <select id="email_check" resultType="int">
         SELECT COUNT(*)
         FROM woo_member
-        WHERE member_id = #{member_id}
+        WHERE CONCAT(member_email,'@',member_email_addr) = #{member_email}
     </select>
 </mapper>
