@@ -47,6 +47,8 @@
             padding-bottom: 100px;
         }
     </style>
+    <
+
 </head>
 <body>
 
@@ -59,32 +61,44 @@
                 <h4 class="h4">강좌 등록</h4>
                 <br>
 
-                <form name="frm" id="frm">
+                <form name="frm" id="frm" enctype="multipart/form-data">
 
-                    <div class="d-flex align-items-start align-items-sm-center mt-3">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강좌명</label>
-                        <div class="col-sm-12 col-md-5">
-                            <input class="form-control" type="text" placeholder="강좌명을 입력해주세요.">
-                        </div>
-                    </div>
+
                     <div class="d-flex align-items-start align-items-sm-center mt-3">
                         <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강사 아이디</label>
                         <div class="col-sm-12 col-md-5">
-                            <input class="form-control" type="text" placeholder="강사 아이디를 입력해주세요." readonly>
+                            <input class="form-control" type="text" name="member_id" placeholder="강사 아이디를 입력해주세요." value="${selectedMemberId}" id="member_id" readonly>
                         </div>
-                        <button id="searchTeacher" type="button" style="width: 100px; height: 50px;"  class="btn btn-primary">찾기</button>
+                        <button id="searchTeacher" type="button" style="width: 100px; height: 50px;"   class="btn btn-primary">찾기</button>
                     </div>
                     <div class="d-flex align-items-start align-items-sm-center mt-3">
                         <label class="col-sm-12 col-md-2 col-form-label fontWe-700" >강사명</label>
                         <div class="col-sm-12 col-md-5">
-                            <input class="form-control" type="text" placeholder="강사명을 입력해주세요." readonly>
+                            <input class="form-control" type="text" placeholder="강사명을 입력해주세요." name="member_name" id="member_name" value="${selectedMemberName}" readonly>
                         </div>
                     </div>
-
+                    <div class="d-flex align-items-start align-items-sm-center mt-3">
+                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강좌명</label>
+                        <div class="col-sm-12 col-md-5">
+                            <input class="form-control" type="text" name="lecture_title" placeholder="강좌명을 입력해주세요.">
+                        </div>
+                    </div>
                     <div class="d-flex align-items-start align-items-sm-center mt-3">
                         <label class="col-sm-12 col-md-2 col-form-label fontWe-700">수업내용 및 목표</label>
                         <div class="contentBox col-sm-12 col-md-8">
-                            <div><textarea class="form-control" rows="15" cols="5" name="content" id="content" placeholder="수업내용 및 목표를 입력해주세요."></textarea></div>
+                            <div><textarea class="form-control" rows="15" cols="5"  id="content" name="lecture_content" placeholder="수업내용 및 목표를 입력해주세요."></textarea></div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start align-items-sm-center mt-3">
+                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">커리큘럼</label>
+                        <div class="contentBox col-sm-12 col-md-8">
+                            <div><textarea class="form-control" rows="15" cols="5"  id="study" name="lecture_study" placeholder="커리큘럼을 입력해주세요."></textarea></div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start align-items-sm-center mt-3">
+                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">수업상세 내용</label>
+                        <div class="contentBox col-sm-12 col-md-8">
+                            <div><textarea class="form-control" rows="15" cols="5" id="col" name="lecture_content_detail" placeholder="수업내용 및 목표를 입력해주세요."></textarea></div>
                         </div>
                     </div>
                     <div class="d-flex align-items-start align-items-sm-center mt-4">
@@ -92,7 +106,7 @@
                         <div class="col-md-1 col-sm-12">
                             <div class="form-group">
                                 <label>과목</label>
-                                <select class="selectpicker form-control" name="search_type" data-size="5" data-style="btn-outline-info">
+                                <select class="selectpicker form-control" name="lecture_category_subject" data-size="5" data-style="btn-outline-info">
                                     <option>전체</option>
                                     <option>국어</option>
                                     <option>영어</option>
@@ -104,8 +118,8 @@
                         <div class="col-md-1 col-sm-12">
                             <div class="form-group">
                                 <label>초중고</label>
-                                <select id="schoolSelect" name="search_type" class="selectpicker form-control school" data-size="5" data-style="btn-outline-info">
-                                    <option>전체</option>
+                                <select id="schoolSelect" name="lecture_category_school" class="selectpicker form-control school" data-size="5" data-style="btn-outline-info">
+                                    <option value="all">전체</option>
                                     <option value="elementary">초등</option>
                                     <option value="middle">중등</option>
                                     <option value="high">고등</option>
@@ -115,8 +129,8 @@
                         <div class="col-md-1 col-sm-12">
                             <div class="form-group">
                                 <label>학년</label>
-                                <select id="gradeSelect" name="search_type" class="selectpicker form-control grade" data-size="5" data-style="btn-outline-info">
-                                    <option>전체</option>
+                                <select id="gradeSelect" name="lecture_category_grade" class="selectpicker form-control grade" data-size="5" data-style="btn-outline-info">
+                                    <option value="all">전체</option>
                                 </select>
                             </div>
                         </div>
@@ -126,43 +140,55 @@
                         <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강좌 시작기간</label>
 
                         <div class="col-sm-12 col-md-10 d-flex">
-                            <input type="date" class="form-control w-25" id="search_date1" name="search_date1" value="" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            <input type="date" class="form-control w-25" id="search_date1" name="lecture_start_date" value="" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 
                             <span class="input-group-text"></span>
                             <label class="col-md-2 col-form-label fontWe-700">강좌 끝나는기간</label>
-                            <input type="date" class="form-control w-25" id="search_date2" name="search_date2" value="" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            <input type="date" class="form-control w-25" id="search_date2" name="lecture_end_date" value="" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                         </div>
                     </div>
 
-                    <div class="d-flex align-items-start align-items-sm-center mt-5">
+                 <%--   <div class="d-flex align-items-start align-items-sm-center mt-5">
                         <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강좌 업로드</label>
                         <div class="col-sm-12 col-md-10 ">
-                            <input type="file" class="form-control-file form-control height-auto w-50">
+                            <input type="file" class="form-control-file form-control height-auto w-50" name="video">
                         </div>
                     </div>
-
+--%>
                     <div class="d-flex align-items-start align-items-sm-center mt-3">
                         <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강좌 이미지 업로드</label>
                         <div class="col-sm-12 col-md-10">
                             <div id="image_container"></div>
                             <br>
                             <div>
-                                <input type="file" name="upload" class="form-control-file form-control height-auto w-50" onchange="setThumbnail(event);" accept="image/png, image/jpeg"  />
+                                <input type="file" name="file" class="form-control-file form-control height-auto w-50" onchange="setThumbnail(event);" accept="image/png, image/jpeg"  />
                                 <p class="text-muted mb-0">JPG 또는 PNG 파일만 업로드 가능합니다.</p>
                             </div>
                         </div>
                     </div>
 
+                    <div class="d-flex align-items-start align-items-sm-center mt-3">
+                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700" >가격</label>
+                        <div class="col-sm-12 col-md-5">
+                            <input class="form-control" type="text" placeholder="가격 입력해주세요." name="lecture_price" id="lecture_price" >
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start align-items-sm-center mt-3">
+                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700" >할인율</label>
+                        <div class="col-sm-12 col-md-5">
+                            <input class="form-control" type="text" placeholder="할인율을 입력해주세요." name="lecture_sale" id="lecture_sale"  >
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start align-items-sm-center mt-3">
+                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700"></label>
+                        <div class="col-sm-12 col-md-5 mt-3">
+                            <button type="button" name="registBtn" id="registBtn"  class="btn btn-primary" style="width: 600px; height: 50px;">등록</button>
 
+                        </div>
+                    </div>
                 </form>
 
-                <div class="d-flex align-items-start align-items-sm-center mt-3">
-                    <label class="col-sm-12 col-md-2 col-form-label fontWe-700"></label>
-                    <div class="col-sm-12 col-md-5 mt-3">
-                        <button type="submit" name="registBtn" class="btn btn-primary" style="width: 600px; height: 50px;">등록</button>
 
-                    </div>
-                </div>
 
 
 
@@ -207,7 +233,49 @@
 
         reader.readAsDataURL(e.target.files[0]);
     }
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+    document.getElementById('schoolSelect').addEventListener('change', function() {
+        const gradeSelect = document.getElementById('gradeSelect');
+        gradeSelect.innerHTML = ''; // 기존 옵션 제거
 
+        const selectedSchool = this.value;
+        let options = '<option value="all">전체</option>';
+
+        if (selectedSchool === 'elementary') {
+            options += '<option value="1">1학년</option>';
+            options += '<option value="2">2학년</option>';
+            options += '<option value="3">3학년</option>';
+            options += '<option value="4">4학년</option>';
+            options += '<option value="5">5학년</option>';
+            options += '<option value="6">6학년</option>';
+        } else if (selectedSchool === 'middle') {
+            options += '<option value="1">1학년</option>';
+            options += '<option value="2">2학년</option>';
+            options += '<option value="3">3학년</option>';
+        } else if (selectedSchool === 'high') {
+            options += '<option value="1">1학년</option>';
+            options += '<option value="2">2학년</option>';
+            options += '<option value="3">3학년</option>';
+        }
+
+        gradeSelect.innerHTML = options;
+        $('.selectpicker').selectpicker('refresh');
+    });
+
+
+    document.getElementById("member_id").value = getQueryParam("selectedMemberId");
+    document.getElementById("member_name").value = getQueryParam("selectedMemberName");
+
+    document.querySelector("#registBtn").addEventListener("click", function () {
+        const frm = document.querySelector("#frm");
+        console.log("####" + frm );
+        frm.method = 'post';
+        frm.action = '/admin/lecture/registLecture';
+        frm.submit();
+    });
 </script>
 <script src="/resources/vendors/scripts/core.js"></script>
 <script src="/resources/vendors/scripts/script.min.js"></script>
