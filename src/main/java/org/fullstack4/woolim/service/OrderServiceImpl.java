@@ -105,8 +105,9 @@ public class OrderServiceImpl implements OrderServiceIf{
     @Override
     public List<OrderDTO> viewOrderDetailList(OrderDTO orderDTO) {
         OrderDetailVO orderDetailVO = modelMapper.map(orderDTO, OrderDetailVO.class);
-        log.info(orderDetailVO);
+        log.info("orderDetailVO"+orderDetailVO);
         List<OrderDetailVO> voList = orderMapper.viewOrderDetailList(orderDetailVO);
+        log.info("voList"+voList);
         List<OrderDTO> orderDTOList = voList.stream().map(vo->modelMapper.map(vo,OrderDTO.class)).collect(Collectors.toList());
 
         return orderDTOList;

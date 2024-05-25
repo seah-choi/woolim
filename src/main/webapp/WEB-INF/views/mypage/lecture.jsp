@@ -52,14 +52,6 @@
                 <div class="col-lg-9 order-1 order-lg-2">
                     <div class="place-order">
                         <div class="order-total">
-                            <form action="/mypage/pointcharge">
-                                <div class="d-flex justify-content-end">
-                                    <input type="date" style="width: 20%" name="search_date1" class="form-control me-3">
-                                    <span class="me-3">~</span>
-                                    <input type="date" style="width: 20%" name="search_date2" class="me-3 form-control">
-                                    <button type="submit" class="btn btn-primary" >검색</button>
-                                </div>
-                            </form>
                             <hr>
                             <h4 class="d-flex justify-content-center">수강중인 강좌</h4>
                             <table class="table mt-5">
@@ -132,7 +124,7 @@
                 success: function (data) {
                     if (data.result == "success") {
                         alert(data.msg);
-                        location.href = "/mypage/cart";
+                        location.href = "/mypage/lecture";
                     } else if (data.result == "false") {
                         alert(data.msg);
                     } else {
@@ -145,31 +137,6 @@
 
             });
 
-    }
-
-    function purchaseConfirm(item){
-        $.ajax({
-            url: "/mypage/purChaseConfirm.dox?",
-            dataType: "json",
-            type: "POST",
-            data: {
-                order_detail_idx:item
-            },
-            success: function (data) {
-                if (data.result == "success") {
-                    alert(data.msg);
-                    location.href = "/mypage/cart";
-                } else if (data.result == "false") {
-                    alert(data.msg);
-                } else {
-                    alert(data.msg);
-                }
-            },
-            fail: function (data) {
-
-            }
-
-        });
     }
 </script>
 </body>

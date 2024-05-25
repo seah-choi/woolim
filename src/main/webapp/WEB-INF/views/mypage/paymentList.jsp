@@ -63,14 +63,15 @@
                             <hr>
                             <h4 class="d-flex justify-content-center">결제 내역</h4>
                             <div class="accordion" id="accordionPanelsStayOpenExample">
-                                <c:forEach items="${responseDTO.dtolist}" var="list">
+                                <c:forEach items="${responseDTO.dtolist}" var="list" varStatus="status">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne${status.index}" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
                                             결제 번호 : ${list.order_num}
+                                            &nbsp;&nbsp;결제 날짜:${list.order_date}
                                         </button>
                                     </h2>
-                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                                    <div id="panelsStayOpen-collapseOne${status.index}" class="accordion-collapse collapse">
                                         <div class="accordion-body">
                                             <div class="d-flex justify-content-end">
                                                 총 결제 금액:${list.order_total}
@@ -87,8 +88,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                <c:forEach items="${detailList}" var="dtolist">
-                                                    <c:forEach items="${dtolist}" var="dto">
+                                                <c:forEach items="${detailList[status.index]}" var="dto">
                                                         <tr>
                                                             <td style="width:25%; "><img src="/resources/img/lecture/${dto.lecture_image}"></td>
                                                             <td>${dto.lecture_title}</td>
@@ -106,7 +106,6 @@
                                                                 </td>
                                                             </c:if>
                                                         </tr>
-                                                    </c:forEach>
                                                 </c:forEach>
                                                 </tbody>
                                             </table>
@@ -174,7 +173,7 @@
             success: function (data) {
                 if (data.result == "success") {
                     alert(data.msg);
-                    location.href = "/mypage/cart";
+                    location.href = "/mypage/paymentList";
                 } else if (data.result == "false") {
                     alert(data.msg);
                 } else {
