@@ -56,4 +56,43 @@ public class CommonUtil {
     public static String comma(String str) {
         return String.format("%,d", parseInt(str));
     }
+    public static String postConnection(String paramUrl, Map<String, String> paramMap) {
+        try{
+            if(parseString(paramUrl).isEmpty()){
+                throw new Exception("URL is null!!");
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+
+            if(!paramMap.isEmpty()){
+                Set<String> key = paramMap.keySet();
+                for (Object obj : key) {
+                    String keyName = (String) obj;
+                    String valueName = paramMap.get(keyName);
+
+                    params.add(keyName, valueName);
+                }
+            }
+
+            RestTemplate restTemplate = new RestTemplate();
+            HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(params, headers);
+
+            ResponseEntity<String> response = restTemplate.exchange(
+                    paramUrl,
+                    HttpMethod.POST,
+                    httpEntity,
+                    String.class
+            );
+
+            // 응답
+            return response.getBody();
+
+        } catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

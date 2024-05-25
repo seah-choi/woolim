@@ -2,6 +2,7 @@ package org.fullstack4.woolim.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.InsufficientStockException;
 import org.fullstack4.woolim.domain.LectureVO;
 import org.fullstack4.woolim.domain.MemberVO;
@@ -10,14 +11,34 @@ import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.dto.PageRequestDTO;
 import org.fullstack4.woolim.dto.PageResponseDTO;
 import org.fullstack4.woolim.mapper.MemberMapper;
+
+import org.json.simple.parser.JSONParser;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import org.json.JSONObject;
 
 
 @Log4j2
@@ -150,5 +171,55 @@ public class MemberServiceImpl implements MemberServiceIf{
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
         int result = memberMapper.modify(memberVO);
         return result;
+    }
+
+    @Override
+    public MemberDTO socialLogin(HttpServletRequest request) throws IOException {
+        MemberDTO memberDTO = null;
+        String code = CommonUtil.parseString(request.getParameter("scope"));
+        log.info(code);
+
+        String parameters = "code=" + code +
+                "&client_id=407108558562-l8kdc02drjtq9qe6id97a5bm4gfubfvb.apps.googleusercontent.com" +
+                "&client_secret=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" +
+                "&redirect_uri=http://localhost:8080/login/google" +
+                "&grant_type=authorization_code";
+
+        URL url = new URL("https://oauth2.googleapis.com/token");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+        try (OutputStream os = conn.getOutputStream()) {
+            os.write(parameters.getBytes(StandardCharsets.UTF_8));
+        }
+
+        StringBuilder response = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line.trim());
+            }
+        }
+
+        JSONObject jsonObject = new JSONObject(response.toString());
+
+        URL url2 = new URL("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + jsonObject.getString("access_token"));
+        HttpURLConnection conn2 = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+
+        StringBuilder response2 = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line.trim());
+            }
+        }
+        log.info(new JSONObject(response2.toString()));
+
+        return memberDTO;
     }
 }
