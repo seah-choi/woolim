@@ -23,8 +23,10 @@ public class LectureDTO {
     private int lecture_star;
     private String lecture_content;
     private String lecture_video;
-    private String lecture_category;
-    private String lecture_category_detail;
+    private String lecture_category_subject;
+    private String lecture_category_school;
+    private String lecture_category_grade;
+
     private int member_idx;
     private LocalDate lecture_reg_date;
     private String member_id;

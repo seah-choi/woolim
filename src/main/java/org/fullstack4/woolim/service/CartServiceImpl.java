@@ -30,8 +30,14 @@ public class CartServiceImpl implements CartServiceIf{
     }
 
     @Override
-    public int insertCartOrJjim(CartDTO cartDTO) {
+    @Transactional(rollbackFor = {InsufficientStockException.class, Exception.class})
+    public int insertCartOrJjim(CartDTO cartDTO) throws InsufficientStockException{
         CartVO cartVO = modelMapper.map(cartDTO, CartVO.class);
+        log.info(cartVO.toString());
+        int exist = cartMapper.existCartOrJjim(cartVO);
+        if(exist>0){
+            throw new InsufficientStockException("이미 추가된 강좌입니다.");
+        }
         int result = cartMapper.insertCartOrJjim(cartVO);
         return result;
     }
@@ -42,6 +48,12 @@ public class CartServiceImpl implements CartServiceIf{
         int total_result =0;
         for(int i = 0; i < cartDTO.size(); i++){
             CartVO cartVO = modelMapper.map(cartDTO.get(i), CartVO.class);
+            log.info(cartVO);
+            int exist = cartMapper.existCartOrJjim(cartVO);
+            log.info("exist:{}",exist);
+            if(exist>0){
+                throw new InsufficientStockException("이미 장바구니에 담긴 강좌가 있습니다.");
+            }
             int result = cartMapper.InsertCartFromJjim(cartVO);
             if(result>0){
                 total_result ++;
@@ -51,5 +63,12 @@ public class CartServiceImpl implements CartServiceIf{
         }
 
         return total_result;
+    }
+
+    @Override
+    public int deleteCartOrJjim(CartDTO cartDTO) {
+        CartVO cartVO = modelMapper.map(cartDTO, CartVO.class);
+        int result = cartMapper.deleteCartOrJjim(cartVO);
+        return result;
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface CartServiceIf {
     List<CartDTO> cartOrJjimList(CartDTO cartDTO);
-    int insertCartOrJjim(CartDTO cartDTO);
+    int insertCartOrJjim(CartDTO cartDTO) throws InsufficientStockException;
     int InsertCartFromJjim(List<CartDTO> cartDTO) throws InsufficientStockException;
+    int deleteCartOrJjim(CartDTO cartDTO);
 }

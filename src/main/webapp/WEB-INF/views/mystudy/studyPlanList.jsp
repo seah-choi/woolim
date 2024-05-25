@@ -162,6 +162,37 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel2" style="font-weight: bold">학습일정 수정</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form name="frm" id="scheduleForm2">
+                        <div class="modal-body">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here" name="study_content" id="study_content2"></textarea>
+                                <label for="study_content">일정</label>
+                            </div>
+                            <br>
+                            <input type="hidden" name="study_idx" id="study_idx" value="">
+                            <span>기간 설정</span>
+                            <div class="form-floating mb-3" style="display: flex">
+                                <input type="date" class="form-control date" id="start_date2" name="start_date" style="width: 180px;">
+                                <span style="padding: 10px;">~</span>
+                                <input type="date" class="form-control date" id="end_date2" name="end_date" style="width: 180px;">
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="justify-content: center;">
+                            <button type="button" class="btn" id="modifyBtn">수정</button>
+                            <button type="button" class="btn" id="deleteBtn">삭제</button>
+                            <button type="button" class="btn btn-outline-secondary">취소</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <br>
         <div class="content">
             <div id='calendar'></div>
@@ -188,6 +219,7 @@
 <script src='/resources/fullcalendar/packages/daygrid/main.js'></script>
 
 <script>
+    let study_idx=0;
     document.addEventListener('DOMContentLoaded', function() {
         let today = new Date();
         let year = today.getFullYear(); // 현재 연도
@@ -200,6 +232,16 @@
         let dateStr = year + '-' + month + '-' + day; // "년-월-일" 형식
         console.log(dateStr);
 
+        var dtoList = [];
+        <c:forEach var="list" items="${studyList}">
+            var dto = {
+                title : "${list.study_content}",
+                start : "${list.start_date}",
+                end : "${list.end_date}",
+                customProperty : "${list.study_idx}"
+            };
+            dtoList.push(dto);
+        </c:forEach>
 
         var calendarEl = document.getElementById('calendar');
 
@@ -208,16 +250,116 @@
             defaultDate: dateStr,
             editable: true,
             eventLimit: true, // allow "more" link when too many events
-            events: [
-                {
-                    title: '중간고사',
-                    start: '2024-05-27'
-                }
-            ]
+            events: dtoList,
+            eventClick: function(element){
+                study_idx = element.event.extendedProps.customProperty;
+                $('#exampleModal2').modal('show');
+                document.getElementById("study_content2").value= element.event.title;
+                document.getElementById("start_date2").value = formatDate(element.event.start);
+                document.getElementById("end_date2").value = formatDate(element.event.end);
+                document.getElementById("study_idx").value = study_idx;
+            },
+            eventDrop: function(element) {
+                $.ajax({
+                    url: "/events/modifyEvent",
+                    method: 'post',
+                    dataType : 'text',
+                    data : {
+                        "study_content" : element.event.title,
+                        "start_date" : formatDate(element.event.start),
+                        "end_date" : formatDate(element.event.end),
+                        "study_idx" : element.event.extendedProps.customProperty
+                    },
+                    success: function (response){
+                        if(response > 0){
+                            var id = element.event.extendedProps.customProperty
+                            calendar.getEvents().forEach(function(evt){
+                                if(evt.extendedProps.customProperty == id)
+                                    evt.remove();
+
+                            });
+                            calendar.addEvent({
+                                title: element.event.title,
+                                start: formatDate(element.event.start),
+                                end: formatDate(element.event.end),
+                                customProperty: response
+                            });
+                            $('#exampleModal2').modal('hide');
+                            document.getElementById('scheduleForm2').reset();
+                            calendar.render();
+                        }
+                        else{
+                            alert("수정 실패");
+                        }
+                    }
+                });
+            }
         });
 
         calendar.render();
 
+        let deleteBtn = document.getElementById("deleteBtn");
+        deleteBtn.addEventListener("click", function(e){
+            $.ajax({
+                url: "/events/deleteEvent",
+                method: 'get',
+                dataType : 'text',
+                data : {
+                    "study_idx" : study_idx
+                },
+                success: function (response){
+                    if(response == 1){
+                        alert("삭제 성공");
+                        var id = document.getElementById("study_idx").value
+                        calendar.getEvents().forEach(function(evt){
+                            if(evt.extendedProps.customProperty == id)
+                                evt.remove();
+                        });
+                        $('#exampleModal2').modal('hide');
+                        document.getElementById('scheduleForm2').reset();
+                        calendar.render();
+                    }
+                    else{
+                        alert("삭제 실패");
+                    }
+                }
+            })
+        });
+        document.getElementById("modifyBtn").addEventListener("click",function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "/events/modifyEvent",
+                method: 'post',
+                dataType : 'text',
+                data : {
+                    "study_content" : document.getElementById("study_content2").value,
+                    "start_date" : document.getElementById("start_date2").value,
+                    "end_date" : document.getElementById("end_date2").value,
+                    "study_idx" : study_idx
+                },
+                success: function (response){
+                    if(response > 0){
+                        var id = document.getElementById("study_idx").value
+                        calendar.getEvents().forEach(function(evt){
+                            if(evt.extendedProps.customProperty == id)
+                                evt.remove();
+                        });
+                        calendar.addEvent({
+                            title: document.getElementById("study_content2").value,
+                            start: document.getElementById("start_date2").value,
+                            end: document.getElementById("end_date2").value,
+                            customProperty: response
+                        });
+                        $('#exampleModal2').modal('hide');
+                        document.getElementById('scheduleForm2').reset();
+                        calendar.render();
+                    }
+                    else{
+                        alert("수정 실패");
+                    }
+                }
+            });
+        });
         document.querySelector("#regist").addEventListener("click", function (){
             let study_content = document.getElementById("study_content").value;
             let start_date = document.getElementById("start_date").value;
@@ -225,6 +367,10 @@
             console.log(study_content);
             console.log(start_date);
             console.log(end_date);
+            if(start_date > end_date){
+                alert("일정을 다시 확인해주세요");
+                return;
+            }
             if(study_content && start_date){
                 $.ajax({
                     url: "/events/addEvent",
@@ -236,50 +382,39 @@
                         "end_date" : end_date
                     },
                     success: function (response){
-                        console.log(response);
-                        if(response == 1){
-                            alert("추가 성공");
+                        if(response >0){
+                            alert("등록 성공");
+                            calendar.addEvent({
+                                title: study_content,
+                                start: start_date,
+                                end: end_date,
+                                customProperty: response
+                            });
                             $('#exampleModal1').modal('hide');
+                            document.getElementById('scheduleForm').reset();
                         }
                         else{
                             alert("추가 실패");
                         }
                     }
-                })
-                // AJAX 요청을 통해 데이터를 서버로 전송
-                // var xhr = new XMLHttpRequest();
-                // xhr.open("POST", "/events/addEvent", true);
-                // xhr.setRequestHeader("Content-Type", "application/json");
-                // xhr.onreadystatechange = function() {
-                //     if (xhr.readyState === 4) {
-                //         if (xhr.status === 200) {
-                //             alert("일정이 성공적으로 추가되었습니다.");
-                //             // 일정 추가 성공 시 캘린더에도 추가
-                //             calendar.addEvent({
-                //                 title: study_content,
-                //                 start: start_date,
-                //                 end: end_date
-                //             });
-                //             // 모달 닫기
-                //             $('#exampleModal1').modal('hide');
-                //             // 폼 리셋
-                //             document.getElementById('scheduleForm').reset();
-                //         } else {
-                //             alert("일정 추가에 실패했습니다.");
-                //         }
-                //     }
-                // };
-                // var data = {
-                //     study_content: study_content,
-                //     start_date: start_date,
-                //     end_date: end_date
-                // };
-                // xhr.send(JSON.stringify(data));
+                });
             } else {
                 alert("일정과 시작 날짜는 필수입니다.");
             }
         });
     });
+    function formatDate(dateString) {
+        // 주어진 날짜 문자열을 Date 객체로 변환
+        const date = new Date(dateString);
+
+        // 년, 월, 일 추출
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 1을 더하고, 2자리로 맞춤
+        const day = ('0' + date.getDate()).slice(-2); // 일도 2자리로 맞춤
+
+        // 'yyyy-mm-dd' 형식으로 포맷팅
+        return year+'-'+month+'-'+day;
+    }
 
 </script>
 

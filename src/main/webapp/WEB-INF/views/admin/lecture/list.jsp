@@ -103,20 +103,26 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <label class="ml-3 col-form-label fontWe-700">검색 기간</label>
-                            <div class="col-2">
-                                <input type="date" class="form-control" name="search_date1" id="search_date1" value="">
-                            </div>
-                            <div class="mt-2">
-                                <span class="justify-content-center">~</span>
-                            </div>
-                            <div class="col-2">
-                                <input type="date" class="form-control" name="search_date2" id="search_date2" value="">
-                            </div>
-                            <div class="col-sm-2">
-                                <button class="btn btn-warning" id="btnSearch" type="submit">검색</button>
-                                <button class="btn btn-warning" id="btnReset" type="reset" onclick="location.href='/data/main'">초기화</button>
-                            </div>
+
+                            <form action="/lecture/list" method="get" class="input-group" style="width: 500px;">
+                                <select class="category-btn" name="type" id="search_area">
+                                    <option value="" ${pageMaker.cri.type == null ? 'selected' : ''}>전체</option>
+                                    <option value="T" ${pageMaker.cri.type eq 'T' ? 'selected' : ''}>제목</option>
+                                    <option value="W" ${pageMaker.cri.type eq 'W' ? 'selected' : ''}>강사</option>
+                                    <option value="C" ${pageMaker.cri.type eq 'C' ? 'selected' : ''}>과목</option>
+                                </select>
+                                <c:choose>
+                                    <c:when test="${pageMaker.cri.keyword != null && pageMaker.cri.keyword != ''}">
+                                        <input type="text" name="keyword" id="keyword" value="${pageMaker.cri.keyword}"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="text" name="keyword" id="keyword" placeholder="검색어를 입력하세요.">
+                                    </c:otherwise>
+                                </c:choose>
+
+                                <button type="button" id="searchBtn"><i class="ti-search"></i></button>
+                                <button type="button" id="resetBtn">초기화</button>
+                            </form>
                         </div>
                     </form>
                 </div>
@@ -139,6 +145,7 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <c:forEach items="${list}" var="list">
                     <tr>
                         <td>
                             <div class="custom-control custom-checkbox mb-5">
@@ -146,26 +153,14 @@
                                 <label class="custom-control-label" for="customCheck2"><span></span></label>
                             </div>
                         </td>
-                        <td>1</td>
-                        <td>수능특강 국어</td>
-                        <td>국어</td>
-                        <td>김철수</td>
-                        <td>2024.03.01~2024.05.21</td>
-                        <td>2024.02.15</td>
+                        <td>${list.lecture_idx}</td>
+                        <td>${list.lecture_title}</td>
+                        <td>${list.lecture_category_subject}</td>
+                        <td>${list.member_name}</td>
+                        <td>${list.lecture_start_date} ~ ${list.lecture_end_date}</td>
+                        <td>${list.lecture_reg_date}</td>
                     </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" id="${dto.comu_idx}" name="comu_idx"
-                                   value="${dto.comu_idx }"/>
-                            <label for="${dto.comu_idx }"><span></span></label>
-                        </td>
-                        <td>2</td>
-                        <td>수능특강 국어</td>
-                        <td>국어</td>
-                        <td>김철수</td>
-                        <td>2024.03.01~2024.05.21</td>
-                        <td>2024.02.15</td>
-                    </tr>
+                    </c:forEach>
 
                     </tbody>
 
@@ -174,29 +169,148 @@
                     <a class="btn btn-primary btn-lg btn-block" href="/admin/lecture/regist" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
                 </div>
 
-                <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
-                    <ul class="pagination">
-                        <li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous">
-                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">
-                                <i class="ion-chevron-left"></i></a></li>
-                        <li class="paginate_button page-item active">
-                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                        <li class="paginate_button page-item next" id="DataTables_Table_0_next">
-                            <a href="#" aria-controls="DataTables_Table_0" data-dt-idx="3" tabindex="0" class="page-link">
-                                <i class="ion-chevron-right"></i></a></li>
-                    </ul>
-                </div>
+                <div class="pageInfo_wrap">
+                    <div class="pageInfo_area">
+                        <!-- 이전페이지 버튼 -->
+                        <c:if test="${pageMaker.prev}">
+                            <li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
+                        </c:if>
 
-            </div>
+                        <!-- 각 번호 페이지 버튼 -->
+                        <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+                            <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a href="${num}">${num}</a></li>
+                        </c:forEach>
+
+
+                        <!-- 다음페이지 버튼 -->
+                        <c:if test="${pageMaker.next}">
+                            <li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
+                        </c:if>
+                    </div>
+                </div>
 
         </div>
     </div>
+    <form class="moveForm" method="get" id="moveForm">
+        <input type="hidden" name="type" value="${pageMaker.cri.type }">
+        <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+        <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+        <input type="hidden" name="keyword" id="key" value="${pageMaker.cri.keyword }">
+        <input type="hidden" name="sorting" value="${pageMaker.cri.sorting}">
+        <input type="hidden" name="viewSorting"  value="${pageMaker.cri.viewSorting}">
+        <input type="hidden" name="category"  value="${pageMaker.cri.category}">
+        <input type="hidden" name="subject"  value="${pageMaker.cri.subject}">
+    </form>
+</div>
 </div>
 <!-- js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script>
+    const moveForm = document.querySelector("#moveForm");
+    document.querySelector(".pageinfo")
+    $(".pageInfo_area a").on("click", function(e){
+        let sort = document.getElementById("viewSorting").value;
 
+        if(sort == null) {
+            sort = 9;
+        }
+        e.preventDefault();
+        const key = document.querySelector("#key").value;
+        console.log(key+"#");
+        const pageNum = $(this).attr("href");
+        moveForm.querySelector("input[name='pageNum']").value = pageNum;
+        moveForm.querySelector("input[name='type']").value;
+        moveForm.querySelector("input[name='keyword']").value = key;
+        moveForm.querySelector("input[name='viewSorting']").value = sort;
+        moveForm.querySelector("input[name='sorting']").value;
+        moveForm.action = "/admin/lecture/list";
+        moveForm.submit();
+    });
+
+    document.querySelector("#searchBtn").addEventListener("click", function (e) {
+        e.preventDefault();
+
+        let type =  document.querySelector("#search_area").value;
+        console.log(type+"asd");
+        let val = document.querySelector("#keyword").value;
+
+        if(!type){
+            alert("검색 종류를 선택하세요.");
+            return false;
+        }
+
+        if(!val){
+            alert("키워드를 입력하세요.");
+            return false;
+        }
+        moveForm.querySelector("input[name='viewSorting']").value;
+        moveForm.querySelector("input[name='sorting']").value;
+        moveForm.querySelector("input[name='type']").value = type;
+        moveForm.querySelector("input[name='keyword']").value = val;
+        moveForm.querySelector("input[name='pageNum']").value = 1;
+        moveForm.submit();
+    });
+
+    function redirectToList() {
+        let sortingValue = document.getElementById("sorting").value;
+        let sort = document.getElementById("viewSorting").value;
+
+        if(sort == null) {
+            sort = 9;
+        }
+        moveForm.querySelector("input[name='viewSorting']").value=sort;
+        moveForm.querySelector("input[name='sorting']").value = sortingValue;
+        moveForm.querySelector("input[name='type']").value;
+        moveForm.querySelector("input[name='keyword']").value;
+        moveForm.querySelector("input[name='pageNum']").value = 1;
+        moveForm.submit();
+
+    }
+    function viewSorting() {
+        let sortingValue = document.getElementById("viewSorting").value;
+        moveForm.querySelector("input[name='viewSorting']").value = sortingValue;
+        moveForm.querySelector("input[name='sorting']").value ;
+        moveForm.querySelector("input[name='type']").value;
+        moveForm.querySelector("input[name='keyword']").value;
+        moveForm.querySelector("input[name='pageNum']").value = 1;
+        moveForm.submit();
+    }
+    function  navigateWithSort(category) {
+        let sort = document.getElementById("viewSorting").value;
+
+        if(sort == null) {
+            sort = 9;
+        }
+        moveForm.querySelector("input[name='viewSorting']").value = sort;
+        moveForm.querySelector("input[name='sorting']").value ;
+        moveForm.querySelector("input[name='type']").value;
+        moveForm.querySelector("input[name='keyword']").value;
+        moveForm.querySelector("input[name='pageNum']").value = 1;
+        moveForm.querySelector("input[name='category']").value = category;
+        moveForm.submit();
+    }
+    document.querySelector("#resetBtn").addEventListener("click", function (){
+        location.href= '/lecture/list';
+    });
+
+    document.querySelectorAll('input[name="subject"]').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            updateFormAndSubmit();
+        });
+    });
+
+    function updateFormAndSubmit() {
+        const checkboxes = document.querySelectorAll('input[name="subject"]:checked');
+        let sort = document.getElementById("viewSorting").value;
+
+        if (sort == null) {
+            sort = 9;
+        }
+        checkboxes.forEach((checkbox) => {
+            moveForm.querySelector("input[name='viewSorting']").value = checkbox.value;
+            console.log("###" + checkbox.value);
+        });
+    }
     //분류 셀렉박스
     const gradeOptions = {
         elementary: ['전체', '1학년', '2학년', '3학년', '4학년', '5학년', '6학년'],
@@ -204,6 +318,7 @@
         high: ['전체', '1학년', '2학년', '3학년'],
     };
 
+/*
     document.getElementById('schoolSelect').addEventListener('change', function () {
         const schoolType = this.value;
         const gradeSelect = document.getElementById('gradeSelect');
@@ -226,23 +341,24 @@
 
         $('.selectpicker').selectpicker('refresh');
     });
+*/
 
-    document.getElementById('schoolSelect').dispatchEvent(new Event('change'));
+/*    document.getElementById('schoolSelect').dispatchEvent(new Event('change'));*/
 
-
+/*
 
     let frm = document.querySelector("#frm");
-    let chkAll = document.querySelector("#chkAll");
+    let chkAll = document.querySelector("#chkAll");*/
     // 체크박스 전체 선택/해제
-    chkAll.addEventListener("click", (e) => {
+/*    chkAll.addEventListener("click", (e) => {
         var check = document.querySelectorAll("input[type ='checkbox']");
 
         check.forEach((checkbox) => {
             checkbox.checked = chkAll.checked;
         });
-    });
+    });*/
 
-    // 삭제 버튼 눌렀을 때
+   /* // 삭제 버튼 눌렀을 때
     document.querySelector("#btnDelete").addEventListener("click", (e) => {
         var check = document.querySelectorAll("input[type ='checkbox']:checked");
         console.log(check);
@@ -262,9 +378,10 @@
                 return false;
             }
         }
-    });
+    });*/
 
 </script>
+
 <script src="/resources/vendors/scripts/core.js"></script>
 <script src="/resources/vendors/scripts/script.min.js"></script>
 <script src="/resources/vendors/scripts/process.js"></script>

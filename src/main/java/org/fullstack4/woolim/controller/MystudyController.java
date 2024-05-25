@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.service.BbsServiceIf;
+import org.fullstack4.woolim.service.MemberServiceIf;
 import org.fullstack4.woolim.service.MyStudyServiceIf;
+import org.fullstack4.woolim.service.StudyScheduleServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @Log4j2
 @Controller
@@ -23,7 +26,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class MystudyController {
     private final MyStudyServiceIf myStudyService;
-
+    private final MemberServiceIf memberServiceIf;
+    private final StudyScheduleServiceIf scheduleServiceIf;
     @GetMapping("/classList")
     public void GETClassList(PageRequestDTO pageRequestDTO, Model model,HttpServletRequest req) {
 
@@ -48,8 +52,13 @@ public class MystudyController {
     }
 
     @GetMapping("/studyPlanList")
-    public void GETStudyPlanList() {
-
+    public void GETStudyPlanList(HttpServletRequest req,
+                                 Model model) {
+        HttpSession session = req.getSession();
+        String member_id = (String)session.getAttribute("member_id");
+        MemberDTO memberDTO = memberServiceIf.memberView(member_id);
+        List<StudyScheduleDTO> studyList = scheduleServiceIf.getList(memberDTO.getMember_idx());
+        model.addAttribute("studyList", studyList);
     }
 
     @GetMapping("/studyPlanRegist")

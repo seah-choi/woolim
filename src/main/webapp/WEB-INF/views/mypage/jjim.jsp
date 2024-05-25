@@ -65,7 +65,7 @@
                         </c:if>
                         <c:forEach items="${dtoList}" var="list">
                             <tr>
-                                <td><input class="checkEl" type="checkbox" value="${list.cart_idx}"></td>
+                                <td><input class="checkEl" type="checkbox" value="${list.lecture_idx}"></td>
                                 <td class="cart-pic"><img src="/resources/img/lecture/${list.lecture_image}" alt=""></td>
                                 <td class="cart-title">
                                     <h5>${list.lecture_title}</h5>
@@ -85,6 +85,7 @@
                     <div class="col-lg-4 offset-lg-4">
                         <div class="proceed-checkout d-flex justify-content-center">
                             <button class="proceed-btn" onclick="goCart()">장바구니로 이동</button>
+                            <button class="proceed-btn" onclick="goDelete()">삭제</button>
                         </div>
                     </div>
 
@@ -122,29 +123,71 @@
                 JjimList.push(choose.value);
             }
         }
-        console.log(JjimList);
-        $.ajax({
-            url:"/mypage/addcart.dox?",
-            dataType:"json",
-            type : "POST",
-            data : {
-                JjimList:JSON.stringify(JjimList)
-            },
-            success : function(data) {
-                if(data.result == "success") {
-                    alert(data.msg);
-                    location.href="/mypage/cart";
-                }else if(data.result =="false"){
-                    alert(data.msg);
-                }else{
-                    alert(data.msg);
+
+        if(JjimList.length==0){
+            alert("하나 이상의 강좌를 선택해주세요.");
+        }else {
+            $.ajax({
+                url: "/mypage/addcart.dox?",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    JjimList: JSON.stringify(JjimList)
+                },
+                success: function (data) {
+                    if (data.result == "success") {
+                        alert(data.msg);
+                        location.href = "/mypage/cart";
+                    } else if (data.result == "false") {
+                        alert(data.msg);
+                    } else {
+                        alert(data.msg);
+                    }
+                },
+                fail: function (data) {
+
                 }
-            },
-            fail : function (data){
 
+            });
+        }
+    }
+
+    function goDelete(){
+        let JjimList = [];
+
+        for(let choose of checkEl){
+            if(choose.checked){
+                JjimList.push(choose.value);
             }
+        }
 
-        });
+        if(JjimList.length==0){
+            alert("하나 이상의 강좌를 선택해주세요.");
+        }else {
+            $.ajax({
+                url: "/mypage/deletecart.dox?",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    JjimList: JSON.stringify(JjimList),
+                    cart_status: 'N'
+                },
+                success: function (data) {
+                    if (data.result == "success") {
+                        alert(data.msg);
+                        location.href = "/mypage/cart";
+                    } else if (data.result == "false") {
+                        alert(data.msg);
+                    } else {
+                        alert(data.msg);
+                    }
+                },
+                fail: function (data) {
+
+                }
+
+            });
+        }
     }
 
 
