@@ -93,4 +93,16 @@ public class BbsServiceImpl implements BbsServiceIf{
         return result;
     }
 
+    @Override
+    public int fileModify(BoardFileDTO boardFileDTO) {
+        BoardFileVO boardFileVO = modelMapper.map(boardFileDTO, BoardFileVO.class);
+        int result = bbsMapper.fileModify(boardFileVO);
+        return result;
+    }
+
+    @Override
+    public boolean hasExistingFiles(int bbs_idx) {
+        return bbsMapper.checkExistingFiles(bbs_idx) > 0;
+    }
+
 }

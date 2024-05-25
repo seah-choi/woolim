@@ -141,6 +141,7 @@
                     <input type="hidden" name="bbs_category_code" value="${bbsList.bbs_type}">
                     <input type="hidden" name="member_id" value="${sessionScope.member_id}">
                     <input type="hidden" name="bbs_teacher_yn" value="N">
+                    <input type="hidden" name="bbs_idx" value="${bbs.bbs_idx}">
 
                     <h6>제목</h6>
                     <div class="d-flex align-items-start align-items-sm-center mt-3 w-50">
@@ -149,12 +150,15 @@
                     <br>
                     <div>
                         <input type="file" class="form-control w-50" name="files" id="file" multiple>
-                        <div class="px-4 py-2 mb-4">${file.saveFile}</div>
+                        <c:if test="${not empty file}">
+                            <div class="px-4 py-2 mb-4">기존 파일 : ${file.saveFile}</div>
+                        </c:if>
                     </div>
+
                     <br>
                     <h6>내용</h6>
                     <div>
-                        <textarea id="summernote" name="bbs_content"></textarea>
+                        <textarea id="summernote" name="bbs_content">${bbs.bbs_content}</textarea>
                     </div>
                     <div style="display: flex;justify-content: center; margin-top: 50px">
                         <div>

@@ -21,5 +21,8 @@ public interface BbsMapper {
     int file_regist(BoardFileVO boardFileVO);
     BoardFileVO fileView(int bbs_idx);
     int deleteList(Integer[] idxList);
+    int fileModify(BoardFileVO boardFileVO);
+
+    int checkExistingFiles(int bbs_idx);
 
 }
