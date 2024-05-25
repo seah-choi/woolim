@@ -118,7 +118,7 @@
                                     <a data-toggle="tab" href="#tab-2" role="tab">공지사항</a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab" href="#tab-3" role="tab">Q&A</a>
+                                    <a data-toggle="tab" href="?tab=3" role="tab">Q&A</a>
                                 </li>
                                 <li>
                                     <a data-toggle="tab" href="#tab-4" role="tab">자료실</a>
@@ -352,14 +352,43 @@
                                                 </ul>
                                             </nav><!-- End Pagination with icons -->
                                         </div>
-
-
-
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="tab-3" role="tabpanel">
                                     <div class="customer-review-option">
                                         <h4>2 Comments</h4>
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 130px;">
+                                                    <div class="custom-control custom-checkbox d-flex">
+                                                        <input type="checkbox" class="custom-control-input" id="chkAll2" name="chkAll">
+                                                        <label class="custom-control-label" for="chkAll" style="font-weight: 700;">전체선택</label>
+                                                    </div>
+                                                </th>
+                                                <th>NO.</th>
+                                                <th>제목</th>
+                                                <th>작성자</th>
+                                                <th>등록일</th>
+                                                <th>조회수</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox ">
+                                                        <input type="checkbox" class="custom-control-input" value="${list.bbs_idx}" name="bbs_idx" id="${list.bbs_idx}">
+                                                        <label class="custom-control-label" for="${list.bbs_idx}"><span></span></label>
+                                                    </div>
+                                                </td>
+                                                <td>1</td>
+                                                <td><a href="/teacher/view?" class="aTag">제목</a></td>
+                                                <td>test1</td>
+                                                <td>2024-05-24</td>
+                                                <td>12</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                         <div class="comment-option">
                                             <div class="co-item">
                                                 <div class="avatar-pic">

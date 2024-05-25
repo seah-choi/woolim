@@ -43,7 +43,12 @@
         SELECT *
         FROM woo_qna
         <where>
-            member_id= #{member_id}
+            <if test="member_idx != null">
+                teacher_idx = #{member_idx}
+            </if>
+            <if test="member_idx == null">
+                member_id= #{member_id}
+            </if>
             <if test="search_types != null">
                 <foreach collection="search_types" item="type" >
                     <choose>

@@ -118,4 +118,13 @@
         </where>
     </delete>
 
+    <update id="fileModify">
+        update woo_bbs_file set orgFile = #{orgFile}, saveFile = #{saveFile}
+        where bbs_idx = #{bbs_idx}
+
+    </update>
+
+    <select id="checkExistingFiles" resultType="int">
+        SELECT COUNT(*) FROM woo_bbs_file WHERE bbs_idx = #{bbs_idx}
+    </select>
 </mapper>

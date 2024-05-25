@@ -25,7 +25,7 @@ public class StudyScheduleServiceImpl implements StudyScheduleServiceIf{
         int result = studyScheduleMapper.addEvent(studyScheduleVO);
         log.info("studyScheduleVO : "+studyScheduleVO);
         log.info("studyScheduleDTO : "+studyScheduleDTO);
-        return result;
+        return studyScheduleVO.getStudy_idx();
     }
 
     @Override
@@ -35,4 +35,17 @@ public class StudyScheduleServiceImpl implements StudyScheduleServiceIf{
 
         return dtolist;
     }
+
+    @Override
+    public int delete(int study_idx) {
+        return studyScheduleMapper.delete(study_idx);
+    }
+
+    @Override
+    public int modify(StudyScheduleDTO studyScheduleDTO) {
+        StudyScheduleVO studyScheduleVO = modelMapper.map(studyScheduleDTO, StudyScheduleVO.class);
+        return studyScheduleMapper.modify(studyScheduleVO);
+
+    }
+
 }

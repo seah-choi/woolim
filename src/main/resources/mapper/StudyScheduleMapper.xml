@@ -3,15 +3,27 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/schema/mybatis-3-mapper.dtd">
 <mapper namespace="org.fullstack4.woolim.mapper.StudyScheduleMapper">
-    <insert id="addEvent">
+    <insert id="addEvent" parameterType="org.fullstack4.woolim.domain.StudyScheduleVO" useGeneratedKeys="true" keyProperty="study_idx" keyColumn="study_idx">
         insert into woo_study_schedule (member_idx, study_content, start_date, end_date)
         values(#{member_idx}, #{study_content}, #{start_date}, #{end_date})
     </insert>
+    <update id="modify">
+        UPDATE woo_study_schedule
+        SET study_content = #{study_content},
+            start_date = #{start_date},
+            end_date = #{end_date}
+        WHERE study_idx = #{study_idx}
+    </update>
 
     <select id="getList" resultType="org.fullstack4.woolim.domain.StudyScheduleVO">
         SELECT study_idx, study_content, member_idx, start_date, end_date
         FROM woo_study_schedule
         WHERE member_idx = #{member_idx}
     </select>
+    <delete id="delete">
+        DELETE
+        FROM woo_study_schedule
+        WHERE study_idx = #{study_idx}
+    </delete>
 
 </mapper>

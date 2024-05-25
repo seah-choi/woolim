@@ -15,4 +15,7 @@ public interface BbsServiceIf {
     int file_regist(BoardFileDTO boardFileDTO);
     BoardFileDTO fileView(int bbs_idx);
     int deleteList(Integer[] idxList);
+    int fileModify(BoardFileDTO boardFileDTO);
+
+    boolean hasExistingFiles(int bbs_idx);
 }
