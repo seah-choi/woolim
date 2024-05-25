@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <html>
 <head>
@@ -121,7 +122,12 @@
                 <label for="floatingTextarea">제목</label>
             </div>
             <br>
-            <input type="file" class="form-control" name="file" id="bbs_image" multiple>
+            <div>
+                <input type="file" class="form-control w-50" name="files" id="file" multiple>
+                <c:if test="${not empty file}">
+                    <div class="px-4 py-2 mb-4">기존 파일 : ${file.saveFile}</div>
+                </c:if>
+            </div>
             <br>
             <div>
                 <textarea id="summernote" name="bbs_content">${bbs.bbs_content}</textarea>

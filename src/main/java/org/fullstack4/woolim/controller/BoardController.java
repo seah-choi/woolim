@@ -144,37 +144,80 @@ public class BoardController {
             return "redirect:/board/regist";
         }
 
+        int resultFile = 0;
+        String upload = "";
+
+        resultFile = bbsServiceIf.modify(bbsDTO);
+
+
         List<MultipartFile> list = files.getFiles("files");
-        String uploadFoler = CommonUtil.getUploadFolder(req,"bbs");
+        upload = CommonUtil.getUploadFolder(req, "bbs");
 
-        int result = bbsServiceIf.modify(bbsDTO);
+        log.info("resultFile : " + resultFile);
+        log.info("files.size111 : " + files.getFiles("files").size());
+        log.info("list : " + list);
 
-        for(int i=0;i<list.size();i++){
-            if(list.get(i).getSize()==0){
-                break;
+        log.info("uploadFoler111: " + upload);
+
+        boolean fileExists = bbsServiceIf.hasExistingFiles(bbsDTO.getBbs_idx());
+        if (fileExists) {
+            // 기존 파일이 있는 글 수정 등록 로직
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getSize() == 0) {
+                    continue;
+                }
+
+                FileDTO fileDTO = FileDTO.builder()
+                        .file(list.get(i))
+                        .uploadFolder(upload)
+                        .build();
+                log.info("========================");
+                log.info("PostModify >> bbsDTO" + bbsDTO);
+                log.info("========================");
+                Map<String, String> map = FileUtil.FileUpload(fileDTO);
+                log.info("=======================");
+                log.info("upload : " + map);
+                log.info("=======================");
+                if (map.get("result").equals("success")) {
+                    BoardFileDTO boardFileDTO = BoardFileDTO.builder()
+                            .bbs_idx(bbsDTO.getBbs_idx())
+                            .orgFile(map.get("orgName"))
+                            .saveFile(map.get("newName")).build();
+                    bbsServiceIf.fileModify(boardFileDTO);
+                    log.info("boardFileDTO : " + boardFileDTO);
+                }
             }
-            FileDTO fileDTO = FileDTO.builder()
-                    .file(list.get(i))
-                    .uploadFolder(uploadFoler)
-                    .build();
-            log.info("========================");
-            log.info("PostfreeModify >> bbsDTO" + bbsDTO);
-            log.info("========================");
-            Map<String, String> map = FileUtil.FileUpload(fileDTO);
-            log.info("=======================");
-            log.info("upload : " + map);
-            log.info("=======================");
-            if(map.get("result").equals("success")) {
-                BoardFileDTO boardFileDTO = BoardFileDTO.builder()
-                        .bbs_idx(result)
-                        .orgFile(map.get("orgName"))
-                        .saveFile(map.get("newName")).build();
-                bbsServiceIf.file_regist(boardFileDTO);
+
+        } else {
+            //기존 파일이 없을 때 로직
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getSize() == 0) {
+                    break;
+                }
+                FileDTO fileDTO = FileDTO.builder()
+                        .file(list.get(i))
+                        .uploadFolder(upload)
+                        .build();
+                log.info("========================");
+                log.info("PostModify2222 >> bbsDTO" + bbsDTO);
+                log.info("========================");
+                Map<String, String> map = FileUtil.FileUpload(fileDTO);
+                log.info("=======================");
+                log.info("upload2222 : " + map);
+                log.info("=======================");
+                if (map.get("result").equals("success")) {
+                    BoardFileDTO boardFileDTO = BoardFileDTO.builder()
+                            .bbs_idx(bbsDTO.getBbs_idx())
+                            .orgFile(map.get("orgName"))
+                            .saveFile(map.get("newName")).build();
+                    bbsServiceIf.file_regist(boardFileDTO);
+                    log.info("boardFileDTO2222 : " + boardFileDTO);
+                }
             }
         }
 
 
-        if(result > 0) {
+        if(resultFile > 0) {
             return "redirect:/board/view?bbs_idx=" + bbsDTO.getBbs_idx();
         } else {
             return "/board/modify?bbs_idx=" + bbsDTO.getBbs_idx();
@@ -287,43 +330,90 @@ public class BoardController {
     public void GETfreeModify(@RequestParam(name="bbs_idx", defaultValue = "0") int bbs_idx, Model model) {
 
         BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
+        BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
         model.addAttribute("bbs", bbsDTO);
+        model.addAttribute("file", boardFileDTO);
+        log.info("GETModify bbsDTO : "+bbsDTO);
+
     }
 
     @PostMapping("/freeModify")
     public String PostfreeModify(BbsDTO bbsDTO,MultipartHttpServletRequest files
                                  ,HttpServletRequest req, RedirectAttributes redirectAttributes){
 
+        int resultFile = 0;
+        String upload = "";
+
+        resultFile = bbsServiceIf.modify(bbsDTO);
+
+
         List<MultipartFile> list = files.getFiles("files");
-        String uploadFoler = CommonUtil.getUploadFolder(req,"bbs");
+        upload = CommonUtil.getUploadFolder(req, "bbs");
 
-        int result = bbsServiceIf.modify(bbsDTO);
+        log.info("resultFile : " + resultFile);
+        log.info("files.size111 : " + files.getFiles("files").size());
+        log.info("list : " + list);
 
-        for(int i=0;i<list.size();i++){
-            if(list.get(i).getSize()==0){
-                break;
+        log.info("uploadFoler111: " + upload);
+
+        boolean fileExists = bbsServiceIf.hasExistingFiles(bbsDTO.getBbs_idx());
+        if (fileExists) {
+            // 기존 파일이 있는 글 수정 등록 로직
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getSize() == 0) {
+                    continue;
+                }
+
+                FileDTO fileDTO = FileDTO.builder()
+                        .file(list.get(i))
+                        .uploadFolder(upload)
+                        .build();
+                log.info("========================");
+                log.info("PostModify >> bbsDTO" + bbsDTO);
+                log.info("========================");
+                Map<String, String> map = FileUtil.FileUpload(fileDTO);
+                log.info("=======================");
+                log.info("upload : " + map);
+                log.info("=======================");
+                if (map.get("result").equals("success")) {
+                    BoardFileDTO boardFileDTO = BoardFileDTO.builder()
+                            .bbs_idx(bbsDTO.getBbs_idx())
+                            .orgFile(map.get("orgName"))
+                            .saveFile(map.get("newName")).build();
+                    bbsServiceIf.fileModify(boardFileDTO);
+                    log.info("boardFileDTO : " + boardFileDTO);
+                }
             }
-            FileDTO fileDTO = FileDTO.builder()
-                    .file(list.get(i))
-                    .uploadFolder(uploadFoler)
-                    .build();
-            log.info("========================");
-            log.info("PostfreeModify >> bbsDTO" + bbsDTO);
-            log.info("========================");
-            Map<String, String> map = FileUtil.FileUpload(fileDTO);
-            log.info("=======================");
-            log.info("upload : " + map);
-            log.info("=======================");
-            if(map.get("result").equals("success")) {
-                BoardFileDTO boardFileDTO = BoardFileDTO.builder()
-                        .bbs_idx(result)
-                        .orgFile(map.get("orgName"))
-                        .saveFile(map.get("newName")).build();
-                bbsServiceIf.file_regist(boardFileDTO);
+
+        } else {
+            //기존 파일이 없을 때 로직
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getSize() == 0) {
+                    break;
+                }
+                FileDTO fileDTO = FileDTO.builder()
+                        .file(list.get(i))
+                        .uploadFolder(upload)
+                        .build();
+                log.info("========================");
+                log.info("PostModify2222 >> bbsDTO" + bbsDTO);
+                log.info("========================");
+                Map<String, String> map = FileUtil.FileUpload(fileDTO);
+                log.info("=======================");
+                log.info("upload2222 : " + map);
+                log.info("=======================");
+                if (map.get("result").equals("success")) {
+                    BoardFileDTO boardFileDTO = BoardFileDTO.builder()
+                            .bbs_idx(bbsDTO.getBbs_idx())
+                            .orgFile(map.get("orgName"))
+                            .saveFile(map.get("newName")).build();
+                    bbsServiceIf.file_regist(boardFileDTO);
+                    log.info("boardFileDTO2222 : " + boardFileDTO);
+                }
             }
         }
 
-        if(result > 0) {
+        if(resultFile > 0) {
             return "redirect:/board/freeView?bbs_idx=" + bbsDTO.getBbs_idx();
         } else {
             return "/board/freeModify?bbs_idx=" + bbsDTO.getBbs_idx();
