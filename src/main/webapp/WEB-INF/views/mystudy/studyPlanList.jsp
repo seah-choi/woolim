@@ -169,6 +169,7 @@
 
     </div>
 </div>
+${studyList}
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
@@ -200,6 +201,15 @@
         let dateStr = year + '-' + month + '-' + day; // "년-월-일" 형식
         console.log(dateStr);
 
+        var dtoList = [];
+        <c:forEach var="list" items="${studyList}">
+            var dto = {
+                title : "${list.study_content}",
+                start : "${list.start_date}",
+                end : "${list.end_date}"
+            };
+            dtoList.push(dto);
+        </c:forEach>
 
         var calendarEl = document.getElementById('calendar');
 
@@ -208,12 +218,13 @@
             defaultDate: dateStr,
             editable: true,
             eventLimit: true, // allow "more" link when too many events
-            events: [
-                {
-                    title: '중간고사',
-                    start: '2024-05-27'
-                }
-            ]
+            events: dtoList
+            // events: [
+            //     {
+            //         title: '중간고사',
+            //         start: '2024-05-27'
+            //     }
+            // ]
         });
 
         calendar.render();
@@ -239,7 +250,13 @@
                         console.log(response);
                         if(response == 1){
                             alert("추가 성공");
+                            calendar.addEvent({
+                                title: study_content,
+                                start: start_date,
+                                end: end_date
+                            });
                             $('#exampleModal1').modal('hide');
+                            document.getElementById('scheduleForm').reset();
                         }
                         else{
                             alert("추가 실패");
