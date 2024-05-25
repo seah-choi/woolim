@@ -234,7 +234,7 @@
                                         </ul>
                                     </div>
                                     <div class="pi-text">
-                                        <div class="catagory-name">${list.lecture_category}</div>
+                                        <div class="catagory-name">${list.lecture_category_school}</div>
                                         <a href="#">
                                             <h5>${list.lecture_title}</h5>
                                         </a>
