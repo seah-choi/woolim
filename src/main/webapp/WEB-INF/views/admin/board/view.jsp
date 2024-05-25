@@ -208,6 +208,7 @@
                             </div>
                         </c:if>
 
+
                         <c:if test="${bbs.bbs_category_code eq 'bbs02'}">
                             <div>
                                 <div id="comment">
