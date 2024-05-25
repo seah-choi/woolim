@@ -43,7 +43,8 @@ public class LectureController {
         PageMakerDTO pageMakerDTO = new PageMakerDTO(cri,total);
 
         /*log.info("---lectureDTOS-------" + lectureDTOS);*/
-        log.info("-----------------------");
+        log.info("------lectureDTOS-------" + lectureDTOS);
+
         model.addAttribute("list",lectureDTOS);
         model.addAttribute("pageMaker",pageMakerDTO);
         model.addAttribute("cri",cri);
