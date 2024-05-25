@@ -105,9 +105,30 @@ public class OrderServiceImpl implements OrderServiceIf{
     @Override
     public List<OrderDTO> viewOrderDetailList(OrderDTO orderDTO) {
         OrderDetailVO orderDetailVO = modelMapper.map(orderDTO, OrderDetailVO.class);
+        log.info(orderDetailVO);
         List<OrderDetailVO> voList = orderMapper.viewOrderDetailList(orderDetailVO);
         List<OrderDTO> orderDTOList = voList.stream().map(vo->modelMapper.map(vo,OrderDTO.class)).collect(Collectors.toList());
 
         return orderDTOList;
+    }
+
+    @Override
+    public void DOrefund(OrderDTO orderDTO, MemberDTO memberDTO, PaymentDTO paymentDTO) throws InsufficientStockException {
+        OrderDetailVO orderVO = modelMapper.map(orderDTO, OrderDetailVO.class);
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+        PaymentVO paymentVO = modelMapper.map(paymentDTO, PaymentVO.class);
+
+        orderMapper.UpdateStatus(orderVO);
+        orderMapper.InsertPayment(paymentVO);
+        memberMapper.changePoint(memberVO);
+    }
+
+    @Override
+    public void Dopurchase(OrderDTO orderDTO, ClassDTO classDTO) throws InsufficientStockException {
+        OrderDetailVO orderVO = modelMapper.map(orderDTO, OrderDetailVO.class);
+        ClassVO classVO = modelMapper.map(classDTO, ClassVO.class);
+
+        orderMapper.UpdateStatus(orderVO);
+        orderMapper.insertClass(classVO);
     }
 }

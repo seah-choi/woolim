@@ -4,6 +4,7 @@ import org.fullstack4.woolim.common.InsufficientStockException;
 import org.fullstack4.woolim.domain.CartVO;
 import org.fullstack4.woolim.dto.CartDTO;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface CartServiceIf {

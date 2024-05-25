@@ -228,7 +228,7 @@
                                             <i class="icon_heart_alt" onclick="addJjim(${list.lecture_idx})"></i>
                                         </div>
                                         <ul>
-                                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                            <li class="w-icon active"><a href="/order/order?lecture_idx=${list.lecture_idx}"><i class="icon_bag_alt"></i></a></li>
                                             <li class="quick-view"><a href="/lecture/view/?lecture_idx=${list.lecture_idx}"> 상품 상세보기</a></li>
                                             <li class="w-icon"><a href="#"><i class="fa fa-random" onclick="addCart(${list.lecture_idx})"></i></a></li>
                                         </ul>
@@ -533,42 +533,8 @@
         moveForm.submit();*/
     }
 
-    function addCart(item){
-        console.log("test");
-        test(item,"Y","cart");
-    }
-
-    function addJjim(item){
-        console.log("test");
-        test(item,"N","jjim");
-    }
-
-    function test(idx,status,link){
-        $.ajax({
-            url:"/mypage/addcartone.dox",
-            dataType:"json",
-            type : "POST",
-            data : {
-                lecture_idx:idx,
-                cart_status:status
-            },
-            success : function(data) {
-                if(data.result == "success") {
-                    alert(data.msg);
-                    location.href="/mypage/"+link;
-                }else if(data.result =="false"){
-                    alert(data.msg);
-                }else{
-                    alert(data.msg);
-                }
-            },
-            fail : function (data){
-
-            }
-
-        });
-    }
 </script>
+<script src="/resources/js/cart.js"></script>
 <!-- Js Plugins -->
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>

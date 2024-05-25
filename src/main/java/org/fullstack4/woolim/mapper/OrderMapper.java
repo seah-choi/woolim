@@ -1,6 +1,7 @@
 package org.fullstack4.woolim.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.fullstack4.woolim.domain.ClassVO;
 import org.fullstack4.woolim.domain.OrderDetailVO;
 import org.fullstack4.woolim.domain.OrderVO;
 import org.fullstack4.woolim.domain.PaymentVO;
@@ -19,6 +20,8 @@ public interface OrderMapper {
     int total_count(PageRequestDTO pageRequestDTO);
     int exist(OrderDetailVO orderDetailVO);
     int OrderCount(PageRequestDTO pageRequestDTO);
+    int UpdateStatus(OrderDetailVO orderDetailVO);
     List<OrderVO> viewOrderList(PageRequestDTO pageRequestDTO);
     List<OrderDetailVO> viewOrderDetailList(OrderDetailVO orderDetailVO);
+    int insertClass(ClassVO classVO);
 }
