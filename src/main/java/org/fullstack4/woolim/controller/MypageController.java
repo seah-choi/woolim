@@ -7,6 +7,7 @@ import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.FileUtil;
 import org.fullstack4.woolim.common.InsufficientStockException;
 import org.fullstack4.woolim.dto.*;
+import org.fullstack4.woolim.mapper.CartMapper;
 import org.fullstack4.woolim.mapper.MemberMapper;
 import org.fullstack4.woolim.service.*;
 import org.springframework.stereotype.Controller;
@@ -295,10 +296,45 @@ public class MypageController {
         return new Gson().toJson(resultMap);
     }
 
+    @RequestMapping(value = "/addcartone.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String Addcartone(@RequestParam HashMap<String, Object> map,HttpServletRequest req){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HttpSession session = req.getSession();
+        String cart_status = map.get("cart_status").toString();
+        String member_id = session.getAttribute("member_id").toString();
+        int lecture_idx = Integer.parseInt(map.get("lecture_idx").toString());
+
+        log.info("member_id="+member_id+"cart_status="+cart_status+"lecture_idx="+lecture_idx);
+        CartDTO cartDTO = CartDTO.builder()
+                .member_id(member_id)
+                .lecture_idx(lecture_idx)
+                .cart_status(cart_status)
+                .build();
+
+        try {
+            int result = cartService.insertCartOrJjim(cartDTO);
+            if(result>0){
+                resultMap.put("result", "success");
+                resultMap.put("msg","성공했습니다.");
+            }else{
+                resultMap.put("result", "fail");
+                resultMap.put("msg","실패했습니다.");
+            }
+        }catch (InsufficientStockException e){
+            resultMap.put("result", "fail");
+            resultMap.put("msg",e.getMessage());
+        }
+
+        return new Gson().toJson(resultMap);
+    }
+
     @RequestMapping(value = "/addcart.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String Addcart(@RequestParam HashMap<String, Object> map){
+    public String Addcart(@RequestParam HashMap<String, Object> map,HttpServletRequest req){
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HttpSession session = req.getSession();
+        String member_id = session.getAttribute("member_id").toString();
         String JjimList = map.get("JjimList").toString();
         JjimList = JjimList.replace("\"","");
         JjimList = JjimList.replace("[","");
@@ -307,7 +343,9 @@ public class MypageController {
         List<CartDTO> dtoList = new ArrayList<CartDTO>();
         for(int i = 0; i < JJimList.length; i++){
             CartDTO cartDTO = CartDTO.builder()
-                    .cart_idx(Integer.parseInt(JJimList[i]))
+                    .lecture_idx(Integer.parseInt(JJimList[i]))
+                    .member_id(member_id)
+                    .cart_status("Y")
                     .build();
             dtoList.add(cartDTO);
 
@@ -326,6 +364,45 @@ public class MypageController {
             resultMap.put("result", "fail");
             resultMap.put("msg",e.getMessage());
         }
+
+        return new Gson().toJson(resultMap);
+    }
+
+    @RequestMapping(value = "/deletecart.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String Deletecart(@RequestParam HashMap<String, Object> map,HttpServletRequest req){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HttpSession session = req.getSession();
+        String member_id = session.getAttribute("member_id").toString();
+        String JjimList = map.get("JjimList").toString();
+        String cart_status = map.get("cart_status").toString();
+        JjimList = JjimList.replace("\"","");
+        JjimList = JjimList.replace("[","");
+        JjimList = JjimList.replace("]","");
+        String[] JJimList = JjimList.split(",");
+
+        int result = 0;
+        for(int i = 0; i < JJimList.length; i++){
+            CartDTO cartDTO = CartDTO.builder()
+                    .lecture_idx(Integer.parseInt(JJimList[i]))
+                    .member_id(member_id)
+                    .cart_status(cart_status)
+                    .build();
+
+            log.info("삭제 테스트 : "+ cartDTO);
+            result = result + cartService.deleteCartOrJjim(cartDTO);
+
+        }
+
+        if(result>0){
+            resultMap.put("result", "success");
+            resultMap.put("msg", "성공적으로 삭제했습니다.");
+        }else{
+            resultMap.put("result", "fail");
+            resultMap.put("msg", "실패했습니다.");
+        }
+
+
 
         return new Gson().toJson(resultMap);
     }

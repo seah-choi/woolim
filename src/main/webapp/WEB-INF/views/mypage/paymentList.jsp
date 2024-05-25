@@ -62,45 +62,42 @@
                             </form>
                             <hr>
                             <h4 class="d-flex justify-content-center">결제 내역</h4>
-                            <table class="table mt-5">
-                                <thead>
-                                <tr class="table-secondary">
-                                    <th scope="col">구분</th>
-                                    <th scope="col">내용</th>
-                                    <th scope="col">금액</th>
-                                    <th scope="col">날짜</th>
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:if test="${responseDTO.dtolist.size()==0}">
-                                    <tr>
-                                        <td colspan="4"><p class="d-flex justify-content-center">기록이 없습니다.</p></td>
-                                    </tr>
-                                </c:if>
-                                <c:forEach items="${responseDTO.dtolist}" var="list">
-                                    <tr>
-                                        <th scope="row">${list.payment_type}</th>
-                                        <td id="title">${list.payment_title}</td>
-                                        <td>${list.price}</td>
-                                        <td>${list.payment_reg_date}</td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
                             <div class="accordion" id="accordionPanelsStayOpenExample">
+                                <c:forEach items="${responseDTO.dtolist}" var="list">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                                            Accordion Item #1
+                                            ${list.order_total}원
                                         </button>
                                     </h2>
                                     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                                         <div class="accordion-body">
-                                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                            <table class="table mt-5">
+                                                <thead class="table-secondary">
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">강좌명</th>
+                                                        <th scope="col">가격</th>
+                                                        <th scope="col">수강가능 기간</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <c:forEach items="${detailList}" var="dtolist">
+                                                    <c:forEach items="${dtolist}" var="dto">
+                                                        <tr>
+                                                            <td style="width:25%; "><img src="/resources/img/lecture/${dto.lecture_image}"></td>
+                                                            <td>${dto.lecture_title}</td>
+                                                            <td>${dto.price}</td>
+                                                            <td>${dto.lecture_start_date} ~ ${dto.lecture_end_date}</td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
+                                </c:forEach>
                             </div>
                             <nav class="blog-pagination justify-content-center d-flex mt-5">
                                 <ul class="pagination">

@@ -12,4 +12,5 @@ public interface CartMapper {
     int insertCartOrJjim(CartVO cartVO);
     int deleteCartOrJjim(CartVO cartVO);
     int InsertCartFromJjim(CartVO cartVO);
+    int existCartOrJjim(CartVO cartVO);
 }
