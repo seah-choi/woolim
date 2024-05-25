@@ -90,6 +90,7 @@
 <%--                            컨트롤러 전송용 전체 가격 input 태그--%>
                             <input type="hidden" id="price" name="price" value="">
                             <button class="proceed-btn" onclick="goOrder()">결제</button>
+                            <button class="proceed-btn" onclick="goDelete()">삭제</button>
                         </div>
                     </div>
 
@@ -133,15 +134,59 @@
     function goOrder(){
         let param = "?lecture_idx="
         let index = 0;
+        let JjimList = [];
         for(let choose of checkEl){
             if(choose.checked){
                 let lecture_idx = choose.value;
                 let cart_idx = cartAll[index].value;
                 param = param+lecture_idx+"&Cart_idx="+cart_idx+"&lecture_idx=";
+                JjimList.push(choose.value);
                 index++;
             }
         }
-        location.href="/order/order"+param;
+        if(JjimList.length==0) {
+            alert("하나 이상의 강좌를 선택해주세요.");
+        }else{
+            location.href="/order/order"+param;
+        }
+    }
+
+    function goDelete(){
+        let JjimList = [];
+
+        for(let choose of checkEl){
+            if(choose.checked){
+                JjimList.push(choose.value);
+            }
+        }
+
+        if(JjimList.length==0){
+            alert("하나 이상의 강좌를 선택해주세요.");
+        }else {
+            $.ajax({
+                url: "/mypage/deletecart.dox?",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    JjimList: JSON.stringify(JjimList),
+                    cart_status: 'Y'
+                },
+                success: function (data) {
+                    if (data.result == "success") {
+                        alert(data.msg);
+                        location.href = "/mypage/cart";
+                    } else if (data.result == "false") {
+                        alert(data.msg);
+                    } else {
+                        alert(data.msg);
+                    }
+                },
+                fail: function (data) {
+
+                }
+
+            });
+        }
     }
 
 </script>
