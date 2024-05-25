@@ -63,15 +63,19 @@
                             <hr>
                             <h4 class="d-flex justify-content-center">결제 내역</h4>
                             <div class="accordion" id="accordionPanelsStayOpenExample">
-                                <c:forEach items="${responseDTO.dtolist}" var="list">
+                                <c:forEach items="${responseDTO.dtolist}" var="list" varStatus="status">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                                            ${list.order_total}원
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne${status.index}" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                                            결제 번호 : ${list.order_num}
+                                            &nbsp;&nbsp;결제 날짜:${list.order_date}
                                         </button>
                                     </h2>
-                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                                    <div id="panelsStayOpen-collapseOne${status.index}" class="accordion-collapse collapse">
                                         <div class="accordion-body">
+                                            <div class="d-flex justify-content-end">
+                                                총 결제 금액:${list.order_total}
+                                            </div>
                                             <table class="table mt-5">
                                                 <thead class="table-secondary">
                                                     <tr>
@@ -79,18 +83,29 @@
                                                         <th scope="col">강좌명</th>
                                                         <th scope="col">가격</th>
                                                         <th scope="col">수강가능 기간</th>
+                                                        <th></th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                <c:forEach items="${detailList}" var="dtolist">
-                                                    <c:forEach items="${dtolist}" var="dto">
+                                                <c:forEach items="${detailList[status.index]}" var="dto">
                                                         <tr>
                                                             <td style="width:25%; "><img src="/resources/img/lecture/${dto.lecture_image}"></td>
                                                             <td>${dto.lecture_title}</td>
                                                             <td>${dto.price}</td>
                                                             <td>${dto.lecture_start_date} ~ ${dto.lecture_end_date}</td>
+                                                            <c:if test="${dto.order_status == '구매 완료' }">
+                                                                <td colspan="2"><button class="btn btn-primary" type="button" onclick="purchaseConfirm(${dto.order_detail_idx},${dto.lecture_idx})" disabled>구매 완료</button></td>
+                                                            </c:if>
+                                                            <c:if test="${dto.order_status == '환불 완료' }">
+                                                                <td colspan="2"><button class="btn btn-primary" type="button" onclick="purchaseConfirm(${dto.order_detail_idx},${dto.lecture_idx})" disabled>환불 완료</button></td>
+                                                            </c:if>
+                                                            <c:if test="${dto.order_status == '구매 중' }">
+                                                                <td>
+                                                                    <button class="btn btn-primary" type="button" onclick="purchaseConfirm(${dto.order_detail_idx},${dto.lecture_idx})">구매 확정</button>
+                                                                </td>
+                                                            </c:if>
                                                         </tr>
-                                                    </c:forEach>
                                                 </c:forEach>
                                                 </tbody>
                                             </table>
@@ -144,6 +159,33 @@
 <script src="/resources/js/main.js"></script>
 <script>
 
+
+    function purchaseConfirm(order_detail_idx,lecture_idx){
+        $.ajax({
+            url: "/mypage/purChaseConfirm.dox?",
+            dataType: "json",
+            type: "POST",
+            data: {
+                order_detail_idx:order_detail_idx,
+                lecture_idx:lecture_idx,
+                cart_status:"구매 완료",
+            },
+            success: function (data) {
+                if (data.result == "success") {
+                    alert(data.msg);
+                    location.href = "/mypage/paymentList";
+                } else if (data.result == "false") {
+                    alert(data.msg);
+                } else {
+                    alert(data.msg);
+                }
+            },
+            fail: function (data) {
+
+            }
+
+        });
+    }
 </script>
 </body>
 </html>

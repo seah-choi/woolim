@@ -225,11 +225,12 @@
                         </li>
                         <li><a href="/mypage/view">마이페이지</a>
                             <ul class="dropdown">
-                                <li><a href="/mypage/view">회원정보</a></li>
-                                <li><a href="/mypage/writeList">작성글</a></li>
-                                <li><a href="/mypage/paymentList">결제내역</a></li>
-                                <li><a href="/mypage/jjim">찜한 강의</a></li>
-                                <li><a href="/mypage/qnaList">1:1문의</a></li>
+                                <li><a href="/mypage/view">회원 정보 수정</a></li>
+                                <li><a href="/mystudy/freeList">작성글</a></li>
+                                <li><a href="/mypage/paymentList">결제 내역</a></li>
+                                <li><a href="/mypage/lecture">수강중인 강좌</a></li>
+                                <li><a href="/mypage/jjim">찜 강의</a></li>
+                                <li><a href="/mypage/qnaList">1 : 1 문의하기</a></li>
                                 <li><a href="/mypage/cart">장바구니</a></li>
                                 <li><a href="/mypage/pointcharge">포인트 충전</a></li>
                             </ul>

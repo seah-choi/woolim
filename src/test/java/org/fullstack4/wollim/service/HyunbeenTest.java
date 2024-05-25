@@ -7,6 +7,7 @@ import org.fullstack4.woolim.mapper.CartMapper;
 import org.fullstack4.woolim.mapper.MemberMapper;
 import org.fullstack4.woolim.mapper.MyStudyMapper;
 import org.fullstack4.woolim.mapper.OrderMapper;
+import org.fullstack4.woolim.service.OrderServiceIf;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.modelmapper.ModelMapper;
@@ -38,6 +39,8 @@ public class HyunbeenTest {
 
     @Autowired(required = false)
     private MyStudyMapper myStudyMapper;
+    @Autowired(required = false)
+    private OrderServiceIf orderServiceIf;
 
     @Test
     public void HyunbeenTest() {
@@ -60,21 +63,12 @@ public class HyunbeenTest {
 
     @Test
     public void CartTest(){
-        HashMap<String, Object> resultMap = new HashMap<String, Object>();
-        String cart_status = "Y";
-        String member_id = "test2";
-        int lecture_idx = 1;
+        OrderDetailVO orderDetailVO = new OrderDetailVO();
+        orderDetailVO.setMember_id("test2");
+        log.info(orderDetailVO);
+        List<OrderDetailVO> voList = orderMapper.viewOrderDetailList(orderDetailVO);
+        log.info(voList);
 
-        log.info("member_id="+member_id+"cart_status="+cart_status+"lecture_idx="+lecture_idx);
-        CartDTO cartDTO = CartDTO.builder()
-                .member_id(member_id)
-                .lecture_idx(lecture_idx)
-                .cart_status(cart_status)
-                .build();
-
-        CartVO cartVO = modelMapper.map(cartDTO,CartVO.class);
-        int result = cartMapper.insertCartOrJjim(cartVO);
-        log.info("result="+result);
 
 
     }

@@ -61,6 +61,18 @@ public class MypageController {
 
     }
 
+    @GetMapping("/lecture")
+    public void GETLecture(HttpServletRequest req, Model model){
+        HttpSession session = req.getSession();
+        String member_id = (String) session.getAttribute("member_id");
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setMember_id(member_id);
+
+        List<OrderDTO> detailList = orderService.viewOrderDetailList(orderDTO);
+        log.info("detailList: " + detailList);
+        model.addAttribute("detailList", detailList);
+    }
+
     @GetMapping("/paymentList")
     public void GETPaymentList(HttpServletRequest req, Model model,PageRequestDTO pageRequestDTO) {
         HttpSession session = req.getSession();
@@ -402,6 +414,85 @@ public class MypageController {
             resultMap.put("msg", "실패했습니다.");
         }
 
+
+
+        return new Gson().toJson(resultMap);
+    }
+
+    @RequestMapping(value = "/refund.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String Refund(@RequestParam HashMap<String, Object> map,HttpServletRequest req){
+        log.info("test");
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HttpSession session = req.getSession();
+        String cart_status = map.get("cart_status").toString();
+        String member_id = session.getAttribute("member_id").toString();
+        int order_detail_idx = Integer.parseInt(map.get("order_detail_idx").toString());
+        String payment_num = map.get("payment_num").toString();
+        int price = Integer.parseInt(map.get("price").toString());
+
+        MemberDTO memberDTO = MemberDTO.builder()
+                .member_id(member_id)
+                .member_point(price)
+                .build();
+
+        PaymentDTO paymentDTO = PaymentDTO.builder()
+                .member_id(member_id)
+                .payment_num(payment_num)
+                .payment_type(cart_status)
+                .payment_title("포인트 환불")
+                .price(price)
+                .build();
+
+        OrderDTO orderDTO = OrderDTO.builder()
+                .order_detail_idx(order_detail_idx)
+                .order_status("환불 완료")
+                .build();
+
+
+        log.info("memberDTO" + memberDTO);
+        log.info("paymentDTO" + paymentDTO);
+        log.info("orderDTO" + orderDTO);
+        try {
+            orderService.DOrefund(orderDTO, memberDTO, paymentDTO);
+            resultMap.put("result","success");
+            resultMap.put("msg","성공");
+        }catch (InsufficientStockException e){
+            resultMap.put("result", "fail");
+            resultMap.put("msg",e.getMessage());
+        }
+
+        return new Gson().toJson(resultMap);
+    }
+
+    @RequestMapping(value = "/purChaseConfirm.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String purChaseConfirm(@RequestParam HashMap<String, Object> map,HttpServletRequest req){
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        HttpSession session = req.getSession();
+        String cart_status = map.get("cart_status").toString();
+        String member_id = session.getAttribute("member_id").toString();
+        int lecture_idx = Integer.parseInt(map.get("lecture_idx").toString());
+        int order_detail_idx = Integer.parseInt(map.get("order_detail_idx").toString());
+
+        OrderDTO orderDTO = OrderDTO.builder()
+                .order_detail_idx(order_detail_idx)
+                .order_status("구매 완료")
+                .build();
+
+        ClassDTO classDTO = ClassDTO.builder()
+                .lecture_idx(lecture_idx)
+                .member_id(member_id)
+                .build();
+
+        try {
+            orderService.Dopurchase(orderDTO,classDTO);
+            resultMap.put("result","success");
+            resultMap.put("msg","성공");
+        }catch (InsufficientStockException e){
+            resultMap.put("result", "fail");
+            resultMap.put("msg",e.getMessage());
+        }
 
 
         return new Gson().toJson(resultMap);

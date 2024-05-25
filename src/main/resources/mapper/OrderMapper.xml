@@ -92,7 +92,7 @@
     </select>
 
     <select id="viewOrderList" resultType="org.fullstack4.woolim.domain.OrderVO">
-        SELECT order_date,order_total,order_cancel_yn
+        SELECT order_idx,order_date,order_total,order_cancel_yn,member_id
                ,order_reg_date,order_status,order_refund_request,order_refund_response,order_num
         FROM woo_order
         <where>
@@ -125,10 +125,29 @@
     </select>
 
     <select id="viewOrderDetailList" resultType="org.fullstack4.woolim.domain.OrderDetailVO">
-        SELECT WOD.lecture_idx,order_status,price,lecture_image,lecture_title,lecture_start_date,lecture_end_date
+        SELECT WOD.lecture_idx,order_status,price,lecture_image,lecture_title,lecture_start_date,lecture_end_date,order_detail_idx
         FROM woo_order_detail as WOD
         INNER JOIN woo_lecture as WL ON WOD.lecture_idx = WL.lecture_idx
-        WHERE order_num = #{order_num}
-        ORDER by order_detail_idx DESC
+        <where>
+            WOD.member_id = #{member_id}
+            <if test="order_num != null and order_num !=''">
+                AND order_num = #{order_num}
+                ORDER by order_detail_idx DESC
+            </if>
+            <if test="order_num == null or order_num ==''">
+                AND lecture_end_date >= NOW()
+                AND lecture_start_date <![CDATA[<=]]> NOW()
+                ORDER by lecture_end_date DESC
+            </if>
+        </where>
     </select>
+
+    <update id="UpdateStatus">
+        UPDATE woo_order_detail SET order_status=#{order_status}
+        WHERE order_detail_idx =#{order_detail_idx}
+    </update>
+
+    <insert id="insertClass">
+        INSERT INTO woo_class(member_id,lecture_idx) VALUES(#{member_id},#{lecture_idx})
+    </insert>
 </mapper>

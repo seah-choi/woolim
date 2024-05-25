@@ -30,8 +30,15 @@ public class OrderController {
     @GetMapping("/order")
     public void GETOrder(HttpServletRequest req, Model model,
                          @RequestParam(name="lecture_idx") List<String> Lecture_idx,
-                         @RequestParam(name="Cart_idx") List<String> Cart_idx){
+                         @RequestParam(name="Cart_idx", defaultValue = "") List<String> Cart_idx){
 
+        String lecture_idx1 = req.getParameter("lecture_idx") == null ? "" : req.getParameter("lecture_idx");
+        if(Lecture_idx.size() == 1){
+            
+            Lecture_idx.add("거짓값");
+        }
+
+        log.info("시부레" + Lecture_idx);
         HttpSession session = req.getSession();
         String id = session.getAttribute("member_id").toString();
         MemberDTO memberDTO = memberService.memberView(id);
