@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,17 +60,22 @@ public class HyunbeenTest {
 
     @Test
     public void CartTest(){
-        PageRequestDTO pageRequestDTO = new PageRequestDTO();
-        pageRequestDTO.setMember_idx(2);
-        List<LectureVO> voList = memberMapper.LectureListbyTeacherpage(pageRequestDTO);
-        List<LectureDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo,LectureDTO.class)).collect(Collectors.toList());
-        int total_count = memberMapper.LectureListCountByT(pageRequestDTO);
-        PageResponseDTO<LectureDTO> responseDTO = PageResponseDTO.<LectureDTO>withAll()
-                .total_count(total_count)
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        String cart_status = "Y";
+        String member_id = "test2";
+        int lecture_idx = 1;
+
+        log.info("member_id="+member_id+"cart_status="+cart_status+"lecture_idx="+lecture_idx);
+        CartDTO cartDTO = CartDTO.builder()
+                .member_id(member_id)
+                .lecture_idx(lecture_idx)
+                .cart_status(cart_status)
                 .build();
 
-        log.info(responseDTO);
+        CartVO cartVO = modelMapper.map(cartDTO,CartVO.class);
+        int result = cartMapper.insertCartOrJjim(cartVO);
+        log.info("result="+result);
+
+
     }
 }

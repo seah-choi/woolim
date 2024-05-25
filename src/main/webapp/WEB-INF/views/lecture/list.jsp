@@ -225,16 +225,16 @@
                                         <img src="/resources/img/lecture/${list.lecture_image}" alt="">
                                         <div class="sale pp-sale">Sale</div>
                                         <div class="icon">
-                                            <i class="icon_heart_alt"></i>
+                                            <i class="icon_heart_alt" onclick="addJjim(${list.lecture_idx})"></i>
                                         </div>
                                         <ul>
                                             <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
                                             <li class="quick-view"><a href="/lecture/view/?lecture_idx=${list.lecture_idx}"> 상품 상세보기</a></li>
-                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                            <li class="w-icon"><a href="#"><i class="fa fa-random" onclick="addCart(${list.lecture_idx})"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="pi-text">
-                                        <div class="catagory-name">${list.lecture_category}</div>
+                                        <div class="catagory-name">${list.lecture_category_school}</div>
                                         <a href="#">
                                             <h5>${list.lecture_title}</h5>
                                         </a>
@@ -531,6 +531,42 @@
         moveForm.querySelector("input[name='pageNum']").value = 1;
         moveForm.querySelector("input[name='category']").value;
         moveForm.submit();*/
+    }
+
+    function addCart(item){
+        console.log("test");
+        test(item,"Y","cart");
+    }
+
+    function addJjim(item){
+        console.log("test");
+        test(item,"N","jjim");
+    }
+
+    function test(idx,status,link){
+        $.ajax({
+            url:"/mypage/addcartone.dox",
+            dataType:"json",
+            type : "POST",
+            data : {
+                lecture_idx:idx,
+                cart_status:status
+            },
+            success : function(data) {
+                if(data.result == "success") {
+                    alert(data.msg);
+                    location.href="/mypage/"+link;
+                }else if(data.result =="false"){
+                    alert(data.msg);
+                }else{
+                    alert(data.msg);
+                }
+            },
+            fail : function (data){
+
+            }
+
+        });
     }
 </script>
 <!-- Js Plugins -->

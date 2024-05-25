@@ -26,4 +26,18 @@ public class LectureAdminServiceImpl implements LectureAdminService{
 
         return list;
     }
+
+    @Override
+    public int insertLecture(LectureDTO dto) {
+        int iResult = lectureAdminMapper.insertLecture(dto);
+        return iResult;
+    }
+
+    @Override
+    public List<LectureDTO> getList() {
+        List<LectureDTO> list = lectureAdminMapper.getList().stream().map(vo->modelMapper.map(vo,LectureDTO.class)).collect(Collectors.toList());
+
+
+        return list;
+    }
 }

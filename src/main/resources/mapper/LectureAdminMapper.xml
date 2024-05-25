@@ -6,4 +6,46 @@
     <select id="getTeacherList" resultType="org.fullstack4.woolim.domain.MemberVO">
         select * from woo_member where member_category = "teacher"
     </select>
+    <select id="getList" resultType="org.fullstack4.woolim.domain.LectureVO">
+        select * from woo_lecture
+    </select>
+
+
+
+    <insert id="insertLecture">
+        INSERT INTO woo_lecture (
+            lecture_title,
+            member_name,
+            lecture_start_date,
+            lecture_end_date,
+            lecture_image,
+            lecture_content,
+            lecture_category_subject,
+            lecture_category_school,
+            lecture_category_grade,
+            lecture_reg_date,
+            member_id,
+            lecture_study,
+            lecture_content_detail,
+            lecture_price,
+            lecture_sale
+        ) VALUES (
+                     #{lecture_title},
+                     #{member_name},
+                     #{lecture_start_date},
+                     #{lecture_end_date},
+                     #{lecture_image},
+                     #{lecture_content},
+                     #{lecture_category_subject},
+                     #{lecture_category_school},
+                     #{lecture_category_grade},
+                     now(),
+                     #{member_id},
+                     #{lecture_study},
+                     #{lecture_content_detail},
+                     #{lecture_price},
+                     #{lecture_sale}
+                 );
+
+    </insert>
 </mapper>
