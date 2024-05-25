@@ -9,6 +9,7 @@ import org.fullstack4.woolim.mapper.MemberMapper;
 import org.fullstack4.woolim.service.BbsServiceIf;
 import org.fullstack4.woolim.service.MemberServiceIf;
 import org.fullstack4.woolim.service.MemberServiceImpl;
+import org.fullstack4.woolim.service.QnaServiceIf;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 public class TeacherController {
 
     private final MemberServiceIf memberServiceIf;
+    private final QnaServiceIf qnaServiceIf;
     private final BbsServiceIf bbsServiceIf;
     private final ModelMapper modelMapper;
     private final MemberMapper memberMapper;
@@ -65,6 +67,8 @@ public class TeacherController {
         pageRequestDTO.setTeacher_id(member_id);
         pageRequestDTO.setBbs_type(bbs_type);
         PageResponseDTO<BbsDTO> bbsList = bbsServiceIf.bbsListByPage(pageRequestDTO);
+        PageResponseDTO<QnaDTO> qnaList = qnaServiceIf.qnaListByPage(pageRequestDTO);
+
 //        pageRequestDTO.setBbs_type("bbs04");
 //        PageResponseDTO<BbsDTO> noticeListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
 //        pageRequestDTO.setBbs_type("bbs03");
@@ -83,6 +87,7 @@ public class TeacherController {
 //        model.addAttribute("noticeListDTO", noticeListDTO);
 //        model.addAttribute("faqListDTO", faqListDTO);
 //        model.addAttribute("invenListDTO", invenListDTO);
+        model.addAttribute("qnaList", qnaList);
         model.addAttribute("bbsList", bbsList);
         model.addAttribute("memberDTO", memberDTO);
         model.addAttribute("responseDTO", responseDTO);
