@@ -172,6 +172,7 @@ public class OrderServiceImpl implements OrderServiceIf{
         ClassVO classVO = modelMapper.map(classDTO, ClassVO.class);
 
 
+        orderMapper.insertGrade(classVO);
         orderMapper.UpdateStatus(orderVO);
         orderMapper.insertClass(classVO);
     }

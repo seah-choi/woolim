@@ -85,6 +85,10 @@ public class LectureController {
     @GetMapping("/boardList")
     public void noticeListGET(@RequestParam(defaultValue = "") String bbs_type,
                               PageRequestDTO pageRequestDTO, String lecture_idx, Model model){
+
+        pageRequestDTO.setBbs_type("bbs04");
+        PageResponseDTO<BbsDTO> noticeListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
+
         int idx = Integer.parseInt(lecture_idx);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         model.addAttribute("list" , lectureDTO);

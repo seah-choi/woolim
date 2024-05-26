@@ -9,7 +9,7 @@
         <where>
             bbs_teacher_yn = #{bbs_teacher_yn}
             <if test="teacher_id != null and teacher_id != ''">
-                and member_id=#{teacher_id}
+                and lecture_idx=#{lecture_idx}
             </if>
             <if test="bbs_type !=null and bbs_type !=''">
                 and bbs_category_code=#{bbs_type}
@@ -131,4 +131,9 @@
     <update id="updateReadCount" parameterType="int">
         UPDATE woo_bbs SET bbs_read_cnt = bbs_read_cnt + 1 WHERE bbs_idx = #{bbs_idx}
     </update>
+
+    <insert id="InsertLectureBbs">
+        INSERT INTO woo_bbs (member_id,bbs_title,bbs_content,bbs_image,bbs_reg_date,bbs_category_code,bbs_teacher_yn,lecture_idx)
+        VALUES(#{member_id},#{bbs_title},#{bbs_content},#{bbs_image}, now(),#{bbs_category_code},#{bbs_teacher_yn},#{lecture_idx})
+    </insert>
 </mapper>

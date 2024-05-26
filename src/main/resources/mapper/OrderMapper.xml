@@ -156,4 +156,8 @@
     <insert id="insertClass">
         INSERT INTO woo_class(member_id,lecture_idx) VALUES(#{member_id},#{lecture_idx})
     </insert>
+
+    <insert id="insertGrade">
+        INSERT INTO woo_grade(member_id,lecture_idx) VALUES(#{member_id},#{lecture_idx})
+    </insert>
 </mapper>
