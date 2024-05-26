@@ -85,8 +85,12 @@ public class LectureController {
 
     @GetMapping("/boardList")
     public void noticeListGET(@RequestParam(defaultValue = "") String bbs_type,
-                              PageRequestDTO pageRequestDTO, String lecture_idx, Model model){
+                              PageRequestDTO pageRequestDTO, Model model){
 
+//        log.info("-----------------------");
+//        log.info(lecture_idx);
+//        pageRequestDTO.setLecture_idx(lecture_idx);
+        log.info(pageRequestDTO);
         pageRequestDTO.setBbs_type(bbs_type);
         pageRequestDTO.setBbs_teacher_yn("Y");
 
@@ -95,11 +99,10 @@ public class LectureController {
         model.addAttribute("responseDTO" , noticeListDTO);
 
 
-
-
-        int idx = Integer.parseInt(lecture_idx);
-        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+//        int idx = Integer.parseInt(lecture_idx);
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(noticeListDTO.getLecture_idx());
         model.addAttribute("list" , lectureDTO);
+        model.addAttribute("bbs_type",bbs_type);
     }
 
     @GetMapping("/jalyosilList")

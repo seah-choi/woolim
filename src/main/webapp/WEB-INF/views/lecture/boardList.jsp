@@ -302,16 +302,17 @@
             <h5 style="font-weight: bold">공지사항</h5>
             <hr>
             <div style="display: flex;justify-content: flex-end;">
-                <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/boardRegist?lecture_idx=${list.lecture_idx}'">글쓰기</button>
+                <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/boardRegist?bbs_type=${bbs_type}&lecture_idx=${list.lecture_idx}'">글쓰기</button>
             </div>
             <br>
             <div class="searchBox">
-                <form role="search" id="frmSearch" class="searchForm" action="/board/freeList" method="get">
-                    <input type="hidden" name="bbs_type" value="${bbs_type}" >
+                <form role="search" id="frmSearch" class="searchForm" action="/lecture/boardList" method="get">
+                    <input type="hidden" name="lecture_idx" value="${responseDTO.lecture_idx}">
+                    <input type="hidden" name="bbs_type" value="${responseDTO.bbs_type}">
                     <div class="mb-3 row d-flex">
                         <div class="input-group">
                             <select id="schoolSelect" name="search_type" class="selectpicker form-control col-sm-1 school" data-size="5" data-style="btn-outline-info">
-                                <option>전체</option>
+                                <option value="">전체</option>
                                 <option value="t" ${search_type=="t" ? "selected" : ""}>제목</option>
                                 <option value="c" ${search_type=="c" ? "selected" : ""}>내용</option>
                                 <option value="u" ${search_type=="u" ? "selected" : ""}>작성자</option>
@@ -333,30 +334,32 @@
                 </tr>
                 </thead>
                 <tbody>
+                <c:forEach items="${responseDTO.dtolist}" var="list">
                     <tr>
                         <th scope="row">#</th>
-                        <td><a href="/lecture/boardView?lecture_idx=${list.lecture_idx}">공지사항</a></td>
-                        <td>2024-05-25</td>
-                        <td>0</td>
+                        <td><a href="/lecture/boardView?bbs_idx=${list.bbs_idx}">${list.bbs_title}</a></td>
+                        <td>${list.bbs_reg_date}</td>
+                        <td>${list.bbs_read_cnt}</td>
                     </tr>
+                </c:forEach>
                 </tbody>
             </table>
             <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">
                 <ul class="pagination">
-                    <li class="page-item <c:if test="${bbsList.prev_page_plag == 'false'}"> disabled</c:if>" >
-                        <a href="/board/list?page=${bbsList.page_block_start - bbsList.page_block_size}${bbsList.linkParams}"
+                    <li class="page-item <c:if test="${responseDTO.prev_page_plag == 'false'}"> disabled</c:if>" >
+                        <a href="/lecture/boardList?page=${responseDTO.page_block_start - responseDTO.page_block_size}${responseDTO.linkParams}"
                            class="page-link" aria-label="Previous">&laquo;
                         </a>
                     </li>
-                    <c:forEach begin="${bbsList.page_block_start}"
-                               end="${bbsList.page_block_end}"
+                    <c:forEach begin="${responseDTO.page_block_start}"
+                               end="${responseDTO.page_block_end}"
                                var="page_num">
-                        <li class="page-item <c:if test="${bbsList.page == page_num}">active</c:if>">
-                            <a href="/board/list?page=${page_num}${bbsList.linkParams}" class="page-link">${page_num}</a>
+                        <li class="page-item <c:if test="${responseDTO.page == page_num}">active</c:if>">
+                            <a href="/lecture/boardList?page=${page_num}${responseDTO.linkParams}" class="page-link">${page_num}</a>
                         </li>
                     </c:forEach>
-                    <li class="page-item <c:if test="${bbsList.next_page_plag == 'false'}"> disabled</c:if>" >
-                        <a href="/board/list?page=${bbsList.page_block_start + bbsList.page_block_size}${bbsList.linkParams}" class="page-link" aria-label="Previous">
+                    <li class="page-item <c:if test="${responseDTO.next_page_plag == 'false'}"> disabled</c:if>" >
+                        <a href="/lecture/boardList?page=${responseDTO.page_block_start + responseDTO.page_block_size}${responseDTO.linkParams}" class="page-link" aria-label="Previous">
                             &raquo;
                         </a>
                     </li>
