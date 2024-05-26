@@ -71,22 +71,22 @@
                             <br><br>
                             <label for="member_phone">핸드폰 *</label>
                             <div class="input-group">
-                                <input type="text" data-name="핸드폰" class="form-control" name="member_phone" id="member_phone">
+                                <input type="text" data-name="핸드폰 번호" class="form-control" name="member_phone" id="member_phone">
                             </div>
-                            <small id="err_member_phone" class="info text-danger err-text" style="display: none">핸드폰 번호를 확인해주세요.</small>
+                            <small id="err_member_phone" class="info text-danger err-text" style="display: none">핸드폰 번호를 확인해주세요.(-없이 숫자만 입력해주세요)</small>
                             <br><br>
                             <div class="group-input">
                                 <label>주소</label>
                                 <div>
                                     <div class="mb-3">
                                         <div class="input-group mb-3">
-                                            <input type="text" data-name="주소" name="member_zonecode" style="border: 1px solid #ced4da;width: 390px" data-name="우편번호" class="form-control" placeholder="우편번호" value="" id="sample4_postcode" aria-label="Recipient's username" aria-describedby="button-addon2"  onclick="sample4_execDaumPostcode()">
+                                            <input type="text" data-name="주소" name="member_zonecode" style="border: 1px solid #ced4da;width: 390px" readonly data-name="우편번호" class="form-control" placeholder="우편번호" value="" id="sample4_postcode" aria-label="Recipient's username" aria-describedby="button-addon2"  onclick="sample4_execDaumPostcode()">
                                             <button class="btn btn-outline-info"  type="button" id="button-addon2" onclick="sample4_execDaumPostcode()">우편번호 찾기</button>
                                         </div>
                                         <small id="err_zip_code" class="info text-danger"></small>
                                     </div>
                                     <div class="input-group">
-                                        <input type="text" name="member_addr" class="form-control" style="border: 1px solid #ced4da;" data-name="주소" value="" id="sample4_roadAddress" placeholder="도로명주소">
+                                        <input type="text" name="member_addr" class="form-control" style="border: 1px solid #ced4da;" readonly data-name="주소" value="" id="sample4_roadAddress" placeholder="도로명주소">
                                         <small id="err_addr1" class="info text-danger"></small>
                                     </div>
                                     <div class="input-group">
@@ -114,11 +114,11 @@
     <script>
         let inputEl = document.getElementsByClassName("form-control");
         let errMsg = document.getElementsByClassName("err-text");
-        let id_reg = /^[a-z0-9]{8,20}$/;
+        let id_reg = /^(?=.*[a-z])(?=.*\d)[a-z\d]{8,20}$/;
         let pwd_reg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
-        let name_reg = /^[ㄱ-ㅎ|가-힣]{2,20}$/;
+        let name_reg = /^[가-힣]{2,20}$/;
         let tel_reg = /^[0-9]{10,11}$/;
-        let email_reg = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6})*$/;
+        let email_reg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 
         //아이디 유효성
