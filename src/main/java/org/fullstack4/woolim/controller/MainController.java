@@ -4,10 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
-import org.fullstack4.woolim.dto.LectureDTO;
-import org.fullstack4.woolim.dto.MemberDTO;
-import org.fullstack4.woolim.dto.PageRequestDTO;
-import org.fullstack4.woolim.dto.PageResponseDTO;
+import org.fullstack4.woolim.dto.*;
+import org.fullstack4.woolim.service.CartServiceIf;
 import org.fullstack4.woolim.service.MemberServiceIf;
 import org.fullstack4.woolim.service.lecture.LectureServiceIf;
 import org.springframework.stereotype.Controller;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Log4j2
@@ -25,10 +24,11 @@ import java.util.List;
 public class MainController {
     private final LectureServiceIf lectureService;
     private final MemberServiceIf memberService;
+    private final CartServiceIf cartService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model, Criteria cri, @RequestParam (defaultValue="1")String sorting, PageRequestDTO pageRequestDTO, @RequestParam(defaultValue = "9") int page_size
-                        , @RequestParam(defaultValue = "s01") String search_word) {
+                        , @RequestParam(defaultValue = "s01") String search_word, HttpSession session) {
         System.out.println("#####");
         log.info("-----------------------");
         log.info("-----LectureController-----" +"-> GETList() ");
@@ -47,6 +47,15 @@ public class MainController {
             total = lectureService.getLectureKeyword(cri);
         }
 
+        String id = "";
+        if(session.getAttribute("member_id")!=null)
+            id = session.getAttribute("member_id").toString();
+        CartDTO cartDTO = CartDTO.builder()
+                .member_id(id)
+                .cart_status("N")
+                .build();
+        List<CartDTO> jjimList = cartService.cartOrJjimList(cartDTO);
+
         String member_type = "teacher";
         pageRequestDTO.setPage_size(page_size);
         pageRequestDTO.setMember_type(member_type);
@@ -64,6 +73,7 @@ public class MainController {
 
         /*log.info("---lectureDTOS-------" + lectureDTOS);*/
 
+        model.addAttribute("jjimList", jjimList);
         model.addAttribute("list",lectureDTOS);
         model.addAttribute("pageMaker",pageMakerDTO);
         model.addAttribute("cri",cri);
