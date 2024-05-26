@@ -6,6 +6,7 @@ import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
 import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.service.BbsServiceIf;
+import org.fullstack4.woolim.service.CartServiceIf;
 import org.fullstack4.woolim.service.lecture.LectureServiceIf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Log4j2
@@ -25,9 +27,10 @@ public class LectureController {
     private LectureServiceIf lectureServiceIf;
     @Autowired
     private BbsServiceIf bbsServiceIf;
-
+    @Autowired
+    private CartServiceIf cartServiceIf;
     @GetMapping("/list")
-    public String GETList(Model model, Criteria cri) {
+    public String GETList(Model model, Criteria cri, HttpSession session) {
         System.out.println("#####");
         log.info("-----------------------");
         log.info("-----LectureController-----" +"-> GETList() ");
@@ -45,12 +48,22 @@ public class LectureController {
             total = lectureServiceIf.getLectureKeyword(cri);
         }
 
+        String id = "";
+        if(session.getAttribute("member_id")!=null)
+            id = session.getAttribute("member_id").toString();
+        CartDTO cartDTO = CartDTO.builder()
+                .member_id(id)
+                .cart_status("N")
+                .build();
+        List<CartDTO> jjimList = cartServiceIf.cartOrJjimList(cartDTO);
+
 
         PageMakerDTO pageMakerDTO = new PageMakerDTO(cri,total);
 
         /*log.info("---lectureDTOS-------" + lectureDTOS);*/
         log.info("------lectureDTOS-------" + lectureDTOS);
 
+        model.addAttribute("jjimList", jjimList);
         model.addAttribute("list",lectureDTOS);
         model.addAttribute("pageMaker",pageMakerDTO);
         model.addAttribute("cri",cri);
