@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Title</title>
@@ -26,6 +27,87 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
+    <style>
+        .offcanvas-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .offcanvas-title {
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .fw-brand-check {
+            margin-top: 20px;
+        }
+
+        .bc-item {
+            margin-bottom: 15px;
+        }
+
+        .bc-item label {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .bc-item label:hover {
+            background-color: #e9ecef;
+            border-color: #adb5bd;
+        }
+
+        .bc-item input[type="radio"] {
+            display: none;
+        }
+
+        .bc-item input[type="radio"]:checked + .checkmark {
+            background-color: #68afcb;
+            border-color: #68afcb;
+        }
+
+        .checkmark {
+            width: 20px;
+            height: 20px;
+            background-color: #f8f9fa;
+            border: 2px solid #adb5bd;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .btn-primary {
+            width: 90px;
+            height: 50px;
+            background-color: #68afcb;
+            border-color: #68afcb;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #8bc8e0;
+            border-color: #8bc8e0;
+        }
+        .page-item.active .page-link {
+            background-color: #68afcb !important;
+            color: #fff !important;
+            border-color: #68afcb !important;
+        }
+
+        a.page-link {
+            color: #68afcb;
+        }
+        li.page-item {
+            color: #68afcb;
+        }
+
+    </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -87,13 +169,13 @@
                                     <tr>
                                         <th scope="row">${list.payment_type}</th>
                                         <td id="title">${list.payment_title}</td>
-                                        <td>${list.price}</td>
+                                        <td><fmt:formatNumber value="${list.price}" pattern="#,###"/>원</td>
                                         <td>${list.payment_reg_date}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
                             </table>
-                            <nav class="blog-pagination justify-content-center d-flex mt-5">
+                            <nav class="blog-pagination justify-content-center d-flex mt-5" >
                                 <ul class="pagination">
                                     <li class="page-item <c:if test="${responseDTO.prev_page_plag == 'false'}"> disabled</c:if>" >
                                         <a href="/mypage/pointcharge?page=${responseDTO.page_block_start - responseDTO.page_block_size}${responseDTO.linkParams}"
@@ -130,45 +212,45 @@
                 </div>
                 <div class="fw-brand-check">
                     <div class="bc-item">
-                        <label for="bc-calvin">
+                        <label for="bc-calvin" class="p-3">
                             1,000원
                             <input type="radio" id="bc-calvin" class="subjectbtn" value="1000" name="pay">
-                            <span class="checkmark"></span>
+                            <span class="checkmark ml-2"></span>
                         </label>
                     </div>
                     <div class="bc-item">
-                        <label for="bc-diesel">
+                        <label for="bc-diesel" class="p-3">
                             3,000원
                             <input type="radio" id="bc-diesel" class="subjectbtn" value="3000" name="pay">
-                            <span class="checkmark"></span>
+                            <span class="checkmark ml-2"></span>
                         </label>
                     </div>
                     <div class="bc-item">
-                        <label for="bc-polo">
+                        <label for="bc-polo" class="p-3">
                             5,000원
                             <input type="radio" id="bc-polo" class="subjectbtn" value="5000" name="pay">
-                            <span class="checkmark"></span>
+                            <span class="checkmark ml-2"></span>
                         </label>
                     </div>
                     <div class="bc-item">
-                        <label for="bc-tommy">
+                        <label for="bc-tommy" class="p-3">
                             10,000원
                             <input type="radio" id="bc-tommy" class="subjectbtn" value="10000" name="pay">
-                            <span class="checkmark"></span>
+                            <span class="checkmark ml-2"></span>
                         </label>
                     </div>
                     <div class="bc-item">
-                        <label for="bc-tommy2">
+                        <label for="bc-tommy2" class="p-3">
                             30,000원
                             <input type="radio" id="bc-tommy2" class="subjectbtn" value="30000" name="pay">
-                            <span class="checkmark"></span>
+                            <span class="checkmark ml-2"></span>
                         </label>
                     </div>
                     <div class="bc-item">
-                        <label for="bc-tommy1">
+                        <label for="bc-tommy1" class="p-3">
                             50,000원
                             <input type="radio" id="bc-tommy1" class="subjectbtn" value="50000" name="pay">
-                            <span class="checkmark"></span>
+                            <span class="checkmark ml-2"></span>
                         </label>
                     </div>
                     <div>

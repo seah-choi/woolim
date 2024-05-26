@@ -3,14 +3,20 @@ package org.fullstack4.woolim.controller;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.woolim.common.GoogleOAuth2Helper;
 import org.fullstack4.woolim.common.InsufficientStockException;
+import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.service.MemberServiceIf;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashMap;
 
 @Log4j2
@@ -20,9 +26,13 @@ import java.util.HashMap;
 public class LoginController {
 
     private final MemberServiceIf memberService;
+    private final GoogleOAuth2Helper googleOAuth2Helper = new GoogleOAuth2Helper();
     @GetMapping("/login")
-    public void GETLogin() {
-
+    public String GETLogin(HttpSession session) {
+        if(session.getAttribute("user_id")!=null){
+            return "redirect:/";
+        }
+        return "/login/login";
     }
 
     @RequestMapping(value = "/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -65,6 +75,34 @@ public class LoginController {
         HttpSession session = req.getSession();
         session.invalidate();
         return "redirect:/login/login";
+    }
+
+    @GetMapping("/oauth2/callback")
+    public String oauth2Callback(@RequestParam("code") String code, Model model, HttpServletRequest req, RedirectAttributes redirectAttributes) {
+        log.info("oauth2Callback");
+        try {
+            String accessToken = googleOAuth2Helper.getAccessToken(code);
+            log.info(accessToken);
+            JSONObject userInfo = googleOAuth2Helper.getUserInfo(accessToken);
+            log.info(userInfo);
+            MemberDTO memberDTO = memberService.socialLogin(userInfo);
+            if(memberDTO.getMember_phone() != null){
+                HttpSession session = req.getSession();
+                log.info("callback : " + memberDTO);
+                log.info("callback member_oauth: " + memberDTO.getMember_oauth());
+                session.setAttribute("member_id",memberDTO.getMember_id());
+                session.setAttribute("user_id",memberDTO.getMember_id());
+                session.setAttribute("member_name",memberDTO.getMember_name());
+            }else{
+                HttpSession session = req.getSession();
+                session.setAttribute("memberDTO", memberDTO);
+            }
+            return "redirect:/member/join";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Failed to retrieve user information.");
+            return "error";
+        }
     }
 
 

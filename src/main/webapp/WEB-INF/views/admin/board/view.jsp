@@ -127,7 +127,7 @@
             margin-top: 30px;
             margin-bottom: 50px;
         }
-        #cmModify{
+        #btnModify{
             border: none;
         }
         #cmDelete{
@@ -149,7 +149,7 @@
 
 
          .card-box {
-             margin-right: 600px;
+             margin-right: 300px;
              margin-left: 20px;
              padding-bottom: 100px;
          }
@@ -182,7 +182,6 @@
                 </c:if>
 
 
-                <form name="frm" >
 
                     <div id="list">
                         <div class="bottomLine">
@@ -196,10 +195,15 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div>
+                            <c:if test="${not empty file && bbs.bbs_category_code eq 'bbs02'}">
+                                <img src="/resources/upload/bbs/${file.saveFile}" width="700px" height="400px">
+                            </c:if>
+                        </div>
                         <div class="align-items-start align-items-sm-center mt-3" style="white-space: pre-wrap;">
                             ${bbs.bbs_content}
                         </div>
+
                         <br><br>
                         <c:if test="${not empty file}">
                             <div class="d-flex topLine pt-4">
@@ -212,13 +216,13 @@
                         <c:if test="${bbs.bbs_category_code eq 'bbs02'}">
                             <div>
                                 <div id="comment">
-                                    <form name="frm" action="/adminBbsReply/regist" method="post">
+                                    <form name="frm" id="frm_comment" action="/adminBbsReply/regist" method="post">
                                         <input type="hidden" name="member_id" value="${sessionScope.member_id}">
                                         <input type="hidden" name="bbs_idx" value="${bbs.bbs_idx}">
-                                        <span>답변</span>&nbsp;<span id="cmCount">1</span>
+                                        <span>답변</span>&nbsp;<span id="cmCount">${bbs.bbs_reply_cnt}</span>
                                         <div class="form-floating" style="display: flex;margin-top: 10px;margin-bottom: 40px;">
-                                            <textarea class="form-control" placeholder="Leave a comment here" name="reply_content" id="floatingTextarea"></textarea>
-                                            <label for="floatingTextarea">댓글</label>
+                                            <textarea class="form-control" placeholder="Leave a comment here" name="reply_content" id="replyContent"></textarea>
+                                            <label for="reply_content">댓글</label>
                                             <button type="submit" class="btn" id="btn_comment">등록</button>
                                         </div>
                                     </form>
@@ -253,18 +257,21 @@
                                 </div>
                             </div>
                         </c:if>
-
-                        <div class="topLine" style="display: flex;justify-content: center;">
-                            <div>
-                                <button type="button" class="btn" id="btn_back" onclick="location.href='/admin/board/list?bbs_type=${bbs.bbs_category_code}'">목록</button>
+                        <form name="frmDelete" id="frmDelete" method="post" action="/admin/board/delete">
+                                <input type="hidden" name="bbs_idx" value="${bbs.bbs_idx}">
+                                <input type="hidden" name="bbs_category_code" value="${bbs.bbs_category_code}">
+                            <div class="topLine" style="display: flex;justify-content: center;">
+                                <div>
+                                    <button type="button" class="btn" id="btn_back" onclick="location.href='/admin/board/list?bbs_type=${bbs.bbs_category_code}'">목록</button>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn" id="btn_modify" onclick="location.href='/admin/board/modify?bbs_idx=${bbs.bbs_idx}'">수정</button>
+                                    <button type="button" class="btn btn-secondary" id="btn_delete" onclick="goDelete(${bbs.bbs_idx})">삭제</button>
+                                </div>
                             </div>
-                            <div>
-                                <button type="button" class="btn" id="btn_modify" onclick="location.href='/admin/board/modify?bbs_idx=${bbs.bbs_idx}'">수정</button>
-                                <button type="button" class="btn btn-secondary" id="btn_delete">삭제</button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
-                </form>
+
             </div>
         </div>
     </div>
@@ -287,7 +294,7 @@
                 }
                 if(this.textContent=="등록"){
                     let cmFrm = document.getElementsByClassName("cmFrm");
-                    cmFrm[i].action = "/bbsReply/modify";
+                    cmFrm[i].action = "/adminBbsReply/modify";
                     cmFrm[i].submit();
                 }
             });
@@ -306,12 +313,25 @@
                 if (this.textContent == "삭제") {
                     if (confirm("해당 댓글을 삭제하시겠습니까?")) {
                         let cmFrm = document.getElementsByClassName("cmFrm");
-                        cmFrm[i].action = "/bbsReply/delete";
+                        cmFrm[i].action = "/adminBbsReply/delete";
                         cmFrm[i].submit();
                     }
                 }
             });
         }
+
+
+        function goDelete(bbs_idx) {
+            const frm= document.getElementById("frmDelete");
+
+            let confirm_flag = confirm("해당 게시글을 삭제하시겠습니까?");
+            if(confirm_flag) {
+                frm.submit();
+            }
+
+
+        }
+
         function godelete(e) {
             e.preventDefault();
             if(confirm("해당 글을 정말 삭제하시겠습니까?")) {

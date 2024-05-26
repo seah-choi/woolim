@@ -127,14 +127,14 @@
             color: #fff;
             vertical-align: middle;
         }
-     /*   ul {
-            color:#fff;
-            word-break: break-all;
-            vertical-align: middle;
-            font-size: 14px;
-            line-height: 40px;
-            font-weight: 300;
-        }*/
+        /*   ul {
+               color:#fff;
+               word-break: break-all;
+               vertical-align: middle;
+               font-size: 14px;
+               line-height: 40px;
+               font-weight: 300;
+           }*/
         ul > li  > span{
             font-size: 12px;
         }
@@ -149,12 +149,32 @@
         #leftNav{
             border-right: 1px solid #ccc;
             padding: 30px;
-            width: 700px;
+            width: 200px;
         }
 
         #leftNav a {
             padding-left: 0;
             color: #212529 !important;
+        }
+        #list a {
+            color: #000 !important;
+            text-decoration: none;
+        }
+
+        #list{
+            padding: 50px;
+            width: 900px;
+            padding-top: 30px;
+        }
+
+        #search {
+            background: #68afcb;
+            color: #fff;
+            border: none;
+        }
+        #btn_regist {
+            background: #68afcb;
+            color: #fff;
         }
     </style>
 
@@ -263,171 +283,28 @@
     </div>
 
     <c:set var="lecture" value="}"></c:set>
-<div id="box">
-    <div id="leftNav">
-        <nav class="nav flex-column">
-            <h4>강의</h4>
-            <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
-            <div style="padding-top: 20px; line-height: unset;">
-                <a class="nav-link" aria-current="page" href="/lecture/view?lecture_idx=${list.lecture_idx}">강의소개</a>
-                <a class="nav-link" href="/lecture/boardList?bbs_type=bbs04&lecture_idx=${list.lecture_idx}">공지사항</a>
-                <a class="nav-link" href="/lecture/qnaList?lecture_idx=${list.lecture_idx}">Q&A</a>
-                <a class="nav-link" href="/lecture/jalyosilList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
-                <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
-            </div>
-        </nav>
-    </div>
+    <div id="box">
+        <div id="leftNav">
+            <nav class="nav flex-column">
+                <h4>강의</h4>
+                <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
+                <div style="padding-top: 20px; line-height: unset;">
+                    <a class="nav-link" aria-current="page" href="/lecture/view?lecture_idx=${list.lecture_idx}">강의소개</a>
+                    <a class="nav-link" href="/lecture/boardList?bbs_type=bbs04&lecture_idx=${list.lecture_idx}">공지사항</a>
+                    <a class="nav-link" href="/lecture/qnaList?lecture_idx=${list.lecture_idx}">Q&A</a>
+                    <a class="nav-link" href="/lecture/jalyosilList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
+                    <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
+                </div>
+            </nav>
+        </div>
 
-    <div class="product-tab" style="margin-left: 100px;">
-        <div class="tab-item">
-            <ul class="nav" role="tablist">
-                <li>
-                    <a class="active" data-toggle="tab" href="#tab-1" role="tab">강의소개</a>
-                </li>
-                <li>
-                    <a data-toggle="tab" href="#tab-2" role="tab">SPECIFICATIONS</a>
-                </li>
-                <li>
-                    <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews (02)</a>
-                </li>
-            </ul>
-        </div>
-        <div class="tab-item-content">
-            <div class="tab-content">
-                <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
-                    <div class="product-content">
-                        <div class="row">
-                            <div class="col-lg-7">
-                                <h5>강의소개</h5>
-                                <p>${list.lecture_content}</p>
-                                <h5>커리큘럼</h5>
-                                <p>${list.lecture_content_detail} </p>
-                                <h5>홍보/예시 영상</h5>
-                                <p><iframe width="560" height="315" src="https://www.youtube.com/embed/czXTZJUDcE0?si=DjBhneKB4x1zMw0G" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                </p>
-                                <h5>상세 설명</h5>
-                                <p>${list.lecture_study} </p>
-                            </div>
-                            <div class="col-lg-5">
-                                <img src="img/product-single/tab-desc.jpg" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="tab-2" role="tabpanel">
-                    <div class="specification-table">
-                        <table>
-                            <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 500px;">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                                            Accordion Item #1
-                                        </button>
-                                    </h2>
-                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                                        <div class="accordion-body">
-                                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                                            Accordion Item #2
-                                        </button>
-                                    </h2>
-                                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                                        <div class="accordion-body">
-                                            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                            Accordion Item #3
-                                        </button>
-                                    </h2>
-                                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                                        <div class="accordion-body">
-                                            <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </table>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="tab-3" role="tabpanel">
-                    <div class="customer-review-option">
-                        <h4>2 Comments</h4>
-                        <div class="comment-option">
-                            <div class="co-item">
-                                <div class="avatar-pic">
-                                    <img src="img/product-single/avatar-1.png" alt="">
-                                </div>
-                                <div class="avatar-text">
-                                    <div class="at-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5>Brandon Kelley <span>27 Aug 2019</span></h5>
-                                    <div class="at-reply">Nice !</div>
-                                </div>
-                            </div>
-                            <div class="co-item">
-                                <div class="avatar-pic">
-                                    <img src="img/product-single/avatar-2.png" alt="">
-                                </div>
-                                <div class="avatar-text">
-                                    <div class="at-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5>Roy Banks <span>27 Aug 2019</span></h5>
-                                    <div class="at-reply">Nice !</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="personal-rating">
-                            <h6>Your Ratind</h6>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                        </div>
-                        <div class="leave-comment">
-                            <h4>Leave A Comment</h4>
-                            <form action="#" class="comment-form">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <input type="text" placeholder="Name">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <input type="text" placeholder="Email">
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <textarea placeholder="Messages"></textarea>
-                                        <button type="submit" class="site-btn">Send message</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="product-tab" id="list">
+            <h5 style="font-weight: bold">Q&A</h5>
+            <hr>
+
+
         </div>
     </div>
-</div>
     <footer class="footer-section">
         <div class="container">
             <div class="row">

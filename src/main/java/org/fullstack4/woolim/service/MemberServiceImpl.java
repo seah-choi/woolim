@@ -1,7 +1,9 @@
 package org.fullstack4.woolim.service;
 
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.InsufficientStockException;
 import org.fullstack4.woolim.domain.LectureVO;
 import org.fullstack4.woolim.domain.MemberVO;
@@ -10,15 +12,35 @@ import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.dto.PageRequestDTO;
 import org.fullstack4.woolim.dto.PageResponseDTO;
 import org.fullstack4.woolim.mapper.MemberMapper;
+
+import org.json.simple.parser.JSONParser;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
+import org.json.JSONObject;
+import com.google.gson.JsonObject;
 
 @Log4j2
 @Service
@@ -80,6 +102,18 @@ public class MemberServiceImpl implements MemberServiceIf{
         log.info(memberVO);
         int result = memberMapper.regist(memberVO);
         return result;
+    }
+
+    @Override
+    public MemberDTO google(String member_oauth) {
+        MemberVO memberVO = memberMapper.google(member_oauth);
+        log.info(memberVO);
+        if(memberVO != null) {
+            MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
+            return memberDTO;
+        }
+        return null;
+
     }
 
     @Override
@@ -151,4 +185,35 @@ public class MemberServiceImpl implements MemberServiceIf{
         int result = memberMapper.modify(memberVO);
         return result;
     }
+
+    @Override
+    public MemberDTO socialLogin(JSONObject member_info) throws IOException {
+
+
+        String name = member_info.getString("name");
+        String id = member_info.getString("id");
+        boolean verifiedEmail = member_info.getBoolean("verified_email");
+        String givenName = member_info.getString("given_name");
+        String locale = member_info.getString("locale");
+        String familyName = member_info.getString("family_name");
+        String email = member_info.getString("email");
+        String picture = member_info.getString("picture");
+
+        MemberDTO memberDTO = google(id);
+
+        if(memberDTO!= null){
+            return memberDTO;
+        }
+        else{
+            MemberDTO newDTO = MemberDTO.builder()
+                    .member_id(email.split("@")[0])
+                    .member_name(name)
+                    .member_oauth(id)
+                    .member_email(email.split("@")[0])
+                    .member_email_addr(email.split("@")[1]).build();
+            return newDTO;
+        }
+    }
+
+
 }

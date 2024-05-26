@@ -137,21 +137,21 @@
 
                 <hr>
                 <br>
-                <form name="frmRegist" action="/admin/board/regist" method="post" enctype="multipart/form-data">
+                <form name="frmRegist" id="frmRegist" action="/admin/board/regist" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="bbs_category_code" value="${bbsList.bbs_type}">
                     <input type="hidden" name="member_id" value="${sessionScope.member_id}">
                     <input type="hidden" name="bbs_teacher_yn" value="N">
 
                     <h6>제목</h6>
                     <div class="d-flex align-items-start align-items-sm-center mt-3 w-50">
-                        <input class="form-control" name="bbs_title" type="text" placeholder="제목을 입력해주세요.">
+                        <input class="form-control" id="bbs_title" name="bbs_title" type="text" placeholder="제목을 입력해주세요.">
                     </div>
                     <br>
                     <input type="file" class="form-control w-50" name="files" id="file" multiple>
                     <br>
                     <h6>내용</h6>
                     <div>
-                        <textarea id="summernote" name="bbs_content"></textarea>
+                        <textarea id="summernote"  name="bbs_content"></textarea>
                     </div>
                     <div style="display: flex;justify-content: center; margin-top: 50px">
                         <div>
@@ -159,7 +159,7 @@
                         </div>
                         <div>
                             <button type="submit" class="btn" id="btn_regist">등록</button>
-                            <button type="button" class="btn btn-secondary" id="btn_delete">취소</button>
+
                         </div>
                     </div>
                 </form>
@@ -202,7 +202,24 @@
 
     });
 
+    //등록하기
+    const frmRegist = document.querySelector("#frmRegist");
+    const btn_regist = document.querySelector("#btn_regist");
+    const bbs_title = document.querySelector("#bbs_title");
+    const bbs_content = document.querySelector(".bbs_content");
 
+    document.querySelector("#btn_regist").addEventListener("click", function(e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        if(bbs_title.value.trim() === "") {
+            bbs_title.focus();
+            return alert("제목을 입력하세요.");
+        }
+
+        frmRegist.submit();
+    }, false);
 </script>
 <script src="/resources/vendors/scripts/core.js"></script>
 <script src="/resources/vendors/scripts/script.min.js"></script>

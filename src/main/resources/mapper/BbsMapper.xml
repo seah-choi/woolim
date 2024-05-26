@@ -127,4 +127,8 @@
     <select id="checkExistingFiles" resultType="int">
         SELECT COUNT(*) FROM woo_bbs_file WHERE bbs_idx = #{bbs_idx}
     </select>
+
+    <update id="updateReadCount" parameterType="int">
+        UPDATE woo_bbs SET bbs_read_cnt = bbs_read_cnt + 1 WHERE bbs_idx = #{bbs_idx}
+    </update>
 </mapper>

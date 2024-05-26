@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.FileUtil;
 import org.fullstack4.woolim.dto.*;
+import org.fullstack4.woolim.service.BbsReplyServiceIf;
 import org.fullstack4.woolim.service.BbsServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,7 @@ import java.util.stream.Stream;
 public class AdminBoardController {
 
     private final BbsServiceIf bbsServiceIf;
+    private final BbsReplyServiceIf bbsReplyServiceIf;
 
 
     @GetMapping("/list")
@@ -120,11 +122,13 @@ public class AdminBoardController {
 
         BbsDTO  bbsDTO = bbsServiceIf.view(bbs_idx);
         BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
+        List<BbsReplyDTO> bbsReplyDTOList = bbsReplyServiceIf.list(bbs_idx);
 
+        bbsServiceIf.updateReadCount(bbs_idx);
 
         model.addAttribute("bbs", bbsDTO);
         model.addAttribute("file",boardFileDTO);
-
+        model.addAttribute("reply", bbsReplyDTOList);
 
 
 
@@ -241,12 +245,30 @@ public class AdminBoardController {
     }
 
     @GetMapping("/delete")
-    public String GETDelete(@RequestParam(name="bbs_idx", required=false) String idxList) {
+    public String GETDelete(@RequestParam(name="bbs_idx",
+                            required=false) String idxList,
+                            BbsDTO bbsDTO,
+                            @RequestParam(name = "bbs_category_code",
+                            required = false) String bbs_category_code) {
         String[] arrIdx = idxList.split(",");
         Integer[] newArr = Stream.of(arrIdx).mapToInt(Integer::parseInt).boxed().toArray(Integer[]::new);
         bbsServiceIf.deleteList(newArr);
 
         log.info("idxList : " + idxList);
-        return "redirect:/admin/board/list";
+        log.info("bbs_category_code : "+bbs_category_code);
+        return "redirect:/admin/board/list?bbs_type="+bbsDTO.getBbs_category_code();
+    }
+
+    @PostMapping("/delete")
+    public String POSTDelete(@RequestParam(name="bbs_idx", defaultValue = "0") int bbs_idx, BbsDTO bbsDTO) {
+        int result = bbsServiceIf.delete(bbs_idx);
+
+        log.info("bbs_idx : " + bbs_idx);
+        log.info("result : " + result);
+        if(result > 0){
+            return "redirect:/admin/board/list?bbs_type="+bbsDTO.getBbs_category_code();
+        } else{
+            return "admin/board/view?bbs_idx="+bbsDTO.getBbs_idx();
+        }
     }
 }

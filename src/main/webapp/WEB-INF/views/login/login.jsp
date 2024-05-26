@@ -48,6 +48,16 @@
                             <div class="input-group">
                                 <input class="form-control" type="password" id="pass" name="member_pwd">
                             </div>
+                            <%
+                                String clientId = "407108558562-l8kdc02drjtq9qe6id97a5bm4gfubfvb.apps.googleusercontent.com"; // Google Cloud Platform에서 생성한 OAuth 2.0 클라이언트 ID를 입력하세요.
+                                String redirectUri = "http://localhost:8080/login/oauth2/callback"; // Google Cloud Platform에 등록한 리디렉션 URI와 일치해야 합니다.
+                                String responseType = "code";
+                                String scope = "email%20profile"; // 인증 시 요청할 권한 범위입니다. 이메일과 프로필 정보에 접근합니다.
+                                String authUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + clientId
+                                        + "&redirect_uri=" + redirectUri
+                                        + "&response_type=" + responseType
+                                        + "&scope=" + scope;
+                            %>
                             <div class="group-input gi-check">
                                 <div class="gi-more">
                                     <label for="save-pass">
@@ -58,9 +68,14 @@
                                 </div>
                             </div>
                             <button type="button" class="site-btn login-btn" onclick="login()">로그인</button>
+                            <button type="button" class="btn" style="width: 300px; padding-left: 0"
+                                    onclick="location.href = '<%=authUrl%>'">
+                                <img src="/resources/img/google-button/web_light_sq_SU@4x.png">
+                                <%--                                <img class="w-200px" src="/resources/img/btnG_완성형.png" >--%>
+                            </button>
                         </form>
                         <div class="switch-login">
-                            <a href="/member/join" class="or-login">회원가입</a>
+                            <a href="/member/join?flag=1" class="or-login">회원가입</a>
                         </div>
                     </div>
                 </div>
