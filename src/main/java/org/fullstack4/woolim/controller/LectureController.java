@@ -116,7 +116,7 @@ public class LectureController {
 
         pageRequestDTO.setBbs_teacher_yn("Y");
 
-        PageResponseDTO<GradeDTO> bbsList = lectureServiceIf.gradeListByPage(pageRequestDTO);
+        PageResponseDTO<ClassDTO> bbsList = lectureServiceIf.gradeListByPage(pageRequestDTO);
 
         model.addAttribute("bbsList", bbsList);
 
