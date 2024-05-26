@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderServiceIf{
             int exist =orderMapper.exist(orderDetailVO);
             log.info(exist);
             if(exist > 0){
-                throw new InsufficientStockException("이미 수강중인 강좌가 있습니다.");
+                throw new InsufficientStockException("이미 결제한 강좌가 있습니다.");
             }
             orderMapper.DoOrderDetail(orderDetailVO);
             orderMapper.Enrolment(orderDetailVO);

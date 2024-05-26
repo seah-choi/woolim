@@ -88,7 +88,7 @@
     <select id="exist" resultType="int">
         SELECT count(*)
         FROM woo_order_detail
-        WHERE lecture_idx=#{lecture_idx} AND member_id=#{member_id}
+        WHERE lecture_idx=#{lecture_idx} AND member_id=#{member_id} AND order_status != '환불 완료'
     </select>
 
     <select id="viewOrderList" resultType="org.fullstack4.woolim.domain.OrderVO">
