@@ -272,20 +272,6 @@
                 <li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
             </c:if>
         </div>
-
- <%--       <div class="search_wrap">
-            <div class="search_area d-flex align-items-center">
-                <select name="type" class="form-control mr-2">
-                    <option value="" <c:out value="${pageMaker.cri.type == null?'selected':'' }"/>>--</option>
-                    <option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':'' }"/>>상품 이름</option>
-                    <option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>상품 저자</option>
-                    <option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>상품 출판사</option>
-                </select>
-                <input type="text" id="keyword" name="keyword" class="form-control mr-2" placeholder="Keyword">
-                <button id="searchBtn" class="btn btn-primary">Search</button>
-            </div>
-        </div>--%>
-
     </div>
 
 
