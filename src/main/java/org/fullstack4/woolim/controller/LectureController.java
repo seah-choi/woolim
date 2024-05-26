@@ -4,10 +4,7 @@ import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
-import org.fullstack4.woolim.dto.BbsDTO;
-import org.fullstack4.woolim.dto.BoardFileDTO;
-import org.fullstack4.woolim.dto.LectureDTO;
-import org.fullstack4.woolim.dto.PageRequestDTO;
+import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.service.BbsServiceIf;
 import org.fullstack4.woolim.service.lecture.LectureServiceIf;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,8 +77,12 @@ public class LectureController {
         log.info("-----------------------");
         int idx = Integer.parseInt(lecture_idx);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+        List<VideoDTO> videoDTO = lectureServiceIf.lectureVideo(idx);
+
         log.info("-----lectureDTO--------" + lectureDTO);
+        log.info("-----video--------" + videoDTO);
         model.addAttribute("list" , lectureDTO);
+        model.addAttribute("video" , videoDTO);
         return "/lecture/view";
     }
 

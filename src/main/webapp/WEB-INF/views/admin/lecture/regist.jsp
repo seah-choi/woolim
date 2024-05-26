@@ -148,13 +148,13 @@
                         </div>
                     </div>
 
-                 <%--   <div class="d-flex align-items-start align-items-sm-center mt-5">
-                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강좌 업로드</label>
+             <div class="d-flex align-items-start align-items-sm-center mt-5">
+                        <label class="col-sm-12 col-md-2 col-form-label fontWe-700">유튜브 링크</label>
                         <div class="col-sm-12 col-md-10 ">
-                            <input type="file" class="form-control-file form-control height-auto w-50" name="video">
+                            <input type="text" class="form-control-file form-control height-auto w-50" name="lecture_video">
                         </div>
                     </div>
---%>
+
                     <div class="d-flex align-items-start align-items-sm-center mt-3">
                         <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강좌 이미지 업로드</label>
                         <div class="col-sm-12 col-md-10">

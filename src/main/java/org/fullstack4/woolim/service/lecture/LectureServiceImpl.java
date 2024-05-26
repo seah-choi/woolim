@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.domain.LectureVO;
 import org.fullstack4.woolim.dto.LectureDTO;
+import org.fullstack4.woolim.dto.VideoDTO;
 import org.fullstack4.woolim.mapper.LectureMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,12 @@ public class LectureServiceImpl implements LectureServiceIf {
         LectureDTO lectureDTO = modelMapper.map(lectureVO, LectureDTO.class);
 
         return lectureDTO;
+    }
+
+    @Override
+    public List<VideoDTO> lectureVideo(int lecture_idx) {
+        List<VideoDTO> list = lectureMapper.lectureVideo(lecture_idx).stream().map(vo->modelMapper.map(vo, VideoDTO.class)).collect(Collectors.toList());
+
+        return list;
     }
 }
