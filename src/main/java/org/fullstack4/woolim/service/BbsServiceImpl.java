@@ -105,4 +105,9 @@ public class BbsServiceImpl implements BbsServiceIf{
         return bbsMapper.checkExistingFiles(bbs_idx) > 0;
     }
 
+    @Override
+    public boolean updateReadCount(int bbs_idx) {
+        return bbsMapper.updateReadCount(bbs_idx);
+    }
+
 }
