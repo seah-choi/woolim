@@ -12,6 +12,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +43,11 @@ public class OrderServiceImpl implements OrderServiceIf{
             int exist =orderMapper.exist(orderDetailVO);
             int exist2 = orderMapper.exist2(orderDetailVO);
             log.info(exist);
+            LocalDate now = LocalDate.now();
+            if(now.isAfter(lectureDTO.getLecture_start_date())){
+                throw new InsufficientStockException("지금 수강신청 기간이 아닌 강좌가 있습니다.");
+            }
+
             if(exist > 0){
                 throw new InsufficientStockException("이미 결제한 강좌가 있습니다.");
             }
@@ -118,10 +125,41 @@ public class OrderServiceImpl implements OrderServiceIf{
     }
 
     @Override
-    public void DOrefund(OrderDTO orderDTO, MemberDTO memberDTO, PaymentDTO paymentDTO) throws InsufficientStockException {
+    public void DOrefund(OrderDTO orderDTO, MemberDTO memberDTO, PaymentDTO paymentDTO,LectureDTO lectureDTO) throws InsufficientStockException {
         OrderDetailVO orderVO = modelMapper.map(orderDTO, OrderDetailVO.class);
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
         PaymentVO paymentVO = modelMapper.map(paymentDTO, PaymentVO.class);
+
+        LocalDate now = LocalDate.now();
+
+        LocalDate lectureStartDate = lectureDTO.getLecture_start_date();
+        LocalDate lectureEndDate = lectureDTO.getLecture_end_date();
+
+// 강의 전체 기간(일 수)
+        long totalDuration = ChronoUnit.DAYS.between(lectureStartDate, lectureEndDate);
+
+// 현재 날짜부터 강의 시작일까지의 경과 일수
+        long elapsedDuration = ChronoUnit.DAYS.between(lectureStartDate, now);
+
+// 경과한 시간의 백분율
+        double percentageElapsed = (double) elapsedDuration / totalDuration * 100;
+
+        if(now.isAfter(lectureDTO.getLecture_end_date())){
+            throw new InsufficientStockException("이미 수강기간이 종료된 강의입니다.");
+        }
+        if(percentageElapsed>50){
+            throw new InsufficientStockException("지금은 환불이 불가능합니다.");
+        }
+        if(percentageElapsed>30){
+            int price= Integer.parseInt(String.valueOf(orderVO.getPrice() * 0.5));
+            orderVO.setPrice(price);
+            memberVO.setMember_point(price);
+            paymentVO.setPrice(price);
+        }
+        System.out.println("경과된 시간의 백분율: " + percentageElapsed + "%");
+        
+        
+
 
         orderMapper.UpdateStatus(orderVO);
         orderMapper.InsertPayment(paymentVO);
@@ -129,9 +167,10 @@ public class OrderServiceImpl implements OrderServiceIf{
     }
 
     @Override
-    public void Dopurchase(OrderDTO orderDTO, ClassDTO classDTO) throws InsufficientStockException {
+    public void Dopurchase(OrderDTO orderDTO, ClassDTO classDTO,LectureDTO lectureDTO) throws InsufficientStockException {
         OrderDetailVO orderVO = modelMapper.map(orderDTO, OrderDetailVO.class);
         ClassVO classVO = modelMapper.map(classDTO, ClassVO.class);
+
 
         orderMapper.UpdateStatus(orderVO);
         orderMapper.insertClass(classVO);
