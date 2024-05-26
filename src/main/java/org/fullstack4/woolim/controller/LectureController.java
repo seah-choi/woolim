@@ -76,4 +76,32 @@ public class LectureController {
         model.addAttribute("list" , lectureDTO);
         return "/lecture/view";
     }
+
+    @GetMapping("/noticeList")
+    public void noticeListGET(String lecture_idx, Model model){
+        int idx = Integer.parseInt(lecture_idx);
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+        model.addAttribute("list" , lectureDTO);
+    }
+
+    @GetMapping("/qnaList")
+    public void qnaListGET(String lecture_idx, Model model){
+        int idx = Integer.parseInt(lecture_idx);
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+        model.addAttribute("list" , lectureDTO);
+    }
+
+    @GetMapping("/jalyosilList")
+    public void jalyosilListGET(String lecture_idx, Model model){
+        int idx = Integer.parseInt(lecture_idx);
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+        model.addAttribute("list" , lectureDTO);
+    }
+
+    @GetMapping("/studentList")
+    public void studentListGET(String lecture_idx, Model model){
+        int idx = Integer.parseInt(lecture_idx);
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+        model.addAttribute("list" , lectureDTO);
+    }
 }
