@@ -2,8 +2,10 @@ package org.fullstack4.woolim.service.lecture;
 
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.criteria.Criteria;
+import org.fullstack4.woolim.domain.BbsVO;
+import org.fullstack4.woolim.domain.GradeVO;
 import org.fullstack4.woolim.domain.LectureVO;
-import org.fullstack4.woolim.dto.LectureDTO;
+import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.LectureMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +56,25 @@ public class LectureServiceImpl implements LectureServiceIf {
         LectureDTO lectureDTO = modelMapper.map(lectureVO, LectureDTO.class);
 
         return lectureDTO;
+    }
+
+    @Override
+    public PageResponseDTO<GradeDTO> gradeListByPage(PageRequestDTO pageRequestDTO) {
+        List<GradeVO> voList =lectureMapper.gradeListByPage(pageRequestDTO);
+        log.info("voList" + voList);
+        List<GradeDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo, GradeDTO.class)).collect(Collectors.toList());
+        log.info("dtoList" + dtoList);
+
+        int total_count = lectureMapper.grade_count(pageRequestDTO);
+        log.info("total_count" + total_count);
+
+        PageResponseDTO<GradeDTO> responseDTO = PageResponseDTO.<GradeDTO>withAll()
+                .total_count(total_count)
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .build();
+
+        log.info("responseDTO :" +responseDTO);
+        return responseDTO;
     }
 }

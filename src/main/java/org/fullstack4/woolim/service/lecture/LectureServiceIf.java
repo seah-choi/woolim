@@ -1,7 +1,7 @@
 package org.fullstack4.woolim.service.lecture;
 
 import org.fullstack4.woolim.criteria.Criteria;
-import org.fullstack4.woolim.dto.LectureDTO;
+import org.fullstack4.woolim.dto.*;
 
 import java.util.List;
 
@@ -14,4 +14,6 @@ public interface LectureServiceIf {
     int getLectureKeywordCategory(Criteria cri);
 
     LectureDTO lectureView(int idx);
+
+    PageResponseDTO<GradeDTO> gradeListByPage(PageRequestDTO pageRequestDTO);
 }
