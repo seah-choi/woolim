@@ -2,6 +2,7 @@ package org.fullstack4.woolim.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.woolim.common.CookieUtil;
 import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.service.MemberServiceIf;
 import org.springframework.stereotype.Controller;
@@ -109,7 +110,13 @@ public class MemberController {
         return result;
 
     }
-
+    @GetMapping("/leave")
+    public String leave(String member_id, HttpServletResponse resp, HttpSession session){
+        memberService.leave(member_id);
+        CookieUtil.setDeleteCookie(resp,"save_id");
+        session.invalidate();
+        return "redirect:/";
+    }
 
 
 }

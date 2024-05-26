@@ -166,6 +166,11 @@ public class MemberServiceImpl implements MemberServiceIf{
     }
 
     @Override
+    public int leave(String member_id) {
+        return memberMapper.leave(member_id);
+    }
+
+    @Override
     public int adminDetail(MemberDTO memberDTO) {
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
         int result = memberMapper.adminDetail(memberVO);

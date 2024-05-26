@@ -117,7 +117,7 @@
                         <button type="submit" class="btn site-btn register-btn" id="regist" disabled>회원 정보 수정</button>
                     </form>
                     <div class="switch-login">
-                        <a href="./login.html" class="or-login">회원 탈퇴</a>
+                        <a href="/member/leave?member_id=${sessionScope.user_id}" class="or-login">회원 탈퇴</a>
                     </div>
                 </div>
             </div>
