@@ -125,7 +125,7 @@
                                 <th scope="row">${list.subject_name}</th>
                                 <td colspan="2">${list.lecture_title}</td>
                                 <td>${list.grade}</td>
-                                <td style="width: 150px;"><button type="button" class="btn" data-idx="${list.grade_idx}" id="view" data-bs-toggle="modal" data-bs-target="#exampleModal">상세보기</button></td>
+                                <td style="width: 150px;"><button type="button" class="btn view" data-idx="${list.grade_idx}" id="view" data-bs-toggle="modal" data-bs-target="#exampleModal">상세보기</button></td>
                             </tr>
                         </c:forEach>
                     </c:when>
@@ -197,44 +197,46 @@
 <script>
     const myModal = document.getElementById('myModal');
     const myInput = document.getElementById('myInput');
-    let btnView = document.getElementById('view');
+    let btnView = document.getElementsByClassName('view');
 
-    btnView.addEventListener('click',function(e){
-        $.ajax({
-            url: "/mystudy/getGrade",
-            method: 'get',
-            dataType : 'text',
-            data : {
-                "grade_idx" : this.getAttribute("data-idx")
-            },
-            success: function (response){
-                var data = JSON.parse(response)
-                console.log(data);
-                document.getElementById("exampleModalLabel").textContent = data.member_name + "님의 성적표"
-                document.getElementById("grade_idx").value = data.grade_idx;
-                document.getElementById("grade_title").textContent = '[' + data.subject_name + '] '+ data.lecture_title;
-                document.getElementById("grade").value = data.grade;
-            }
-        })
-    });
+    for(let i=0;i<btnView.length;i++) {
+        btnView[i].addEventListener('click', function (e) {
+            $.ajax({
+                url: "/mystudy/getGrade",
+                method: 'get',
+                dataType: 'text',
+                data: {
+                    "grade_idx": this.getAttribute("data-idx")
+                },
+                success: function (response) {
+                    var data = JSON.parse(response)
+                    console.log(data);
+                    document.getElementById("exampleModalLabel").textContent = data.member_name + "님의 성적표"
+                    document.getElementById("grade_idx").value = data.grade_idx;
+                    document.getElementById("grade_title").textContent = '[' + data.subject_name + '] ' + data.lecture_title;
+                    document.getElementById("grade").value = data.grade;
+                }
+            })
+        });
+    }
     // myModal.addEventListener('shown.bs.modal', () => {
     //     myInput.focus()
     // })
 
-    document.querySelector("#modify").addEventListener("click", function(e) {
-        e.preventDefault();
-        if(confirm("해당 글을 수정하시겠습니까?")){
-            location.href='/myStudy/';
-        };
-    });
-
-    document.querySelector("#delete").addEventListener("click", function (e) {
-        e.preventDefault();
-        if(confirm("해당 글을 정말 삭제하시겠습니까?")){
-            document.querySelector("#frm").submit();
-        }
-
-    });
+    // document.querySelector("#modify").addEventListener("click", function(e) {
+    //     e.preventDefault();
+    //     if(confirm("해당 글을 수정하시겠습니까?")){
+    //         location.href='/myStudy/';
+    //     };
+    // });
+    //
+    // document.querySelector("#delete").addEventListener("click", function (e) {
+    //     e.preventDefault();
+    //     if(confirm("해당 글을 정말 삭제하시겠습니까?")){
+    //         document.querySelector("#frm").submit();
+    //     }
+    //
+    // });
 </script>
 </body>
 </html>

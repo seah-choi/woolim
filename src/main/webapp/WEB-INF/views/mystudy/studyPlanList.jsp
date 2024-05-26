@@ -259,6 +259,46 @@
                 document.getElementById("end_date2").value = formatDate(element.event.end);
                 document.getElementById("study_idx").value = study_idx;
             },
+            eventResize: function(element) {
+                console.log(element.event.title);
+                console.log(formatDate(element.event.start));
+                console.log(formatDate(element.event.end));
+                console.log(element.event.extendedProps.customProperty);
+
+                $.ajax({
+                    url: "/events/modifyEvent",
+                    method: 'post',
+                    dataType : 'text',
+                    data : {
+                        "study_content" : element.event.title,
+                        "start_date" : formatDate(element.event.start),
+                        "end_date" : formatDate(element.event.end),
+                        "study_idx" : element.event.extendedProps.customProperty
+                    },
+                    success: function (response){
+                        if(response > 0){
+                            var id = element.event.extendedProps.customProperty
+                            calendar.getEvents().forEach(function(evt){
+                                if(evt.extendedProps.customProperty == id)
+                                    evt.remove();
+
+                            });
+                            calendar.addEvent({
+                                title: element.event.title,
+                                start: formatDate(element.event.start),
+                                end: formatDate(element.event.end),
+                                customProperty: response
+                            });
+                            $('#exampleModal2').modal('hide');
+                            document.getElementById('scheduleForm2').reset();
+                            calendar.render();
+                        }
+                        else{
+                            alert("수정 실패");
+                        }
+                    }
+                });
+            },
             eventDrop: function(element) {
                 $.ajax({
                     url: "/events/modifyEvent",
