@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -128,6 +129,26 @@ public class LectureController {
 
         log.info("LectureController >> GETList() END");
         log.info("============================");
+    }
+
+    @PostMapping("/studentRegist")
+    public String studentRegist(GradeDTO gradeDTO){
+        int result = lectureServiceIf.regist(gradeDTO);
+        if(result > 0){
+            return "redirect:/lecture/studentList";
+        } else {
+            return "redirect:/lecture/studentList";
+        }
+    }
+
+    @PostMapping("/studentModify")
+    public String studentModify(GradeDTO gradeDTO){
+        int result = lectureServiceIf.modify(gradeDTO);
+        if(result > 0){
+            return "redirect:/lecture/studentList";
+        } else {
+            return "redirect:/lecture/studentList";
+        }
     }
 
 
