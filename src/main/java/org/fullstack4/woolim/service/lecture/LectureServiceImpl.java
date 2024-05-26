@@ -3,6 +3,7 @@ package org.fullstack4.woolim.service.lecture;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.domain.BbsVO;
+import org.fullstack4.woolim.domain.ClassVO;
 import org.fullstack4.woolim.domain.GradeVO;
 import org.fullstack4.woolim.domain.LectureVO;
 import org.fullstack4.woolim.dto.*;
@@ -59,16 +60,16 @@ public class LectureServiceImpl implements LectureServiceIf {
     }
 
     @Override
-    public PageResponseDTO<GradeDTO> gradeListByPage(PageRequestDTO pageRequestDTO) {
-        List<GradeVO> voList =lectureMapper.gradeListByPage(pageRequestDTO);
+    public PageResponseDTO<ClassDTO> gradeListByPage(PageRequestDTO pageRequestDTO) {
+        List<ClassVO> voList =lectureMapper.gradeListByPage(pageRequestDTO);
         log.info("voList" + voList);
-        List<GradeDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo, GradeDTO.class)).collect(Collectors.toList());
+        List<ClassDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo, ClassDTO.class)).collect(Collectors.toList());
         log.info("dtoList" + dtoList);
 
         int total_count = lectureMapper.grade_count(pageRequestDTO);
         log.info("total_count" + total_count);
 
-        PageResponseDTO<GradeDTO> responseDTO = PageResponseDTO.<GradeDTO>withAll()
+        PageResponseDTO<ClassDTO> responseDTO = PageResponseDTO.<ClassDTO>withAll()
                 .total_count(total_count)
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList)

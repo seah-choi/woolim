@@ -13,4 +13,8 @@ public class ClassVO {
     private int class_idx;
     private String member_id;
     private int lecture_idx;
+    private String grade;
+    private String lecture_title;
+    private String member_name;
+    private int grade_idx;
 }

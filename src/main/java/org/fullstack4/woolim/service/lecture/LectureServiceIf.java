@@ -15,5 +15,5 @@ public interface LectureServiceIf {
 
     LectureDTO lectureView(int idx);
 
-    PageResponseDTO<GradeDTO> gradeListByPage(PageRequestDTO pageRequestDTO);
+    PageResponseDTO<ClassDTO> gradeListByPage(PageRequestDTO pageRequestDTO);
 }
