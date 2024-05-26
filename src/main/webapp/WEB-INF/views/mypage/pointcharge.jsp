@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Title</title>
@@ -168,7 +169,7 @@
                                     <tr>
                                         <th scope="row">${list.payment_type}</th>
                                         <td id="title">${list.payment_title}</td>
-                                        <td>${list.price}</td>
+                                        <td><fmt:formatNumber value="${list.price}" pattern="#,###"/>원</td>
                                         <td>${list.payment_reg_date}</td>
                                     </tr>
                                 </c:forEach>
