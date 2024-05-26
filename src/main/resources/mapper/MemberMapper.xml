@@ -8,6 +8,11 @@
         INSERT INTO woo_member(member_id, member_pwd, member_oauth, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date)
         VALUES(#{member_id}, #{member_pwd}, #{member_oauth}, #{member_email}, #{member_phone}, #{member_email_addr}, #{member_zonecode}, #{member_addr}, #{member_addr_detail}, #{member_category}, #{member_name}, 0, 'N', NOW() )
     </insert>
+    <update id="leave">
+        UPDATE woo_member
+        set member_status = 'Y'
+        WHERE member_id = #{member_id}
+    </update>
 
     <select id="view" resultType="org.fullstack4.woolim.domain.MemberVO">
         SELECT member_id,member_name, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date
@@ -15,27 +20,37 @@
         <where>
             <if test="member_id !=null and member_id !=''">
                 member_id= #{member_id}
+                AND member_status= 'N'
             </if>
             <if test="member_idx !=null and member_idx !=''">
                 or member_idx = #{member_idx}
+                AND member_status= 'N'
             </if>
         </where>
     </select>
 
     <update id="modify">
-        update woo_member set member_pwd = #{member_pwd}, member_phone = #{member_phone}, member_addr = #{member_addr}, member_zonecode = #{member_zonecode}, member_email=#{member_email}, member_addr_detail = #{member_addr_detail}, member_modify_date = now()
+        update woo_member
+        set member_pwd = #{member_pwd}, member_phone = #{member_phone}, member_addr = #{member_addr}, member_zonecode = #{member_zonecode}, member_email=#{member_email}, member_addr_detail = #{member_addr_detail}, member_modify_date = now()
         where member_id = #{member_id}
+    </update>
+    <update id="google_modify">
+        update woo_member
+        set member_addr = #{member_addr}, member_phone = #{member_phone}, member_zonecode = #{member_zonecode}, member_addr_detail = #{member_addr_detail}, member_modify_date = now()
+        where member_oauth = #{member_oauth}
     </update>
 
     <select id="memberView" resultType="org.fullstack4.woolim.domain.MemberVO">
-        SELECT member_idx, member_id,member_name, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date
+        SELECT member_idx, member_id,member_name, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date, member_oauth
         FROM woo_member
         WHERE member_id= #{member_id}
+        AND member_status= 'N'
     </select>
     <select id="google" resultType="org.fullstack4.woolim.domain.MemberVO">
         SELECT member_idx, member_id,member_name, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date, member_oauth
         FROM woo_member
         WHERE member_oauth= #{member_oauth}
+        AND member_status= 'N'
     </select>
 
     <select id ="MemberListbyPage" resultType="org.fullstack4.woolim.domain.MemberVO">

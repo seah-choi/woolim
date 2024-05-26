@@ -3,6 +3,7 @@ package org.fullstack4.woolim.controller;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.woolim.common.CookieUtil;
 import org.fullstack4.woolim.common.GoogleOAuth2Helper;
 import org.fullstack4.woolim.common.InsufficientStockException;
 import org.fullstack4.woolim.dto.MemberDTO;
@@ -54,6 +55,12 @@ public class LoginController {
                 resultMap.put("result", "success");
                 resultMap.put("msg","성공적으로 로그인되었습니다.");
                 HttpSession session = req.getSession();
+                if(save_id){
+                    CookieUtil.setCookies(resp,"","/",999999,"save_id", id);
+                }
+                else{
+                    CookieUtil.setDeleteCookie(resp,"save_id");
+                }
                 session.setAttribute("member_id", id);
                 session.setAttribute("member_name", name);
                 session.setAttribute("member_category", member_category);

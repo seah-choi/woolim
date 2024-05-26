@@ -43,8 +43,8 @@
         <div class="sidebar-menu" style="margin-top: 40px">
             <ul id="accordion-menu">
                 <li class="dropdown">
-                    <a href="#" class="noDropdown">
-                        <span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
+                    <a href="/admin/dashboard" class="noDropdown">
+                        <span class="micon dw dw-house-1"></span><span class="mtext">대시보드</span>
                     </a>
                 </li>
                 <li class="dropdown">

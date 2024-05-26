@@ -78,4 +78,23 @@ public class LectureServiceImpl implements LectureServiceIf {
         log.info("responseDTO :" +responseDTO);
         return responseDTO;
     }
+
+    @Override
+    public int modify(GradeDTO gradeDTO) {
+        GradeVO vo = modelMapper.map(gradeDTO, GradeVO.class);
+        int result = lectureMapper.modify(vo);
+        return result;
+    }
+
+    @Override
+    public int regist(GradeDTO gradeDTO) {
+        GradeVO vo = modelMapper.map(gradeDTO, GradeVO.class);
+        int result = lectureMapper.modify(vo);
+        return result;
+    }
+
+    @Override
+    public int delete(int grade_idx) {
+        return lectureMapper.delete(grade_idx);
+    }
 }

@@ -2,6 +2,7 @@ package org.fullstack4.woolim.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.woolim.common.CookieUtil;
 import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.service.MemberServiceIf;
 import org.springframework.stereotype.Controller;
@@ -66,12 +67,14 @@ public class MemberController {
             memberDTO.setMember_id(googleMember.getMember_id());
             memberDTO.setMember_name(googleMember.getMember_name());
             memberDTO.setMember_email(googleMember.getMember_email());
+            memberDTO.setMember_email_addr(googleMember.getMember_email_addr());
             memberDTO.setMember_addr_detail(googleMember.getMember_addr_detail());
             memberDTO.setMember_oauth(googleMember.getMember_oauth());
             memberDTO.setMember_category("student");
             int result = memberService.regist(memberDTO);
             if(result>0){
                 session.removeAttribute("memberDTO");
+                session.setAttribute("member_id", memberDTO.getMember_id());
                 session.setAttribute("user_id", memberDTO.getMember_id());
                 session.setAttribute("member_name", memberDTO.getMember_name());
                 return "redirect:/";
@@ -107,7 +110,13 @@ public class MemberController {
         return result;
 
     }
-
+    @GetMapping("/leave")
+    public String leave(String member_id, HttpServletResponse resp, HttpSession session){
+        memberService.leave(member_id);
+        CookieUtil.setDeleteCookie(resp,"save_id");
+        session.invalidate();
+        return "redirect:/";
+    }
 
 
 }

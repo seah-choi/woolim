@@ -9,7 +9,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+    <title>woolim</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -24,6 +24,17 @@
     <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+    <style>
+        .inner-text h4 {
+            background: #68afcb;
+            color: #fff;
+            border-radius: 100px;
+            width: 200px;
+            height: 70px;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -55,36 +66,36 @@
 <!-- Product Shop Section Begin -->
 <section class="hero-section">
     <div class="hero-items owl-carousel">
-        <div class="single-hero-items set-bg" data-setbg="/resources/img/hero-1.jpg">
+        <div class="single-hero-items set-bg" data-setbg="/resources/img/main1.png">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5">
-                        <span>Bag,kids</span>
-                        <h1>Black friday</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore</p>
-                        <a href="#" class="primary-btn">Shop Now</a>
+<%--                        <span>Bag,kids</span>--%>
+<%--                        <h1>Black friday</h1>--%>
+<%--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor--%>
+<%--                            incididunt ut labore et dolore</p>--%>
+<%--                        <a href="#" class="primary-btn">Shop Now</a>--%>
                     </div>
                 </div>
-                <div class="off-card">
-                    <h2>Sale <span>50%</span></h2>
-                </div>
+<%--                <div class="off-card">--%>
+<%--                    <h2>Sale <span>50%</span></h2>--%>
+<%--                </div>--%>
             </div>
         </div>
-        <div class="single-hero-items set-bg" data-setbg="/resources/img/hero-2.jpg">
+        <div class="single-hero-items set-bg" data-setbg="/resources/img/main.png">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5">
-                        <span>Bag,kids</span>
-                        <h1>Black friday</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore</p>
-                        <a href="#" class="primary-btn">Shop Now</a>
+<%--                        <span>Bag,kids</span>--%>
+<%--                        <h1>Black friday</h1>--%>
+<%--                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor--%>
+<%--                            incididunt ut labore et dolore</p>--%>
+<%--                        <a href="#" class="primary-btn">Shop Now</a>--%>
                     </div>
                 </div>
-                <div class="off-card">
-                    <h2>Sale <span>50%</span></h2>
-                </div>
+<%--                <div class="off-card">--%>
+<%--                    <h2>Sale <span>50%</span></h2>--%>
+<%--                </div>--%>
             </div>
         </div>
     </div>
@@ -98,7 +109,7 @@
             <div class="col-lg-4">
                 <div class="single-banner">
                     <a href="/lecture/list?type=&pageNum=1&amount=9&keyword=&sorting=&viewSorting=9&category=30000">
-                        <img src="/resources/img/banner-1.jpg" alt="">
+<%--                        <img src="/resources/img/banner-1.jpg" alt="">--%>
                         <div class="inner-text">
                             <h4>고등학생</h4>
                         </div>
@@ -108,7 +119,7 @@
             <div class="col-lg-4">
                 <div class="single-banner">
                     <a href="/lecture/list?type=&pageNum=1&amount=9&keyword=&sorting=&viewSorting=9&category=20000">
-                        <img src="/resources/img/banner-2.jpg" alt="">
+<%--                        <img src="/resources/img/banner-2.jpg" alt="">--%>
                         <div class="inner-text">
                             <h4>중학생</h4>
                         </div>
@@ -118,7 +129,7 @@
             <div class="col-lg-4">
                 <div class="single-banner">
                     <a href="/lecture/list?type=&pageNum=1&amount=9&keyword=&sorting=&viewSorting=9&category=10000">
-                        <img src="/resources/img/banner-3.jpg" alt="">
+<%--                        <img src="/resources/img/banner-3.jpg" alt="">--%>
                         <div class="inner-text">
                             <h4>초등학생</h4>
                         </div>
@@ -135,7 +146,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3">
-                <div class="product-large set-bg" data-setbg="/resources/img/products/women-large.jpg">
+                <div class="product-large set-bg" data-setbg="/resources/img/color.png">
                     <h2>강좌 리스트</h2>
                     <a href="/lecture/list">리스트 전체보기</a>
                 </div>
@@ -225,7 +236,7 @@
                 </div>
             </div>
             <div class="col-lg-3 offset-lg-1">
-                <div class="product-large set-bg m-large" data-setbg="/resources/img/products/man-large.jpg">
+                <div class="product-large set-bg m-large" data-setbg="/resources/img/color.png">
                     <h2>선생님</h2>
                     <a href="/teacher/list">리스트 전체보기</a>
                 </div>
