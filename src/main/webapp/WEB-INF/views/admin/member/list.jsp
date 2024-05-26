@@ -254,29 +254,6 @@
     }
 
 
-   /* function godelete(e) {
-        // 삭제 버튼 눌렀을 때
-        document.querySelector("#btnDelete").addEventListener("click", (e) => {
-            var check = document.querySelectorAll("input[type ='checkbox']:checked");
-            console.log(check);
-            if (check.length == 0) {
-                alert("하나 이상 선택하세요.");
-                e.preventDefault();
-                return false;
-            } else {
-                let deleteOk = confirm("정말 강퇴하겠습니까?");
-                if (deleteOk) {
-                    console.log(check);
-                    frm.submit();
-
-                } else {
-                    e.preventDefault();
-                    return false;
-                }
-            }
-        });
-    }*/
-
 </script>
 
 <script src="/resources/vendors/scripts/core.js"></script>
