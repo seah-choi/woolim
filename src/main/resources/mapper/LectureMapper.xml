@@ -154,7 +154,8 @@
         WHERE grade_idx = #{grade_idx}
     </update>
 
-    <delete id="delete">
-
-    </delete>
+    <update id="delete">
+        update woo_grade set grade = null
+        WHERE grade_idx = #{grade_idx}
+    </update>
 </mapper>
