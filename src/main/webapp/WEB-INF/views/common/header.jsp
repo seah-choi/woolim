@@ -78,7 +78,7 @@
                     <div class="d-flex">
                         <c:if test="${sessionScope.member_category == 'admin'}">
                             <div class="lan-selector">
-                                <a href="/admin/member/list" class="adminA panel" ><i class="icon-copy fa fa-cog" aria-hidden="true"></i>︎</a>
+                                <a href="/admin/dashboard" class="adminA panel" ><i class="icon-copy fa fa-cog" aria-hidden="true"></i>︎</a>
                             </div>
                         </c:if>
                         <c:if test="${sessionScope['user_id'] != null}">
