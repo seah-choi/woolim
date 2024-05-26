@@ -347,9 +347,6 @@
                 </form>
             </div>
             <br>
-            <c:choose>
-            <c:when test="${not empty bbsList.dtolist}">
-            <c:forEach items="${bbsList.dtolist}" var="list">
             <table class="table">
                 <thead>
                 <tr class="table-secondary">
@@ -360,6 +357,9 @@
                     <th></th>
                 </tr>
                 </thead>
+                <c:choose>
+                <c:when test="${not empty bbsList.dtolist}">
+                <c:forEach items="${bbsList.dtolist}" var="list">
                 <tbody>
                     <tr>
                         <th scope="row">${list.grade_idx}</th>
@@ -374,13 +374,15 @@
                         </c:if>
                     </tr>
                 </tbody>
+                </c:forEach>
+                </c:when>
+                    <c:otherwise>
+                        수강생이 없습니다.
+                    </c:otherwise>
+                </c:choose>
             </table>
-            </c:forEach>
-            </c:when>
-                <c:otherwise>
-                    수강생이 없습니다.
-                </c:otherwise>
-            </c:choose>
+
+
             <%--        성적표 입력 모달창--%>
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
