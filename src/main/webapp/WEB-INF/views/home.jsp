@@ -34,6 +34,22 @@
             text-align: center;
             padding: 20px;
         }
+        .studentDiv h4 {
+            background: #eaeaea !important;
+            color: #658bb0 !important;
+        }
+        .cateTile {
+            text-align: center;
+            background-color: #eaeaea;
+            padding-top: 50px;
+        }
+        .cateTile h3 {
+            font-weight: bold;
+            color: #73695e;
+        }
+        .classMu {
+            background-color: #eaeaea
+        }
     </style>
 </head>
 
@@ -103,35 +119,38 @@
 <!-- Hero Section End -->
 
 <!-- Banner Section Begin -->
-<div class="banner-section spad">
+<div class="cateTile"><h3>강좌 바로가기</h3></div>
+<div class="banner-section spad classMu" >
+
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-4">
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-2">
                 <div class="single-banner">
                     <a href="/lecture/list?type=&pageNum=1&amount=9&keyword=&sorting=&viewSorting=9&category=30000">
 <%--                        <img src="/resources/img/banner-1.jpg" alt="">--%>
-                        <div class="inner-text">
-                            <h4>고등학생</h4>
+                        <div class="inner-text studentDiv">
+                            <h4>🎓고등학생</h4>
                         </div>
                     </a>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <div class="single-banner">
                     <a href="/lecture/list?type=&pageNum=1&amount=9&keyword=&sorting=&viewSorting=9&category=20000">
 <%--                        <img src="/resources/img/banner-2.jpg" alt="">--%>
-                        <div class="inner-text">
-                            <h4>중학생</h4>
+                        <div class="inner-text studentDiv">
+                            <h4>🤹중학생</h4>
                         </div>
                     </a>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <div class="single-banner">
                     <a href="/lecture/list?type=&pageNum=1&amount=9&keyword=&sorting=&viewSorting=9&category=10000">
 <%--                        <img src="/resources/img/banner-3.jpg" alt="">--%>
-                        <div class="inner-text">
-                            <h4>초등학생</h4>
+                        <div class="inner-text studentDiv">
+                            <h4>🧸초등학생</h4>
                         </div>
                     </a>
                 </div>

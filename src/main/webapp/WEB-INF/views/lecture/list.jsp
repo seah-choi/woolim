@@ -225,7 +225,18 @@
                                         <img src="/resources/img/lecture/${list.lecture_image}" alt="">
                                         <div class="sale pp-sale">Sale</div>
                                         <div class="icon">
-                                            <i class="icon_heart_alt" onclick="addJjim(${list.lecture_idx})"></i>
+                                            <c:set var="flag" value="0"/>
+                                            <c:forEach items="${jjimList}" var="jjim">
+                                                <c:if test="${jjim.lecture_idx == list.lecture_idx}">
+                                                    <c:set var="flag" value="1"/>
+                                                </c:if>
+                                            </c:forEach>
+                                            <c:if test="${flag == '0'}">
+                                                <i class="icon_heart_alt" onclick="addJjim(${list.lecture_idx})"></i>
+                                            </c:if>
+                                            <c:if test="${flag == '1'}">
+                                                <i class="icon_heart" onclick="addJjim(${list.lecture_idx})"></i>
+                                            </c:if>
                                         </div>
                                         <ul>
                                             <li class="w-icon active"><a href="/order/order?lecture_idx=${list.lecture_idx}"><i class="icon_bag_alt"></i></a></li>
