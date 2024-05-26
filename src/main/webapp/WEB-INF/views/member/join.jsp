@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: user
@@ -35,35 +36,36 @@
                         <form action="/member/join" method="post" id="frmJoin">
                             <label for="member_id">아이디 *</label>
                             <div class="input-group">
-                                <input type="text" data-name="아이디" class="form-control" name="member_id" data-idCheck="N" id="member_id">
-                                <button id="id_check" onclick="idCheck(document.getElementById('member_id').value, event)">id 중복 확인</button>
+                                <input type="text" data-name="아이디" class="form-control" name="member_id" data-idCheck="N" id="member_id" value="<c:if test="${memberDTO.member_oauth != null}">소셜로그인으로 진행한 회원입니다.</c:if>"
+                                       <c:if test="${memberDTO.member_oauth != null}">disabled</c:if>>
+                                <button id="id_check" class="btn btn-outline-info" onclick="idCheck(document.getElementById('member_id').value, event)" <c:if test="${memberDTO.member_oauth != null}">disabled</c:if>>id 중복 확인</button>
                             </div>
                             <small id="err_member_id" class="info text-danger err-text" style="display: none">영문 소문자, 숫자를 포함한 8자리~20자리로 입력해주세요</small>
                             <br><br>
                             <label for="member_pwd">비밀번호 *</label>
                             <div class="input-group">
-                                <input type="password" name="member_pwd" data-name="비밀번호" class="form-control" id="member_pwd">
+                                <input type="password" name="member_pwd" data-name="비밀번호" class="form-control" id="member_pwd" value="" <c:if test="${memberDTO.member_oauth != null}">disabled</c:if>>
                             </div>
                             <small id="err_member_pwd" class="info text-danger err-text" style="display: none">영어 대소문자, 숫자, 특수 문자를 포함한 8자리~20자리로 입력해주세요</small>
                             <br><br>
                             <label for="member_pwd2">비밀번호 확인 *</label>
                             <div class="input-group">
-                                <input type="password" data-name="비밀번호" class="form-control" id="member_pwd2" name="member_pwd2">
+                                <input type="password" data-name="비밀번호" class="form-control" id="member_pwd2" name="member_pwd2" <c:if test="${memberDTO.member_oauth != null}">disabled</c:if>>
                             </div>
                             <small id="err_member_pwd2" class="info text-danger err-text" style="display: none">비밀번호가 일치하지 않습니다.</small>
                             <br><br>
                             <label for="member_name">이름 *</label>
                             <div class="input-group">
-                                <input name="member_name" data-name="이름" class="form-control" type="text" id="member_name">
+                                <input name="member_name" data-name="이름" class="form-control" type="text" id="member_name" value="${memberDTO.member_name}" <c:if test="${memberDTO.member_oauth != null}">disabled</c:if>>
                             </div>
                             <small id="err_member_name" class="info text-danger err-text" style="display: none">이름은 한글로 2자리~20자리로 입력해주세요</small>
                             <br><br>
                             <label for="member_email">이메일 *</label>
                             <div class="input-group">
-                                <input type="text" data-name="이메일" data-emailCheck="N" class="form-control" id="member_email1">
+                                <input type="text" data-name="이메일" data-emailCheck="N" class="form-control" id="member_email1" value="<c:if test="${memberDTO.member_oauth != null}">${memberDTO.member_email}@${memberDTO.member_email_addr}</c:if>" <c:if test="${memberDTO.member_oauth != null}">disabled</c:if>>
                                 <input type="hidden" id="member_email" name="member_email">
                                 <input type="hidden" id="member_email_addr" name="member_email_addr">
-                                <button onclick="emailCheck(document.getElementById('member_email1').value, event)">email 중복 확인</button>
+                                <button class="btn btn-outline-info" onclick="emailCheck(document.getElementById('member_email1').value, event)" <c:if test="${memberDTO.member_oauth != null}">disabled</c:if>>email 중복 확인</button>
                             </div>
                             <small id="err_member_email" class="info text-danger err-text" style="display: none">이메일주소를 확인해주세요.</small>
                             <br><br>
@@ -95,6 +97,7 @@
                                 </div>
                                 <small id="err_member_addr" class="info text-danger err-text"  style="display: none">주소를 입력해주세요.</small>
                             </div>
+                            <input type="hidden" id="social_flag" name="flag" value="<c:if test="${memberDTO.member_oauth != null}">1</c:if><c:if test="${memberDTO.member_oauth == null}">0</c:if>">
                             <input type="hidden" name="member_category" value="student">
                             <button type="submit" id="btnJoin" class="site-btn register-btn">회원가입</button>
                         </form>
@@ -282,34 +285,53 @@
         let btnJoin = document.getElementById("btnJoin");
         btnJoin.addEventListener("click", function(e){
            e.preventDefault();
+           let social_flag = document.getElementById("social_flag");
+           if(social_flag==0) {
 
-           //공백 체크
-           for(let i=0;i<=6;i++){
-               if(!nullCheck(inputEl[i])){
-                   alert("모든 항목은 필수사항입니다.");
-                   console.log("err : " + i);
+               //공백 체크
+               for (let i = 0; i <= 6; i++) {
+                   if (!nullCheck(inputEl[i])) {
+                       alert("모든 항목은 필수사항입니다.");
+                       console.log("err : " + i);
+                       return;
+                   }
+               }
+               for (let i = 0; i <= 6; i++) {
+                   if (errMsg[i].style.display === "block") {
+                       alert(inputEl[i].getAttribute('data-name') + '을(를) 확인해주세요');
+                       return;
+                   }
+               }
+               if (inputEl[0].getAttribute("data-idCheck") == 'N') {
+                   alert("아이디 중복 확인을 진행해주세요");
                    return;
                }
-           }
-            for(let i=0;i<=6;i++){
-                if(errMsg[i].style.display==="block"){
-                    alert(inputEl[i].getAttribute('data-name')+'을(를) 확인해주세요');
-                    return;
-                }
-            }
-            if(inputEl[0].getAttribute("data-idCheck")=='N'){
-                alert("아이디 중복 확인을 진행해주세요");
-                return;
-            }
-            if(inputEl[4].getAttribute("data-emailCheck")=='N'){
-                alert("이메일 중복 확인을 진행해주세요");
-                return;
-            }
+               if (inputEl[4].getAttribute("data-emailCheck") == 'N') {
+                   alert("이메일 중복 확인을 진행해주세요");
+                   return;
+               }
 
-            let member_email = document.getElementById("member_email");
-            member_email.value = inputEl[4].value.split('@')[0];
-            let member_email_addr = document.getElementById("member_email_addr");
-            member_email_addr.value = inputEl[4].value.split('@')[1];
+               let member_email = document.getElementById("member_email");
+               member_email.value = inputEl[4].value.split('@')[0];
+               let member_email_addr = document.getElementById("member_email_addr");
+               member_email_addr.value = inputEl[4].value.split('@')[1];
+           }
+           else{
+               for (let i = 5; i <= 6; i++) {
+                   if (!nullCheck(inputEl[i])) {
+                       alert(inputEl[i].getAttribute('data-name') + '을(를) 확인해주세요');
+                       console.log("err : " + i);
+                       return;
+                   }
+               }
+               for (let i = 5; i <= 6; i++) {
+                   if (errMsg[i].style.display === "block") {
+                       alert(inputEl[i].getAttribute('data-name') + '을(를) 확인해주세요');
+                       return;
+                   }
+               }
+
+           }
 
             let frmJoin = document.getElementById("frmJoin");
             frmJoin.submit();
