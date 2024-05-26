@@ -87,6 +87,7 @@
                                         <option value="student" <c:if test="${memberList.member_type eq 'student'}">selected</c:if>>학생</option>
                                         <option value="teacher" <c:if test="${memberList.member_type eq 'teacher'}">selected</c:if>>선생님</option>
                                     </select>
+
                                 </div>
                             </div>
 
@@ -146,23 +147,15 @@
                                 <td><a href="/admin/member/view?member_id=${list.member_id}">${list.member_name}</a></td>
                                 <td>${list.member_id}</td>
                                 <td style="width: 130px">
-                                    <select name="member_type" class="selectpicker form-control grade" data-size="5" data-style="btn-outline-info">
-                                        <c:if test="${list.member_category eq 'admin'}">
-                                            <option value="admin">관리자</option>
-                                            <option value="student">학생</option>
-                                            <option value="teacher">선생님</option>
-                                        </c:if>
-                                        <c:if test="${list.member_category eq 'student'}">
-                                            <option value="student">학생</option>
-                                            <option value="teacher">선생님</option>
-                                            <option value="admin">관리자</option>
-                                        </c:if>
-                                        <c:if test="${list.member_category eq 'teacher'}">
-                                            <option value="teacher">선생님</option>
-                                            <option value="student">학생</option>
-                                            <option value="admin">관리자</option>
-                                        </c:if>
-                                    </select>
+                                    <c:if test="${list.member_category eq 'admin'}">
+                                        <div>관리자</div>
+                                    </c:if>
+                                    <c:if test="${list.member_category eq 'student'}">
+                                        <div>학생</div>
+                                    </c:if>
+                                    <c:if test="${list.member_category eq 'teacher'}">
+                                        <div>선생님</div>
+                                    </c:if>
                                 </td>
                                 <td>${list.member_reg_date}</td>
                                 <td>${list.member_status}</td>
@@ -260,29 +253,6 @@
             }
     }
 
-
-   /* function godelete(e) {
-        // 삭제 버튼 눌렀을 때
-        document.querySelector("#btnDelete").addEventListener("click", (e) => {
-            var check = document.querySelectorAll("input[type ='checkbox']:checked");
-            console.log(check);
-            if (check.length == 0) {
-                alert("하나 이상 선택하세요.");
-                e.preventDefault();
-                return false;
-            } else {
-                let deleteOk = confirm("정말 강퇴하겠습니까?");
-                if (deleteOk) {
-                    console.log(check);
-                    frm.submit();
-
-                } else {
-                    e.preventDefault();
-                    return false;
-                }
-            }
-        });
-    }*/
 
 </script>
 

@@ -24,5 +24,6 @@ public interface BbsMapper {
     int fileModify(BoardFileVO boardFileVO);
 
     int checkExistingFiles(int bbs_idx);
+    public boolean updateReadCount(int bbs_idx);
 
 }
