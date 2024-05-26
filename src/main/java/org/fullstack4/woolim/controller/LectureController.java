@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
+import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpSession;
+
 import java.util.List;
 
 @Log4j2
@@ -170,17 +174,39 @@ public class LectureController {
 
 
     @GetMapping("/boardRegist")
-    public void boardRegistGET(String lecture_idx, Model model){
-        int idx = Integer.parseInt(lecture_idx);
-        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+    public void boardRegistGET(Model model, @RequestParam String bbs_type, @RequestParam int lecture_idx){
+
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(lecture_idx);
         model.addAttribute("list" , lectureDTO);
+        model.addAttribute("bbs_type",bbs_type);
+        model.addAttribute("lecture_idx", lecture_idx);
+    }
+
+    @PostMapping("/boardRegist")
+    public String boardRegistPOST(BbsDTO bbsDTO){
+        int result = bbsServiceIf.InsertLectureBbs(bbsDTO);
+        if(result>0){
+            return "redirect:/lecture/boardList?bbs_type="+bbsDTO.getBbs_category_code()+"&lecture_idx="+bbsDTO.getLecture_idx();
+        }
+        else{
+            return null;
+        }
     }
 
     @GetMapping("/boardView")
-    public void boardViewGET(String lecture_idx, Model model){
-        int idx = Integer.parseInt(lecture_idx);
-        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+    public void boardViewGET(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type){
+
+        BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
+        BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
+
+        model.addAttribute("file",boardFileDTO);
+        model.addAttribute("bbsDTO" , bbsDTO);
+        log.info(bbsDTO.toString());
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(lecture_idx);
         model.addAttribute("list" , lectureDTO);
+        model.addAttribute("bbs_type",bbs_type);
+        model.addAttribute("lecture_idx", lecture_idx);
+        model.addAttribute("bbs_idx", bbs_idx);
     }
 
 
@@ -206,5 +232,24 @@ public class LectureController {
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         model.addAttribute("list" , lectureDTO);
     }
+
+    @GetMapping("/boardModify")
+    public void GETBModify(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type) {
+        BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
+        model.addAttribute("bbsDTO", bbsDTO);
+        model.addAttribute("bbs_type",bbs_type);
+        model.addAttribute("lecture_idx", lecture_idx);
+        model.addAttribute("bbs_idx", bbs_idx);
+    }
+
+    @PostMapping("/boardModify")
+    public void POSTBModify(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type) {
+        BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
+        model.addAttribute("bbsDTO", bbsDTO);
+        model.addAttribute("bbs_type",bbs_type);
+        model.addAttribute("lecture_idx", lecture_idx);
+        model.addAttribute("bbs_idx", bbs_idx);
+    }
+
 
 }

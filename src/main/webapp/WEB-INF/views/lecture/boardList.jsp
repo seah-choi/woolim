@@ -299,7 +299,9 @@
         </div>
 
         <div class="product-tab" id="list">
-            <h5 style="font-weight: bold">공지사항</h5>
+            <c:if test="${responseDTO.bbs_type=='bbs04'}"><h5 style="font-weight: bold">공지사항</h5></c:if>
+            <c:if test="${responseDTO.bbs_type=='bbs05'}"><h5 style="font-weight: bold">자료실</h5></c:if>
+            <c:if test="${responseDTO.bbs_type=='bbs03'}"><h5 style="font-weight: bold">Q&A</h5></c:if>
             <hr>
             <div style="display: flex;justify-content: flex-end;">
                 <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/boardRegist?bbs_type=${bbs_type}&lecture_idx=${list.lecture_idx}'">글쓰기</button>
@@ -337,7 +339,7 @@
                 <c:forEach items="${responseDTO.dtolist}" var="list">
                     <tr>
                         <th scope="row">#</th>
-                        <td><a href="/lecture/boardView?bbs_idx=${list.bbs_idx}">${list.bbs_title}</a></td>
+                        <td><a href="/lecture/boardView?bbs_idx=${list.bbs_idx}&lecture_idx=${list.lecture_idx}&bbs_type=${list.bbs_category_code}">${list.bbs_title}</a></td>
                         <td>${list.bbs_reg_date}</td>
                         <td>${list.bbs_read_cnt}</td>
                     </tr>

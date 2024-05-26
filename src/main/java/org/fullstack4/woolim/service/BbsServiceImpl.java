@@ -101,6 +101,13 @@ public class BbsServiceImpl implements BbsServiceIf{
     }
 
     @Override
+    public int InsertLectureBbs(BbsDTO bbsDTO) {
+        BbsVO bbsVO = modelMapper.map(bbsDTO, BbsVO.class);
+        int result = bbsMapper.InsertLectureBbs(bbsVO);
+        return result;
+    }
+
+    @Override
     public boolean hasExistingFiles(int bbs_idx) {
         return bbsMapper.checkExistingFiles(bbs_idx) > 0;
     }

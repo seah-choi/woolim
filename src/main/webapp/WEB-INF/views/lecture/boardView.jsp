@@ -302,14 +302,14 @@
         </div>
 
         <div class="product-tab" id="list">
-            <h5 style="font-weight: bold">제목</h5>
+            <h5 style="font-weight: bold">${bbsDTO.bbs_title}</h5>
             <hr>
             <div id="se">
                 <div>
-                    <span style="font-weight: bold">작성일</span><span id="date">2024-05-25</span>
+                    <span style="font-weight: bold">작성일</span><span id="date">${bbsDTO.bbs_reg_date}</span>
                 </div>
                 <div>
-                    <span style="font-weight: bold">조회수</span><span id="count">0</span>
+                    <span style="font-weight: bold">조회수</span><span id="count">${bbsDTO.bbs_read_cnt}</span>
                 </div>
             </div>
             <hr>
@@ -320,10 +320,10 @@
                 </c:if>
             </div>
             <br>
-            <div style="white-space: pre-wrap;margin-bottom: 100px;">내용</div>
+            <div style="white-space: pre-wrap;margin-bottom: 100px;">${bbsDTO.bbs_content}</div>
             <div style="display: flex;justify-content: center;">
                 <div>
-                    <button type="button" class="btn" id="btn_back" onclick="location.href='/board/list'">목록</button>
+                    <button type="button" class="btn" id="btn_back" onclick="location.href='/lecture/boardList?bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">목록</button>
                 </div>
             </div>
         </div>
