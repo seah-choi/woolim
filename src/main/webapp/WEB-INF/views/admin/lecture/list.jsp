@@ -29,7 +29,18 @@
     <link rel="stylesheet" type="text/css" href="/resources/vendors/styles/icon-font.min.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/adminStyle.css">
 
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/resources/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
     <script>
@@ -46,6 +57,169 @@
             margin-left: 20px;
             padding-bottom: 100px;
         }
+        /* 전체 컨테이너를 플렉스 컨테이너로 설정 */
+        .advanced-search {
+            display: flex;
+            align-items: center;
+        }
+
+        /* 카테고리 선택 버튼 스타일 */
+        .category-btn {
+            height: 40px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 0 15px;
+            font-size: 16px;
+            color: #495057;
+            background-color: #fff;
+            outline: none;
+            transition: border-color 0.3s ease-in-out;
+            margin-left: 18px;
+        }
+
+        .category-btn:focus {
+            border-color: #80bdff;
+        }
+
+        /* 입력 그룹 컨테이너 스타일 */
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        /* 텍스트 입력 스타일 */
+        .input-group input[type="text"] {
+            height: 40px;
+            padding: 0 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #495057;
+            outline: none;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .input-group input[type="text"]:focus {
+            border-color: #80bdff;
+        }
+
+        /* 버튼 스타일 */
+        .input-group button {
+            height: 40px;
+            padding: 0 20px;
+            border: 1px solid #ced4da;
+            background-color: #68afcb;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .input-group button i {
+            font-size: 16px;
+        }
+
+        .input-group button:hover {
+            background-color: #0056b3;
+        }
+        .select-option {
+            display: flex;
+        }
+
+        .select-option .sorting {
+            margin-right: 10px; /* 선택 상자 사이의 간격을 조절합니다. */
+        }
+        .pageInfo_wrap .pagination {
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: .25rem;
+            justify-content: center;
+        }
+
+        .pageInfo_wrap .page-link {
+            position: relative;
+            display: block;
+            padding: .5rem .75rem;
+            margin-left: -1px;
+            line-height: 1;
+            color: #327f9b;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+
+        .pageInfo_wrap .page-link:hover {
+            z-index: 2;
+            color: #327f9b;
+            text-decoration: none;
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+        }
+
+        .pageInfo_wrap .page-link:focus {
+            z-index: 3;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .pageInfo_wrap .page-item:first-child .page-link {
+            margin-left: 0;
+            border-top-left-radius: .25rem;
+            border-bottom-left-radius: .25rem;
+        }
+
+        .pageInfo_wrap .page-item:last-child .page-link {
+            border-top-right-radius: .25rem;
+            border-bottom-right-radius: .25rem;
+        }
+
+        .pageInfo_wrap .page-item.active .page-link {
+            z-index: 3;
+            color: #fff;
+            background-color: #68afcb;
+            border-color: #68afcb;
+        }
+
+        .pageInfo_wrap .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            cursor: auto;
+            background-color: #fff;
+            border-color: #dee2e6;
+        }
+
+        .pageInfo_wrap .pagination-lg .page-link {
+            padding: .75rem 1.5rem;
+            font-size: 1.25rem;
+            line-height: 1.5;
+        }
+
+        .pageInfo_wrap .pagination-lg .page-item:first-child .page-link {
+            border-top-left-radius: .3rem;
+            border-bottom-left-radius: .3rem;
+        }
+
+        .pageInfo_wrap .pagination-lg .page-item:last-child .page-link {
+            border-top-right-radius: .3rem;
+            border-bottom-right-radius: .3rem;
+        }
+
+        .pageInfo_wrap .pagination-sm .page-link {
+            padding: .25rem .5rem;
+            font-size: .875rem;
+            line-height: 1.5;
+        }
+
+        .pageInfo_wrap .pagination-sm .page-item:first-child .page-link {
+            border-top-left-radius: .2rem;
+            border-bottom-left-radius: .2rem;
+        }
+
+        .pageInfo_wrap .pagination-sm .page-item:last-child .page-link {
+            border-top-right-radius: .2rem;
+            border-bottom-right-radius: .2rem;
+        }
+
     </style>
 </head>
 <body>
@@ -63,7 +237,7 @@
                 <div class="searchBox">
                     <form role="search" id="frmSearch" class="searchForm">
                         <div class="mb-3 row d-flex">
-                            <label class="ml-3 col-form-label fontWe-700 mt-4">검색 범위</label>
+                            <%--<label class="ml-3 col-form-label fontWe-700 mt-4">검색 범위</label>
 
                             <div class="col-md-1 col-sm-12">
                                 <div class="form-group selectDiv">
@@ -76,8 +250,24 @@
                                         <option>과학</option>
                                     </select>
                                 </div>
+                            </div>--%>
+                            <div class="col-lg-7 col-md-7">
+                                <div class="select-option">
+                                    <select class="sorting" id="sorting" onchange="redirectToList()">
+                                        <option value="1" ${pageMaker.cri.sorting == '1' ? 'selected' : ''}>인기순</option>
+                                        <option value="2" ${pageMaker.cri.sorting == '2' ? 'selected' : ''}>최신순</option>
+                                        <option value="3" ${pageMaker.cri.sorting == '3' ? 'selected' : ''}>댓글순</option>
+                                        <option value="4" ${pageMaker.cri.sorting == '4' ? 'selected' : ''}>좋아요순</option>
+                                    </select>
+                                    <select class="sorting" id="viewSorting" onchange="viewSortingFun()">
+                                        <option value="9" ${pageMaker.cri.viewSorting == '9' ? 'selected' : ''}>9개씩 보기</option>
+                                        <option value="12" ${pageMaker.cri.viewSorting == '12' ? 'selected' : ''}>12개씩 보기</option>
+                                        <option value="24" ${pageMaker.cri.viewSorting == '24' ? 'selected' : ''}>24개씩 보기</option>
+                                        <option value="36" ${pageMaker.cri.viewSorting == '36' ? 'selected' : ''}>36개씩 보기</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="col-md-1 col-sm-12 ml-5" >
+                            <%--<div class="col-md-1 col-sm-12 ml-5" >
                                 <div class="form-group selectDiv">
                                     <label>초중고</label>
                                     <select id="schoolSelect" name="search_type" class="selectpicker form-control school" data-size="5" data-style="btn-outline-info">
@@ -99,7 +289,7 @@
 
                             <div class="mt-4 ml-5">
                                 <input class="searchInput ml-2" type="search" name="search_word"  id="search_word" placeholder="검색" aria-label="Search" value="">
-                            </div>
+                            </div>--%>
                         </div>
 
                         <div class="mb-3 row">
@@ -120,11 +310,41 @@
                                     </c:otherwise>
                                 </c:choose>
 
-                                <button type="button" id="searchBtn"><i class="ti-search"></i></button>
-                                <button type="button" id="resetBtn">초기화</button>
+                                <button type="button" id="searchBtn" style="height: 40px;
+    padding: 0 20px;
+    border: 1px solid #ced4da;
+    background-color: #68afcb;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;"><i class="ti-search"></i></button>
+                                <button type="button" id="resetBtn" style="height: 40px;
+    padding: 0 20px;
+    border: 1px solid #ced4da;
+    background-color: #68afcb;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;">초기화</button>
                             </form>
                         </div>
                     </form>
+                    <div class="mb-3 row" style="margin-left: 20px;">
+                        <label class="ml-3 col-form-label fontWe-700">검색 기간</label>
+                        <div class="col-2 ml-4">
+                            <input type="date" class="form-control" name="search_date1" id="search_date1" value="">
+                        </div>
+                        <div class="mt-2">
+                            <span class="justify-content-center">~</span>
+                        </div>
+                        <div class="col-2">
+                            <input type="date" class="form-control" name="search_date2" id="search_date2" value="">
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-warning" id="btnSearch" type="submit">검색</button>
+                            <button class="btn btn-warning" id="btnReset" type="reset" onclick="location.href='/admin/board/list?bbs_type=${bbsList.bbs_type}'">초기화</button>
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <table class="table table-hover">
@@ -132,8 +352,8 @@
                     <tr>
                         <th>
                             <div class="custom-control custom-checkbox mb-5">
-                                <input type="checkbox" class="custom-control-input" id="chkAll" name="chkAll">
-                                <label class="custom-control-label" for="chkAll">전체선택</label>
+                                <input type="checkbox" class="custom-control-input" id="c0" name="chkAll">
+                                <label class="custom-control-label" for="c0">전체선택</label>
                             </div>
                         </th>
                         <th>NO.</th>
@@ -145,16 +365,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${list}" var="list">
+                    <c:forEach items="${list}" var="list" varStatus="status">
                     <tr>
                         <td>
                             <div class="custom-control custom-checkbox mb-5">
-                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                <label class="custom-control-label" for="customCheck2"><span></span></label>
+                                <input type="checkbox" class="custom-control-input" id="c${status.index + 1}">
+                                <label class="custom-control-label" for="c${status.index + 1}"><span></span></label>
                             </div>
                         </td>
+                        <input  type="hidden" class="lectureIdx" value="${list.lecture_idx}"/>
                         <td>${list.lecture_idx}</td>
-                        <td>${list.lecture_title}</td>
+                        <td><a href="/admin/lecture/modify?lecture_idx=${list.lecture_idx}">${list.lecture_title}</a></td>
                         <td>${list.lecture_category_subject}</td>
                         <td>${list.member_name}</td>
                         <td>${list.lecture_start_date} ~ ${list.lecture_end_date}</td>
@@ -167,31 +388,39 @@
                 </table>
                 <div class="d-flex justify-content-sm-end">
                     <a class="btn btn-primary btn-lg btn-block" href="/admin/lecture/regist" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
+                    <button class="btn" id="deleteBtn">삭제</button>
                 </div>
 
-                <div class="pageInfo_wrap">
-                    <div class="pageInfo_area">
-                        <!-- 이전페이지 버튼 -->
-                        <c:if test="${pageMaker.prev}">
-                            <li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
-                        </c:if>
 
-                        <!-- 각 번호 페이지 버튼 -->
-                        <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                            <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a href="${num}">${num}</a></li>
-                        </c:forEach>
-
-
-                        <!-- 다음페이지 버튼 -->
-                        <c:if test="${pageMaker.next}">
-                            <li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
-                        </c:if>
-                    </div>
-                </div>
 
         </div>
     </div>
-    <form class="moveForm" method="get" id="moveForm">
+        <div class="pageInfo_wrap">
+            <ul class="pagination pageInfo_area">
+                <!-- 이전페이지 버튼 -->
+                <c:if test="${pageMaker.prev}">
+                    <li class="page-item pageInfo_btn previous">
+                        <a class="page-link" href="${pageMaker.startPage-1}"><<</a>
+                    </li>
+                </c:if>
+
+                <!-- 각 번호 페이지 버튼 -->
+                <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+                    <li class="page-item pageInfo_btn ${pageMaker.cri.pageNum == num ? "active" : ""}">
+                        <a class="page-link" href="${num}">${num}</a>
+                    </li>
+                </c:forEach>
+
+                <!-- 다음페이지 버튼 -->
+                <c:if test="${pageMaker.next}">
+                    <li class="page-item pageInfo_btn next">
+                        <a class="page-link" href="${pageMaker.endPage + 1}"> >></a>
+                    </li>
+                </c:if>
+            </ul>
+        </div>
+
+        <form class="moveForm" method="get" id="moveForm">
         <input type="hidden" name="type" value="${pageMaker.cri.type }">
         <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
         <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
@@ -199,7 +428,7 @@
         <input type="hidden" name="sorting" value="${pageMaker.cri.sorting}">
         <input type="hidden" name="viewSorting"  value="${pageMaker.cri.viewSorting}">
         <input type="hidden" name="category"  value="${pageMaker.cri.category}">
-        <input type="hidden" name="subject"  value="${pageMaker.cri.subject}">
+
     </form>
 </div>
 </div>
@@ -250,7 +479,16 @@
         moveForm.querySelector("input[name='pageNum']").value = 1;
         moveForm.submit();
     });
-
+    function viewSortingFun() {
+        console.log("vieCOnsdif");
+        let sortingValue = document.getElementById("viewSorting").value;
+        moveForm.querySelector("input[name='viewSorting']").value = sortingValue;
+        moveForm.querySelector("input[name='sorting']").value ;
+        moveForm.querySelector("input[name='type']").value;
+        moveForm.querySelector("input[name='keyword']").value;
+        moveForm.querySelector("input[name='pageNum']").value = 1;
+        moveForm.submit();
+    }
     function redirectToList() {
         let sortingValue = document.getElementById("sorting").value;
         let sort = document.getElementById("viewSorting").value;
@@ -290,7 +528,7 @@
         moveForm.submit();
     }
     document.querySelector("#resetBtn").addEventListener("click", function (){
-        location.href= '/lecture/list';
+        location.href= '/admin/lecture/list';
     });
 
     document.querySelectorAll('input[name="subject"]').forEach(function (checkbox) {
@@ -311,77 +549,65 @@
             console.log("###" + checkbox.value);
         });
     }
-    //분류 셀렉박스
-    const gradeOptions = {
-        elementary: ['전체', '1학년', '2학년', '3학년', '4학년', '5학년', '6학년'],
-        middle: ['전체', '1학년', '2학년', '3학년'],
-        high: ['전체', '1학년', '2학년', '3학년'],
-    };
 
-/*
-    document.getElementById('schoolSelect').addEventListener('change', function () {
-        const schoolType = this.value;
-        const gradeSelect = document.getElementById('gradeSelect');
-
-        gradeSelect.innerHTML = '';
-
-        if (schoolType in gradeOptions) {
-            gradeOptions[schoolType].forEach(grade => {
-                const option = document.createElement('option');
-                option.value = grade;
-                option.textContent = grade;
-                gradeSelect.appendChild(option);
-            });
-        } else {
-            const option = document.createElement('option');
-            option.value = 'all';
-            option.textContent = '전체';
-            gradeSelect.appendChild(option);
-        }
-
-        $('.selectpicker').selectpicker('refresh');
-    });
-*/
-
-/*    document.getElementById('schoolSelect').dispatchEvent(new Event('change'));*/
-
-/*
-
-    let frm = document.querySelector("#frm");
-    let chkAll = document.querySelector("#chkAll");*/
-    // 체크박스 전체 선택/해제
-/*    chkAll.addEventListener("click", (e) => {
-        var check = document.querySelectorAll("input[type ='checkbox']");
-
-        check.forEach((checkbox) => {
-            checkbox.checked = chkAll.checked;
-        });
-    });*/
-
-   /* // 삭제 버튼 눌렀을 때
-    document.querySelector("#btnDelete").addEventListener("click", (e) => {
-        var check = document.querySelectorAll("input[type ='checkbox']:checked");
-        console.log(check);
-        if (check.length == 0) {
-            alert("하나 이상 선택하세요.");
-            e.preventDefault();
-            return false;
-        } else {
-                let deleteOk = confirm("삭제 하시겠습니까?");
-                if (deleteOk) {
-
-                console.log(check);
-                frm.submit();
-
-            } else {
-                e.preventDefault();
-                return false;
+    const vr = document.querySelector('#c0');
+    document.querySelectorAll('.custom-control-input').forEach(function(checkbox) {
+        checkbox.addEventListener("click", function(e) {
+            if (checkbox.id === 'c0') {
+                if (checkbox.checked) {
+                    document.querySelectorAll('.custom-control-input').forEach(function(checkbox) {
+                        checkbox.checked = true;
+                    });
+                } else {
+                    document.querySelectorAll('.custom-control-input').forEach(function(checkbox) {
+                        checkbox.checked = false;
+                    });
+                }
             }
-        }
-    });*/
+        });
+    });
+
+    document.querySelectorAll('.custom-control-input').forEach(function(checkbox) {
+        checkbox.addEventListener("click", function(){
+
+        })
+    });
+    document.querySelector('#deleteBtn').addEventListener("click", function(){
+        document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+
+
+
+        });
+    });
+
+    document.querySelector('#deleteBtn').addEventListener("click", function(){
+        var selectedValues = [];
+
+        document.querySelectorAll('.custom-control-input').forEach(function(checkbox) {
+            if (checkbox.checked) {
+                const selected = checkbox.closest('tr').querySelector('.lectureIdx');
+                if (selected) {
+                    selectedValues.push(selected.value);
+                }
+            }
+        });
+
+        console.log("선택된 값들:", selectedValues);
+        location.href="/admin/lecture/delete?selectedValues=" + selectedValues;
+    });
 
 </script>
-
+<!-- Js Plugins -->
+<script src="/resources/js/jquery-3.3.1.min.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
+<script src="/resources/js/jquery-ui.min.js"></script>
+<script src="/resources/js/jquery.countdown.min.js"></script>
+<script src="/resources/js/jquery.nice-select.min.js"></script>
+<script src="/resources/js/jquery.zoom.min.js"></script>
+<script src="/resources/js/jquery.dd.min.js"></script>
+<script src="/resources/js/jquery.slicknav.js"></script>
+<script src="/resources/js/owl.carousel.min.js"></script>
+<script src="/resources/js/main.js"></script>
 <script src="/resources/vendors/scripts/core.js"></script>
 <script src="/resources/vendors/scripts/script.min.js"></script>
 <script src="/resources/vendors/scripts/process.js"></script>

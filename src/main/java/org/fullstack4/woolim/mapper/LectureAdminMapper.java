@@ -11,4 +11,12 @@ public interface LectureAdminMapper {
     List<LectureVO> getList();
 
     int insertLecture(LectureDTO dto);
+
+    int deleteLecture(int lecture_idx);
+
+    int deleteLectureImage(int lecture_idx);
+
+    int modifyLectureFile(LectureDTO dto);
+
+    int modifyLecture(LectureDTO dto);
 }

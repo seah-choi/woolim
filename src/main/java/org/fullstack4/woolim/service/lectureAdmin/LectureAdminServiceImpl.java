@@ -40,4 +40,28 @@ public class LectureAdminServiceImpl implements LectureAdminService{
 
         return list;
     }
+
+    @Override
+    public int deleteLecture(int lecture_idx) {
+        int dResult = lectureAdminMapper.deleteLecture(lecture_idx);
+        return dResult;
+    }
+
+    @Override
+    public int deleteLectureImage(int lecture_idx) {
+        int dResult = lectureAdminMapper.deleteLectureImage(lecture_idx);
+        return dResult;
+    }
+
+    @Override
+    public int modifyLectureFile(LectureDTO dto) {
+        int uResult = lectureAdminMapper.modifyLectureFile(dto);
+        return uResult;
+    }
+
+    @Override
+    public int modifyLecture(LectureDTO dto) {
+        int uResult = lectureAdminMapper.modifyLecture(dto);
+        return uResult;
+    }
 }

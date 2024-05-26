@@ -28,7 +28,8 @@
             lecture_study,
             lecture_content_detail,
             lecture_price,
-            lecture_sale
+            lecture_sale,
+            lecture_sale_price
         ) VALUES (
                      #{lecture_title},
                      #{member_name},
@@ -44,8 +45,57 @@
                      #{lecture_study},
                      #{lecture_content_detail},
                      #{lecture_price},
-                     #{lecture_sale}
+                     #{lecture_sale},
+                     #{lecture_sale_price}
                  );
 
     </insert>
+
+    <delete id="deleteLecture">
+        delete from woo_lecture where lecture_idx = #{lecture_idx}
+    </delete>
+
+    <update id="deleteLectureImage">
+        update woo_lecture set lecture_image = null where lecture_idx = #{lecture_idx}
+    </update>
+
+    <update id="modifyLectureFile">
+        UPDATE woo_lecture
+        SET
+            lecture_title = #{lecture_title},
+            member_name = #{member_name},
+            lecture_start_date = #{lecture_start_date},
+            lecture_end_date = #{lecture_end_date},
+            lecture_image = #{lecture_image},
+            lecture_content = #{lecture_content},
+            lecture_category_subject = #{lecture_category_subject},
+            lecture_category_school = #{lecture_category_school},
+            lecture_category_grade = #{lecture_category_grade},
+            member_id = #{member_id},
+            lecture_study = #{lecture_study},
+            lecture_content_detail = #{lecture_content_detail},
+            lecture_price = #{lecture_price},
+            lecture_sale = #{lecture_sale}
+        WHERE lecture_idx = #{lecture_idx};
+    </update>
+
+    <update id="modifyLecture">
+        UPDATE woo_lecture
+        SET
+            lecture_title = #{lecture_title},
+            member_name = #{member_name},
+            lecture_start_date = #{lecture_start_date},
+            lecture_end_date = #{lecture_end_date},
+            lecture_image = #{lecture_image},
+            lecture_content = #{lecture_content},
+            lecture_category_subject = #{lecture_category_subject},
+            lecture_category_school = #{lecture_category_school},
+            lecture_category_grade = #{lecture_category_grade},
+            member_id = #{member_id},
+            lecture_study = #{lecture_study},
+            lecture_content_detail = #{lecture_content_detail},
+            lecture_price = #{lecture_price},
+            lecture_sale = #{lecture_sale}
+        WHERE lecture_idx = #{lecture_idx};
+    </update>
 </mapper>
