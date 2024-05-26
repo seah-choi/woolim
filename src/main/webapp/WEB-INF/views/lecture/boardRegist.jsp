@@ -302,12 +302,16 @@
         </div>
 
         <div class="product-tab" id="list">
-            <h5 style="font-weight: bold">공지사항</h5>
+            <c:if test="${bbs_type=='bbs04'}"><h5 style="font-weight: bold">공지사항</h5></c:if>
+            <c:if test="${bbs_type=='bbs05'}"><h5 style="font-weight: bold">자료실</h5></c:if>
+            <c:if test="${bbs_type=='bbs03'}"><h5 style="font-weight: bold">Q&A</h5></c:if>
             <hr>
             <br>
             <form name="frm" action="/lecture/boardRegist" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
-                <input type="hidden" name="bbs_category_code" id="bbs_category_code" value="bbs02">
+                <input type="hidden" name="bbs_category_code" id="bbs_category_code" value="${bbs_type}">
+                <input type="hidden" name="lecture_idx" value="${lecture_idx}">
+                <input type="hidden" name="bbs_teacher_yn" value="Y">
                 <div class="form-floating">
                     <textarea class="form-control" name="bbs_title" placeholder="Leave a comment here" id="floatingTextarea" style="resize: none"></textarea>
                     <label for="floatingTextarea">제목</label>
