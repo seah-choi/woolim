@@ -1,5 +1,6 @@
 package org.fullstack4.woolim.service;
 
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.common.CommonUtil;
@@ -39,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.json.JSONObject;
-
+import com.google.gson.JsonObject;
 
 @Log4j2
 @Service
@@ -101,6 +102,18 @@ public class MemberServiceImpl implements MemberServiceIf{
         log.info(memberVO);
         int result = memberMapper.regist(memberVO);
         return result;
+    }
+
+    @Override
+    public MemberDTO google(String member_oauth) {
+        MemberVO memberVO = memberMapper.google(member_oauth);
+        log.info(memberVO);
+        if(memberVO != null) {
+            MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
+            return memberDTO;
+        }
+        return null;
+
     }
 
     @Override
@@ -174,52 +187,33 @@ public class MemberServiceImpl implements MemberServiceIf{
     }
 
     @Override
-    public MemberDTO socialLogin(HttpServletRequest request) throws IOException {
-        MemberDTO memberDTO = null;
-        String code = CommonUtil.parseString(request.getParameter("scope"));
-        log.info(code);
+    public MemberDTO socialLogin(JSONObject member_info) throws IOException {
 
-        String parameters = "code=" + code +
-                "&client_id=407108558562-l8kdc02drjtq9qe6id97a5bm4gfubfvb.apps.googleusercontent.com" +
-                "&client_secret=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" +
-                "&redirect_uri=http://localhost:8080/login/google" +
-                "&grant_type=authorization_code";
 
-        URL url = new URL("https://oauth2.googleapis.com/token");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setDoOutput(true);
-        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        String name = member_info.getString("name");
+        String id = member_info.getString("id");
+        boolean verifiedEmail = member_info.getBoolean("verified_email");
+        String givenName = member_info.getString("given_name");
+        String locale = member_info.getString("locale");
+        String familyName = member_info.getString("family_name");
+        String email = member_info.getString("email");
+        String picture = member_info.getString("picture");
 
-        try (OutputStream os = conn.getOutputStream()) {
-            os.write(parameters.getBytes(StandardCharsets.UTF_8));
+        MemberDTO memberDTO = google(id);
+
+        if(memberDTO!= null){
+            return memberDTO;
         }
-
-        StringBuilder response = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line.trim());
-            }
+        else{
+            MemberDTO newDTO = MemberDTO.builder()
+                    .member_id(email.split("@")[0])
+                    .member_name(name)
+                    .member_oauth(id)
+                    .member_email(email.split("@")[0])
+                    .member_email_addr(email.split("@")[1]).build();
+            return newDTO;
         }
-
-        JSONObject jsonObject = new JSONObject(response.toString());
-
-        URL url2 = new URL("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + jsonObject.getString("access_token"));
-        HttpURLConnection conn2 = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-
-        StringBuilder response2 = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line.trim());
-            }
-        }
-        log.info(new JSONObject(response2.toString()));
-
-        return memberDTO;
     }
+
+
 }

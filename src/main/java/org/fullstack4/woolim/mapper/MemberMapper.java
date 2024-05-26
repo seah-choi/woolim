@@ -14,6 +14,7 @@ public interface MemberMapper {
     int regist(MemberVO memberVO);
     MemberVO view(MemberDTO memberDTO);
     MemberVO memberView(String member_id);
+    MemberVO google(String member_oauth);
     List<MemberVO> MemberListbyPage(PageRequestDTO requestDTO);
     int total_count(PageRequestDTO requestDTO);
 
@@ -32,4 +33,5 @@ public interface MemberMapper {
     int email_check(String member_id);
 
     int modify(MemberVO memberVO);
+
 }

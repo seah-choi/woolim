@@ -67,16 +67,15 @@
                                     </label>
                                 </div>
                             </div>
-                            <button type="button" class="border-0 flow-hidden w-100 bg-transparent p-0 m-0"
-                                    onclick="location.href = '<%=authUrl%>'">
-                                소셜
-<%--                                <img class="w-200px" src="/resources/img/btnG_완성형.png" >--%>
-                            </button>
-
                             <button type="button" class="site-btn login-btn" onclick="login()">로그인</button>
+                            <button type="button" class="btn" style="width: 300px; padding-left: 0"
+                                    onclick="location.href = '<%=authUrl%>'">
+                                <img src="/resources/img/google-button/web_light_sq_SU@4x.png">
+                                <%--                                <img class="w-200px" src="/resources/img/btnG_완성형.png" >--%>
+                            </button>
                         </form>
                         <div class="switch-login">
-                            <a href="/member/join" class="or-login">회원가입</a>
+                            <a href="/member/join?flag=1" class="or-login">회원가입</a>
                         </div>
                     </div>
                 </div>
