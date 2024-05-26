@@ -165,8 +165,8 @@
                     <!-- order-card end -->
 
                     <div class="d-flex justify-content-center">
-                        <div id="chart_div" class="chartDiv" style="width: 930px; height: 500px;"></div>
-                        <div id="sales_chart" class="chartDiv" style="width: 930px; height: 500px;"></div>
+                        <div id="chart_div" class="chartDiv" style="width: 945px; height: 500px;"></div>
+                        <div id="sales_chart" class="chartDiv" style="width: 945px; height: 500px;"></div>
                     </div>
 
         </div>
