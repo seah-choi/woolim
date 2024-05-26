@@ -121,12 +121,14 @@
                         <ul class="nav-right">
                             <li class="heart-icon"><a href="/mypage/jjim">
                                 <i class="icon_heart_alt"></i>
-                                <span>1</span>
+                                <span><c:if test="${sessionScope.jjimList != null}">${sessionScope.jjimList.size()}</c:if>
+                                <c:if test="${sessionScope.jjimList == null}">0</c:if></span>
                             </a>
                             </li>
                             <li class="cart-icon"><a href="/mypage/cart">
                                 <i class="icon_bag_alt"></i>
-                                <span>3</span>
+                                <span><c:if test="${sessionScope.cartList != null}">${sessionScope.cartList.size()}</c:if>
+                                <c:if test="${sessionScope.cartList == null}">0</c:if></span>
                             </a>
                                 <div class="cart-hover">
                                     <div class="select-items">
