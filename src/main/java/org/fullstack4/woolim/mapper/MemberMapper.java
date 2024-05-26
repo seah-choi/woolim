@@ -15,6 +15,7 @@ public interface MemberMapper {
     MemberVO view(MemberDTO memberDTO);
     MemberVO memberView(String member_id);
     MemberVO google(String member_oauth);
+    int google_modify(MemberVO memberVO);
     List<MemberVO> MemberListbyPage(PageRequestDTO requestDTO);
     int total_count(PageRequestDTO requestDTO);
 

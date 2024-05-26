@@ -66,12 +66,14 @@ public class MemberController {
             memberDTO.setMember_id(googleMember.getMember_id());
             memberDTO.setMember_name(googleMember.getMember_name());
             memberDTO.setMember_email(googleMember.getMember_email());
+            memberDTO.setMember_email_addr(googleMember.getMember_email_addr());
             memberDTO.setMember_addr_detail(googleMember.getMember_addr_detail());
             memberDTO.setMember_oauth(googleMember.getMember_oauth());
             memberDTO.setMember_category("student");
             int result = memberService.regist(memberDTO);
             if(result>0){
                 session.removeAttribute("memberDTO");
+                session.setAttribute("member_id", memberDTO.getMember_id());
                 session.setAttribute("user_id", memberDTO.getMember_id());
                 session.setAttribute("member_name", memberDTO.getMember_name());
                 return "redirect:/";

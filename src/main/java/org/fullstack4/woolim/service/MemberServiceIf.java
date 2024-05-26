@@ -20,6 +20,7 @@ public interface MemberServiceIf {
     int regist(MemberDTO memberDTO);
     MemberDTO google(String member_oauth);
     MemberDTO memberView(String member_id);
+    int google_modify(MemberDTO memberDTO);
 
     PageResponseDTO<MemberDTO> adminMemberList(PageRequestDTO pageRequestDTO);
     PageResponseDTO<LectureDTO> LectureListbyTeacherpage(PageRequestDTO pageRequestDTO);
