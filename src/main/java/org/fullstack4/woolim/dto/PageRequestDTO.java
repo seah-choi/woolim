@@ -67,6 +67,7 @@ public class PageRequestDTO {
     private String member_category;
     private String bbs_teacher_yn;
     private String qna_teacher_yn;
+    private int lecture_idx;
 
     public void setTotal_count(int total_count) {
         this.total_count = total_count;
@@ -123,6 +124,9 @@ public class PageRequestDTO {
             }
             if(teacher_id != null && !teacher_id.isEmpty()){
                 sb.append("&teacher_id=" + teacher_id);
+            }
+            if(lecture_idx  > 0){
+                sb.append("&lecture_idx=" + lecture_idx);
             }
             linkParams = sb.toString();
         }

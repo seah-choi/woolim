@@ -36,6 +36,7 @@ public class PageResponseDTO<E> {
     private String bbs_teacher_yn;
     private String qna_teacher_yn;
     private String teacher_id;
+    private int lecture_idx;
 
     List<E> dtolist;
 
@@ -75,6 +76,7 @@ public class PageResponseDTO<E> {
         this.qna_teacher_yn = pageRequestDTO.getQna_teacher_yn();
         this.member_idx = pageRequestDTO.getMember_idx();
         this.teacher_id = pageRequestDTO.getTeacher_id();
+        this.lecture_idx = pageRequestDTO.getLecture_idx();
 
         log.info("pageRequestDTO : {}", pageRequestDTO);
         log.info("dtoList : {}", dtoList);

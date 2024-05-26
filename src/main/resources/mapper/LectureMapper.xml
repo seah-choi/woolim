@@ -113,4 +113,34 @@
         select * from woo_lecture
         where lecture_idx = #{idx}
     </select>
+
+    <select id="gradeListByPage" resultType="org.fullstack4.woolim.domain.GradeVO">
+        SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx
+        FROM woo_class AS wc
+        INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wc.lecture_idx
+        INNER JOIN woo_grade AS wg ON wg.lecture_idx = wl.lecture_idx
+        INNER JOIN woo_member AS wm ON wm.member_id = wc.member_id
+        <where>
+            <if test="teacher_id != null and teacher_id != ''">
+                and wm.member_id=#{teacher_id}
+            </if>
+            and wl.lecture_idx = #{lecture_idx}
+        </where>
+        ORDER BY wc.class_idx DESC
+        limit #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="grade_count" resultType="int">
+        SELECT count(*)
+        FROM woo_class AS wc
+        INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wc.lecture_idx
+        INNER JOIN woo_grade AS wg ON wg.lecture_idx = wl.lecture_idx
+        INNER JOIN woo_member AS wm ON wm.member_id = wc.member_id
+        <where>
+            <if test="teacher_id != null and teacher_id != ''">
+                and wm.member_id=#{teacher_id}
+            </if>
+            and wl.lecture_idx = #{lecture_idx}
+        </where>
+    </select>
 </mapper>

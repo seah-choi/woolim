@@ -188,6 +188,9 @@
             background: #68afcb;
             color: #fff;
         }
+        .modal-footer{
+            justify-content: center !important;
+        }
     </style>
 
 </head>
@@ -331,6 +334,9 @@
                 </form>
             </div>
             <br>
+            <c:choose>
+            <c:when test="${not empty bbsList.dtolist}">
+            <c:forEach items="${bbsList.dtolist}" var="list">
             <table class="table">
                 <thead>
                 <tr class="table-secondary">
@@ -342,15 +348,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>최세아</td>
-                    <td>${list.lecture_title}</td>
-                    <td>90</td>
-                    <td style="width: 150px;"><button type="button" class="btn" data-idx="" id="view" data-bs-toggle="modal" data-bs-target="#exampleModal">성적표입력</button></td>
-                </tr>
+                    <tr>
+                        <th scope="row">${list.grade_idx}</th>
+                        <td>${list.member_name}</td>
+                        <td>${list.lecture_title}</td>
+                        <td>${list.grade}</td>
+                        <td style="width: 150px;"><button type="button" class="btn" data-idx="${list.grade_idx}" data-name="${list.member_name}" data-title="${list.lecture_title}" data-grade="${list.grade}" data-bs-toggle="modal" data-bs-target="#exampleModal" id="view">성적표입력</button></td>
+                    </tr>
                 </tbody>
             </table>
+            </c:forEach>
+            </c:when>
+                <c:otherwise>
+                    수강생이 없습니다.
+                </c:otherwise>
+            </c:choose>
             <%--        성적표 모달창--%>
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -362,14 +374,16 @@
                         <form name="frm" action="" method="post">
                             <div class="modal-body">
                                 <input type="hidden" id="grade_idx" name="grade_idx" value="">
-                                <span id="grade_title"></span>
+<%--                                <span id="grade_title"></span>--%>
                                 <span>점수 : </span>
-                                <input type="text" id="grade" name="grade" style="width: 100px;>점
+                                <input type="text" id="grade" name="grade" style="width: 100px;">
                             </div>
                             <br>
                             <div class="modal-footer">
-                                <button type="submit" class="btn" id="btn_regist" data-bs-dismiss="modal">등록</button>
-                                <button type="reset" class="btn" id="check" data-bs-dismiss="modal">취소</button>
+                                <div style="display: flex;">
+                                    <button type="submit" class="btn" id="btn_regist" data-bs-dismiss="modal">등록</button>&nbsp;
+                                    <button type="reset" class="btn" id="check" data-bs-dismiss="modal">취소</button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -484,5 +498,27 @@
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var exampleModal = document.getElementById('exampleModal');
+        exampleModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget; // Button that triggered the modal
+            var idx = button.getAttribute('data-idx');
+            var name = button.getAttribute('data-name');
+            var title = button.getAttribute('data-title');
+            var grade = button.getAttribute('data-grade');
+
+            var modalTitle = exampleModal.querySelector('.modal-title');
+            var gradeIdxInput = exampleModal.querySelector('#grade_idx');
+            var gradeTitleSpan = exampleModal.querySelector('#grade_title');
+            var gradeInput = exampleModal.querySelector('#grade');
+
+            modalTitle.textContent = name + '님의 성적표';
+            gradeIdxInput.value = idx;
+            gradeTitleSpan.textContent = title;
+            gradeInput.value = grade;
+        });
+    });
+</script>
 </body>
 </html>

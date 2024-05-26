@@ -4,10 +4,7 @@ import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
-import org.fullstack4.woolim.dto.BbsDTO;
-import org.fullstack4.woolim.dto.BoardFileDTO;
-import org.fullstack4.woolim.dto.LectureDTO;
-import org.fullstack4.woolim.dto.PageRequestDTO;
+import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.service.BbsServiceIf;
 import org.fullstack4.woolim.service.lecture.LectureServiceIf;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,11 +98,28 @@ public class LectureController {
     }
 
     @GetMapping("/studentList")
-    public void studentListGET(String lecture_idx, Model model){
+    public void studentListGET(String lecture_idx, Model model,PageRequestDTO pageRequestDTO){
         int idx = Integer.parseInt(lecture_idx);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         model.addAttribute("list" , lectureDTO);
+
+        pageRequestDTO.setBbs_teacher_yn("Y");
+
+        PageResponseDTO<GradeDTO> bbsList = lectureServiceIf.gradeListByPage(pageRequestDTO);
+
+        model.addAttribute("bbsList", bbsList);
+
+        if(bbsList.getSearch_types()!=null){
+            model.addAttribute("search_type", bbsList.getSearch_types()[0]);
+        }
+
+        log.info("bbsList : " + bbsList);
+
+        log.info("LectureController >> GETList() END");
+        log.info("============================");
     }
+
+
 
     @GetMapping("/boardRegist")
     public void boardRegistGET(String lecture_idx, Model model){
