@@ -299,10 +299,10 @@
         </div>
 
         <div class="product-tab" id="list">
-            <h5 style="font-weight: bold">Q&A</h5>
+            <h5 style="font-weight: bold">공지사항</h5>
             <hr>
             <div style="display: flex;justify-content: flex-end;">
-                <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/qnaRegist?lecture_idx=${list.lecture_idx}'">글쓰기</button>
+                <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/boardRegist?lecture_idx=${list.lecture_idx}'">글쓰기</button>
             </div>
             <br>
             <div class="searchBox">
@@ -333,12 +333,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">#</th>
-                    <td><a href="/lecture/qnaView?lecture_idx=${list.lecture_idx}">질문과답변</a></td>
-                    <td>2024-05-25</td>
-                    <td>0</td>
-                </tr>
+                    <tr>
+                        <th scope="row">#</th>
+                        <td><a href="/lecture/boardView?lecture_idx=${list.lecture_idx}">공지사항</a></td>
+                        <td>2024-05-25</td>
+                        <td>0</td>
+                    </tr>
                 </tbody>
             </table>
             <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">

@@ -166,15 +166,18 @@
             width: 900px;
             padding-top: 30px;
         }
-
-        #search {
-            background: #68afcb;
-            color: #fff;
-            border: none;
+        a {
+            text-decoration: none !important;
         }
-        #btn_regist {
+        #btn_modify{
             background: #68afcb;
             color: #fff;
+        }
+        #btn_back{
+            background: #fff;
+            color: #68afcb;
+            border: 1px solid #68afcb;
+            margin-right: 5px;
         }
     </style>
 
@@ -301,68 +304,31 @@
         <div class="product-tab" id="list">
             <h5 style="font-weight: bold">Q&A</h5>
             <hr>
-            <div style="display: flex;justify-content: flex-end;">
-                <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/qnaRegist?lecture_idx=${list.lecture_idx}'">글쓰기</button>
-            </div>
             <br>
-            <div class="searchBox">
-                <form role="search" id="frmSearch" class="searchForm" action="/board/freeList" method="get">
-                    <input type="hidden" name="bbs_type" value="${bbs_type}" >
-                    <div class="mb-3 row d-flex">
-                        <div class="input-group">
-                            <select id="schoolSelect" name="search_type" class="selectpicker form-control col-sm-1 school" data-size="5" data-style="btn-outline-info">
-                                <option>전체</option>
-                                <option value="t" ${search_type=="t" ? "selected" : ""}>제목</option>
-                                <option value="c" ${search_type=="c" ? "selected" : ""}>내용</option>
-                                <option value="u" ${search_type=="u" ? "selected" : ""}>작성자</option>
-                            </select>
-                            <input type="search" class="form-control" name="search_word"  id="search_word" value='<c:out value="${pageRequestDTO.search_word}"/>' placeholder="검색어를 입력하세요." aria-label="Text input with 2 dropdown buttons">
-                            <button class="btn btn-outline-secondary" type="submit" id="search" aria-expanded="false">검색</button>
-                        </div>
+            <form name="frm" action="/lecture/qnaRegist" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
+                <input type="hidden" name="bbs_category_code" id="bbs_category_code" value="bbs02">
+                <div class="form-floating">
+                    <textarea class="form-control" name="bbs_title" placeholder="Leave a comment here" id="floatingTextarea" style="resize: none"></textarea>
+                    <label for="floatingTextarea">제목</label>
+                </div>
+                <br>
+                <input type="file" class="form-control" name="files" id="file" multiple>
+                <br>
+                <div>
+                    <textarea id="summernote" name="bbs_content"></textarea>
+                </div>
+                <br>
+                <div style="display: flex;justify-content: center;">
+                    <div>
+                        <button type="button" class="btn" id="btn_back" onclick="location.href='/lecture/qnaList?lecture_idx=${list.lecture_idx}'">목록</button>
                     </div>
-                </form>
-            </div>
-            <br>
-            <table class="table">
-                <thead>
-                <tr class="table-secondary">
-                    <th scope="col">#</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">등록일</th>
-                    <th scope="col">조회수</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">#</th>
-                    <td><a href="/lecture/qnaView?lecture_idx=${list.lecture_idx}">질문과답변</a></td>
-                    <td>2024-05-25</td>
-                    <td>0</td>
-                </tr>
-                </tbody>
-            </table>
-            <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">
-                <ul class="pagination">
-                    <li class="page-item <c:if test="${bbsList.prev_page_plag == 'false'}"> disabled</c:if>" >
-                        <a href="/board/list?page=${bbsList.page_block_start - bbsList.page_block_size}${bbsList.linkParams}"
-                           class="page-link" aria-label="Previous">&laquo;
-                        </a>
-                    </li>
-                    <c:forEach begin="${bbsList.page_block_start}"
-                               end="${bbsList.page_block_end}"
-                               var="page_num">
-                        <li class="page-item <c:if test="${bbsList.page == page_num}">active</c:if>">
-                            <a href="/board/list?page=${page_num}${bbsList.linkParams}" class="page-link">${page_num}</a>
-                        </li>
-                    </c:forEach>
-                    <li class="page-item <c:if test="${bbsList.next_page_plag == 'false'}"> disabled</c:if>" >
-                        <a href="/board/list?page=${bbsList.page_block_start + bbsList.page_block_size}${bbsList.linkParams}" class="page-link" aria-label="Previous">
-                            &raquo;
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
+                    <div>
+                        <button type="submit" class="btn" id="btn_modify">등록</button>
+                        <button type="button" class="btn btn-secondary" id="btn_delete">취소</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <footer class="footer-section">
@@ -449,5 +415,24 @@
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
+<link href="/resources/css/summernote/summernote-lite.css" rel="stylesheet">
+<script src="/resources/js/summernote/summernote-lite.js"></script>
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        height: 500,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['codeview', 'help']]
+        ]
+
+    });
+</script>
 </body>
 </html>

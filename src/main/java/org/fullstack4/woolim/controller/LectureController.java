@@ -4,13 +4,18 @@ import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
+import org.fullstack4.woolim.dto.BbsDTO;
+import org.fullstack4.woolim.dto.BoardFileDTO;
 import org.fullstack4.woolim.dto.LectureDTO;
+import org.fullstack4.woolim.dto.PageRequestDTO;
+import org.fullstack4.woolim.service.BbsServiceIf;
 import org.fullstack4.woolim.service.lecture.LectureServiceIf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -20,6 +25,9 @@ import java.util.List;
 public class LectureController {
     @Autowired
     private LectureServiceIf lectureServiceIf;
+    @Autowired
+    private BbsServiceIf bbsServiceIf;
+
     @GetMapping("/list")
     public String GETList(Model model, Criteria cri) {
         System.out.println("#####");
@@ -77,15 +85,9 @@ public class LectureController {
         return "/lecture/view";
     }
 
-    @GetMapping("/noticeList")
-    public void noticeListGET(String lecture_idx, Model model){
-        int idx = Integer.parseInt(lecture_idx);
-        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
-        model.addAttribute("list" , lectureDTO);
-    }
-
-    @GetMapping("/qnaList")
-    public void qnaListGET(String lecture_idx, Model model){
+    @GetMapping("/boardList")
+    public void noticeListGET(@RequestParam(defaultValue = "") String bbs_type,
+                              PageRequestDTO pageRequestDTO, String lecture_idx, Model model){
         int idx = Integer.parseInt(lecture_idx);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         model.addAttribute("list" , lectureDTO);
@@ -104,4 +106,43 @@ public class LectureController {
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         model.addAttribute("list" , lectureDTO);
     }
+
+    @GetMapping("/boardRegist")
+    public void boardRegistGET(String lecture_idx, Model model){
+        int idx = Integer.parseInt(lecture_idx);
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+        model.addAttribute("list" , lectureDTO);
+    }
+
+    @GetMapping("/boardView")
+    public void boardViewGET(String lecture_idx, Model model){
+        int idx = Integer.parseInt(lecture_idx);
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+        model.addAttribute("list" , lectureDTO);
+    }
+
+
+
+
+    @GetMapping("/qnaList")
+    public void qnaListGET(String lecture_idx, Model model){
+        int idx = Integer.parseInt(lecture_idx);
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+        model.addAttribute("list" , lectureDTO);
+    }
+
+    @GetMapping("/qnaRegist")
+    public void qnaRegistGET(String lecture_idx, Model model){
+        int idx = Integer.parseInt(lecture_idx);
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+        model.addAttribute("list" , lectureDTO);
+    }
+
+    @GetMapping("/qnaView")
+    public void qnaViewGET(String lecture_idx, Model model){
+        int idx = Integer.parseInt(lecture_idx);
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+        model.addAttribute("list" , lectureDTO);
+    }
+
 }
