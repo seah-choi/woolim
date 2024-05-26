@@ -12,6 +12,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +32,6 @@ public class OrderServiceImpl implements OrderServiceIf{
     public void DoOrder(OrderDTO orderDTO, MemberDTO memberDTO, PaymentDTO paymentDTO, List<CartDTO> cartDTO, List<LectureDTO> lectureDTOList) throws InsufficientStockException {
         OrderVO orderVO = modelMapper.map(orderDTO, OrderVO.class);
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
-        List<CartVO> cartVO = cartDTO.stream().map(dto->modelMapper.map(dto,CartVO.class)).collect(Collectors.toList());
         PaymentVO paymentVO = modelMapper.map(paymentDTO, PaymentVO.class);
 
 
@@ -39,8 +40,17 @@ public class OrderServiceImpl implements OrderServiceIf{
             orderDTO.setLecture_idx(lectureDTO.getLecture_idx());
             OrderDetailVO orderDetailVO = modelMapper.map(orderDTO, OrderDetailVO.class);
             int exist =orderMapper.exist(orderDetailVO);
+            int exist2 = orderMapper.exist2(orderDetailVO);
             log.info(exist);
+            LocalDate now = LocalDate.now();
+            if(now.isAfter(lectureDTO.getLecture_start_date())){
+                throw new InsufficientStockException("지금 수강신청 기간이 아닌 강좌가 있습니다.");
+            }
+
             if(exist > 0){
+                throw new InsufficientStockException("이미 결제한 강좌가 있습니다.");
+            }
+            if(exist2 > 0){
                 throw new InsufficientStockException("이미 수강중인 강좌가 있습니다.");
             }
             orderMapper.DoOrderDetail(orderDetailVO);
@@ -51,8 +61,11 @@ public class OrderServiceImpl implements OrderServiceIf{
         orderMapper.InsertPayment(paymentVO);
         memberMapper.changePoint(memberVO);
 
-        for (CartVO cartVO1 : cartVO) {
-            cartMapper.deleteCartOrJjim(cartVO1);
+        if(cartDTO != null) {
+            List<CartVO> cartVO = cartDTO.stream().map(dto -> modelMapper.map(dto, CartVO.class)).collect(Collectors.toList());
+            for (CartVO cartVO1 : cartVO) {
+                cartMapper.deleteCartOrJjim(cartVO1);
+            }
         }
     }
 
@@ -114,10 +127,41 @@ public class OrderServiceImpl implements OrderServiceIf{
     }
 
     @Override
-    public void DOrefund(OrderDTO orderDTO, MemberDTO memberDTO, PaymentDTO paymentDTO) throws InsufficientStockException {
+    public void DOrefund(OrderDTO orderDTO, MemberDTO memberDTO, PaymentDTO paymentDTO,LectureDTO lectureDTO) throws InsufficientStockException {
         OrderDetailVO orderVO = modelMapper.map(orderDTO, OrderDetailVO.class);
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
         PaymentVO paymentVO = modelMapper.map(paymentDTO, PaymentVO.class);
+
+        LocalDate now = LocalDate.now();
+
+        LocalDate lectureStartDate = lectureDTO.getLecture_start_date();
+        LocalDate lectureEndDate = lectureDTO.getLecture_end_date();
+
+// 강의 전체 기간(일 수)
+        long totalDuration = ChronoUnit.DAYS.between(lectureStartDate, lectureEndDate);
+
+// 현재 날짜부터 강의 시작일까지의 경과 일수
+        long elapsedDuration = ChronoUnit.DAYS.between(lectureStartDate, now);
+
+// 경과한 시간의 백분율
+        double percentageElapsed = (double) elapsedDuration / totalDuration * 100;
+
+        if(now.isAfter(lectureDTO.getLecture_end_date())){
+            throw new InsufficientStockException("이미 수강기간이 종료된 강의입니다.");
+        }
+        if(percentageElapsed>50){
+            throw new InsufficientStockException("지금은 환불이 불가능합니다.");
+        }
+        if(percentageElapsed>30){
+            int price= Integer.parseInt(String.valueOf(orderVO.getPrice() * 0.5));
+            orderVO.setPrice(price);
+            memberVO.setMember_point(price);
+            paymentVO.setPrice(price);
+        }
+        System.out.println("경과된 시간의 백분율: " + percentageElapsed + "%");
+        
+        
+
 
         orderMapper.UpdateStatus(orderVO);
         orderMapper.InsertPayment(paymentVO);
@@ -125,10 +169,12 @@ public class OrderServiceImpl implements OrderServiceIf{
     }
 
     @Override
-    public void Dopurchase(OrderDTO orderDTO, ClassDTO classDTO) throws InsufficientStockException {
+    public void Dopurchase(OrderDTO orderDTO, ClassDTO classDTO,LectureDTO lectureDTO) throws InsufficientStockException {
         OrderDetailVO orderVO = modelMapper.map(orderDTO, OrderDetailVO.class);
         ClassVO classVO = modelMapper.map(classDTO, ClassVO.class);
 
+
+        orderMapper.insertGrade(classVO);
         orderMapper.UpdateStatus(orderVO);
         orderMapper.insertClass(classVO);
     }

@@ -178,7 +178,7 @@
                 <span>강사 : ${list.member_name} </span>
                 <span>수강기간 : ${list.lecture_start_date} ~ ${list.lecture_end_date}</span>
                 <div style="display: flex;justify-content: flex-end;">
-                    <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/view'">학습하러 가기</button>
+                    <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/view?lecture_idx=${list.lecture_idx}'">학습하러 가기</button>
                 </div>
             </div>
         </div>

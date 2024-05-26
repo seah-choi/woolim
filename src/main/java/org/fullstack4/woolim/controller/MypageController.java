@@ -10,6 +10,7 @@ import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.CartMapper;
 import org.fullstack4.woolim.mapper.MemberMapper;
 import org.fullstack4.woolim.service.*;
+import org.fullstack4.woolim.service.lecture.LectureServiceIf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,6 +37,7 @@ public class MypageController {
     private final QnaServiceIf qnaService;
     private final OrderServiceIf orderService;
     private final PaymentServiceIf paymentService;
+    private final LectureServiceIf lectureService;
 
     @GetMapping("/view")
     public void GETView(HttpServletRequest req,
@@ -99,12 +101,16 @@ public class MypageController {
     }
 
     @GetMapping("/cart")
-    public void GETCartList(HttpServletRequest req, Model model) {
+    public void GETCartList(HttpServletRequest req, Model model
+            ,@RequestParam (defaultValue = "")String search_date1
+            ,@RequestParam (defaultValue = "")String search_date2) {
         HttpSession session = req.getSession();
         String id = session.getAttribute("member_id").toString();
         CartDTO cartDTO = CartDTO.builder()
                 .member_id(id)
                 .cart_status("Y")
+                .search_date1(search_date1)
+                .search_date2(search_date2)
                 .build();
         List<CartDTO> dtoList = cartService.cartOrJjimList(cartDTO);
 
@@ -128,11 +134,14 @@ public class MypageController {
     }
 
     @GetMapping("/jjim")
-    public void GETJjim(HttpServletRequest req, Model model) {
+    public void GETJjim(HttpServletRequest req, Model model,@RequestParam (defaultValue = "")String search_date1
+            ,@RequestParam (defaultValue = "")String search_date2) {
         HttpSession session = req.getSession();
         String id = session.getAttribute("member_id").toString();
         CartDTO cartDTO = CartDTO.builder()
                 .member_id(id)
+                .search_date1(search_date1)
+                .search_date2(search_date2)
                 .cart_status("N")
                 .build();
         List<CartDTO> dtoList = cartService.cartOrJjimList(cartDTO);
@@ -430,6 +439,7 @@ public class MypageController {
         int order_detail_idx = Integer.parseInt(map.get("order_detail_idx").toString());
         String payment_num = map.get("payment_num").toString();
         int price = Integer.parseInt(map.get("price").toString());
+        int lecture_idx = Integer.parseInt(map.get("lecture_idx").toString());
 
         MemberDTO memberDTO = MemberDTO.builder()
                 .member_id(member_id)
@@ -449,12 +459,13 @@ public class MypageController {
                 .order_status("환불 완료")
                 .build();
 
+        LectureDTO lectureDTO = lectureService.lectureView(lecture_idx);
 
         log.info("memberDTO" + memberDTO);
         log.info("paymentDTO" + paymentDTO);
         log.info("orderDTO" + orderDTO);
         try {
-            orderService.DOrefund(orderDTO, memberDTO, paymentDTO);
+            orderService.DOrefund(orderDTO, memberDTO, paymentDTO,lectureDTO);
             resultMap.put("result","success");
             resultMap.put("msg","성공");
         }catch (InsufficientStockException e){
@@ -485,8 +496,10 @@ public class MypageController {
                 .member_id(member_id)
                 .build();
 
+        LectureDTO lectureDTO = lectureService.lectureView(lecture_idx);
+
         try {
-            orderService.Dopurchase(orderDTO,classDTO);
+            orderService.Dopurchase(orderDTO,classDTO,lectureDTO);
             resultMap.put("result","success");
             resultMap.put("msg","성공");
         }catch (InsufficientStockException e){

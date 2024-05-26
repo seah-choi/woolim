@@ -9,7 +9,7 @@
         <where>
             bbs_teacher_yn = #{bbs_teacher_yn}
             <if test="teacher_id != null and teacher_id != ''">
-                and member_id=#{teacher_id}
+                and lecture_idx=#{lecture_idx}
             </if>
             <if test="bbs_type !=null and bbs_type !=''">
                 and bbs_category_code=#{bbs_type}
@@ -39,7 +39,7 @@
     </select>
 
     <select id="bbsListByPage" resultType="org.fullstack4.woolim.domain.BbsVO">
-        select bbs_idx, member_id, bbs_title, bbs_content, bbs_reg_date, bbs_image, bbs_file_yn, bbs_category_code, bbs_read_cnt, bbs_reply_yn, bbs_like, bbs_modify_date, bbs_reply_cnt
+        select bbs_idx, member_id, bbs_title, bbs_content, bbs_reg_date, bbs_image, bbs_file_yn, bbs_category_code, bbs_read_cnt, bbs_reply_yn, bbs_like, bbs_modify_date, bbs_reply_cnt, lecture_idx
         from woo_bbs
         <where>
             bbs_teacher_yn = #{bbs_teacher_yn}
@@ -131,4 +131,9 @@
     <update id="updateReadCount" parameterType="int">
         UPDATE woo_bbs SET bbs_read_cnt = bbs_read_cnt + 1 WHERE bbs_idx = #{bbs_idx}
     </update>
+
+    <insert id="InsertLectureBbs">
+        INSERT INTO woo_bbs (member_id,bbs_title,bbs_content,bbs_image,bbs_reg_date,bbs_category_code,bbs_teacher_yn,lecture_idx)
+        VALUES(#{member_id},#{bbs_title},#{bbs_content},#{bbs_image}, now(),#{bbs_category_code},#{bbs_teacher_yn},#{lecture_idx})
+    </insert>
 </mapper>

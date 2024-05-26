@@ -23,4 +23,6 @@ public class CartVO {
     private int lecture_sale_price;
     private LocalDate lecture_start_date;
     private LocalDate lecture_end_date;
+    private String search_date1;
+    private String search_date2;
 }

@@ -8,6 +8,12 @@
     FROM woo_cart as wc
     INNER JOIN woo_lecture as wl ON wc.lecture_idx = wl.lecture_idx
     WHERE cart_status=#{cart_status} AND wc.member_id = #{member_id}
+    <if test="search_date1 != null and search_date1 != 'null' and search_date1 != ''">
+        and lecture_start_date >= #{search_date1}
+    </if>
+    <if test="search_date2 != null and search_date2 != 'null'  and search_date2 != ''">
+        and lecture_end_date <![CDATA[<=]]> #{search_date2}
+    </if>
 </select>
 
     <insert id="insertCartOrJjim">

@@ -14,6 +14,6 @@ public interface OrderServiceIf {
     PageResponseDTO<PaymentDTO> getPayment(PageRequestDTO pageRequestDTO);
     PageResponseDTO<OrderDTO> viewOrderList(PageRequestDTO pageRequestDTO);
     List<OrderDTO> viewOrderDetailList(OrderDTO orderDTO);
-    void DOrefund(OrderDTO orderDTO,MemberDTO memberDTO,PaymentDTO paymentDTO) throws InsufficientStockException;
-    void Dopurchase(OrderDTO orderDTO,ClassDTO classDTO) throws InsufficientStockException;
+    void DOrefund(OrderDTO orderDTO,MemberDTO memberDTO,PaymentDTO paymentDTO,LectureDTO lectureDTO) throws InsufficientStockException;
+    void Dopurchase(OrderDTO orderDTO,ClassDTO classDTO,LectureDTO lectureDTO) throws InsufficientStockException;
 }

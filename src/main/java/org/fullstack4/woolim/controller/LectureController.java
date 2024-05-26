@@ -4,16 +4,14 @@ import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
-import org.fullstack4.woolim.dto.BbsDTO;
-import org.fullstack4.woolim.dto.BoardFileDTO;
-import org.fullstack4.woolim.dto.LectureDTO;
-import org.fullstack4.woolim.dto.PageRequestDTO;
+import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.service.BbsServiceIf;
 import org.fullstack4.woolim.service.lecture.LectureServiceIf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -88,6 +86,17 @@ public class LectureController {
     @GetMapping("/boardList")
     public void noticeListGET(@RequestParam(defaultValue = "") String bbs_type,
                               PageRequestDTO pageRequestDTO, String lecture_idx, Model model){
+
+        pageRequestDTO.setBbs_type(bbs_type);
+        pageRequestDTO.setBbs_teacher_yn("Y");
+
+        PageResponseDTO<BbsDTO> noticeListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
+        log.info(noticeListDTO);
+        model.addAttribute("responseDTO" , noticeListDTO);
+
+
+
+
         int idx = Integer.parseInt(lecture_idx);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         model.addAttribute("list" , lectureDTO);
@@ -101,11 +110,48 @@ public class LectureController {
     }
 
     @GetMapping("/studentList")
-    public void studentListGET(String lecture_idx, Model model){
+    public void studentListGET(String lecture_idx, Model model,PageRequestDTO pageRequestDTO){
         int idx = Integer.parseInt(lecture_idx);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         model.addAttribute("list" , lectureDTO);
+
+        pageRequestDTO.setBbs_teacher_yn("Y");
+
+        PageResponseDTO<ClassDTO> bbsList = lectureServiceIf.gradeListByPage(pageRequestDTO);
+
+        model.addAttribute("bbsList", bbsList);
+
+        if(bbsList.getSearch_types()!=null){
+            model.addAttribute("search_type", bbsList.getSearch_types()[0]);
+        }
+
+        log.info("bbsList : " + bbsList);
+
+        log.info("LectureController >> GETList() END");
+        log.info("============================");
     }
+
+    @PostMapping("/studentRegist")
+    public String studentRegist(GradeDTO gradeDTO){
+        int result = lectureServiceIf.regist(gradeDTO);
+        if(result > 0){
+            return "redirect:/lecture/studentList";
+        } else {
+            return "redirect:/lecture/studentList";
+        }
+    }
+
+    @PostMapping("/studentModify")
+    public String studentModify(GradeDTO gradeDTO){
+        int result = lectureServiceIf.modify(gradeDTO);
+        if(result > 0){
+            return "redirect:/lecture/studentList";
+        } else {
+            return "redirect:/lecture/studentList";
+        }
+    }
+
+
 
     @GetMapping("/boardRegist")
     public void boardRegistGET(String lecture_idx, Model model){

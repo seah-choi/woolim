@@ -88,6 +88,12 @@
     <select id="exist" resultType="int">
         SELECT count(*)
         FROM woo_order_detail
+        WHERE lecture_idx=#{lecture_idx} AND member_id=#{member_id} AND order_status != '환불 완료'
+    </select>
+
+    <select id="exist2" resultType="int">
+        SELECT count(*)
+        FROM woo_class
         WHERE lecture_idx=#{lecture_idx} AND member_id=#{member_id}
     </select>
 
@@ -149,5 +155,9 @@
 
     <insert id="insertClass">
         INSERT INTO woo_class(member_id,lecture_idx) VALUES(#{member_id},#{lecture_idx})
+    </insert>
+
+    <insert id="insertGrade">
+        INSERT INTO woo_grade(member_id,lecture_idx) VALUES(#{member_id},#{lecture_idx})
     </insert>
 </mapper>

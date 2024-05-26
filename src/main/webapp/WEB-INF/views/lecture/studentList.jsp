@@ -180,11 +180,27 @@
             background: #68afcb;
             color: #fff;
         }
+        #view2 {
+            background: #fff;
+            border: 1px solid #68afcb;
+            color: #68afcb;
+        }
         #check {
             background: #68afcb;
             color: #fff;
         }
-        #btn_regist{
+        #regist_btn{
+            background: #68afcb;
+            color: #fff;
+        }
+        .modal-footer{
+            justify-content: center !important;
+        }
+        #check2 {
+            background: #68afcb;
+            color: #fff;
+        }
+        #btn_modify{
             background: #68afcb;
             color: #fff;
         }
@@ -331,6 +347,9 @@
                 </form>
             </div>
             <br>
+            <c:choose>
+            <c:when test="${not empty bbsList.dtolist}">
+            <c:forEach items="${bbsList.dtolist}" var="list">
             <table class="table">
                 <thead>
                 <tr class="table-secondary">
@@ -342,16 +361,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>최세아</td>
-                    <td>${list.lecture_title}</td>
-                    <td>90</td>
-                    <td style="width: 150px;"><button type="button" class="btn" data-idx="" id="view" data-bs-toggle="modal" data-bs-target="#exampleModal">성적표입력</button></td>
-                </tr>
+                    <tr>
+                        <th scope="row">${list.grade_idx}</th>
+                        <td>${list.member_name}</td>
+                        <td>${list.lecture_title}</td>
+                        <td>${list.grade}</td>
+                        <c:if test="${list.grade == null}">
+                        <td style="width: 150px;"><button type="button" class="btn" data-idx="${list.grade_idx}" data-name="${list.member_name}" data-title="${list.lecture_title}" data-grade="${list.grade}" data-bs-toggle="modal" data-bs-target="#exampleModal" id="view">성적표입력</button></td>
+                        </c:if>
+                        <c:if test="${list.grade != null}">
+                            <td style="width: 150px;"><button type="button" class="btn" data-idx="${list.grade_idx}" data-name="${list.member_name}" data-title="${list.lecture_title}" data-grade="${list.grade}" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="view2">성적표수정</button></td>
+                        </c:if>
+                    </tr>
                 </tbody>
             </table>
-            <%--        성적표 모달창--%>
+            </c:forEach>
+            </c:when>
+                <c:otherwise>
+                    수강생이 없습니다.
+                </c:otherwise>
+            </c:choose>
+            <%--        성적표 입력 모달창--%>
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -359,23 +389,50 @@
                             <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold">님의 성적표</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form name="frm" action="" method="post">
+                        <form name="frm" action="/lecture/studentRegist" method="post">
                             <div class="modal-body">
                                 <input type="hidden" id="grade_idx" name="grade_idx" value="">
-                                <span id="grade_title"></span>
+<%--                                <span id="grade_title"></span>--%>
                                 <span>점수 : </span>
-                                <input type="text" id="grade" name="grade" style="width: 100px;>점
+                                <input type="text" id="grade" name="grade" style="width: 100px;">
                             </div>
                             <br>
                             <div class="modal-footer">
-                                <button type="submit" class="btn" id="btn_regist" data-bs-dismiss="modal">등록</button>
-                                <button type="reset" class="btn" id="check" data-bs-dismiss="modal">취소</button>
+                                <div style="display: flex;">
+                                    <button type="submit" class="btn" id="regist_btn" data-bs-dismiss="modal">등록</button>&nbsp;
+                                    <button type="reset" class="btn" id="check" data-bs-dismiss="modal">취소</button>
+                                </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-
+            <%--        성적표 수정 모달창--%>
+            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel2" style="font-weight: bold">님의 성적표</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form name="frm" action="/lecture/studentModify" method="post">
+                            <div class="modal-body">
+                                <input type="hidden" id="grade_idx" name="grade_idx" value="${bbsList.grade_idx}">
+                                <%--                                <span id="grade_title"></span>--%>
+                                <span>점수 : </span>
+                                <input type="number" id="grade" name="grade" value="" style="width: 100px;">
+                            </div>
+                            <br>
+                            <div class="modal-footer">
+                                <div style="display: flex;">
+                                    <button type="submit" class="btn" id="btn_modify" data-bs-dismiss="modal">수정</button>&nbsp;
+                                    <button type="reset" class="btn" id="check2" data-bs-dismiss="modal">취소</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">
                 <ul class="pagination">
                     <li class="page-item <c:if test="${bbsList.prev_page_plag == 'false'}"> disabled</c:if>" >
@@ -484,5 +541,65 @@
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 'viewBtn' 클래스를 가진 모든 버튼에 대해 이벤트 리스너 추가
+        document.querySelector('#regist_btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                // 클릭된 버튼에서 data-idx 값을 가져옴
+                let gradeIdx = this.getAttribute('data-idx');
+
+                // 모달 내 hidden input의 value를 설정
+                document.getElementById('grade_idx').value = gradeIdx;
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let exampleModal = document.getElementById('exampleModal');
+        exampleModal.addEventListener('show.bs.modal', function (event) {
+            let button = event.relatedTarget; // Button that triggered the modal
+            let idx = button.getAttribute('data-idx');
+            let name = button.getAttribute('data-name');
+            let title = button.getAttribute('data-title');
+            let grade = button.getAttribute('data-grade');
+
+            let modalTitle = exampleModal.querySelector('.modal-title');
+            let gradeIdxInput = exampleModal.querySelector('#grade_idx');
+            let gradeTitleSpan = exampleModal.querySelector('#grade_title');
+            let gradeInput = exampleModal.querySelector('#grade');
+
+            modalTitle.textContent = name + '님의 성적표';
+            gradeIdxInput.value = idx;
+            gradeTitleSpan.textContent = title;
+            //gradeInput.value = grade;
+
+            gradeInput.value = grade || '';
+        });
+
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let exampleModal2 = document.getElementById('exampleModal2');
+        exampleModal2.addEventListener('show.bs.modal', function (event) {
+            let button = event.relatedTarget; // Button that triggered the modal
+            let idx = button.getAttribute('data-idx');
+            let name = button.getAttribute('data-name');
+            let title = button.getAttribute('data-title');
+            let grade = button.getAttribute('data-grade');
+
+            let modalTitle = exampleModal2.querySelector('.modal-title');
+            let gradeIdxInput = exampleModal2.querySelector('#grade_idx');
+            let gradeTitleSpan = exampleModal2.querySelector('#grade_title');
+            let gradeInput = exampleModal2.querySelector('#grade');
+
+            modalTitle.textContent = name + '님의 성적표';
+            gradeIdxInput.value = idx;
+            gradeTitleSpan.textContent = title;
+            gradeInput.value = grade;
+        });
+
+    });
+</script>
 </body>
 </html>
