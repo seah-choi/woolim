@@ -99,12 +99,16 @@ public class MypageController {
     }
 
     @GetMapping("/cart")
-    public void GETCartList(HttpServletRequest req, Model model) {
+    public void GETCartList(HttpServletRequest req, Model model
+            ,@RequestParam (defaultValue = "")String search_date1
+            ,@RequestParam (defaultValue = "")String search_date2) {
         HttpSession session = req.getSession();
         String id = session.getAttribute("member_id").toString();
         CartDTO cartDTO = CartDTO.builder()
                 .member_id(id)
                 .cart_status("Y")
+                .search_date1(search_date1)
+                .search_date2(search_date2)
                 .build();
         List<CartDTO> dtoList = cartService.cartOrJjimList(cartDTO);
 
@@ -128,11 +132,14 @@ public class MypageController {
     }
 
     @GetMapping("/jjim")
-    public void GETJjim(HttpServletRequest req, Model model) {
+    public void GETJjim(HttpServletRequest req, Model model,@RequestParam (defaultValue = "")String search_date1
+            ,@RequestParam (defaultValue = "")String search_date2) {
         HttpSession session = req.getSession();
         String id = session.getAttribute("member_id").toString();
         CartDTO cartDTO = CartDTO.builder()
                 .member_id(id)
+                .search_date1(search_date1)
+                .search_date2(search_date2)
                 .cart_status("N")
                 .build();
         List<CartDTO> dtoList = cartService.cartOrJjimList(cartDTO);

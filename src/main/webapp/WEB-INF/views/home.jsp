@@ -97,7 +97,7 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="single-banner">
-                    <a href="#">
+                    <a href="/lecture/list?type=&pageNum=1&amount=9&keyword=&sorting=&viewSorting=9&category=30000">
                         <img src="/resources/img/banner-1.jpg" alt="">
                         <div class="inner-text">
                             <h4>고등학생</h4>
@@ -107,7 +107,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="single-banner">
-                    <a href="#">
+                    <a href="/lecture/list?type=&pageNum=1&amount=9&keyword=&sorting=&viewSorting=9&category=20000">
                         <img src="/resources/img/banner-2.jpg" alt="">
                         <div class="inner-text">
                             <h4>중학생</h4>
@@ -117,7 +117,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="single-banner">
-                    <a href="#">
+                    <a href="/lecture/list?type=&pageNum=1&amount=9&keyword=&sorting=&viewSorting=9&category=10000">
                         <img src="/resources/img/banner-3.jpg" alt="">
                         <div class="inner-text">
                             <h4>초등학생</h4>

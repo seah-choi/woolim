@@ -91,6 +91,12 @@
         WHERE lecture_idx=#{lecture_idx} AND member_id=#{member_id} AND order_status != '환불 완료'
     </select>
 
+    <select id="exist2" resultType="int">
+        SELECT count(*)
+        FROM woo_class
+        WHERE lecture_idx=#{lecture_idx} AND member_id=#{member_id}
+    </select>
+
     <select id="viewOrderList" resultType="org.fullstack4.woolim.domain.OrderVO">
         SELECT order_idx,order_date,order_total,order_cancel_yn,member_id
                ,order_reg_date,order_status,order_refund_request,order_refund_response,order_num

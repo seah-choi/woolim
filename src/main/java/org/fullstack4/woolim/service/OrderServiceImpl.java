@@ -39,9 +39,13 @@ public class OrderServiceImpl implements OrderServiceIf{
             orderDTO.setLecture_idx(lectureDTO.getLecture_idx());
             OrderDetailVO orderDetailVO = modelMapper.map(orderDTO, OrderDetailVO.class);
             int exist =orderMapper.exist(orderDetailVO);
+            int exist2 = orderMapper.exist2(orderDetailVO);
             log.info(exist);
             if(exist > 0){
                 throw new InsufficientStockException("이미 결제한 강좌가 있습니다.");
+            }
+            if(exist2 > 0){
+                throw new InsufficientStockException("이미 수강중인 강좌가 있습니다.");
             }
             orderMapper.DoOrderDetail(orderDetailVO);
             orderMapper.Enrolment(orderDetailVO);

@@ -34,7 +34,7 @@
             <div class="col-lg-9 order-1 order-lg-2">
                 <h5 style="font-weight: bold">찜한 강의</h5>
                 <hr>
-                <form action="/mypage/cart">
+                <form action="/mypage/jjim">
                     <div class="d-flex justify-content-end">
                         <input type="date" style="width: 20%" name="search_date1" class="form-control me-3">
                         <span class="me-3">~</span>
