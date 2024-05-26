@@ -86,8 +86,15 @@ public class LectureController {
     public void noticeListGET(@RequestParam(defaultValue = "") String bbs_type,
                               PageRequestDTO pageRequestDTO, String lecture_idx, Model model){
 
-        pageRequestDTO.setBbs_type("bbs04");
+        pageRequestDTO.setBbs_type(bbs_type);
+        pageRequestDTO.setBbs_teacher_yn("Y");
+
         PageResponseDTO<BbsDTO> noticeListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
+        log.info(noticeListDTO);
+        model.addAttribute("responseDTO" , noticeListDTO);
+
+
+
 
         int idx = Integer.parseInt(lecture_idx);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);

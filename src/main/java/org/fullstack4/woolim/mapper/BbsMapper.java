@@ -22,6 +22,7 @@ public interface BbsMapper {
     BoardFileVO fileView(int bbs_idx);
     int deleteList(Integer[] idxList);
     int fileModify(BoardFileVO boardFileVO);
+    int InsertLectureBbs(BbsVO bbsVO);
 
     int checkExistingFiles(int bbs_idx);
     public boolean updateReadCount(int bbs_idx);

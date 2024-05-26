@@ -32,7 +32,6 @@ public class OrderServiceImpl implements OrderServiceIf{
     public void DoOrder(OrderDTO orderDTO, MemberDTO memberDTO, PaymentDTO paymentDTO, List<CartDTO> cartDTO, List<LectureDTO> lectureDTOList) throws InsufficientStockException {
         OrderVO orderVO = modelMapper.map(orderDTO, OrderVO.class);
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
-        List<CartVO> cartVO = cartDTO.stream().map(dto->modelMapper.map(dto,CartVO.class)).collect(Collectors.toList());
         PaymentVO paymentVO = modelMapper.map(paymentDTO, PaymentVO.class);
 
 
@@ -62,8 +61,11 @@ public class OrderServiceImpl implements OrderServiceIf{
         orderMapper.InsertPayment(paymentVO);
         memberMapper.changePoint(memberVO);
 
-        for (CartVO cartVO1 : cartVO) {
-            cartMapper.deleteCartOrJjim(cartVO1);
+        if(cartDTO != null) {
+            List<CartVO> cartVO = cartDTO.stream().map(dto -> modelMapper.map(dto, CartVO.class)).collect(Collectors.toList());
+            for (CartVO cartVO1 : cartVO) {
+                cartMapper.deleteCartOrJjim(cartVO1);
+            }
         }
     }
 
