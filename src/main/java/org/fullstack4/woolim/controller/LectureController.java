@@ -2,6 +2,8 @@ package org.fullstack4.woolim.controller;
 
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.woolim.common.CommonUtil;
+import org.fullstack4.woolim.common.FileUtil;
 import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
 import org.fullstack4.woolim.dto.*;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Log4j2
@@ -248,12 +253,92 @@ public class LectureController {
     }
 
     @PostMapping("/boardModify")
-    public void POSTBModify(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type) {
-        BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
-        model.addAttribute("bbsDTO", bbsDTO);
-        model.addAttribute("bbs_type",bbs_type);
-        model.addAttribute("lecture_idx", lecture_idx);
-        model.addAttribute("bbs_idx", bbs_idx);
+    public String POSTBModify(@RequestParam int lecture_idx, Model model, @RequestParam int bbs_idx
+            , @RequestParam String bbs_type, BbsDTO bbsDTO, HttpServletRequest req
+            , MultipartHttpServletRequest files) {
+        int resultFile = 0;
+        String upload = "";
+
+        resultFile = bbsServiceIf.modify(bbsDTO);
+
+
+        List<MultipartFile> list = files.getFiles("files");
+        upload = CommonUtil.getUploadFolder(req, "bbs");
+
+        log.info("resultFile : " + resultFile);
+        log.info("files.size111 : " + files.getFiles("files").size());
+        log.info("list : " + list);
+
+        log.info("uploadFoler111: " + upload);
+
+        boolean fileExists = bbsServiceIf.hasExistingFiles(bbsDTO.getBbs_idx());
+        if (fileExists) {
+            // 기존 파일이 있는 글 수정 등록 로직
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getSize() == 0) {
+                    continue;
+                }
+
+                FileDTO fileDTO = FileDTO.builder()
+                        .file(list.get(i))
+                        .uploadFolder(upload)
+                        .build();
+                log.info("========================");
+                log.info("PostModify >> bbsDTO" + bbsDTO);
+                log.info("========================");
+                Map<String, String> map = FileUtil.FileUpload(fileDTO);
+                log.info("=======================");
+                log.info("upload : " + map);
+                log.info("=======================");
+                if (map.get("result").equals("success")) {
+                    BoardFileDTO boardFileDTO = BoardFileDTO.builder()
+                            .bbs_idx(bbsDTO.getBbs_idx())
+                            .orgFile(map.get("orgName"))
+                            .saveFile(map.get("newName")).build();
+                    bbsServiceIf.fileModify(boardFileDTO);
+                    log.info("boardFileDTO : " + boardFileDTO);
+                }
+            }
+
+        } else {
+            //기존 파일이 없을 때 로직
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getSize() == 0) {
+                    break;
+                }
+                FileDTO fileDTO = FileDTO.builder()
+                        .file(list.get(i))
+                        .uploadFolder(upload)
+                        .build();
+                log.info("========================");
+                log.info("PostModify2222 >> bbsDTO" + bbsDTO);
+                log.info("========================");
+                Map<String, String> map = FileUtil.FileUpload(fileDTO);
+                log.info("=======================");
+                log.info("upload2222 : " + map);
+                log.info("=======================");
+                if (map.get("result").equals("success")) {
+                    BoardFileDTO boardFileDTO = BoardFileDTO.builder()
+                            .bbs_idx(bbsDTO.getBbs_idx())
+                            .orgFile(map.get("orgName"))
+                            .saveFile(map.get("newName")).build();
+                    bbsServiceIf.file_regist(boardFileDTO);
+                    log.info("boardFileDTO2222 : " + boardFileDTO);
+                }
+            }
+        }
+
+
+        if(resultFile > 0) {
+            model.addAttribute("bbsDTO", bbsDTO);
+            model.addAttribute("bbs_type",bbs_type);
+            model.addAttribute("lecture_idx", lecture_idx);
+            model.addAttribute("bbs_idx", bbs_idx);
+            return "redirect:/lecture/boardView?bbs_idx=" + bbsDTO.getBbs_idx();
+        } else {
+            return "/lecture/boardModify?bbs_idx=" + bbsDTO.getBbs_idx();
+        }
+
     }
 
 
