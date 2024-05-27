@@ -100,10 +100,7 @@ public class LectureController {
 
     }
 
-    @GetMapping("/delete")
-    public void GETDelete() {
 
-    }
     @GetMapping("/view")
     public String viewGET(String lecture_idx, Model model , HttpServletRequest request) throws Exception {
         log.info("-----------------------");
@@ -115,14 +112,18 @@ public class LectureController {
 
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         List<VideoDTO> videoDTO = lectureServiceIf.lectureVideo(idx);
+/*
         OrderDetailDTO orderDetailDTO = lectureServiceIf.lectureStatus(idx,member_id);
+*/
 
         log.info("-----lectureDTO--------" + lectureDTO);
         log.info("-----video--------" + videoDTO);
+/*
         log.info("-----orderDetailDTO--------" + orderDetailDTO);
+*/
         model.addAttribute("list" , lectureDTO);
         model.addAttribute("video" , videoDTO);
-        model.addAttribute("order" , orderDetailDTO);
+//        model.addAttribute("order" , orderDetailDTO);
         return "/lecture/view";
     }
 
@@ -240,7 +241,8 @@ public class LectureController {
 
         if(bbs_type.equals("bbs03")){
             List<BbsReplyDTO> reply = bbsReplyService.list(bbs_idx);
-            model.addAttribute(reply);
+            log.info(reply);
+            model.addAttribute("reply",reply);
         }
 
         model.addAttribute("file",boardFileDTO);
@@ -252,7 +254,13 @@ public class LectureController {
         model.addAttribute("lecture_idx", lecture_idx);
         model.addAttribute("bbs_idx", bbs_idx);
     }
-
+    @PostMapping("/delete")
+    public String delete(@RequestParam(name="grade_idx", defaultValue = "0") int[] grade_idx){
+        for(int i : grade_idx) {
+            lectureServiceIf.delete(i);
+        }
+        return "redirect:/lecture/studentList";
+    }
 
 
 
