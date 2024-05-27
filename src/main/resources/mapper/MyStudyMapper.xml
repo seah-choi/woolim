@@ -215,7 +215,7 @@
         FROM woo_grade AS wg
         INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wg.lecture_idx
         INNER JOIN woo_subject AS ws ON ws.subject_category_code = wl.lecture_category_subject
-        INNER JOIN woo_member AS wm ON wm.member_idx = wg.member_idx
+        INNER JOIN woo_member AS wm ON wm.member_id = wg.member_id
         <where>
             <if test="bbs_type !=null and bbs_type !=''">
                 bbs_category_code=#{bbs_type}
@@ -249,7 +249,7 @@
         FROM woo_grade AS wg
         INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wg.lecture_idx
         INNER JOIN woo_subject AS ws ON ws.subject_category_code = wl.lecture_category_subject
-        INNER JOIN woo_member AS wm ON wm.member_idx = wg.member_idx
+        INNER JOIN woo_member AS wm ON wm.member_id = wg.member_id
         WHERE wg.grade_idx = #{grade_idx}
     </select>
 
@@ -258,7 +258,7 @@
         FROM woo_grade AS wg
         INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wg.lecture_idx
         INNER JOIN woo_subject AS ws ON ws.subject_category_code = wl.lecture_category_subject
-        INNER JOIN woo_member AS wm ON wm.member_idx = wg.member_idx
+        INNER JOIN woo_member AS wm ON wm.member_id = wg.member_id
         <where>
             <if test="bbs_type !=null and bbs_type !=''">
                 bbs_category_code=#{bbs_type}
