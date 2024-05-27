@@ -214,7 +214,8 @@
                     document.getElementById("exampleModalLabel").textContent = data.member_name + "님의 성적표"
                     document.getElementById("grade_idx").value = data.grade_idx;
                     document.getElementById("grade_title").textContent = '[' + data.subject_name + '] ' + data.lecture_title;
-                    document.getElementById("grade").value = data.grade;
+                    if(data.grade != undefined)
+                        document.getElementById("grade").value = data.grade;
                 }
             })
         });

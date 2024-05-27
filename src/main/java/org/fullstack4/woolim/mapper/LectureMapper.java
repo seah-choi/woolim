@@ -24,11 +24,11 @@ public interface LectureMapper {
     int grade_count(PageRequestDTO pageRequestDTO);
     int modify(GradeVO gradeVO);
     int regist(GradeVO gradeVO);
-    int delete(String[] grade_idx);
+    int delete(int grade_idx);
 
     ClassVO getGrade(int class_idx);
 
     List<VideoVO> lectureVideo(int lecture_idx);
 
-    OrderDetailVO lectureStatus(int lecture_idx , String member_id);
+    OrderListVO lectureStatus(int lecture_idx , String member_id);
 }

@@ -161,11 +161,7 @@
 
     <update id="delete">
         update woo_grade set grade = null
-        WHERE grade_idx in
-        <foreach collection="grade_idx" item="item" open="(" close=")" separator="," index="index">
-            #{item}
-        </foreach>
-
+        WHERE grade_idx = #{grade_idx}
     </update>
 
 
@@ -177,7 +173,7 @@
          INNER JOIN woo_member AS wm ON wm.member_id = wc.member_id
         WHERE wc.class_idx = #{class_idx}
     </select>
-    <select id="lectureStatus" resultType="org.fullstack4.woolim.domain.OrderDetailVO">
+    <select id="lectureStatus" resultType="org.fullstack4.woolim.domain.OrderListVO">
         select * from woo_order_detail
         where lecture_idx = #{arg0} and member_id = #{arg1}
 
