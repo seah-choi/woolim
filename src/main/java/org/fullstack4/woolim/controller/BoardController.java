@@ -67,6 +67,8 @@ public class BoardController {
         BbsDTO  bbsDTO = bbsServiceIf.view(bbs_idx);
         BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
 
+        bbsServiceIf.updateReadCount(bbs_idx);
+
         model.addAttribute("bbs", bbsDTO);
         model.addAttribute("file",boardFileDTO);
 
@@ -427,6 +429,7 @@ public class BoardController {
         BbsDTO  bbsDTO = bbsServiceIf.view(bbs_idx);
         BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
         List<BbsReplyDTO> bbsReplyDTOList = bbsReplyServiceIf.list(bbs_idx);
+        bbsServiceIf.updateReadCount(bbs_idx);
 
         model.addAttribute("bbs", bbsDTO);
         model.addAttribute("file",boardFileDTO);
