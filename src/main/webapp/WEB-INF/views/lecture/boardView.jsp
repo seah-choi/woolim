@@ -314,9 +314,13 @@
             <hr>
             <br>
             <div>
-                <c:if test="${not empty file}">
-                    <img src="/resources/upload/bbs/${file.saveFile}" width="700px" height="400px">
+                <span style="padding-top: 8px;">첨부파일 : </span>
+                <c:if test="${fileList != null}">
+                    <c:forEach var="file" items="${fileList}">
+                        <a download href="/resources/upload/bbs/${file.saveFile}" class="btn rounded-pill px-2 py-2 mb-4 text-primary"><i class="me-2 text-primary"></i>${file.orgFile}</a>
+                    </c:forEach>
                 </c:if>
+                <c:if test="${fileList == null}">등록된 파일이 없습니다.</c:if>
             </div>
             <br>
             <div style="white-space: pre-wrap;margin-bottom: 100px;">${bbsDTO.bbs_content}</div>

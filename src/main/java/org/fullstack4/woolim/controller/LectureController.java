@@ -6,6 +6,7 @@ import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.FileUtil;
 import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
+import org.fullstack4.woolim.domain.BoardFileVO;
 import org.fullstack4.woolim.domain.OrderDetailVO;
 import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.service.BbsReplyServiceIf;
@@ -272,15 +273,15 @@ public class LectureController {
     public void boardViewGET(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type){
 
         BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
-        BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
 
         if(bbs_type.equals("bbs03")){
             List<BbsReplyDTO> reply = bbsReplyService.list(bbs_idx);
             log.info(reply);
             model.addAttribute("reply",reply);
         }
+        List<BoardFileDTO> fileList = bbsServiceIf.file_list(bbs_idx);
+        model.addAttribute("fileList", fileList);
 
-        model.addAttribute("file",boardFileDTO);
         model.addAttribute("bbsDTO" , bbsDTO);
         log.info(bbsDTO.toString());
         LectureDTO lectureDTO = lectureServiceIf.lectureView(lecture_idx);

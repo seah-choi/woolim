@@ -108,6 +108,15 @@ public class BbsServiceImpl implements BbsServiceIf{
     }
 
     @Override
+    public List<BoardFileDTO> file_list(int bbs_idx) {
+        List<BoardFileVO> voList =bbsMapper.file_list(bbs_idx);
+        log.info("voList" + voList);
+        List<BoardFileDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo, BoardFileDTO.class)).collect(Collectors.toList());
+        log.info("dtoList" + dtoList);
+        return dtoList;
+    }
+
+    @Override
     public boolean hasExistingFiles(int bbs_idx) {
         return bbsMapper.checkExistingFiles(bbs_idx) > 0;
     }

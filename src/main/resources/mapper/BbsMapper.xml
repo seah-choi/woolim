@@ -143,4 +143,9 @@
         INSERT INTO woo_bbs (member_id,bbs_title,bbs_content,bbs_image,bbs_reg_date,bbs_category_code,bbs_teacher_yn,lecture_idx)
         VALUES(#{member_id},#{bbs_title},#{bbs_content},#{bbs_image}, now(),#{bbs_category_code},#{bbs_teacher_yn},#{lecture_idx})
     </insert>
+    <select id="file_list" resultType="org.fullstack4.woolim.domain.BoardFileVO">
+        SELECT idx, bbs_idx, orgFile, saveFile
+        FROM woo_bbs_file
+        WHERE bbs_idx = #{bbs_idx}
+    </select>
 </mapper>
