@@ -185,7 +185,6 @@
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <main>
-
     <div id="back1">
 
         <div id="id2" class="container">
@@ -294,8 +293,8 @@
                 <div style="padding-top: 20px; line-height: unset;">
                     <a class="nav-link" aria-current="page" href="/lecture/view?lecture_idx=${list.lecture_idx}">강의소개</a>
                     <a class="nav-link" href="/lecture/boardList?bbs_type=bbs04&lecture_idx=${list.lecture_idx}">공지사항</a>
-                    <a class="nav-link" href="/lecture/qnaList?lecture_idx=${list.lecture_idx}">Q&A</a>
-                    <a class="nav-link" href="/lecture/jalyosilList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
+                    <a class="nav-link" href="/lecture/boardList?bbs_type=bbs03&lecture_idx=${list.lecture_idx}">Q&A</a>
+                    <a class="nav-link" href="/lecture/boardList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
                     <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
                 </div>
             </nav>
@@ -324,12 +323,62 @@
             <div style="display: flex;justify-content: center;">
                 <div>
                     <button type="button" class="btn" id="btn_back" onclick="location.href='/lecture/boardList?bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">목록</button>
-                    <button type="button" class="btn" onclick="location.href='/lecture/boardModify?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">수정</button>
-                    <button type="button" class="btn" onclick="location.href='/lecture/boardDelete?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">삭제</button>
+                    <c:if test="${sessionScope.user_id == bbsDTO.member_id}">
+                        <button type="button" class="btn" onclick="location.href='/lecture/boardModify?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">수정</button>
+                        <button type="button" class="btn" onclick="location.href='/lecture/boardDelete?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">삭제</button>
+                    </c:if>
                 </div>
             </div>
+            <c:if test="${bbsDTO.bbs_category_code eq 'bbs03'}">
+            <div id="comment">
+                <form name="frm" id="frm_comment" action="/bbsReply/regist" method="post">
+                    <input type="hidden" name="member_id" value="${sessionScope.member_id}">
+                    <input type="hidden" name="bbs_idx" value="${bbs_idx}">
+                    <input type="hidden" name="lecture_idx" value="${list.lecture_idx}">
+                    <span>답변</span>&nbsp;<span id="cmCount">${bbs.bbs_reply_cnt}</span>
+                    <div class="form-floating" style="display: flex;margin-top: 10px;margin-bottom: 40px;">
+                        <textarea class="form-control" placeholder="Leave a comment here" name="reply_content" id="replyContent"></textarea>
+                        <label for="reply_content">댓글</label>
+                        <input type="hidden" name="lecture_YN" value="Y">
+                        <button type="submit" class="btn btn-outline-info" id="btn_comment">등록</button>
+                    </div>
+                </form>
+
+                    <div>
+                        <c:choose>
+                            <c:when test="${not empty reply}">
+                                <c:forEach items="${reply}" var="reply">
+                                    <span style="font-weight: bold">${reply.member_id}</span>&nbsp;<span>${reply.reply_reg_date}</span>
+                                    <br>
+                                    <form name="frm" id="cmFrm" class="cmFrm" action="/bbsReply/delete" method="post">
+                                    <p><input type="text" name="reply_content"  class="reply_content" style="border: 0" value="${reply.reply_content}" id="reply_content" readonly></p>
+                                    <c:if test="${reply.member_id == sessionScope.member_id}">
+                                        <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
+                                        <input type="hidden" name="bbs_idx" value="${reply.bbs_idx}">
+                                        <div style="display: flex;justify-content: flex-end;">
+                                            <button type="button" class="btnModify" id="btnModify">수정</button>
+                                            <span>&nbsp;|&nbsp;</span>
+                                                <%--                                    <button type="submit" id="cmDelete" onclick="cmDelete(event)">삭제</button>--%>
+                                            <button type="button" class="cmDelete" id="cmDelete">삭제</button>
+                                        </div>
+                                        </form>
+                                    </c:if>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <div style="padding: 10px;">
+                                    등록된 댓글이 없습니다.
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+
+            </div>
+            </c:if>
         </div>
+
     </div>
+
     <footer class="footer-section">
         <div class="container">
             <div class="row">
@@ -431,6 +480,26 @@
             ['view', ['codeview', 'help']]
         ]
 
+    });
+
+    document.querySelector("#btn_comment").addEventListener("click", function (e){
+        e.preventDefault();
+
+        let member_id = `${member_id}`;
+        let frm = document.querySelector("#frm_comment");
+        let replyContent = document.querySelector("#replyContent");
+
+        if(member_id == "") {
+            alert("로그인 후 이용하세요.");
+            return false;
+        }
+
+        if(replyContent.value == "" ||  replyContent.value.length < 2 || replyContent.value == null ){
+            alert("댓글은 2자 이상 입력해주세요.");
+            return false;
+        }
+
+        frm.submit();
     });
 </script>
 </body>

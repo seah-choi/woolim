@@ -8,8 +8,10 @@ import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
 import org.fullstack4.woolim.domain.OrderDetailVO;
 import org.fullstack4.woolim.dto.*;
+import org.fullstack4.woolim.service.BbsReplyServiceIf;
 import org.fullstack4.woolim.service.BbsServiceIf;
 import org.fullstack4.woolim.service.CartServiceIf;
+import org.fullstack4.woolim.service.ReviewServiceIf;
 import org.fullstack4.woolim.service.lecture.LectureServiceIf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +47,8 @@ public class LectureController {
     private BbsServiceIf bbsServiceIf;
     @Autowired
     private CartServiceIf cartServiceIf;
+    @Autowired
+    private BbsReplyServiceIf bbsReplyService;
     @GetMapping("/list")
     public String GETList(Model model, Criteria cri, HttpSession session) {
         System.out.println("#####");
@@ -203,6 +207,19 @@ public class LectureController {
         model.addAttribute("bbs_type",bbs_type);
         model.addAttribute("lecture_idx", lecture_idx);
     }
+    @PostMapping
+    public String qnaRegistPOST(BbsDTO bbsDTO, RedirectAttributes redirectAttributes, Model model){
+        bbsDTO.setBbs_category_code("bbs03");
+        int result = bbsServiceIf.regist(bbsDTO);
+
+        if(result >0){
+            return "redirect:/lecture/qnaList?lecture_idx=" + bbsDTO.getLecture_idx();
+        }
+        else{
+            redirectAttributes.addFlashAttribute("bbsDTO");
+            return "redirect:/lecture/qnaRegist?lecture_idx=" + bbsDTO.getLecture_idx();
+        }
+    }
 
     @PostMapping("/boardRegist")
     public String boardRegistPOST(BbsDTO bbsDTO){
@@ -220,6 +237,11 @@ public class LectureController {
 
         BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
         BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
+
+        if(bbs_type.equals("bbs03")){
+            List<BbsReplyDTO> reply = bbsReplyService.list(bbs_idx);
+            model.addAttribute(reply);
+        }
 
         model.addAttribute("file",boardFileDTO);
         model.addAttribute("bbsDTO" , bbsDTO);

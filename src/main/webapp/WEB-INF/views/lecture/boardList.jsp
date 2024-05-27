@@ -304,7 +304,9 @@
             <c:if test="${responseDTO.bbs_type=='bbs03'}"><h5 style="font-weight: bold">Q&A</h5></c:if>
             <hr>
             <div style="display: flex;justify-content: flex-end;">
-                <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/boardRegist?bbs_type=${bbs_type}&lecture_idx=${list.lecture_idx}'">글쓰기</button>
+                <c:if test="${sessionScope.user_id !=null}">
+                    <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/boardRegist?bbs_type=${bbs_type}&lecture_idx=${list.lecture_idx}'">글쓰기</button>
+                </c:if>
             </div>
             <br>
             <div class="searchBox">

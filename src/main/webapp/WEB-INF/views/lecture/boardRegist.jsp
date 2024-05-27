@@ -308,13 +308,13 @@
             <hr>
             <br>
             <form name="frm" action="/lecture/boardRegist" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
+                <input type="hidden" name="member_id" id="member_id" value="${sessionScope.user_id}">
                 <input type="hidden" name="bbs_category_code" id="bbs_category_code" value="${bbs_type}">
                 <input type="hidden" name="lecture_idx" value="${lecture_idx}">
                 <input type="hidden" name="bbs_teacher_yn" value="Y">
                 <div class="form-floating">
                     <textarea class="form-control" name="bbs_title" placeholder="Leave a comment here" id="floatingTextarea" style="resize: none"></textarea>
-                    <label for="floatingTextarea">제목</label>
+                    <label for="floatingTextarea">제목${sessionScope.user_id}</label>
                 </div>
                 <br>
                 <input type="file" class="form-control" name="files" id="file" multiple>
