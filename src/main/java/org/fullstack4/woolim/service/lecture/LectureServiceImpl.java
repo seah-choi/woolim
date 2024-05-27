@@ -2,10 +2,7 @@ package org.fullstack4.woolim.service.lecture;
 
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.criteria.Criteria;
-import org.fullstack4.woolim.domain.BbsVO;
-import org.fullstack4.woolim.domain.ClassVO;
-import org.fullstack4.woolim.domain.GradeVO;
-import org.fullstack4.woolim.domain.LectureVO;
+import org.fullstack4.woolim.domain.*;
 
 import org.fullstack4.woolim.dto.*;
 
@@ -118,6 +115,13 @@ public class LectureServiceImpl implements LectureServiceIf {
 
         return list;
 
+    }
+
+    @Override
+    public OrderDetailDTO lectureStatus(int lecture_idx, String member_id) {
+        OrderDetailVO vo = lectureMapper.lectureStatus(lecture_idx,member_id);
+        OrderDetailDTO dto = modelMapper.map(vo, OrderDetailDTO.class);
+        return dto;
     }
 }
 
