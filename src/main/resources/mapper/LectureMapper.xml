@@ -178,5 +178,9 @@
         where lecture_idx = #{arg0} and member_id = #{arg1}
 
     </select>
+    <select id="getLectureCartStatus" resultType="org.fullstack4.woolim.domain.CartVO">
+        select * from woo_cart
+        where lecture_idx = #{arg0} and member_id = #{arg1} and cart_status = 'N'
 
+    </select>
 </mapper>

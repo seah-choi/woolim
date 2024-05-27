@@ -38,4 +38,6 @@ public interface LectureServiceIf {
     List<VideoDTO> lectureVideo(int lecture_idx);
 
     OrderListDTO lectureStatus(int lecture_idx, String member_id);
+
+    CartDTO getLectureCartStatus(int lecture_idx, String member_id);
 }
