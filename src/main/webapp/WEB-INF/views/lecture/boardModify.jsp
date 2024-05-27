@@ -307,7 +307,7 @@
             <c:if test="${bbs_type=='bbs03'}"><h5 style="font-weight: bold">Q&A</h5></c:if>
             <hr>
             <br>
-            <form name="frm" action="/lecture/boardRegist" method="post" enctype="multipart/form-data">
+            <form name="frm" action="/lecture/boardModify" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
                 <input type="hidden" name="bbs_category_code" id="bbs_category_code" value="${bbs_type}">
                 <input type="hidden" name="lecture_idx" value="${lecture_idx}">
@@ -328,7 +328,7 @@
                         <button type="button" class="btn" id="btn_back" onclick="location.href='/lecture/boardList?bbs_type=bbs04&lecture_idx=${list.lecture_idx}'">목록</button>
                     </div>
                     <div>
-                        <button type="submit" class="btn" id="btn_modify">등록</button>
+                        <button type="submit" class="btn" id="btn_modify">수정</button>
                         <button type="button" class="btn btn-secondary" id="btn_delete">취소</button>
                     </div>
                 </div>

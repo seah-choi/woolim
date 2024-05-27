@@ -324,8 +324,8 @@
             <div style="display: flex;justify-content: center;">
                 <div>
                     <button type="button" class="btn" id="btn_back" onclick="location.href='/lecture/boardList?bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">목록</button>
-                    <button type="button" class="btn" onclick="location.href='/lecture/boardModify?bbs_idx=${bbs_idx}'">수정</button>
-                    <button type="button" class="btn" onclick="location.href='/lecture/boardDelete?bbs_idx=${bbs_idx}'">삭제</button>
+                    <button type="button" class="btn" onclick="location.href='/lecture/boardModify?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">수정</button>
+                    <button type="button" class="btn" onclick="location.href='/lecture/boardDelete?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">삭제</button>
                 </div>
             </div>
         </div>
