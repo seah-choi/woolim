@@ -90,6 +90,96 @@
             background-color: #0056b3;
         }
 
+        .pageInfo_wrap .pagination {
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: .25rem;
+            justify-content: center;
+        }
+
+        .pageInfo_wrap .page-link {
+            position: relative;
+            display: block;
+            padding: .5rem .75rem;
+            margin-left: -1px;
+            line-height: 1;
+            color: #327f9b;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+
+        .pageInfo_wrap .page-link:hover {
+            z-index: 2;
+            color: #327f9b;
+            text-decoration: none;
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+        }
+
+        .pageInfo_wrap .page-link:focus {
+            z-index: 3;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .pageInfo_wrap .page-item:first-child .page-link {
+            margin-left: 0;
+            border-top-left-radius: .25rem;
+            border-bottom-left-radius: .25rem;
+        }
+
+        .pageInfo_wrap .page-item:last-child .page-link {
+            border-top-right-radius: .25rem;
+            border-bottom-right-radius: .25rem;
+        }
+
+        .pageInfo_wrap .page-item.active .page-link {
+            z-index: 3;
+            color: #fff;
+            background-color: #68afcb;
+            border-color: #68afcb;
+        }
+
+        .pageInfo_wrap .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            cursor: auto;
+            background-color: #fff;
+            border-color: #dee2e6;
+        }
+
+        .pageInfo_wrap .pagination-lg .page-link {
+            padding: .75rem 1.5rem;
+            font-size: 1.25rem;
+            line-height: 1.5;
+        }
+
+        .pageInfo_wrap .pagination-lg .page-item:first-child .page-link {
+            border-top-left-radius: .3rem;
+            border-bottom-left-radius: .3rem;
+        }
+
+        .pageInfo_wrap .pagination-lg .page-item:last-child .page-link {
+            border-top-right-radius: .3rem;
+            border-bottom-right-radius: .3rem;
+        }
+
+        .pageInfo_wrap .pagination-sm .page-link {
+            padding: .25rem .5rem;
+            font-size: .875rem;
+            line-height: 1.5;
+        }
+
+        .pageInfo_wrap .pagination-sm .page-item:first-child .page-link {
+            border-top-left-radius: .2rem;
+            border-bottom-left-radius: .2rem;
+        }
+
+        .pageInfo_wrap .pagination-sm .page-item:last-child .page-link {
+            border-top-right-radius: .2rem;
+            border-bottom-right-radius: .2rem;
+        }
 
     </style>
 </head>
@@ -255,23 +345,28 @@
         </div>
     </div>
     <div class="pageInfo_wrap">
-        <div class="pageInfo_area">
+        <ul class="pagination pageInfo_area">
             <!-- 이전페이지 버튼 -->
             <c:if test="${pageMaker.prev}">
-                <li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
+                <li class="page-item pageInfo_btn previous">
+                    <a class="page-link" href="${pageMaker.startPage-1}"><<</a>
+                </li>
             </c:if>
 
             <!-- 각 번호 페이지 버튼 -->
             <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                <li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a href="${num}">${num}</a></li>
+                <li class="page-item pageInfo_btn ${pageMaker.cri.pageNum == num ? "active" : ""}">
+                    <a class="page-link" href="${num}">${num}</a>
+                </li>
             </c:forEach>
-
 
             <!-- 다음페이지 버튼 -->
             <c:if test="${pageMaker.next}">
-                <li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
+                <li class="page-item pageInfo_btn next">
+                    <a class="page-link" href="${pageMaker.endPage + 1}"> >></a>
+                </li>
             </c:if>
-        </div>
+        </ul>
     </div>
 
 

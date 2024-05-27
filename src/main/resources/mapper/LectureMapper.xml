@@ -143,4 +143,9 @@
             and wl.lecture_idx = #{lecture_idx}
         </where>
     </select>
+    <select id="lectureVideo" resultType="org.fullstack4.woolim.domain.VideoVO">
+        select * from woo_video
+        where lecture_idx = #{lecture_idx}
+
+    </select>
 </mapper>

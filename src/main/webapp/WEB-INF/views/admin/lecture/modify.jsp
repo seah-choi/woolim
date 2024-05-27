@@ -41,6 +41,13 @@
     </script>
 
     <style>
+        .section {
+            margin-bottom: 20px;
+        }
+        .section input, .section textarea {
+            display: block;
+            margin-bottom: 10px;
+        }
         .card-box {
             margin-right: 500px;
             margin-left: 20px;
@@ -175,13 +182,12 @@
                     </div>
                 </div>
 
-                <%--   <div class="d-flex align-items-start align-items-sm-center mt-5">
-                       <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강좌 업로드</label>
-                       <div class="col-sm-12 col-md-10 ">
-                           <input type="file" class="form-control-file form-control height-auto w-50" name="video">
-                       </div>
-                   </div>
---%>
+                <div class="d-flex align-items-start align-items-sm-center mt-5">
+                    <label class="col-sm-12 col-md-2 col-form-label fontWe-700">유튜브 링크</label>
+                    <div class="col-sm-12 col-md-10 ">
+                        <input type="text" class="form-control-file form-control height-auto w-50" name="lecture_video" value="${list.lecture_video}">
+                    </div>
+                </div>
                 <div class="d-flex align-items-start align-items-sm-center mt-3">
                     <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강좌 이미지 업로드</label>
                     <div class="col-sm-12 col-md-10">
@@ -229,10 +235,26 @@
                 </div>
             </form>
 
-
-
-
-
+        <div id="sectionsContainer">
+            <form id="videoFrm" name="videoFrm" enctype="multipart/form-data">
+                <span>파일업로드</span>
+                <input type="file" name="files" id="file" multiple="multiple">
+                <input name="lecture_idx"  type="hidden" value="${list.lecture_idx}">
+            </form>
+        </div>
+        <div>
+            <button type="button" id="addRegistVideo" >등록</button>
+        </div>
+            <%--<div>
+                <button type="button" id="addSectionBtn">섹션 추가</button>
+            </div>
+            <div id="sectionsContainer">
+                <form id="videoFrm" name="videoFrm" enctype="multipart/form-data"></form>
+            </div>
+            <div>
+                <button type="button" id="addRegistVideo" style="display: none;">등록</button>
+            </div>
+--%>
 
         </div>
     </div>
@@ -251,6 +273,54 @@
 <link href="/resources/css/summernote/summernote-lite.css" rel="stylesheet">
 <script src="/resources/js/summernote/summernote-lite.js"></script>
 <script>
+    /*document.getElementById('addSectionBtn').addEventListener('click', function() {
+        const sectionContainer = document.getElementById('videoFrm');
+
+        // 새로운 섹션을 담을 div 생성
+        const newSection = document.createElement('div');
+        newSection.className = 'section';
+
+        // 텍스트 입력 필드 생성
+        const textInput = document.createElement('input');
+        textInput.type = 'text';
+        textInput.placeholder = '섹션 제목';
+
+        // 비디오 URL 입력 필드 생성
+        const videoInput = document.createElement('input');
+        videoInput.type = 'file';
+        videoInput.placeholder = '비디오 URL';
+
+        // 비디오 설명 텍스트 영역 생성
+        const videoDescription = document.createElement('textarea');
+        videoDescription.placeholder = '비디오 설명';
+
+        document.querySelector("#addRegistVideo").style.display = 'block';
+
+
+
+        // 섹션에 필드 추가
+        newSection.appendChild(textInput);
+        newSection.appendChild(videoInput);
+        newSection.appendChild(videoDescription);
+
+        // 섹션 컨테이너에 섹션 추가
+        sectionContainer.appendChild(newSection);
+    });
+
+    document.querySelector("#addRegistVideo").addEventListener("click", function (e){
+        e.preventDefault();
+        const videoFrm = document.querySelector("#videoFrm");
+        videoFrm.method = 'post';
+        videoFrm.action ='/admin/lecture/videoRegist';
+        videoFrm.submit();
+    })*/
+    document.querySelector("#addRegistVideo").addEventListener("click", function (e){
+        e.preventDefault();
+        const videoFrm = document.querySelector("#videoFrm");
+        videoFrm.method = 'post';
+        videoFrm.action ='/admin/lecture/videoRegist';
+        videoFrm.submit();
+    })
     document.querySelector("#searchTeacher").addEventListener("click", function (e) {
         e.preventDefault();
 
@@ -392,6 +462,8 @@
             event.stopPropagation(); // 이벤트의 상위 엘리먼트로의 전파 중단
         }
     });
+
+
 </script>
 <script src="/resources/vendors/scripts/core.js"></script>
 <script src="/resources/vendors/scripts/script.min.js"></script>

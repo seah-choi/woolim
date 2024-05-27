@@ -2,6 +2,7 @@ package org.fullstack4.woolim.service.lectureAdmin;
 
 import org.fullstack4.woolim.dto.LectureDTO;
 import org.fullstack4.woolim.dto.MemberDTO;
+import org.fullstack4.woolim.dto.VideoDTO;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface LectureAdminService {
 
     int modifyLectureFile(LectureDTO dto);
     int modifyLecture(LectureDTO dto);
+
+    int addVideo(VideoDTO dto);
 }

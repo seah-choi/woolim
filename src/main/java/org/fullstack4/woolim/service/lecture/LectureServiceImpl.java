@@ -5,7 +5,12 @@ import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.domain.BbsVO;
 import org.fullstack4.woolim.domain.GradeVO;
 import org.fullstack4.woolim.domain.LectureVO;
+
 import org.fullstack4.woolim.dto.*;
+
+import org.fullstack4.woolim.dto.LectureDTO;
+import org.fullstack4.woolim.dto.VideoDTO;
+
 import org.fullstack4.woolim.mapper.LectureMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,9 +65,9 @@ public class LectureServiceImpl implements LectureServiceIf {
 
     @Override
     public PageResponseDTO<GradeDTO> gradeListByPage(PageRequestDTO pageRequestDTO) {
-        List<GradeVO> voList =lectureMapper.gradeListByPage(pageRequestDTO);
+        List<GradeVO> voList = lectureMapper.gradeListByPage(pageRequestDTO);
         log.info("voList" + voList);
-        List<GradeDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo, GradeDTO.class)).collect(Collectors.toList());
+        List<GradeDTO> dtoList = voList.stream().map(vo -> modelMapper.map(vo, GradeDTO.class)).collect(Collectors.toList());
         log.info("dtoList" + dtoList);
 
         int total_count = lectureMapper.grade_count(pageRequestDTO);
@@ -74,7 +79,15 @@ public class LectureServiceImpl implements LectureServiceIf {
                 .dtoList(dtoList)
                 .build();
 
-        log.info("responseDTO :" +responseDTO);
+        log.info("responseDTO :" + responseDTO);
         return responseDTO;
     }
+        public List<VideoDTO> lectureVideo(int lecture_idx) {
+            List<VideoDTO> list = lectureMapper.lectureVideo(lecture_idx).stream().map(vo->modelMapper.map(vo, VideoDTO.class)).collect(Collectors.toList());
+
+            return list;
+
+        }
+
 }
+
