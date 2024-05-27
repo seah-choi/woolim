@@ -23,5 +23,7 @@ public interface LectureAdminMapper {
     int modifyLecture(LectureDTO dto);
 
     int addVideo(VideoDTO dto);
+
+    void deleteVideo(int video_idx);
 }
 
