@@ -408,7 +408,7 @@
                             <div class="modal-body">
                                 <input type="hidden" id="grade_idx" name="grade_idx" value="">
                                 <span>점수 : </span>
-                                <input type="text" id="grade" name="grade" style="width: 100px;">
+                                <input type="text" id="grade" name="grade" style="width: 100px;">점
                             </div>
                             <br>
                             <div class="modal-footer">
@@ -432,15 +432,15 @@
                         <form name="frm" action="/lecture/studentModify" method="post">
                             <div class="modal-body">
                                 <input type="hidden" id="grade_idx" name="grade_idx" value="">
-                                <%--                                <span id="grade_title"></span>--%>
                                 <span>점수 : </span>
-                                <input type="text" id="grade" name="grade" value="" style="width: 100px;">
+                                <input type="text" id="grade" name="grade" value="" style="width: 100px;">점
                             </div>
                             <br>
                             <div class="modal-footer">
                                 <div style="display: flex;">
                                     <button type="submit" class="btn" id="btn_modify" data-bs-dismiss="modal">수정</button>&nbsp;
                                     <button type="reset" class="btn" id="check2" data-bs-dismiss="modal">취소</button>
+                                    <button type="button" class="btn" id="btn_delete2" data-bs-dismiss="modal">삭제</button>
                                 </div>
                             </div>
                         </form>
@@ -578,7 +578,7 @@
             gradeInput.value = grade || '';
         });
 
-        document.querySelector('#btn_modify').forEach(function(button) {
+        document.querySelector('#regist_btn').forEach(function(button) {
             button.addEventListener('click', function() {
                 // 클릭된 버튼에서 data-idx 값을 가져옴
                 let gradeIdx = this.getAttribute('data-idx');
@@ -641,10 +641,9 @@
 
             modalTitle.textContent = name + '님의 성적표';
             gradeIdxInput.value = idx;
-            gradeTitleSpan.textContent = title;
             gradeInput.value = grade;
 
-            document.querySelector('#regist_btn').forEach(function(button) {
+            document.querySelector('#btn_modify').forEach(function(button) {
                 button.addEventListener('click', function() {
                     // 클릭된 버튼에서 data-idx 값을 가져옴
                     let gradeIdx = this.getAttribute('data-idx');
@@ -653,6 +652,10 @@
                     document.getElementById('grade_idx').value = gradeIdx;
                 });
             });
+        });
+
+        document.getElementById('btn_delete2').addEventListener('click', function() {
+            document.getElementById('grade').value = '';
         });
 
     });
