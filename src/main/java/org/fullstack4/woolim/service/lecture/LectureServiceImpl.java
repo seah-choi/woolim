@@ -132,6 +132,21 @@ public class LectureServiceImpl implements LectureServiceIf {
 
         return dto;
     }
+
+    @Override
+    public CartDTO getLectureCartStatus(int lecture_idx, String member_id) {
+        CartVO vo = lectureMapper.getLectureCartStatus(lecture_idx, member_id);
+
+        if (vo == null) {
+            log.warn("No CartDTO found for lecture_idx: " + lecture_idx + " and member_id: " + member_id);
+            return null;
+        }
+
+        CartDTO dto = modelMapper.map(vo, CartDTO.class);
+
+
+        return dto;
+    }
 }
 
 

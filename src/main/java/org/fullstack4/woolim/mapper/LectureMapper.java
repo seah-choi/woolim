@@ -31,4 +31,6 @@ public interface LectureMapper {
     List<VideoVO> lectureVideo(int lecture_idx);
 
     OrderListVO lectureStatus(int lecture_idx , String member_id);
+
+    CartVO getLectureCartStatus(int lecture_idx , String member_id);
 }
