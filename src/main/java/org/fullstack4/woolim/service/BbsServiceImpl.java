@@ -104,7 +104,7 @@ public class BbsServiceImpl implements BbsServiceIf{
     public int InsertLectureBbs(BbsDTO bbsDTO) {
         BbsVO bbsVO = modelMapper.map(bbsDTO, BbsVO.class);
         int result = bbsMapper.InsertLectureBbs(bbsVO);
-        return result;
+        return bbsVO.getBbs_idx();
     }
 
     @Override

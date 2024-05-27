@@ -139,7 +139,7 @@
         UPDATE woo_bbs SET bbs_read_cnt = bbs_read_cnt + 1 WHERE bbs_idx = #{bbs_idx}
     </update>
 
-    <insert id="InsertLectureBbs">
+    <insert id="InsertLectureBbs" parameterType="org.fullstack4.woolim.domain.BbsVO" useGeneratedKeys="true" keyProperty="bbs_idx" keyColumn="bbs_idx">
         INSERT INTO woo_bbs (member_id,bbs_title,bbs_content,bbs_image,bbs_reg_date,bbs_category_code,bbs_teacher_yn,lecture_idx)
         VALUES(#{member_id},#{bbs_title},#{bbs_content},#{bbs_image}, now(),#{bbs_category_code},#{bbs_teacher_yn},#{lecture_idx})
     </insert>

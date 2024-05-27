@@ -223,8 +223,43 @@ public class LectureController {
     }
 
     @PostMapping("/boardRegist")
-    public String boardRegistPOST(BbsDTO bbsDTO){
+    public String boardRegistPOST(BbsDTO bbsDTO,
+                                  MultipartHttpServletRequest files,
+                                  HttpServletRequest request,
+                                  RedirectAttributes redirectAttributes,
+                                  Model model){
+
+        List<MultipartFile> list = files.getFiles("files");
+        log.info("fileupload list >> " + list);
+        log.info("list size : " + list.size());
+
         int result = bbsServiceIf.InsertLectureBbs(bbsDTO);
+
+        String uploadFolder = CommonUtil.getUploadFolder(request,"bbs");
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).getSize()==0){
+                break;
+            }
+            FileDTO fileDTO = FileDTO.builder()
+                    .file(list.get(i))
+                    .uploadFolder(uploadFolder)
+                    .build();
+            log.info("========================");
+            log.info("postQnaRegist >> qnaDTO" + bbsDTO);
+            log.info("========================");
+            Map<String, String> map = FileUtil.FileUpload(fileDTO);
+            log.info("=======================");
+            log.info("upload : " + map);
+            log.info("=======================");
+            if(map.get("result").equals("success")) {
+                BoardFileDTO boardFileDTO = BoardFileDTO.builder()
+                        .bbs_idx(result)
+                        .orgFile(map.get("orgName"))
+                        .saveFile(map.get("newName")).build();
+                bbsServiceIf.file_regist(boardFileDTO);
+            }
+        }
+
         if(result>0){
             return "redirect:/lecture/boardList?bbs_type="+bbsDTO.getBbs_category_code()+"&lecture_idx="+bbsDTO.getLecture_idx();
         }
