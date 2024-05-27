@@ -2,7 +2,9 @@ package org.fullstack4.woolim.mapper;
 
 import org.fullstack4.woolim.domain.LectureVO;
 import org.fullstack4.woolim.domain.MemberVO;
+import org.fullstack4.woolim.domain.VideoVO;
 import org.fullstack4.woolim.dto.LectureDTO;
+import org.fullstack4.woolim.dto.VideoDTO;
 
 import java.util.List;
 
@@ -19,4 +21,7 @@ public interface LectureAdminMapper {
     int modifyLectureFile(LectureDTO dto);
 
     int modifyLecture(LectureDTO dto);
+
+    int addVideo(VideoDTO dto);
 }
+

@@ -6,7 +6,12 @@ import org.fullstack4.woolim.domain.BbsVO;
 import org.fullstack4.woolim.domain.ClassVO;
 import org.fullstack4.woolim.domain.GradeVO;
 import org.fullstack4.woolim.domain.LectureVO;
+
 import org.fullstack4.woolim.dto.PageRequestDTO;
+
+import org.fullstack4.woolim.domain.VideoVO;
+import org.fullstack4.woolim.dto.VideoDTO;
+
 
 import java.util.List;
 
@@ -24,5 +29,9 @@ public interface LectureMapper {
     int modify(GradeVO gradeVO);
     int regist(GradeVO gradeVO);
     int delete(int grade_idx);
+
     ClassVO getGrade(int class_idx);
+
+    List<VideoVO> lectureVideo(int lecture_idx);
+
 }

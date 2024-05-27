@@ -319,8 +319,8 @@
                 <div style="padding-top: 20px; line-height: unset;">
                     <a class="nav-link" aria-current="page" href="/lecture/view?lecture_idx=${list.lecture_idx}">강의소개</a>
                     <a class="nav-link" href="/lecture/boardList?bbs_type=bbs04&lecture_idx=${list.lecture_idx}">공지사항</a>
-                    <a class="nav-link" href="/lecture/qnaList?lecture_idx=${list.lecture_idx}">Q&A</a>
-                    <a class="nav-link" href="/lecture/jalyosilList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
+                    <a class="nav-link" href="/lecture/boardList?bbs_type=bbs03&lecture_idx=${list.lecture_idx}">Q&A</a>
+                    <a class="nav-link" href="/lecture/boardList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
                     <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
                 </div>
             </nav>

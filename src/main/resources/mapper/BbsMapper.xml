@@ -8,7 +8,7 @@
         select count(*) from woo_bbs
         <where>
             bbs_teacher_yn = #{bbs_teacher_yn}
-            <if test="teacher_id != null and teacher_id != ''">
+            <if test="lecture_idx != null and lecture_idx != ''">
                 and lecture_idx=#{lecture_idx}
             </if>
             <if test="bbs_type !=null and bbs_type !=''">
@@ -43,7 +43,7 @@
         from woo_bbs
         <where>
             bbs_teacher_yn = #{bbs_teacher_yn}
-            <if test="teacher_id != null and teacher_id != ''">
+            <if test="lecture_idx != null and lecture_idx != ''">
                 and lecture_idx=#{lecture_idx}
             </if>
             <if test="bbs_type !=null and bbs_type !=''">

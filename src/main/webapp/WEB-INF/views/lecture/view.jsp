@@ -68,6 +68,16 @@
         #frm1 {
 
         }
+        .cart{
+            width: 58px;
+            height: 56px;
+            border-radius: 4px;
+            background: #fff url("/resources/img/lecture/cart2.png") no-repeat center;
+            vertical-align: middle;
+            border: 2px solid #fff;
+            cursor: pointer;
+            background-size: contain;
+        }
         .heart{
             width: 58px;
             height: 56px;
@@ -178,8 +188,14 @@
                     <li style="margin-bottom: 20px;"><span>해시태그</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #국어 #정성훈</li>
                     <li style="margin-bottom: 50px;"><span >별점</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%-- ${lectureDetail[0].lecture_star} --%><span class="star">⭐⭐⭐⭐</span></li>
                 </ul>
+                <form method="post" name="frm" id="frm">
+                    <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
+                    <input type="button" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
+                    <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
+                    <input type="button" id="regist" class="regist" value="수강신청" >
 
-                <c:choose>
+                </form>
+                <%--<c:choose>
                     <c:when test="${checkHeart eq 1 && checkCart eq 1}">
 
                         <form method="post" name="frm" id="frm">
@@ -255,7 +271,7 @@
                         </form>
                     </c:otherwise>
 
-                </c:choose>
+                </c:choose>--%>
 
             </div>
         </div>
@@ -271,8 +287,8 @@
             <div style="padding-top: 20px; line-height: unset;">
                 <a class="nav-link" aria-current="page" href="/lecture/view?lecture_idx=${list.lecture_idx}">강의소개</a>
                 <a class="nav-link" href="/lecture/boardList?bbs_type=bbs04&lecture_idx=${list.lecture_idx}">공지사항</a>
-                <a class="nav-link" href="/lecture/qnaList?lecture_idx=${list.lecture_idx}">Q&A</a>
-                <a class="nav-link" href="/lecture/jalyosilList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
+                <a class="nav-link" href="/lecture/boardList?bbs_type=bbs03&lecture_idx=${list.lecture_idx}">Q&A</a>
+                <a class="nav-link" href="/lecture/boardList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
                 <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
             </div>
         </nav>
@@ -285,7 +301,7 @@
                     <a class="active" data-toggle="tab" href="#tab-1" role="tab">강의소개</a>
                 </li>
                 <li>
-                    <a data-toggle="tab" href="#tab-2" role="tab">SPECIFICATIONS</a>
+                    <a data-toggle="tab" href="#tab-2" role="tab">강의 목차</a>
                 </li>
                 <li>
                     <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews (02)</a>
@@ -318,19 +334,22 @@
                     <div class="specification-table">
                         <table>
                             <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 500px;">
+
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                                            Accordion Item #1
+                                            ${video[0].video_content}
                                         </button>
                                     </h2>
                                     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                                         <div class="accordion-body">
-                                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                            <c:forEach items="${video}" var="video">
+                                                <div><a href="#">${video.video_title}</a></div>
+                                            </c:forEach>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accordion-item">
+                                <%--<div class="accordion-item">
                                     <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
                                             Accordion Item #2
@@ -353,7 +372,7 @@
                                             <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
                                         </div>
                                     </div>
-                                </div>
+                                </div>--%>
                             </div>
                         </table>
                     </div>
@@ -501,7 +520,13 @@
         </div>
     </footer>
 </main>
+<script>
+    document.querySelector("#regist").addEventListener("click", function() {
+        const lectureIdx = document.querySelector("#lecture_idx").value;
+        location.href = '/order/order?lecture_idx='+lectureIdx;
+    });
 
+</script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/js/jquery-ui.min.js"></script>
@@ -512,5 +537,6 @@
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
+<script src="/resources/js/cart.js"></script>
 </body>
 </html>
