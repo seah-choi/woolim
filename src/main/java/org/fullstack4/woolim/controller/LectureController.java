@@ -251,6 +251,8 @@ public class LectureController {
     @GetMapping("/boardModify")
     public void GETBModify(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type) {
         BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(lecture_idx);
+        model.addAttribute("list" , lectureDTO);
         model.addAttribute("bbsDTO", bbsDTO);
         model.addAttribute("bbs_type",bbs_type);
         model.addAttribute("lecture_idx", lecture_idx);
