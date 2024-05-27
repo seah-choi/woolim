@@ -71,4 +71,9 @@ public class LectureAdminServiceImpl implements LectureAdminService{
         int iResult = lectureAdminMapper.addVideo(dto);
         return iResult;
     }
+
+    @Override
+    public void deleteVideo(int video_idx) {
+        lectureAdminMapper.deleteVideo(video_idx);
+    }
 }

@@ -103,4 +103,8 @@
         insert into woo_video(video_title,lecture_idx,video_content,video_file)
         values(#{video_title}, #{lecture_idx}, #{video_content}, #{video_file})
     </insert>
+
+    <delete id="deleteVideo">
+        delete from woo_video where video_idx = #{video_idx}
+    </delete>
 </mapper>

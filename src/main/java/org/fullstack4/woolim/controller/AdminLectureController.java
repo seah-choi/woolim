@@ -80,6 +80,11 @@ public class AdminLectureController {
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         log.info("lectureDTO " + lectureDTO);
         model.addAttribute("list",lectureDTO);
+        List<VideoDTO> videoDTO = lectureServiceIf.lectureVideo(idx);
+        log.info("--------videoDTO--------" + videoDTO );
+        if(videoDTO != null){
+            model.addAttribute("video",videoDTO);
+        }
         if(selectedMemberName != null) {
             log.info("selectedMemberName---" + selectedMemberName);
             model.addAttribute("selectedMemberName",selectedMemberName);
@@ -276,7 +281,6 @@ public class AdminLectureController {
             log.info("--------1111111111111---------------");
 
 
-
             // 이미지 파일 처리
             String uploadFolder = "C:\\java4\\spring\\springweb\\woolim\\src\\main\\webapp\\resources\\img\\lecture";
             String fileRealName = file.getOriginalFilename();
@@ -331,7 +335,7 @@ public class AdminLectureController {
     }
 
     @PostMapping("/videoRegist")
-    public String videoRegistPost(MultipartHttpServletRequest files ,String lecture_idx) {
+    public String videoRegistPost(MultipartHttpServletRequest files ,String lecture_idx , String video_content) {
         log.info("------------------------------------");
 
         log.info("Image File Name: " + files);
@@ -366,9 +370,9 @@ public class AdminLectureController {
             int idx = Integer.parseInt(lecture_idx);
             VideoDTO dto = new VideoDTO();
             dto.setLecture_idx(idx);
-            dto.setVideo_title(newName + fileExt);
+            dto.setVideo_title(fileRealName);
             dto.setVideo_file(newName + fileExt);
-            dto.setVideo_content("섹션1번입니다.");
+            dto.setVideo_content(video_content);
             try {
                 list.get(i).transferTo(saveFile);
                 int iResult = lectureAdminService.addVideo(dto);
@@ -380,6 +384,17 @@ public class AdminLectureController {
             }
         }
 
-        return "/bbs/fileUpload2";
+        return "redirect:/admin/lecture/modify?lecture_idx="+ lecture_idx;
     }
+    @PostMapping("/videoDelete")
+    @ResponseBody
+    public String deleteVideo(@RequestParam("video_idx") int video_idx) {
+        try {
+            lectureAdminService.deleteVideo(video_idx);
+            return "success";
+        } catch (Exception e) {
+            return "error";
+        }
+    }
+
 }
