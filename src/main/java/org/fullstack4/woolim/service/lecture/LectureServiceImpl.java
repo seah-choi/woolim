@@ -111,14 +111,14 @@ public class LectureServiceImpl implements LectureServiceIf {
         ClassDTO dto = modelMapper.map(vo, ClassDTO.class);
         return dto;
     }
-}
 
+    @Override
     public List<VideoDTO> lectureVideo(int lecture_idx) {
         List<VideoDTO> list = lectureMapper.lectureVideo(lecture_idx).stream().map(vo->modelMapper.map(vo, VideoDTO.class)).collect(Collectors.toList());
 
         return list;
 
     }
-
 }
+
 
