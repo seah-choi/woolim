@@ -247,6 +247,14 @@ public class LectureController {
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         model.addAttribute("list" , lectureDTO);
     }
+    @GetMapping("/watchVideo")
+    public String watchVideoGET(String lectureIdx, Model model){
+        int idx = Integer.parseInt(lectureIdx);
+        List<VideoDTO> videoDTO = lectureServiceIf.lectureVideo(idx);
+        log.info("VideoDTO" + videoDTO);
+        model.addAttribute("list" , videoDTO);
+        return "/lecture/watchVideo";
+    }
 
     @GetMapping("/boardModify")
     public void GETBModify(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type) {
