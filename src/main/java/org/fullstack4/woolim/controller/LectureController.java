@@ -121,6 +121,11 @@ public class LectureController {
             log.info("-----orderDetailDTO--------" + orderDetailDTO);
             model.addAttribute("order" , orderDetailDTO);
         }
+        CartDTO cartDTO = lectureServiceIf.getLectureCartStatus(idx,member_id);
+        if(cartDTO != null) {
+            log.info("-----cartDTO--------" + cartDTO);
+            model.addAttribute("cart" , cartDTO);
+        }
 
         log.info("-----lectureDTO--------" + lectureDTO);
         log.info("-----video--------" + videoDTO);

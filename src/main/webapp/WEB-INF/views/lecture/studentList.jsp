@@ -189,6 +189,7 @@
             background: #fff;
             border: 1px solid #68afcb;
             color: #68afcb;
+            margin-bottom: 10px;
         }
         #check {
             background: #68afcb;
@@ -326,7 +327,9 @@
                     <a class="nav-link" href="/lecture/boardList?bbs_type=bbs04&lecture_idx=${list.lecture_idx}">공지사항</a>
                     <a class="nav-link" href="/lecture/boardList?bbs_type=bbs03&lecture_idx=${list.lecture_idx}">Q&A</a>
                     <a class="nav-link" href="/lecture/boardList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
+                    <c:if test="${sessionScope.member_id == list.member_id}">
                     <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
+                    </c:if>
                 </div>
             </nav>
         </div>
@@ -354,7 +357,9 @@
             <br>
             <form name="frm" id="gradeDeleteFrm" action="/lecture/delete" method="post">
                 <input type="hidden" name="lecture_idx" value="${list.lecture_idx}">
+                <c:if test="${not empty bbsList.dtolist}">
                 <button type="submit" class="btn" id="btn_delete" type="submit" onclick="godelete(event)">삭제</button>
+                </c:if>
                 <br>
             <table class="table">
                 <thead>
@@ -366,7 +371,6 @@
                     <th></th>
                 </tr>
                 </thead>
-
                 <c:choose>
                 <c:when test="${not empty bbsList.dtolist}">
                 <c:forEach items="${bbsList.dtolist}" var="list">
@@ -390,7 +394,12 @@
                 </c:forEach>
                 </c:when>
                     <c:otherwise>
-                        수강생이 없습니다.
+                        <tr>
+                            <td>수강생이 없습니다.</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
                     </c:otherwise>
                 </c:choose>
             </table>
@@ -442,7 +451,6 @@
                                 <div style="display: flex;">
                                     <button type="submit" class="btn" id="btn_modify" data-bs-dismiss="modal">수정</button>&nbsp;
                                     <button type="reset" class="btn" id="check2" data-bs-dismiss="modal">취소</button>
-                                    <button type="button" class="btn" id="btn_delete2" data-bs-dismiss="modal">삭제</button>
                                 </div>
                             </div>
                         </form>
