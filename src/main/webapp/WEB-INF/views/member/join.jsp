@@ -90,7 +90,7 @@
                                         <small id="err_addr1" class="info text-danger"></small>
                                     </div>
                                     <div class="input-group">
-                                        <input type="text" name="member_addr_detail" class="form-control" style="border: 1px solid #ced4da;" id="" placeholder="상세주소">
+                                        <input type="text" name="member_addr_detail" class="form-control" style="border: 1px solid #ced4da;" id="member_addr_detail" placeholder="상세주소">
                                         <small id="err_addr2" class="info text-danger"></small>
                                     </div>
                                     <span id="guide" style="color:#999;display:none"></span>
@@ -262,6 +262,7 @@
                     // 우편번호와 주소 정보를 해당 필드에 넣는다.
                     document.getElementById('sample4_postcode').value = data.zonecode;
                     document.getElementById("sample4_roadAddress").value = roadAddr;
+                    document.getElementById("member_addr_detail").value="";
 
                     var guideTextBox = document.getElementById("guide");
                     // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.

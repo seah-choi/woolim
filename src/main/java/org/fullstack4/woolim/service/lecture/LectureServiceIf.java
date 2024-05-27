@@ -1,7 +1,11 @@
 package org.fullstack4.woolim.service.lecture;
 
 import org.fullstack4.woolim.criteria.Criteria;
+<<<<<<< HEAD
 
+=======
+import org.fullstack4.woolim.domain.GradeVO;
+>>>>>>> cc5d5a1ea4b4fa15ad45df0cf57fab061bbcebd8
 import org.fullstack4.woolim.dto.*;
 
 import org.fullstack4.woolim.dto.LectureDTO;
@@ -21,5 +25,8 @@ public interface LectureServiceIf {
 
     LectureDTO lectureView(int idx);
 
-    PageResponseDTO<GradeDTO> gradeListByPage(PageRequestDTO pageRequestDTO);
+    PageResponseDTO<ClassDTO> gradeListByPage(PageRequestDTO pageRequestDTO);
+    int modify(GradeDTO gradeDTO);
+    int regist(GradeDTO gradeDTO);
+    int delete(int grade_idx);
 }

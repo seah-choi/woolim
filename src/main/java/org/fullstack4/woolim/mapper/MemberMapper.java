@@ -15,9 +15,10 @@ public interface MemberMapper {
     MemberVO view(MemberDTO memberDTO);
     MemberVO memberView(String member_id);
     MemberVO google(String member_oauth);
+    int google_modify(MemberVO memberVO);
     List<MemberVO> MemberListbyPage(PageRequestDTO requestDTO);
     int total_count(PageRequestDTO requestDTO);
-
+    int leave(String member_id);
     List<MemberVO> adminMemberList(PageRequestDTO requestDTO);
     List<LectureVO> LectureListbyTeacherpage(PageRequestDTO requestDTO);
     int LectureListCountByT(PageRequestDTO requestDTO);

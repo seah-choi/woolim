@@ -40,5 +40,7 @@ public class BbsVO {
 
     private String bbs_teacher_yn;
 
+    private int lecture_idx;
+
 
 }

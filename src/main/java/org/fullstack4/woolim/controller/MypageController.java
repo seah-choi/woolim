@@ -49,13 +49,25 @@ public class MypageController {
     }
 
     @PostMapping("/view")
-    public String POSTView(MemberDTO memberDTO){
-        int result = memberService.modify(memberDTO);
-        if(result > 0) {
-            return "redirect:/mypage/view";
-        } else{
-            return "redirect:/mypage/view";
+    public String POSTView(MemberDTO memberDTO,
+                           String social_flag,
+                           Model model){
+        if(social_flag.equals("0")) {
+            int result = memberService.modify(memberDTO);
+            if(result>0)
+                model.addAttribute("modifyOK", "1");
+            else
+                model.addAttribute("modifyOK", "0");
         }
+        else{
+            int result =memberService.google_modify(memberDTO);
+            if(result>0)
+                model.addAttribute("modifyOK", "1");
+            else
+                model.addAttribute("modifyOK", "0");
+        }
+
+        return "redirect:/mypage/view";
     }
 
     @GetMapping("/writeList")

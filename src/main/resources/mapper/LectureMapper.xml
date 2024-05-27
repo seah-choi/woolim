@@ -114,7 +114,7 @@
         where lecture_idx = #{idx}
     </select>
 
-    <select id="gradeListByPage" resultType="org.fullstack4.woolim.domain.GradeVO">
+    <select id="gradeListByPage" resultType="org.fullstack4.woolim.domain.ClassVO">
         SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx
         FROM woo_class AS wc
         INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wc.lecture_idx
@@ -143,9 +143,27 @@
             and wl.lecture_idx = #{lecture_idx}
         </where>
     </select>
+<<<<<<< HEAD
     <select id="lectureVideo" resultType="org.fullstack4.woolim.domain.VideoVO">
         select * from woo_video
         where lecture_idx = #{lecture_idx}
 
     </select>
+=======
+
+    <update id="regist">
+        update woo_grade set grade = #{grade}
+        WHERE grade_idx = #{grade_idx}
+    </update>
+
+    <update id="modify">
+        update woo_grade set grade = #{grade}
+        WHERE grade_idx = #{grade_idx}
+    </update>
+
+    <update id="delete">
+        update woo_grade set grade = null
+        WHERE grade_idx = #{grade_idx}
+    </update>
+>>>>>>> cc5d5a1ea4b4fa15ad45df0cf57fab061bbcebd8
 </mapper>

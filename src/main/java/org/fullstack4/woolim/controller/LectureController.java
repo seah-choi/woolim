@@ -6,13 +6,20 @@ import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
 import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.service.BbsServiceIf;
+import org.fullstack4.woolim.service.CartServiceIf;
 import org.fullstack4.woolim.service.lecture.LectureServiceIf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+
+import javax.servlet.http.HttpServletRequest;
+
+import javax.servlet.http.HttpSession;
 
 import java.util.List;
 
@@ -24,9 +31,10 @@ public class LectureController {
     private LectureServiceIf lectureServiceIf;
     @Autowired
     private BbsServiceIf bbsServiceIf;
-
+    @Autowired
+    private CartServiceIf cartServiceIf;
     @GetMapping("/list")
-    public String GETList(Model model, Criteria cri) {
+    public String GETList(Model model, Criteria cri, HttpSession session) {
         System.out.println("#####");
         log.info("-----------------------");
         log.info("-----LectureController-----" +"-> GETList() ");
@@ -44,12 +52,22 @@ public class LectureController {
             total = lectureServiceIf.getLectureKeyword(cri);
         }
 
+        String id = "";
+        if(session.getAttribute("member_id")!=null)
+            id = session.getAttribute("member_id").toString();
+        CartDTO cartDTO = CartDTO.builder()
+                .member_id(id)
+                .cart_status("N")
+                .build();
+        List<CartDTO> jjimList = cartServiceIf.cartOrJjimList(cartDTO);
+
 
         PageMakerDTO pageMakerDTO = new PageMakerDTO(cri,total);
 
         /*log.info("---lectureDTOS-------" + lectureDTOS);*/
         log.info("------lectureDTOS-------" + lectureDTOS);
 
+        model.addAttribute("jjimList", jjimList);
         model.addAttribute("list",lectureDTOS);
         model.addAttribute("pageMaker",pageMakerDTO);
         model.addAttribute("cri",cri);
@@ -88,10 +106,24 @@ public class LectureController {
 
     @GetMapping("/boardList")
     public void noticeListGET(@RequestParam(defaultValue = "") String bbs_type,
-                              PageRequestDTO pageRequestDTO, String lecture_idx, Model model){
-        int idx = Integer.parseInt(lecture_idx);
-        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+                              PageRequestDTO pageRequestDTO, Model model){
+
+//        log.info("-----------------------");
+//        log.info(lecture_idx);
+//        pageRequestDTO.setLecture_idx(lecture_idx);
+        log.info(pageRequestDTO);
+        pageRequestDTO.setBbs_type(bbs_type);
+        pageRequestDTO.setBbs_teacher_yn("Y");
+
+        PageResponseDTO<BbsDTO> noticeListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
+        log.info(noticeListDTO);
+        model.addAttribute("responseDTO" , noticeListDTO);
+
+
+//        int idx = Integer.parseInt(lecture_idx);
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(noticeListDTO.getLecture_idx());
         model.addAttribute("list" , lectureDTO);
+        model.addAttribute("bbs_type",bbs_type);
     }
 
     @GetMapping("/jalyosilList")
@@ -109,7 +141,7 @@ public class LectureController {
 
         pageRequestDTO.setBbs_teacher_yn("Y");
 
-        PageResponseDTO<GradeDTO> bbsList = lectureServiceIf.gradeListByPage(pageRequestDTO);
+        PageResponseDTO<ClassDTO> bbsList = lectureServiceIf.gradeListByPage(pageRequestDTO);
 
         model.addAttribute("bbsList", bbsList);
 
@@ -123,20 +155,62 @@ public class LectureController {
         log.info("============================");
     }
 
+    @PostMapping("/studentRegist")
+    public String studentRegist(GradeDTO gradeDTO){
+        int result = lectureServiceIf.regist(gradeDTO);
+        if(result > 0){
+            return "redirect:/lecture/studentList";
+        } else {
+            return "redirect:/lecture/studentList";
+        }
+    }
+
+    @PostMapping("/studentModify")
+    public String studentModify(GradeDTO gradeDTO){
+        int result = lectureServiceIf.modify(gradeDTO);
+        if(result > 0){
+            return "redirect:/lecture/studentList";
+        } else {
+            return "redirect:/lecture/studentList";
+        }
+    }
+
 
 
     @GetMapping("/boardRegist")
-    public void boardRegistGET(String lecture_idx, Model model){
-        int idx = Integer.parseInt(lecture_idx);
-        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+    public void boardRegistGET(Model model, @RequestParam String bbs_type, @RequestParam int lecture_idx){
+
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(lecture_idx);
         model.addAttribute("list" , lectureDTO);
+        model.addAttribute("bbs_type",bbs_type);
+        model.addAttribute("lecture_idx", lecture_idx);
+    }
+
+    @PostMapping("/boardRegist")
+    public String boardRegistPOST(BbsDTO bbsDTO){
+        int result = bbsServiceIf.InsertLectureBbs(bbsDTO);
+        if(result>0){
+            return "redirect:/lecture/boardList?bbs_type="+bbsDTO.getBbs_category_code()+"&lecture_idx="+bbsDTO.getLecture_idx();
+        }
+        else{
+            return null;
+        }
     }
 
     @GetMapping("/boardView")
-    public void boardViewGET(String lecture_idx, Model model){
-        int idx = Integer.parseInt(lecture_idx);
-        LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+    public void boardViewGET(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type){
+
+        BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
+        BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
+
+        model.addAttribute("file",boardFileDTO);
+        model.addAttribute("bbsDTO" , bbsDTO);
+        log.info(bbsDTO.toString());
+        LectureDTO lectureDTO = lectureServiceIf.lectureView(lecture_idx);
         model.addAttribute("list" , lectureDTO);
+        model.addAttribute("bbs_type",bbs_type);
+        model.addAttribute("lecture_idx", lecture_idx);
+        model.addAttribute("bbs_idx", bbs_idx);
     }
 
 
@@ -162,5 +236,24 @@ public class LectureController {
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         model.addAttribute("list" , lectureDTO);
     }
+
+    @GetMapping("/boardModify")
+    public void GETBModify(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type) {
+        BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
+        model.addAttribute("bbsDTO", bbsDTO);
+        model.addAttribute("bbs_type",bbs_type);
+        model.addAttribute("lecture_idx", lecture_idx);
+        model.addAttribute("bbs_idx", bbs_idx);
+    }
+
+    @PostMapping("/boardModify")
+    public void POSTBModify(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type) {
+        BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
+        model.addAttribute("bbsDTO", bbsDTO);
+        model.addAttribute("bbs_type",bbs_type);
+        model.addAttribute("lecture_idx", lecture_idx);
+        model.addAttribute("bbs_idx", bbs_idx);
+    }
+
 
 }

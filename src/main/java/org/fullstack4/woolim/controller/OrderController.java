@@ -100,24 +100,26 @@ public class OrderController {
         List<LectureDTO> dtolist = new ArrayList<LectureDTO>();
 
 
-        String cart_idx = map.get("cart_idx").toString();
-        log.info("cart_idx: " + cart_idx);
-        cart_idx = cart_idx.replace("[","");
-        cart_idx = cart_idx.replace("]","");
-        log.info("cart_idx replace: " + cart_idx);
-        String[] cartlist = cart_idx.split(",");
-        log.info("cartlist: " + Arrays.toString(cartlist));
         List<CartDTO> cartdtolist = new ArrayList<CartDTO>();
+        if(map.get("cart_idx").toString() != null && !map.get("cart_idx").toString().equals("[]")) {
+            String cart_idx = map.get("cart_idx").toString();
+            log.info("cart_idx: " + cart_idx);
+            cart_idx = cart_idx.replace("[", "");
+            cart_idx = cart_idx.replace("]", "");
+            log.info("cart_idx replace: " + cart_idx);
+            String[] cartlist = cart_idx.split(",");
+            log.info("cartlist: " + Arrays.toString(cartlist));
 
-        for(int i = 0; i<cartlist.length; i++) {
-            CartDTO dto1 = CartDTO.builder()
-                    .cart_idx(Integer.parseInt(cartlist[i]))
-                    .cart_status("Y")
-                    .build();
-            cartdtolist.add(dto1);
+            for (int i = 0; i < cartlist.length; i++) {
+                CartDTO dto1 = CartDTO.builder()
+                        .cart_idx(Integer.parseInt(cartlist[i]))
+                        .cart_status("Y")
+                        .build();
+                cartdtolist.add(dto1);
+            }
+
+            log.info("cartdtolist:{}", cartdtolist.toString());
         }
-
-        log.info("cartdtolist:{}",cartdtolist.toString());
         for(int i = 0; i<lecturelist.length; i++) {
             LectureDTO dto1 = lectureService.lectureView(Integer.parseInt(lecturelist[i]));
             dtolist.add(dto1);

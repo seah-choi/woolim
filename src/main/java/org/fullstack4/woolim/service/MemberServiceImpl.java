@@ -124,6 +124,12 @@ public class MemberServiceImpl implements MemberServiceIf{
     }
 
     @Override
+    public int google_modify(MemberDTO memberDTO) {
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+        return memberMapper.google_modify(memberVO);
+    }
+
+    @Override
     public PageResponseDTO<MemberDTO> adminMemberList(PageRequestDTO pageRequestDTO) {
         List<MemberVO> voList = memberMapper.adminMemberList(pageRequestDTO);
         List<MemberDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo,MemberDTO.class)).collect(Collectors.toList());
@@ -157,6 +163,11 @@ public class MemberServiceImpl implements MemberServiceIf{
         int result = memberMapper.deleteMemberList(idxList);
         log.info("MemberServiceImpl >> deleteMemberList : " + idxList);
         return result;
+    }
+
+    @Override
+    public int leave(String member_id) {
+        return memberMapper.leave(member_id);
     }
 
     @Override
@@ -198,6 +209,7 @@ public class MemberServiceImpl implements MemberServiceIf{
         String familyName = member_info.getString("family_name");
         String email = member_info.getString("email");
         String picture = member_info.getString("picture");
+        log.info(email);
 
         MemberDTO memberDTO = google(id);
 
@@ -210,7 +222,13 @@ public class MemberServiceImpl implements MemberServiceIf{
                     .member_name(name)
                     .member_oauth(id)
                     .member_email(email.split("@")[0])
-                    .member_email_addr(email.split("@")[1]).build();
+                    .member_email_addr(email.split("@")[1])
+                    .build();
+
+            log.info(email.split("@")[0]);
+            log.info(email.split("@")[1]);
+            log.info("newDTO : " + newDTO);
+
             return newDTO;
         }
     }

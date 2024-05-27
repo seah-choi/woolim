@@ -41,7 +41,7 @@
                         <form name="frmLogin" method="post">
                             <label for="username">아이디</label>
                             <div class="input-group">
-                                <input class="form-control" type="text" id="username" name="member_id">
+                                <input class="form-control" type="text" id="username" value="${cookie.save_id.value}" name="member_id">
                             </div>
                             <br>
                             <label for="pass">비밀번호</label>
@@ -62,7 +62,7 @@
                                 <div class="gi-more">
                                     <label for="save-pass">
                                         아이디 저장
-                                        <input type="checkbox" id="save-pass">
+                                        <input type="checkbox" id="save-pass" name="save_id" value="save_id" <c:if test='${cookie.save_id.value != null}'>checked</c:if>>
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>

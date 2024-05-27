@@ -32,7 +32,7 @@
 
 <div class="left-side-bar">
     <div class="brand-logo">
-        <a href="index.html">
+        <a href="/">
             <img src="/resources/img/logo.png" alt="">
         </a>
         <div class="close-sidebar" data-toggle="left-sidebar-close">
@@ -43,8 +43,8 @@
         <div class="sidebar-menu" style="margin-top: 40px">
             <ul id="accordion-menu">
                 <li class="dropdown">
-                    <a href="#" class="noDropdown">
-                        <span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
+                    <a href="/admin/dashboard" class="noDropdown">
+                        <span class="micon dw dw-house-1"></span><span class="mtext">대시보드</span>
                     </a>
                 </li>
                 <li class="dropdown">
@@ -74,7 +74,7 @@
                 </li>
                 <li class="dropdown">
                     <a href="/" class="noDropdown">
-                        <span class="micon icon-copy fa fa-mail-reply"></span><span class="mtext">사이트로 돌아가기</span>
+                        <span class="micon icon-copy fa fa-mail-reply"></span><span class="mtext">홈페이지로 돌아가기</span>
                     </a>
                 </li>
 

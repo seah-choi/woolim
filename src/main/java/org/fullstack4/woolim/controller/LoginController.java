@@ -3,9 +3,12 @@ package org.fullstack4.woolim.controller;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.woolim.common.CookieUtil;
 import org.fullstack4.woolim.common.GoogleOAuth2Helper;
 import org.fullstack4.woolim.common.InsufficientStockException;
+import org.fullstack4.woolim.dto.CartDTO;
 import org.fullstack4.woolim.dto.MemberDTO;
+import org.fullstack4.woolim.service.CartServiceIf;
 import org.fullstack4.woolim.service.MemberServiceIf;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 @Log4j2
 @Controller
@@ -26,6 +30,7 @@ import java.util.HashMap;
 public class LoginController {
 
     private final MemberServiceIf memberService;
+    private final CartServiceIf cartService;
     private final GoogleOAuth2Helper googleOAuth2Helper = new GoogleOAuth2Helper();
     @GetMapping("/login")
     public String GETLogin(HttpSession session) {
@@ -54,6 +59,24 @@ public class LoginController {
                 resultMap.put("result", "success");
                 resultMap.put("msg","성공적으로 로그인되었습니다.");
                 HttpSession session = req.getSession();
+                if(save_id){
+                    CookieUtil.setCookies(resp,"","/",999999,"save_id", id);
+                }
+                else{
+                    CookieUtil.setDeleteCookie(resp,"save_id");
+                }
+                CartDTO cartDTO = CartDTO.builder()
+                        .cart_status("N")
+                        .member_id(id)
+                        .build();
+                List<CartDTO> jjimList = cartService.cartOrJjimList(cartDTO);
+                CartDTO cartDTO2 = CartDTO.builder()
+                        .cart_status("Y")
+                        .member_id(id)
+                        .build();
+                List<CartDTO> cartList = cartService.cartOrJjimList(cartDTO2);
+                session.setAttribute("jjimList", jjimList);
+                session.setAttribute("cartList", cartList);
                 session.setAttribute("member_id", id);
                 session.setAttribute("member_name", name);
                 session.setAttribute("member_category", member_category);

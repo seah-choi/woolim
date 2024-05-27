@@ -25,4 +25,5 @@ public interface OrderMapper {
     List<OrderVO> viewOrderList(PageRequestDTO pageRequestDTO);
     List<OrderDetailVO> viewOrderDetailList(OrderDetailVO orderDetailVO);
     int insertClass(ClassVO classVO);
+    int insertGrade(ClassVO classVO);
 }

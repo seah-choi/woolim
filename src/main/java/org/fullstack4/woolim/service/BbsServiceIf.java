@@ -16,6 +16,7 @@ public interface BbsServiceIf {
     BoardFileDTO fileView(int bbs_idx);
     int deleteList(Integer[] idxList);
     int fileModify(BoardFileDTO boardFileDTO);
+    int InsertLectureBbs(BbsDTO bbsDTO);
 
     boolean hasExistingFiles(int bbs_idx);
     public boolean updateReadCount(int bbs_idx);
