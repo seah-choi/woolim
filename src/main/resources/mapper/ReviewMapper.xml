@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/schema/mybatis-3-mapper.dtd">
+<mapper namespace="org.fullstack4.woolim.mapper.ReviewMapper">
+    <select id="list" resultType="org.fullstack4.woolim.domain.ReviewVO">
+        SELECT review_idx, member_id, review_comment, review_rank, lecture_idx, review_reg_date
+        FROM woo_lecture_review
+        WHERE lecture_idx = #{lecture_idx}
+        ORDER BY review_idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+    <select id="total_count" resultType="int">
+        SELECT COUNT(*)
+        FROM woo_lecture_review
+        WHERE lecture_idx = #{lecture_idx}
+    </select>
+    <insert id="regist">
+        INSERT INTO woo_lecture_review (member_id, review_comment, review_rank, lecture_idx, review_reg_date)
+        VALUES(#{member_id},#{review_comment}, #{review_rank}, #{lecture_idx}, NOW())
+    </insert>
+    <delete id="delete">
+        DELETE FROM woo_lecture_review WHERE review_idx = #{review_idx}
+    </delete>
+</mapper>

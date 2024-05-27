@@ -3,13 +3,13 @@ package org.fullstack4.wollim.service;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.domain.BbsVO;
 import org.fullstack4.woolim.domain.QnaVO;
-import org.fullstack4.woolim.dto.BbsDTO;
-import org.fullstack4.woolim.dto.PageRequestDTO;
-import org.fullstack4.woolim.dto.PageResponseDTO;
-import org.fullstack4.woolim.dto.QnaDTO;
+import org.fullstack4.woolim.domain.ReviewVO;
+import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.MemberMapper;
 import org.fullstack4.woolim.mapper.QnaMapper;
+import org.fullstack4.woolim.mapper.ReviewMapper;
 import org.fullstack4.woolim.service.QnaServiceIf;
+import org.fullstack4.woolim.service.ReviewServiceIf;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.modelmapper.ModelMapper;
@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/root-context.xml")
 public class YUNTEST {
+    @Autowired
+    private ReviewServiceIf reviewServiceIf;
 
     @Autowired
     private QnaServiceIf qnaServiceIf;
@@ -33,6 +35,8 @@ public class YUNTEST {
 
     @Autowired(required = false)
     private QnaMapper qnaMapper;
+    @Autowired(required = false)
+    private ReviewMapper reviewMapper;
 
     @Test
     public void qnaRegistTest(){
@@ -45,6 +49,35 @@ public class YUNTEST {
         }
     }
 
+    @Test
+    public void reviewRegistTest(){
+        for(int i=1;i<=110;i++){
+            ReviewDTO reviewDTO = ReviewDTO.builder()
+                    .lecture_idx(1)
+                    .review_comment("추천합니다.")
+                    .member_id("test4")
+                    .review_rank(4)
+                    .build();
+            reviewServiceIf.regist(reviewDTO);
+        }
+    }
+    @Test
+    public void reviewPageTest(){
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(1)
+                .lecture_idx(1)
+                .build();
+        int total_count = reviewMapper.total_count(pageRequestDTO);
+        List<ReviewVO> voList =reviewMapper.list(pageRequestDTO);
+        log.info("voList" + voList);
+        List<ReviewDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo, ReviewDTO.class)).collect(Collectors.toList());
+        log.info("dtoList" + dtoList);
+        PageResponseDTO<ReviewDTO> responseDTO = PageResponseDTO.<ReviewDTO>withAll()
+                .total_count(total_count)
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList).build();
+        log.info(responseDTO);
+    }
     @Test
     public void test(){
         PageRequestDTO pageRequestDTO = new PageRequestDTO();
