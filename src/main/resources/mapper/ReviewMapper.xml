@@ -15,6 +15,16 @@
         FROM woo_lecture_review
         WHERE lecture_idx = #{lecture_idx}
     </select>
+    <update id="updateAvg">
+        UPDATE woo_lecture
+        set lecture_star = (
+        SELECT AVG(review_rank)
+        FROM woo_lecture_review
+        WHERE lecture_idx = #{lecture_idx}
+        GROUP BY lecture_idx
+        )
+        WHERE lecture_idx = #{lecture_idx}
+    </update>
     <insert id="regist">
         INSERT INTO woo_lecture_review (member_id, review_comment, review_rank, lecture_idx, review_reg_date)
         VALUES(#{member_id},#{review_comment}, #{review_rank}, #{lecture_idx}, NOW())
@@ -22,4 +32,14 @@
     <delete id="delete">
         DELETE FROM woo_lecture_review WHERE review_idx = #{review_idx}
     </delete>
+    <select id="reviewConfirm" resultType="org.fullstack4.woolim.domain.ClassVO">
+        SELECT *
+        FROM woo_class
+        WHERE lecture_idx = #{lecture_idx}
+    </select>
+    <select id="listAll" resultType="org.fullstack4.woolim.domain.ReviewVO">
+        SELECT *
+        FROM woo_lecture_review
+        WHERE lecture_idx = #{lecture_idx}
+    </select>
 </mapper>

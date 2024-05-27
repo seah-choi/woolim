@@ -202,6 +202,42 @@
             border: 2px solid #fff;
             cursor: pointer;
         }
+
+        #reviewRegistFrm fieldset{
+            display: inline-block;
+            direction: rtl;
+            border:0;
+        }
+        #reviewRegistFrm fieldset legend{
+            text-align: left;
+        }
+        #reviewRegistFrm input[type=radio]{
+            display: none;
+        }
+        #reviewRegistFrm label{
+            font-size: 1.5em;
+            color: transparent;
+            text-shadow: 0 0 0 #f0f0f0;
+        }
+        #reviewRegistFrm label:hover{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        #reviewRegistFrm label:hover ~ label{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        #reviewRegistFrm input[type=radio]:checked ~ label{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        #reviewContents {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: solid 1.5px #D3D3D3;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: none;
+        }
     </style>
 
 </head>
@@ -308,6 +344,11 @@
 
     <c:set var="lecture" value="}"></c:set>
 <div id="box">
+    <c:if test="${param.reviewNo == '1'}">
+        <script>
+            alert("리뷰는 수강신청 이후에 진행할 수 있습니다.");
+        </script>
+    </c:if>
     <div id="leftNav">
         <nav class="nav flex-column">
             <h4>강의</h4>
@@ -417,15 +458,25 @@
                                         <div class="co-item">
                                             <div class="avatar-text">
                                                 <div class="at-rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
+                                                    <c:forEach begin="1" end="${review.review_rank}">
+                                                        <i class="fa fa-star"></i>
+                                                    </c:forEach>
+                                                    <c:forEach begin="${review.review_rank}" end="4">
+                                                        <i class="fa fa-star-o"></i>
+                                                    </c:forEach>
+
                                                 </div>
                                                 <h5>${review.member_id} <span>${review.review_reg_date}</span></h5>
                                                 <div class="at-reply">${review.review_comment}</div>
+
                                             </div>
+                                            <form action="/lecture/reviewDelete" method="post" name="frmRegistReview">
+                                                <input type="hidden" value="${review.review_idx}" name="review_idx">
+                                                <input type="hidden" value="${review.lecture_idx}" name="lecture_idx">
+                                                <c:if test="${review.member_id == sessionScope.user_id}">
+                                                    <button type="submit" class="btn btn-sm btnRemove">삭제</button>
+                                                </c:if>
+                                            </form>
                                         </div>
                                     </c:forEach>
                                 </c:when>
@@ -455,19 +506,31 @@
                         </div>
                         <div class="leave-comment">
                             <h4>Leave A Comment</h4>
-                            <ul class="list star-list" id="star_ul">
-                                <p>별점을 선택해주세요.</p><br>
-                                <li><a href="#" data-score="1"><i class="fa fa-star"></i></a></li>
-                                <li><a href="#" data-score="2"><i class="fa fa-star"></i></a></li>
-                                <li><a href="#" data-score="3"><i class="fa fa-star"></i></a></li>
-                                <li><a href="#" data-score="4"><i class="fa fa-star"></i></a></li>
-                                <li><a href="#" data-score="5"><i class="fa fa-star"></i></a></li>
-                            </ul>
-                            <form action="#" class="comment-form">
+                            <form action="/lecture/reviewRegist" id="reviewRegistFrm" method="post" class="comment-form">
+                            <div class="rating">
+                                <span class="text-bold">별점을 선택해주세요</span>
+                                <input type="radio" name="review_rank" value="5" id="rate1" class="star"><label
+                                    for="rate1">★</label>
+                                <input type="radio" name="review_rank" value="4" id="rate2" class="star"><label
+                                    for="rate2">★</label>
+                                <input type="radio" name="review_rank" value="3" id="rate3" class="star"><label
+                                    for="rate3">★</label>
+                                <input type="radio" name="review_rank" value="2" id="rate4" class="star"><label
+                                    for="rate4">★</label>
+                                <input type="radio" name="review_rank" value="1" id="rate5" class="star"><label
+                                    for="rate5">★</label>
+                            </div>
+
+                                <input type="hidden" name="review_rank" value="3">
+                                <input type="hidden" name="member_id" value="${sessionScope.user_id}">
+                                <input type="hidden" name="lecture_idx" value="${list.lecture_idx}">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <textarea placeholder="Messages"></textarea>
-                                        <button type="submit" class="site-btn">Send message</button>
+                                        <textarea placeholder="Messages" name="review_comment" id="review_comment"></textarea>
+                                        <button type="submit" id="reviewRegistBtn" class="site-btn" <c:if test="${sessionScope.user_id == null}">disabled</c:if>>
+                                            <c:if test="${sessionScope.user_id == null}">로그인 후 가능합니다.</c:if>
+                                            <c:if test="${sessionScope.user_id != null}">리뷰 등록</c:if>
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -550,24 +613,49 @@
             </div>
         </div>
     </footer>
-    <c:if test="${not empty responseDTO.dtolist}">
-        ${responseDTO.dtolist}
-    </c:if>
 </main>
 <script>
     window.onload = function() {
         // 특정 조건 확인
-        if (${param.registOK == '1'} || ${param.deleteOK == '1'} ||${param.page_flag == '1'} || ${errors !=null}) {
+        if (${param.registOK == '1'} || ${param.deleteOK == '1'} ||${param.page_flag == '1'} || ${param.reviewAgain == '1'}) {
             reviewTAB();
-            <%--if(${reviewDTO.rank == '0'}){--%>
-            <%--    alert('평점을 입력해주세요');--%>
-            <%--}--%>
-            <%--if(${reviewDTO.rank != '0'}){--%>
-            <%--    document.querySelectorAll('.star-list li a')[${reviewDTO.rank}-1].click();--%>
-            <%--    alert('리뷰를 작성해주세요');--%>
-            <%--}--%>
+            if(${param.registOK == '1'}){
+                alert("등록 되었습니다.");
+            }
+            if(${param.deleteOK == '1'}){
+                alert("삭제 되었습니다.");
+            }
+            if(${param.reviewAgain == '1'}){
+                alert("리뷰는 한번만 작성 가능합니다.");
+            }
+            if(${param.reviewNo == '1'}){
+                alert("리뷰 등록은 수강신청 이후에 진행할 수 있습니다.");
+            }
         }
     };
+
+    let reviewRegistBtn = document.getElementById("reviewRegistBtn");
+    reviewRegistBtn.addEventListener("click", function(e){
+        e.preventDefault();
+        let star = document.getElementsByClassName("star");
+        let review_comment = document.getElementById("review_comment");
+        let flag = 0;
+        for(let i=0;i<star.length;i++){
+            if(star[i].checked)
+                flag = 1;
+        }
+        if(flag==0){
+            alert("별점을 선택해주세요");
+            return;
+        }
+        if(review_comment.value.trim()<10){
+            alert("리뷰는 10자리 이상 작성해주세요");
+            return;
+        }
+
+        let reviewRegistFrm = document.getElementById("reviewRegistFrm");
+        reviewRegistFrm.submit();
+    });
     let tabA = document.querySelectorAll('.tab-a');
     let tabDiv = document.querySelectorAll('.tab-div');
     function reviewTAB(){
@@ -607,22 +695,6 @@
         const lectureIdx = document.querySelector("#lecture_idx").value;
         location.href = '/mypage/jjim';
     });
-    for(let star of stars) {
-        star.addEventListener("click", (event)=>{
-            event.preventDefault();
-            document.querySelector('#star_ul').style.border = 'none';
-            for(let i = 0; i < stars.length; i++) {
-                realStars[i].classList.remove('stars');
-            }
-            score = star.dataset.score;
-            document.getElementById("rank").value = score;
-            console.log(star);
-            console.log(score);
-            for(let i = 0; i < score; i++) {
-                realStars[i].classList.add('stars');
-            }
-        })
-    }
 
 </script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>

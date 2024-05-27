@@ -216,7 +216,57 @@ public class LectureController {
             return "redirect:/lecture/studentList?lecture_idx="+gradeDTO.getLecture_idx();
         }
     }
+    @PostMapping("/reviewRegist")
+    public String reviewRegist(ReviewDTO reviewDTO, RedirectAttributes redirectAttributes){
 
+        int reviewOkFlag = 0;
+        int reviewOkFlag2 = 0;
+
+        List<ClassDTO> classDTOList = reviewServiceif.reviewConfirm(reviewDTO.getLecture_idx());
+        List<ReviewDTO> reviewDTOList = reviewServiceif.listAll(reviewDTO.getLecture_idx());
+        for(ClassDTO classDTO :  classDTOList){
+            if(classDTO.getMember_id().equals(reviewDTO.getMember_id())){
+                reviewOkFlag = 1;
+            }
+        }
+        if(reviewOkFlag==0){
+            redirectAttributes.addAttribute("reviewNo",1);
+            return "redirect:/lecture/view?lecture_idx="+reviewDTO.getLecture_idx();
+        }
+
+        for(ReviewDTO dto : reviewDTOList){
+            if(dto.getMember_id().equals(reviewDTO.getMember_id())){
+                reviewOkFlag2 = 1;
+            }
+        }
+        if(reviewOkFlag2==1){
+            redirectAttributes.addAttribute("reviewAgain",1);
+            return "redirect:/lecture/view?lecture_idx="+reviewDTO.getLecture_idx();
+        }
+
+
+
+        int result = reviewServiceif.regist(reviewDTO);
+
+        if(result>0) {
+            redirectAttributes.addAttribute("registOK", 1);
+            reviewServiceif.updateAvg(reviewDTO.getLecture_idx());
+        }
+        return "redirect:/lecture/view?lecture_idx="+reviewDTO.getLecture_idx();
+    }
+    @PostMapping("/reviewDelete")
+    public String reviewDelete(@RequestParam int review_idx,
+                               @RequestParam int lecture_idx,
+                               RedirectAttributes redirectAttributes){
+        int result = reviewServiceif.delete(review_idx);
+        if(result>0){
+            redirectAttributes.addAttribute("deleteOK", 1);
+            reviewServiceif.updateAvg(lecture_idx);
+        }
+
+
+        return "redirect:/lecture/view?lecture_idx="+lecture_idx;
+    }
 
 
     @GetMapping("/boardRegist")

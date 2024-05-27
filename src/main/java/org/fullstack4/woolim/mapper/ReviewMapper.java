@@ -1,7 +1,9 @@
 package org.fullstack4.woolim.mapper;
 
 import org.fullstack4.woolim.domain.BbsReplyVO;
+import org.fullstack4.woolim.domain.ClassVO;
 import org.fullstack4.woolim.domain.ReviewVO;
+import org.fullstack4.woolim.dto.ClassDTO;
 import org.fullstack4.woolim.dto.PageRequestDTO;
 
 import java.util.List;
@@ -11,4 +13,8 @@ public interface ReviewMapper {
     int regist(ReviewVO reviewVO);
     int delete(int reply_idx);
     int total_count(PageRequestDTO pageRequestDTO);
+    int updateAvg(int lecture_idx);
+    List<ClassVO> reviewConfirm(int lecture_idx);
+    List<ReviewVO> listAll(int lecture_idx);
+
 }
