@@ -5,71 +5,71 @@
 <mapper namespace="org.fullstack4.woolim.mapper.AdminMapper">
 
     <select id="adminTotalOrder" resultType="int">
-        SELECT COUNT(*) FROM woo_order
+        SELECT IFNULL(COUNT(*), 0) FROM woo_order
     </select>
 
     <select id="adminTotalsales" resultType="int">
-        SELECT sum(order_total) FROM woo_order WHERE order_status = '구매 완료'
+        SELECT IFNULL(SUM(order_total), 0) FROM woo_order WHERE order_status = '구매 완료'
     </select>
 
     <select id="adminTotalClass" resultType="int">
-        SELECT COUNT(*) FROM woo_lecture
+        SELECT IFNULL(COUNT(*), 0)  FROM woo_lecture
     </select>
 
     <select id="adminTotalMember" resultType="int">
-        SELECT COUNT(*) FROM woo_member
+        SELECT IFNULL(COUNT(*), 0) FROM woo_member
     </select>
 
     <select id="monthNewMembers" resultType="int">
-        SELECT COUNT(*)
+        SELECT IFNULL(COUNT(*), 0)
         FROM woo_member
         WHERE DATE_FORMAT(member_reg_date, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
     </select>
     
     <select id="weekNewMembers" resultType="int">
-        SELECT COUNT(*)
+        SELECT IFNULL(COUNT(*), 0)
         FROM woo_member
         WHERE YEARWEEK(member_reg_date, 1) = YEARWEEK(CURDATE(), 1)
     </select>
 
     <select id="todayNewMembers" resultType="int">
-        SELECT COUNT(*)
+        SELECT IFNULL(COUNT(*), 0)
         FROM woo_member
         WHERE DATE(member_reg_date) = CURDATE()
     </select>
 
     <select id="monthOrders" resultType="int">
-        SELECT COUNT(*)
+        SELECT IFNULL(COUNT(*), 0)
         FROM woo_order
         WHERE DATE_FORMAT(order_date, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
     </select>
 
     <select id="weekOrders" resultType="int">
-        SELECT COUNT(*)
+        SELECT IFNULL(COUNT(*), 0)
         FROM woo_order
         WHERE YEARWEEK(order_date, 1) = YEARWEEK(CURDATE(), 1)
     </select>
 
     <select id="todayOrders">
-        SELECT COUNT(*)
+        SELECT IFNULL(COUNT(*), 0)
         FROM woo_order
         WHERE DATE(order_date) = CURDATE()
     </select>
 
     <select id="monthSales" resultType="int">
-        SELECT sum(order_total)
+        SELECT IFNULL(SUM(order_total), 0)
         FROM woo_order
         WHERE DATE_FORMAT(order_date, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m') AND order_status = '구매 완료'
     </select>
 
     <select id="weekSales" resultType="int">
-        SELECT sum(order_total)
+        SELECT IFNULL(SUM(order_total), 0)
         FROM woo_order
         WHERE YEARWEEK(order_date, 1) = YEARWEEK(CURDATE(), 1) AND order_status = '구매 완료'
     </select>
 
     <select id="todaySales" resultType="int">
-        SELECT sum(order_total)
+        SELECT IFNULL(SUM(order_total), 0)
         FROM woo_order
         WHERE DATE(order_date) = CURDATE() AND order_status = '구매 완료'
     </select>
