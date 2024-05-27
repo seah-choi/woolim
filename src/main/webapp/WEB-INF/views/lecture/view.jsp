@@ -193,7 +193,7 @@
                     <input type="button" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
                     <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
                     <input type="button" id="regist" class="regist" value="수강신청" >
-
+                    <input type="button" id="watch" class="watch" value="강의보기" >
                 </form>
                 <%--<c:choose>
                     <c:when test="${checkHeart eq 1 && checkCart eq 1}">
@@ -525,7 +525,17 @@
         const lectureIdx = document.querySelector("#lecture_idx").value;
         location.href = '/order/order?lecture_idx='+lectureIdx;
     });
+    document.querySelector("#watch").addEventListener("click", function() {
+        const lectureIdx = document.querySelector("#lecture_idx").value;
+        let popupUrl = "/lecture/watchVideo?lectureIdx="+lectureIdx; // 팝업 창에 표시할 내용에 대한 URL을 여기에 설정합니다.
 
+        // 팝업 창 옵션 설정
+        let popupOption = "width=1200,height=600,scrollbars=yes,resizable=yes";
+
+        // 팝업 창 열기
+        window.open(popupUrl, "", popupOption);
+
+    });
 </script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
