@@ -118,9 +118,18 @@ public class LectureServiceImpl implements LectureServiceIf {
     }
 
     @Override
-    public OrderDetailDTO lectureStatus(int lecture_idx, String member_id) {
-        OrderDetailVO vo = lectureMapper.lectureStatus(lecture_idx,member_id);
-        OrderDetailDTO dto = modelMapper.map(vo, OrderDetailDTO.class);
+    public OrderListDTO lectureStatus(int lecture_idx, String member_id) {
+        OrderListVO vo = lectureMapper.lectureStatus(lecture_idx, member_id);
+
+        if (vo == null) {
+            log.warn("No OrderListVO found for lecture_idx: " + lecture_idx + " and member_id: " + member_id);
+            return null;
+        }
+
+        OrderListDTO dto = modelMapper.map(vo, OrderListDTO.class);
+        log.info("vo: " + vo);
+        log.info("dto: " + dto);
+
         return dto;
     }
 }

@@ -113,18 +113,23 @@ public class LectureController {
 
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         List<VideoDTO> videoDTO = lectureServiceIf.lectureVideo(idx);
-/*
-        OrderDetailDTO orderDetailDTO = lectureServiceIf.lectureStatus(idx,member_id);
-*/
+
+        log.info("-----idx--------" + idx);
+        log.info("-----member_id--------" + member_id);
+        OrderListDTO orderDetailDTO = lectureServiceIf.lectureStatus(idx,member_id);
+        if(orderDetailDTO != null) {
+            log.info("-----orderDetailDTO--------" + orderDetailDTO);
+            model.addAttribute("order" , orderDetailDTO);
+        }
 
         log.info("-----lectureDTO--------" + lectureDTO);
         log.info("-----video--------" + videoDTO);
-/*
-        log.info("-----orderDetailDTO--------" + orderDetailDTO);
-*/
+
+
+
         model.addAttribute("list" , lectureDTO);
         model.addAttribute("video" , videoDTO);
-//        model.addAttribute("order" , orderDetailDTO);
+
         return "/lecture/view";
     }
 
