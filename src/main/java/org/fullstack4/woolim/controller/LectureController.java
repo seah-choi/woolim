@@ -183,9 +183,9 @@ public class LectureController {
     public String studentRegist(GradeDTO gradeDTO){
         int result = lectureServiceIf.regist(gradeDTO);
         if(result > 0){
-            return "redirect:/lecture/studentList";
+            return "redirect:/lecture/studentList?lecture_idx="+gradeDTO.getLecture_idx();
         } else {
-            return "redirect:/lecture/studentList";
+            return "redirect:/lecture/studentList?lecture_idx="+gradeDTO.getLecture_idx();
         }
     }
 
@@ -193,9 +193,9 @@ public class LectureController {
     public String studentModify(GradeDTO gradeDTO){
         int result = lectureServiceIf.modify(gradeDTO);
         if(result > 0){
-            return "redirect:/lecture/studentList";
+            return "redirect:/lecture/studentList?lecture_idx="+gradeDTO.getLecture_idx();
         } else {
-            return "redirect:/lecture/studentList";
+            return "redirect:/lecture/studentList?lecture_idx="+gradeDTO.getLecture_idx();
         }
     }
 
@@ -291,17 +291,24 @@ public class LectureController {
         model.addAttribute("bbs_idx", bbs_idx);
     }
     @PostMapping("/delete")
-    public String delete(@RequestParam(name="grade_idx", defaultValue = "0") String grade_idx,
-                         @RequestParam(name = "lecture_idx")int lecture_idx){
-
-        String[] array_grade = grade_idx.split(",");
-        if(array_grade !=null){
-            lectureServiceIf.delete(array_grade);
+    public String delete(@RequestParam(name="grade_idx", defaultValue = "0") int[] grade_idx, GradeDTO gradeDTO){
+        for(int i : grade_idx) {
+            lectureServiceIf.delete(i);
         }
-
-        log.info("delete : " + grade_idx);
-        return "redirect:/lecture/studentList?lecture_idx="+lecture_idx;
+        return "redirect:/lecture/studentList?lecture_idx="+gradeDTO.getLecture_idx();
     }
+
+//    public String delete(@RequestParam(name="grade_idx", defaultValue = "0") String grade_idx,
+//                         @RequestParam(name = "lecture_idx")int lecture_idx){
+//
+//        String[] array_grade = grade_idx.split(",");
+//        if(array_grade !=null){
+//            lectureServiceIf.delete(array_grade);
+//        }
+//
+//        log.info("delete : " + grade_idx);
+//        return "redirect:/lecture/studentList?lecture_idx="+lecture_idx;
+//    }
 
 
 

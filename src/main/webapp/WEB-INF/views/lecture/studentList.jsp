@@ -405,6 +405,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form name="frm" action="/lecture/studentRegist" method="post">
+                            <input type="hidden" id="lecture_idx" name="lecture_idx" value="${bbsList.lecture_idx}">
                             <div class="modal-body">
                                 <input type="hidden" id="grade_idx" name="grade_idx" value="">
                                 <span>점수 : </span>
@@ -430,6 +431,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form name="frm" action="/lecture/studentModify" method="post">
+                            <input type="hidden" id="lecture_idx" name="lecture_idx" value="${bbsList.lecture_idx}">
                             <div class="modal-body">
                                 <input type="hidden" id="grade_idx" name="grade_idx" value="">
                                 <span>점수 : </span>

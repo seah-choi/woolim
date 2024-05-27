@@ -31,7 +31,7 @@ public interface LectureServiceIf {
     PageResponseDTO<ClassDTO> gradeListByPage(PageRequestDTO pageRequestDTO);
     int modify(GradeDTO gradeDTO);
     int regist(GradeDTO gradeDTO);
-    int delete(String[] grade_idx);
+    int delete(int grade_idx);
 
     ClassDTO getGrade(int class_idx);
 
