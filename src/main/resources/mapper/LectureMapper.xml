@@ -175,5 +175,10 @@
          INNER JOIN woo_member AS wm ON wm.member_id = wc.member_id
         WHERE wc.class_idx = #{class_idx}
     </select>
+    <select id="lectureStatus" resultType="org.fullstack4.woolim.domain.OrderDetailVO">
+        select * from woo_order_detail
+        where lecture_idx = #{arg0} and member_id = #{arg1}
+
+    </select>
 
 </mapper>

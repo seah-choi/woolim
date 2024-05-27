@@ -37,4 +37,5 @@ public interface LectureServiceIf {
 
     List<VideoDTO> lectureVideo(int lecture_idx);
 
+    OrderDetailDTO lectureStatus(int lecture_idx, String member_id);
 }
