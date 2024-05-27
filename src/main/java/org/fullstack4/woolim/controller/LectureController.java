@@ -6,6 +6,7 @@ import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.FileUtil;
 import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
+import org.fullstack4.woolim.domain.OrderDetailVO;
 import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.service.BbsServiceIf;
 import org.fullstack4.woolim.service.CartServiceIf;
@@ -100,18 +101,24 @@ public class LectureController {
 
     }
     @GetMapping("/view")
-    public String viewGET(String lecture_idx, Model model) throws Exception {
+    public String viewGET(String lecture_idx, Model model , HttpServletRequest request) throws Exception {
         log.info("-----------------------");
         log.info("-----LectureController-----" +"-> viewGET() ");
         log.info("-----------------------");
         int idx = Integer.parseInt(lecture_idx);
+        HttpSession session = request.getSession();
+        String member_id = (String)session.getAttribute("member_id");
+
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         List<VideoDTO> videoDTO = lectureServiceIf.lectureVideo(idx);
+        OrderDetailDTO orderDetailDTO = lectureServiceIf.lectureStatus(idx,member_id);
 
         log.info("-----lectureDTO--------" + lectureDTO);
         log.info("-----video--------" + videoDTO);
+        log.info("-----orderDetailDTO--------" + orderDetailDTO);
         model.addAttribute("list" , lectureDTO);
         model.addAttribute("video" , videoDTO);
+        model.addAttribute("order" , orderDetailDTO);
         return "/lecture/view";
     }
 
@@ -246,6 +253,14 @@ public class LectureController {
         int idx = Integer.parseInt(lecture_idx);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         model.addAttribute("list" , lectureDTO);
+    }
+    @GetMapping("/watchVideo")
+    public String watchVideoGET(String lectureIdx, Model model){
+        int idx = Integer.parseInt(lectureIdx);
+        List<VideoDTO> videoDTO = lectureServiceIf.lectureVideo(idx);
+        log.info("VideoDTO" + videoDTO);
+        model.addAttribute("list" , videoDTO);
+        return "/lecture/watchVideo";
     }
 
     @GetMapping("/boardModify")

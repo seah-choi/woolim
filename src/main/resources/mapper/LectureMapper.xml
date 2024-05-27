@@ -115,7 +115,7 @@
     </select>
 
     <select id="gradeListByPage" resultType="org.fullstack4.woolim.domain.ClassVO">
-        SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx
+        SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx, wc.class_idx
         FROM woo_class AS wc
         INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wc.lecture_idx
         INNER JOIN woo_grade AS wg ON wg.lecture_idx = wl.lecture_idx
@@ -168,12 +168,17 @@
 
 
     <select id="getGrade" resultType="org.fullstack4.woolim.domain.ClassVO">
-        SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx
+        SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx, wc.class_idx
         FROM woo_class AS wc
          INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wc.lecture_idx
          INNER JOIN woo_grade AS wg ON wg.lecture_idx = wl.lecture_idx
          INNER JOIN woo_member AS wm ON wm.member_id = wc.member_id
         WHERE wc.class_idx = #{class_idx}
+    </select>
+    <select id="lectureStatus" resultType="org.fullstack4.woolim.domain.OrderDetailVO">
+        select * from woo_order_detail
+        where lecture_idx = #{arg0} and member_id = #{arg1}
+
     </select>
 
 </mapper>
