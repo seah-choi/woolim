@@ -47,6 +47,21 @@
             margin-left: 100px;
             padding-bottom: 100px;
         }
+        .image_container {
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            width: 355px;
+            height: 405px;
+            margin-left: 12px;
+        }
+        .fileDiv {
+            margin-left: 20px;
+            margin-top: 250px;
+        }
+        .teacher_intro {
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -178,6 +193,29 @@
                             </div>
                         </div>
 
+                        <div>
+                            <div id="fileBox">
+                                <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                    <label class="col-sm-12 col-md-2 col-form-label fontWe-700">선생님 이미지</label>
+                                    <%--  <img src="/resources/uploads/${bbs.save_file}" alt="user-avatar" class="d-block rounded" height="100" width="100" id="preview"  />--%>
+                                    <div id="image_container" class="image_container"></div>
+                                    <div class="button-wrapper fileDiv">
+                                        <input type="file" id="file" name="file" class="form-control" accept="image/png, image/jpeg" onchange="setThumbnail(event);"/>
+                                        <p class="text-muted mb-0">JPG 또는 PNG 파일만 업로드 가능합니다.</p>
+                                        <input type="hidden" name="upload" value="">
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-start align-items-sm-center mt-3">
+                                    <label class="col-sm-12 col-md-2 col-form-label fontWe-700">선생님 소개</label>
+                                    <div class="col-sm-12 col-md-5">
+                                        <textarea name="teacher_intro" class="teacher_intro" rows="10" cols="70"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
 
                 </div>
 
@@ -196,10 +234,10 @@
 <!-- js -->
 <script>
     //이미지 프리뷰
-    function setThumbnail(e){
+    function setThumbnail(e) {
         var reader = new FileReader();
 
-        reader.onload = function(e){
+        reader.onload = function (e) {
             // 기존 이미지를 제거
             var imageContainer = document.querySelector("div#image_container");
             imageContainer.innerHTML = '';
@@ -209,13 +247,33 @@
 
             img.setAttribute("src", e.target.result);
             //img.setAttribute("class", "col-lg-3");
-            img.style.width = "300px"; // 원하는 너비로 설정
-            img.style.height = "230px"; // 비율을 유지하려면 auto 사용
+            img.style.width = "350px"; // 원하는 너비로 설정
+            img.style.height = "400px"; // 비율을 유지하려면 auto 사용
             imageContainer.appendChild(img);
         };
 
         reader.readAsDataURL(e.target.files[0]);
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectBox = document.querySelector('select[name="member_category"]');
+        selectBox.addEventListener('change', function() {
+
+            var fileBox = document.getElementById('fileBox');
+
+            if(this.value === 'teacher') {
+                fileBox.style.display = 'block';
+            } else {
+                fileBox.style.display = 'none';
+            }
+        });
+
+        selectBox.dispatchEvent(new Event('change'));
+    });
+
+
+
+
 
 </script>
 <script src="/resources/vendors/scripts/core.js"></script>

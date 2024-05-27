@@ -166,9 +166,6 @@
 
                     </table>
                     <div class="d-flex justify-content-sm-end mt-2">
-                        <div class="d-flex justify-content-sm-end mr-3 ">
-                            <button class="btn btn-primary btn-lg btn-block" href="#" style="width: 100px; height: 40px; font-size: 15px;" >수정하기</button>
-                        </div>
                         <div class="d-flex justify-content-sm-end ml-2 mr-3">
                             <button type="button" id="btnDelete" name="btnDelete" class="btn btn-primary btn-lg btn-block" onclick="godelete();" style="width: 100px; height: 40px; font-size: 15px;">강퇴하기</button>
                         </div>
