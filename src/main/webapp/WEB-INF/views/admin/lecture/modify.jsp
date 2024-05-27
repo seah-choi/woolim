@@ -28,7 +28,11 @@
     <link rel="stylesheet" type="text/css" href="/resources/vendors/styles/core.css">
     <link rel="stylesheet" type="text/css" href="/resources/vendors/styles/icon-font.min.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/adminStyle.css">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <!-- Css Styles -->
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
@@ -53,7 +57,13 @@
             margin-left: 20px;
             padding-bottom: 100px;
         }
-
+        .commonDeleteBtn1{
+            background-color: transparent; /* 배경색 투명 설정 */
+            border: none; /* 테두리 제거 */
+            color: red; /* 텍스트 색상 지정 */
+            font-size: 14px; /* 글꼴 크기 설정 */
+            cursor: pointer; /* 커서를 포인터로 변경하여 클릭 가능한 것으로 나타냄 */
+        }
         /* 삭제 버튼의 스타일 */
         .commonDeleteBtn {
             background-color: transparent; /* 배경색 투명 설정 */
@@ -79,9 +89,64 @@
     <div class="pd-ltr-20 xs-pd-20-10">
         <!-- basic table  Start -->
         <div class="pd-20 card-box mb-30" style="padding-bottom: 100px">
-            <h4 class="h4">강좌 등록</h4>
+            <h4 class="h4">강좌 수정</h4>
             <br>
 
+
+            <div class="d-flex align-items-start align-items-sm-center mt-3">
+                <label class="col-sm-12 col-md-2 col-form-label fontWe-700">강좌 업로드</label>
+                <div class="col-sm-12 col-md-5">
+                    <form id="videoFrm" name="videoFrm" enctype="multipart/form-data">
+                        <div>
+                            <input type="file" name="files" id="file" multiple="multiple" class="form-control-file form-control height-auto w-50"   style="width: 150px;"/>
+                            <p class="text-muted mb-0">mp4  파일만 업로드 가능합니다.</p>
+                            <input name="lecture_idx"  type="hidden" value="${list.lecture_idx}">
+                            <c:choose>
+                                <c:when test="${video[0].video_content != null}">
+                                    <input class="form-control" type="text" name="video_content"  value="${video[0].video_content}" placeholder="섹션 내용 입력" readonly >
+                                </c:when>
+                                <c:otherwise>
+                                    <input class="form-control" type="text" name="video_content" placeholder="섹션 내용 입력"  >
+                                </c:otherwise>
+                            </c:choose>
+
+
+                        </div>
+                    </form>
+
+                </div>
+                <button id="addRegistVideo" type="button" style="width: 100px; height: 50px;"   class="btn btn-primary">등록</button>
+                <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 500px; margin-left: 50px;">
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                ${video[0].video_content}
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                            <div class="accordion-body">
+                                <c:forEach items="${video}" var="video">
+                                    <c:choose>
+                                        <c:when test="${video.video_title != null}">
+                                            <div class="deleteImageDiv">
+                                                <input type="hidden" value="${video.video_idx}" id="video_idx" />
+                                                 <a href="#">${video.video_title}</a>
+                                                <button type="button" class="commonDeleteBtn1">x</button>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button type="button" class="commonDeleteBtn" style="display: none;">x</button>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                </c:forEach>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
             <form name="frm" id="frm" enctype="multipart/form-data" action="/admin/lecture/modifyLecture" method="post">
                 <input type="hidden" class="lecture_idx" id="lecture_idx" name="lecture_idx"value="${list.lecture_idx}"/>
 
@@ -235,16 +300,7 @@
                 </div>
             </form>
 
-        <div id="sectionsContainer">
-            <form id="videoFrm" name="videoFrm" enctype="multipart/form-data">
-                <span>파일업로드</span>
-                <input type="file" name="files" id="file" multiple="multiple">
-                <input name="lecture_idx"  type="hidden" value="${list.lecture_idx}">
-            </form>
-        </div>
-        <div>
-            <button type="button" id="addRegistVideo" >등록</button>
-        </div>
+
             <%--<div>
                 <button type="button" id="addSectionBtn">섹션 추가</button>
             </div>
@@ -259,6 +315,7 @@
         </div>
     </div>
 </div>
+<script src="/media/jquery-1.12.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
@@ -463,7 +520,26 @@
         }
     });
 
+    $(document).ready(function() {
+        $('.commonDeleteBtn1').click(function() {
+            var videoIdx = $(this).siblings('#video_idx').val();
 
+            if(confirm('정말로 삭제하시겠습니까?')) {
+                $.ajax({
+                    url: '/admin/lecture/videoDelete', // 서버의 삭제 엔드포인트 URL
+                    type: 'POST',
+                    data: { video_idx: videoIdx },
+                    success: function(response) {
+                        alert('삭제되었습니다.');
+                        location.reload(); // 페이지 새로고침
+                    },
+                    error: function(error) {
+                        alert('삭제 중 오류가 발생했습니다.');
+                    }
+                });
+            }
+        });
+    });
 </script>
 <script src="/resources/vendors/scripts/core.js"></script>
 <script src="/resources/vendors/scripts/script.min.js"></script>
