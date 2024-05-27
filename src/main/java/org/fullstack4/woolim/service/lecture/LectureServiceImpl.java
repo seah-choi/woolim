@@ -103,6 +103,16 @@ public class LectureServiceImpl implements LectureServiceIf {
     public int delete(int grade_idx) {
         return lectureMapper.delete(grade_idx);
     }
+
+
+    @Override
+    public ClassDTO getGrade(int class_idx) {
+        ClassVO vo = lectureMapper.getGrade(class_idx);
+        ClassDTO dto = modelMapper.map(vo, ClassDTO.class);
+        return dto;
+    }
+}
+
     public List<VideoDTO> lectureVideo(int lecture_idx) {
         List<VideoDTO> list = lectureMapper.lectureVideo(lecture_idx).stream().map(vo->modelMapper.map(vo, VideoDTO.class)).collect(Collectors.toList());
 
@@ -111,3 +121,4 @@ public class LectureServiceImpl implements LectureServiceIf {
     }
 
 }
+

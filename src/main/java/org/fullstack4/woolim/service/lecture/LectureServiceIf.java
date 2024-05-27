@@ -2,6 +2,10 @@ package org.fullstack4.woolim.service.lecture;
 
 import org.fullstack4.woolim.criteria.Criteria;
 
+import org.fullstack4.woolim.domain.ClassVO;
+
+
+
 
 
 import org.fullstack4.woolim.domain.GradeVO;
@@ -28,5 +32,9 @@ public interface LectureServiceIf {
     int modify(GradeDTO gradeDTO);
     int regist(GradeDTO gradeDTO);
     int delete(int grade_idx);
+
+    ClassDTO getGrade(int class_idx);
+
     List<VideoDTO> lectureVideo(int lecture_idx);
+
 }

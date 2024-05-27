@@ -29,5 +29,9 @@ public interface LectureMapper {
     int modify(GradeVO gradeVO);
     int regist(GradeVO gradeVO);
     int delete(int grade_idx);
+
+    ClassVO getGrade(int class_idx);
+
     List<VideoVO> lectureVideo(int lecture_idx);
+
 }
