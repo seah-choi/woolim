@@ -18,7 +18,6 @@ import java.util.List;
 public interface LectureMapper {
     List<LectureVO> getList(Criteria cri);
     List<LectureVO> getListCategory(Criteria cri);
-    List<VideoVO> lectureVideo(int lecture_idx);
 
     int getLectureKeyword(Criteria cri);
     int getLectureKeywordCategory(Criteria cri);
@@ -30,4 +29,5 @@ public interface LectureMapper {
     int modify(GradeVO gradeVO);
     int regist(GradeVO gradeVO);
     int delete(int grade_idx);
+    List<VideoVO> lectureVideo(int lecture_idx);
 }

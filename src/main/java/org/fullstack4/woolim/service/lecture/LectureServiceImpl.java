@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Log4j2
 @Service
 public class LectureServiceImpl implements LectureServiceIf {
@@ -65,17 +66,10 @@ public class LectureServiceImpl implements LectureServiceIf {
     }
 
     @Override
-<<<<<<< HEAD
-    public PageResponseDTO<GradeDTO> gradeListByPage(PageRequestDTO pageRequestDTO) {
-        List<GradeVO> voList = lectureMapper.gradeListByPage(pageRequestDTO);
-        log.info("voList" + voList);
-        List<GradeDTO> dtoList = voList.stream().map(vo -> modelMapper.map(vo, GradeDTO.class)).collect(Collectors.toList());
-=======
     public PageResponseDTO<ClassDTO> gradeListByPage(PageRequestDTO pageRequestDTO) {
         List<ClassVO> voList =lectureMapper.gradeListByPage(pageRequestDTO);
         log.info("voList" + voList);
         List<ClassDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo, ClassDTO.class)).collect(Collectors.toList());
->>>>>>> cc5d5a1ea4b4fa15ad45df0cf57fab061bbcebd8
         log.info("dtoList" + dtoList);
 
         int total_count = lectureMapper.grade_count(pageRequestDTO);
@@ -87,18 +81,9 @@ public class LectureServiceImpl implements LectureServiceIf {
                 .dtoList(dtoList)
                 .build();
 
-        log.info("responseDTO :" + responseDTO);
+        log.info("responseDTO :" +responseDTO);
         return responseDTO;
     }
-<<<<<<< HEAD
-        public List<VideoDTO> lectureVideo(int lecture_idx) {
-            List<VideoDTO> list = lectureMapper.lectureVideo(lecture_idx).stream().map(vo->modelMapper.map(vo, VideoDTO.class)).collect(Collectors.toList());
-
-            return list;
-
-        }
-
-=======
 
     @Override
     public int modify(GradeDTO gradeDTO) {
@@ -118,6 +103,11 @@ public class LectureServiceImpl implements LectureServiceIf {
     public int delete(int grade_idx) {
         return lectureMapper.delete(grade_idx);
     }
->>>>>>> cc5d5a1ea4b4fa15ad45df0cf57fab061bbcebd8
-}
+    public List<VideoDTO> lectureVideo(int lecture_idx) {
+        List<VideoDTO> list = lectureMapper.lectureVideo(lecture_idx).stream().map(vo->modelMapper.map(vo, VideoDTO.class)).collect(Collectors.toList());
 
+        return list;
+
+    }
+
+}
