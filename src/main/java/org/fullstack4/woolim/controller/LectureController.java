@@ -251,6 +251,8 @@ public class LectureController {
     @GetMapping("/boardModify")
     public void GETBModify(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type) {
         BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
+
+        log.info("bbsDTO : " + bbsDTO);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(lecture_idx);
         model.addAttribute("list" , lectureDTO);
         model.addAttribute("bbsDTO", bbsDTO);
@@ -341,9 +343,9 @@ public class LectureController {
             model.addAttribute("bbs_type",bbs_type);
             model.addAttribute("lecture_idx", lecture_idx);
             model.addAttribute("bbs_idx", bbs_idx);
-            return "redirect:/lecture/boardView?bbs_idx=" + bbsDTO.getBbs_idx();
+            return "redirect:/lecture/boardView?bbs_idx=" + bbsDTO.getBbs_idx() +"&bbs_type="+bbs_type+"&lecture_idx="+lecture_idx;
         } else {
-            return "/lecture/boardModify?bbs_idx=" + bbsDTO.getBbs_idx();
+            return "/lecture/boardModify?bbs_idx=" + bbsDTO.getBbs_idx() +"&bbs_type="+bbs_type+"&lecture_idx="+lecture_idx;
         }
 
     }
