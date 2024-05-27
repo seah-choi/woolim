@@ -158,4 +158,13 @@
         update woo_grade set grade = null
         WHERE grade_idx = #{grade_idx}
     </update>
+
+    <select id="getGrade" resultType="org.fullstack4.woolim.domain.ClassVO">
+        SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx
+        FROM woo_class AS wc
+         INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wc.lecture_idx
+         INNER JOIN woo_grade AS wg ON wg.lecture_idx = wl.lecture_idx
+         INNER JOIN woo_member AS wm ON wm.member_id = wc.member_id
+        WHERE wc.class_idx = #{class_idx}
+    </select>
 </mapper>

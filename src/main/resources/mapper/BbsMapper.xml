@@ -39,7 +39,7 @@
     </select>
 
     <select id="bbsListByPage" resultType="org.fullstack4.woolim.domain.BbsVO">
-        select bbs_idx, member_id, bbs_title, bbs_content, bbs_reg_date, bbs_image, bbs_file_yn, bbs_category_code, bbs_read_cnt, bbs_reply_yn, bbs_like, bbs_modify_date, bbs_reply_cnt, lecture_idx
+        select bbs_idx, member_id, bbs_title, bbs_content, bbs_reg_date, bbs_image, bbs_file_yn, bbs_category_code, bbs_read_cnt, bbs_reply_yn, bbs_like, bbs_modify_date, bbs_reply_cnt
         from woo_bbs
         <where>
             bbs_teacher_yn = #{bbs_teacher_yn}

@@ -367,7 +367,7 @@
                         <td>${list.lecture_title}</td>
                         <td>${list.grade}</td>
                         <c:if test="${list.grade == null}">
-                        <td style="width: 150px;"><button type="button" class="btn" data-idx="${list.grade_idx}" data-name="${list.member_name}" data-title="${list.lecture_title}" data-grade="${list.grade}" data-bs-toggle="modal" data-bs-target="#exampleModal" id="view">성적표입력</button></td>
+                        <td style="width: 150px;"><button type="button" class="btn" data-idx="${list.grade_idx}" data-bs-toggle="modal" data-bs-target="#exampleModal" id="view">성적표입력</button></td>
                         </c:if>
                         <c:if test="${list.grade != null}">
                             <td style="width: 150px;"><button type="button" class="btn" data-idx="${list.grade_idx}" data-name="${list.member_name}" data-title="${list.lecture_title}" data-grade="${list.grade}" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="view2">성적표수정</button></td>
@@ -393,7 +393,7 @@
                         </div>
                         <form name="frm" action="/lecture/studentRegist" method="post">
                             <div class="modal-body">
-                                <input type="hidden" id="grade_idx" name="grade_idx" value="">
+                                <input type="hidden" id="grade_idx" name="grade_idx" value="${bbsList.grade_idx}">
 <%--                                <span id="grade_title"></span>--%>
                                 <span>점수 : </span>
                                 <input type="text" id="grade" name="grade" style="width: 100px;">
@@ -438,7 +438,7 @@
             <nav class="blog-pagination justify-content-center d-flex" style="margin-top: 50px;">
                 <ul class="pagination">
                     <li class="page-item <c:if test="${bbsList.prev_page_plag == 'false'}"> disabled</c:if>" >
-                        <a href="/board/list?page=${bbsList.page_block_start - bbsList.page_block_size}${bbsList.linkParams}"
+                        <a href="/lecture/studentList?page=${bbsList.page_block_start - bbsList.page_block_size}${bbsList.linkParams}"
                            class="page-link" aria-label="Previous">&laquo;
                         </a>
                     </li>
@@ -446,11 +446,11 @@
                                end="${bbsList.page_block_end}"
                                var="page_num">
                         <li class="page-item <c:if test="${bbsList.page == page_num}">active</c:if>">
-                            <a href="/board/list?page=${page_num}${bbsList.linkParams}" class="page-link">${page_num}</a>
+                            <a href="/lecture/studentList?page=${page_num}${bbsList.linkParams}" class="page-link">${page_num}</a>
                         </li>
                     </c:forEach>
                     <li class="page-item <c:if test="${bbsList.next_page_plag == 'false'}"> disabled</c:if>" >
-                        <a href="/board/list?page=${bbsList.page_block_start + bbsList.page_block_size}${bbsList.linkParams}" class="page-link" aria-label="Previous">
+                        <a href="/lecture/studentList?page=${bbsList.page_block_start + bbsList.page_block_size}${bbsList.linkParams}" class="page-link" aria-label="Previous">
                             &raquo;
                         </a>
                     </li>
@@ -557,28 +557,53 @@
         });
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        let exampleModal = document.getElementById('exampleModal');
-        exampleModal.addEventListener('show.bs.modal', function (event) {
-            let button = event.relatedTarget; // Button that triggered the modal
-            let idx = button.getAttribute('data-idx');
-            let name = button.getAttribute('data-name');
-            let title = button.getAttribute('data-title');
-            let grade = button.getAttribute('data-grade');
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     let exampleModal = document.getElementById('exampleModal');
+    //     exampleModal.addEventListener('show.bs.modal', function (event) {
+    //         let button = event.relatedTarget; // Button that triggered the modal
+    //         let idx = button.getAttribute('data-idx');
+    //         let name = button.getAttribute('data-name');
+    //         let title = button.getAttribute('data-title');
+    //         let grade = button.getAttribute('data-grade');
+    //
+    //         let modalTitle = exampleModal.querySelector('.modal-title');
+    //         let gradeIdxInput = exampleModal.querySelector('#grade_idx');
+    //         let gradeTitleSpan = exampleModal.querySelector('#grade_title');
+    //         let gradeInput = exampleModal.querySelector('#grade');
+    //
+    //         modalTitle.textContent = name + '님의 성적표';
+    //         gradeIdxInput.value = idx;
+    //         gradeTitleSpan.textContent = title;
+    //         //gradeInput.value = grade;
+    //
+    //         gradeInput.value = grade || '';
+    //     });
+    //
+    // });
 
-            let modalTitle = exampleModal.querySelector('.modal-title');
-            let gradeIdxInput = exampleModal.querySelector('#grade_idx');
-            let gradeTitleSpan = exampleModal.querySelector('#grade_title');
-            let gradeInput = exampleModal.querySelector('#grade');
+    const myModal = document.getElementById('myModal');
+    const myInput = document.getElementById('myInput');
+    let btnView = document.querySelectorAll('#view');
 
-            modalTitle.textContent = name + '님의 성적표';
-            gradeIdxInput.value = idx;
-            gradeTitleSpan.textContent = title;
-            //gradeInput.value = grade;
-
-            gradeInput.value = grade || '';
+    btnView.forEach(function (button) {
+        button.addEventListener('click', function (e) {
+            $.ajax({
+                url: "/lecture/getGrade",
+                method: 'get',
+                dataType: 'text',
+                data: {
+                    "grade_idx": this.getAttribute("data-idx")
+                },
+                success: function (response) {
+                    var data = JSON.parse(response)
+                    console.log(data);
+                    document.getElementById("exampleModalLabel").textContent = data.member_name + "님의 성적표"
+                    document.getElementById("grade_idx").value = data.grade_idx;
+                    document.getElementById("grade_title").textContent = '[' + data.subject_name + '] ' + data.lecture_title;
+                    document.getElementById("grade").value = data.grade;
+                }
+            });
         });
-
     });
 
     document.addEventListener('DOMContentLoaded', function () {
