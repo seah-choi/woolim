@@ -144,6 +144,13 @@
         </where>
     </select>
 
+    <select id="lectureVideo" resultType="org.fullstack4.woolim.domain.VideoVO">
+        select * from woo_video
+        where lecture_idx = #{lecture_idx}
+
+    </select>
+
+
     <update id="regist">
         update woo_grade set grade = #{grade}
         WHERE grade_idx = #{grade_idx}
@@ -158,4 +165,5 @@
         update woo_grade set grade = null
         WHERE grade_idx = #{grade_idx}
     </update>
+
 </mapper>

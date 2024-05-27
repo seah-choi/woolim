@@ -6,7 +6,12 @@ import org.fullstack4.woolim.domain.BbsVO;
 import org.fullstack4.woolim.domain.ClassVO;
 import org.fullstack4.woolim.domain.GradeVO;
 import org.fullstack4.woolim.domain.LectureVO;
+
 import org.fullstack4.woolim.dto.*;
+
+import org.fullstack4.woolim.dto.LectureDTO;
+import org.fullstack4.woolim.dto.VideoDTO;
+
 import org.fullstack4.woolim.mapper.LectureMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Log4j2
 @Service
@@ -97,4 +103,11 @@ public class LectureServiceImpl implements LectureServiceIf {
     public int delete(int grade_idx) {
         return lectureMapper.delete(grade_idx);
     }
+    public List<VideoDTO> lectureVideo(int lecture_idx) {
+        List<VideoDTO> list = lectureMapper.lectureVideo(lecture_idx).stream().map(vo->modelMapper.map(vo, VideoDTO.class)).collect(Collectors.toList());
+
+        return list;
+
+    }
+
 }

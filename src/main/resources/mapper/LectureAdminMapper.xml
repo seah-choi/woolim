@@ -98,4 +98,9 @@
             lecture_sale = #{lecture_sale}
         WHERE lecture_idx = #{lecture_idx};
     </update>
+
+    <insert id="addVideo">
+        insert into woo_video(video_title,lecture_idx,video_content,video_file)
+        values(#{video_title}, #{lecture_idx}, #{video_content}, #{video_file})
+    </insert>
 </mapper>

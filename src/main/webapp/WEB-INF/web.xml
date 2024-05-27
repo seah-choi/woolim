@@ -25,6 +25,7 @@
         <servlet-name>appServlet</servlet-name>
     </filter-mapping>
     <!--//한글 인코딩 필터 설정-->
+
     <servlet>
         <servlet-name>appServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -37,7 +38,13 @@
             <param-value>true</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
+        <multipart-config>
+            <max-file-size>52428800</max-file-size> <!-- 30MB -->
+            <max-request-size>52428800</max-request-size> <!-- 30MB -->
+            <file-size-threshold>0</file-size-threshold>
+        </multipart-config>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>appServlet</servlet-name>
         <url-pattern>/</url-pattern>

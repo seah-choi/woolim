@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 
 import java.util.List;
 
+
 @Log4j2
 @Controller
 @RequestMapping(value="/lecture")
@@ -95,8 +96,12 @@ public class LectureController {
         log.info("-----------------------");
         int idx = Integer.parseInt(lecture_idx);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
+        List<VideoDTO> videoDTO = lectureServiceIf.lectureVideo(idx);
+
         log.info("-----lectureDTO--------" + lectureDTO);
+        log.info("-----video--------" + videoDTO);
         model.addAttribute("list" , lectureDTO);
+        model.addAttribute("video" , videoDTO);
         return "/lecture/view";
     }
 
