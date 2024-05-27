@@ -351,12 +351,27 @@ public class LectureController {
         return "/lecture/watchVideo";
     }
 
+    @GetMapping("/boardDelete")
+    public String boardDelete(@RequestParam(name = "bbs_idx") int bbs_idx,
+                              @RequestParam(name = "bbs_type") String bbs_type,
+                              @RequestParam(name = "lecture_idx")int lecture_idx){
+        int result = bbsServiceIf.delete(bbs_idx);
+        if(result>0)
+            return "redirect:/lecture/boardList?bbs_idx="+bbs_idx+"&bbs_type="+bbs_type+"&lecture_idx="+lecture_idx;
+        else
+            return "redirect:/lecture/boardView?bbs_idx="+bbs_idx+"&bbs_type="+bbs_type+"&lecture_idx="+lecture_idx;
+    }
+
     @GetMapping("/boardModify")
     public void GETBModify(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type) {
         BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
 
         log.info("bbsDTO : " + bbsDTO);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(lecture_idx);
+        List<BoardFileDTO> fileList = bbsServiceIf.file_list(bbs_idx);
+
+
+        model.addAttribute("fileList", fileList);
         model.addAttribute("list" , lectureDTO);
         model.addAttribute("bbsDTO", bbsDTO);
         model.addAttribute("bbs_type",bbs_type);
