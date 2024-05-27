@@ -328,19 +328,19 @@
         <div class="tab-item">
             <ul class="nav" role="tablist">
                 <li>
-                    <a class="active" data-toggle="tab" href="#tab-1" role="tab">강의소개</a>
+                    <a class="active tab-a" data-toggle="tab" id="scrollTarget" href="#tab-1" role="tab">강의소개</a>
                 </li>
                 <li>
-                    <a data-toggle="tab" href="#tab-2" role="tab">강의 목차</a>
+                    <a class="tab-a" data-toggle="tab" href="#tab-2" role="tab">강의 목차</a>
                 </li>
                 <li>
-                    <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews (02)</a>
+                    <a class="tab-a" data-toggle="tab" href="#tab-3" role="tab">Customer Reviews (${responseDTO.total_count})</a>
                 </li>
             </ul>
         </div>
         <div class="tab-item-content">
             <div class="tab-content">
-                <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+                <div class="tab-pane fade-in active tab-div" id="tab-1" role="tabpanel">
                     <div class="product-content">
                         <div class="row">
                             <div class="col-lg-7">
@@ -360,7 +360,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                <div class="tab-pane fade tab-div" id="tab-2" role="tabpanel">
                     <div class="specification-table">
                         <table>
                             <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 500px;">
@@ -407,63 +407,64 @@
                         </table>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                <div class="tab-pane fade tab-div" id="tab-3" role="tabpanel">
                     <div class="customer-review-option">
-                        <h4>2 Comments</h4>
+                        <h4>${responseDTO.total_count} Comments</h4>
                         <div class="comment-option">
-                            <div class="co-item">
-                                <div class="avatar-pic">
-                                    <img src="img/product-single/avatar-1.png" alt="">
-                                </div>
-                                <div class="avatar-text">
-                                    <div class="at-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5>Brandon Kelley <span>27 Aug 2019</span></h5>
-                                    <div class="at-reply">Nice !</div>
-                                </div>
-                            </div>
-                            <div class="co-item">
-                                <div class="avatar-pic">
-                                    <img src="img/product-single/avatar-2.png" alt="">
-                                </div>
-                                <div class="avatar-text">
-                                    <div class="at-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5>Roy Banks <span>27 Aug 2019</span></h5>
-                                    <div class="at-reply">Nice !</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="personal-rating">
-                            <h6>Your Ratind</h6>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
+                            <c:choose>
+                                <c:when test="${not empty responseDTO.dtolist}">
+                                    <c:forEach var="review" items="${responseDTO.dtolist}">
+                                        <div class="co-item">
+                                            <div class="avatar-text">
+                                                <div class="at-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <h5>${review.member_id} <span>${review.review_reg_date}</span></h5>
+                                                <div class="at-reply">${review.review_comment}</div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    등록된 리뷰가 없습니다.
+                                </c:otherwise>
+                            </c:choose>
+                            <nav class="blog-pagination justify-content-center d-flex">
+                                <ul class="pagination">
+                                    <li class="page-item <c:if test="${!responseDTO.prev_page_plag}">disabled</c:if>">
+                                        <a class="page-link" href="/lecture/view?page_flag=1&page=${((responseDTO.page - responseDTO.page_block_size) >= 1) ? (responseDTO.page - responseDTO.page_block_size) : 1}${responseDTO.linkParams}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <c:forEach var="li" begin="${responseDTO.page_block_start}" end="${responseDTO.page_block_end}">
+                                        <li class="page-item <c:if test="${responseDTO.page eq li}">active</c:if> ">
+                                            <a class="page-link" href="/lecture/view?page_flag=1&page=${li}${responseDTO.linkParams}">${li}</a>
+                                        </li>
+                                    </c:forEach>
+                                    <li class="page-item <c:if test="${!responseDTO.next_page_plag}">disabled</c:if>">
+                                        <a class="page-link" href="/lecture/view?page_flag=1&page=${(responseDTO.page + responseDTO.page_block_size) <= responseDTO.total_page ? (responseDTO.page + responseDTO.page_block_size) : responseDTO.total_page}${responseDTO.linkParams}" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                         <div class="leave-comment">
                             <h4>Leave A Comment</h4>
+                            <ul class="list star-list" id="star_ul">
+                                <p>별점을 선택해주세요.</p><br>
+                                <li><a href="#" data-score="1"><i class="fa fa-star"></i></a></li>
+                                <li><a href="#" data-score="2"><i class="fa fa-star"></i></a></li>
+                                <li><a href="#" data-score="3"><i class="fa fa-star"></i></a></li>
+                                <li><a href="#" data-score="4"><i class="fa fa-star"></i></a></li>
+                                <li><a href="#" data-score="5"><i class="fa fa-star"></i></a></li>
+                            </ul>
                             <form action="#" class="comment-form">
                                 <div class="row">
-                                    <div class="col-lg-6">
-                                        <input type="text" placeholder="Name">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <input type="text" placeholder="Email">
-                                    </div>
                                     <div class="col-lg-12">
                                         <textarea placeholder="Messages"></textarea>
                                         <button type="submit" class="site-btn">Send message</button>
@@ -549,8 +550,44 @@
             </div>
         </div>
     </footer>
+    <c:if test="${not empty responseDTO.dtolist}">
+        ${responseDTO.dtolist}
+    </c:if>
 </main>
 <script>
+    window.onload = function() {
+        // 특정 조건 확인
+        if (${param.registOK == '1'} || ${param.deleteOK == '1'} ||${param.page_flag == '1'} || ${errors !=null}) {
+            reviewTAB();
+            <%--if(${reviewDTO.rank == '0'}){--%>
+            <%--    alert('평점을 입력해주세요');--%>
+            <%--}--%>
+            <%--if(${reviewDTO.rank != '0'}){--%>
+            <%--    document.querySelectorAll('.star-list li a')[${reviewDTO.rank}-1].click();--%>
+            <%--    alert('리뷰를 작성해주세요');--%>
+            <%--}--%>
+        }
+    };
+    let tabA = document.querySelectorAll('.tab-a');
+    let tabDiv = document.querySelectorAll('.tab-div');
+    function reviewTAB(){
+        for(let i=0;i<tabA.length;i++){
+            tabA[i].classList.remove('active');
+        }
+        tabA[2].classList.add('active');
+        for(let i=0;i<tabDiv.length;i++){
+            tabDiv[i].classList.remove('active', 'show');
+        }
+        tabDiv[2].classList.add('active');
+        tabDiv[2].classList.add('show');
+        var targetElement = document.getElementById('scrollTarget');
+        var targetRect = targetElement.getBoundingClientRect();
+
+        window.scrollTo({
+            top: window.scrollY + targetRect.top
+        });
+        // document.querySelector('#review-tab').click();
+    }
     document.querySelector("#regist").addEventListener("click", function() {
         const lectureIdx = document.querySelector("#lecture_idx").value;
         location.href = '/order/order?lecture_idx='+lectureIdx;
@@ -570,6 +607,22 @@
         const lectureIdx = document.querySelector("#lecture_idx").value;
         location.href = '/mypage/jjim';
     });
+    for(let star of stars) {
+        star.addEventListener("click", (event)=>{
+            event.preventDefault();
+            document.querySelector('#star_ul').style.border = 'none';
+            for(let i = 0; i < stars.length; i++) {
+                realStars[i].classList.remove('stars');
+            }
+            score = star.dataset.score;
+            document.getElementById("rank").value = score;
+            console.log(star);
+            console.log(score);
+            for(let i = 0; i < score; i++) {
+                realStars[i].classList.add('stars');
+            }
+        })
+    }
 
 </script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>

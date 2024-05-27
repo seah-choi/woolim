@@ -50,6 +50,8 @@ public class LectureController {
     private CartServiceIf cartServiceIf;
     @Autowired
     private BbsReplyServiceIf bbsReplyService;
+    @Autowired
+    private ReviewServiceIf reviewServiceif;
     @GetMapping("/list")
     public String GETList(Model model, Criteria cri, HttpSession session) {
         System.out.println("#####");
@@ -103,7 +105,7 @@ public class LectureController {
 
 
     @GetMapping("/view")
-    public String viewGET(String lecture_idx, Model model , HttpServletRequest request) throws Exception {
+    public String viewGET(String lecture_idx, Model model , HttpServletRequest request, PageRequestDTO pageRequestDTO) throws Exception {
         log.info("-----------------------");
         log.info("-----LectureController-----" +"-> viewGET() ");
         log.info("-----------------------");
@@ -111,8 +113,14 @@ public class LectureController {
         HttpSession session = request.getSession();
         String member_id = (String)session.getAttribute("member_id");
 
+        pageRequestDTO.setLecture_idx(idx);
+        pageRequestDTO.setPage_size(7);
+        PageResponseDTO<ReviewDTO> responseDTO = reviewServiceif.list(pageRequestDTO);
+        log.info("lecture view : " + responseDTO);
+
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         List<VideoDTO> videoDTO = lectureServiceIf.lectureVideo(idx);
+
 
         log.info("-----idx--------" + idx);
         log.info("-----member_id--------" + member_id);
@@ -131,7 +139,7 @@ public class LectureController {
         log.info("-----video--------" + videoDTO);
 
 
-
+        model.addAttribute("responseDTO", responseDTO);
         model.addAttribute("list" , lectureDTO);
         model.addAttribute("video" , videoDTO);
 
