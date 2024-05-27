@@ -7,6 +7,7 @@ import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
 import org.fullstack4.woolim.dto.LectureDTO;
 import org.fullstack4.woolim.dto.MemberDTO;
+import org.fullstack4.woolim.dto.VideoDTO;
 import org.fullstack4.woolim.service.lecture.LectureServiceIf;
 import org.fullstack4.woolim.service.lectureAdmin.LectureAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -328,4 +330,56 @@ public class AdminLectureController {
 
     }
 
+    @PostMapping("/videoRegist")
+    public String videoRegistPost(MultipartHttpServletRequest files ,String lecture_idx) {
+        log.info("------------------------------------");
+
+        log.info("Image File Name: " + files);
+        /*        log.info("Video File Name: " + video.getOriginalFilename());*/
+        log.info("------------------------------------");
+
+
+        // 이미지 파일 처리
+        String uploadFolder = "C:\\java4\\spring\\springweb\\woolim\\src\\main\\webapp\\resources\\img\\video";
+        List<MultipartFile> list = files.getFiles("files");
+        for(int i=0; i<list.size(); i++){
+            String fileRealName = list.get(i).getOriginalFilename();
+            long size  = list.get(i).getSize();
+            String fileExt = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length()); // 확장자명
+            log.info("============================");
+            log.info("uploadFolder : " + uploadFolder);
+            log.info("fileRealName : " + fileRealName);
+            log.info("size : " + size);
+            log.info("fileExt : " + fileExt);
+
+            //새로운 파일명 생성
+            UUID uuid = UUID.randomUUID();
+            String[] uuids = uuid.toString().split("-");
+            String newName = uuids[0];
+
+            log.info("uuid : " + uuid);
+            log.info("uuids : " + uuids);
+            log.info("newName : " + newName);
+            log.info("lecture_idx : " + lecture_idx);
+
+            File saveFile = new File(uploadFolder + "\\" + newName + fileExt);
+            int idx = Integer.parseInt(lecture_idx);
+            VideoDTO dto = new VideoDTO();
+            dto.setLecture_idx(idx);
+            dto.setVideo_title(newName + fileExt);
+            dto.setVideo_file(newName + fileExt);
+            dto.setVideo_content("섹션1번입니다.");
+            try {
+                list.get(i).transferTo(saveFile);
+                int iResult = lectureAdminService.addVideo(dto);
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return "/bbs/fileUpload2";
+    }
 }

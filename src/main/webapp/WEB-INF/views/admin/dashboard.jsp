@@ -93,7 +93,7 @@
         .card-block {
             color: #fff;
         }
-        .card-block h6,
+        .card-block h4,
         .card-block h2,
         .card-block p {
             color: #fff;
@@ -129,7 +129,7 @@
                     <div class="col-md-6 col-xl-3">
                         <div class="card bg-c-blue order-card">
                             <div class="card-block">
-                                <h6 class="m-b-20">총 주문수</h6>
+                                <h4 class="m-b-20">총 주문수</h4>
                                 <h2 class="text-right"><i class="ti-shopping-cart f-left"></i><span><fmt:formatNumber value="${totalOrders}" pattern="#,###"/>건</span></h2>
                                 <p class="m-b-0"><span class="f-right">&nbsp;</span></p>
                             </div>
@@ -138,8 +138,8 @@
                     <div class="col-md-6 col-xl-3">
                         <div class="card bg-c-green order-card">
                             <div class="card-block">
-                                <h6 class="m-b-20">총 매출액</h6>
-                                <h2 class="text-right"><i class="ti-tag f-left"></i><span><fmt:formatNumber value="${totalSales}" pattern="#,###"/>원</span></h2>
+                                <h4 class="m-b-20">총 매출액</h4>
+                                <h2 class="text-right"><i class="fa fa-krw f-left"></i><span><fmt:formatNumber value="${totalSales}" pattern="#,###"/>원</span></h2>
                                 <p class="m-b-0"><span class="f-right">&nbsp;</span></p>
                             </div>
                         </div>
@@ -147,8 +147,8 @@
                     <div class="col-md-6 col-xl-3">
                         <div class="card bg-c-yellow order-card">
                             <div class="card-block">
-                                <h6 class="m-b-20">총 강의수</h6>
-                                <h2 class="text-right"><i class="ti-reload f-left"></i><span><fmt:formatNumber value="${totalClass}" pattern="#,###"/>개</span></h2>
+                                <h4 class="m-b-20">총 강의수</h4>
+                                <h2 class="text-right"><i class="fa fa-video-camera f-left"></i><span><fmt:formatNumber value="${totalClass}" pattern="#,###"/>개</span></h2>
                                 <p class="m-b-0"><span class="f-right">&nbsp;</span></p>
                             </div>
                         </div>
@@ -156,8 +156,8 @@
                     <div class="col-md-6 col-xl-3">
                         <div class="card bg-c-pink order-card">
                             <div class="card-block">
-                                <h6 class="m-b-20">총 회원수</h6>
-                                <h2 class="text-right"><i class="ti-wallet f-left"></i><span><fmt:formatNumber value="${totalMembers}" pattern="#,###"/>명</span></h2>
+                                <h4 class="m-b-20">총 회원수</h4>
+                                <h2 class="text-right"><i class="fa fa-user-circle-o f-left"></i><span><fmt:formatNumber value="${totalMembers}" pattern="#,###"/>명</span></h2>
                                 <p class="m-b-0"><span class="f-right">&nbsp;</span></p>
                             </div>
                         </div>
