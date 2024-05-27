@@ -115,7 +115,7 @@
     </select>
 
     <select id="gradeListByPage" resultType="org.fullstack4.woolim.domain.ClassVO">
-        SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx
+        SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx, wc.class_idx
         FROM woo_class AS wc
         INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wc.lecture_idx
         INNER JOIN woo_grade AS wg ON wg.lecture_idx = wl.lecture_idx
@@ -168,7 +168,7 @@
 
 
     <select id="getGrade" resultType="org.fullstack4.woolim.domain.ClassVO">
-        SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx
+        SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx, wc.class_idx
         FROM woo_class AS wc
          INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wc.lecture_idx
          INNER JOIN woo_grade AS wg ON wg.lecture_idx = wl.lecture_idx
