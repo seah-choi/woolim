@@ -481,7 +481,47 @@
         ]
 
     });
-
+    let btnModify = document.getElementsByClassName("btnModify");
+    let cmDelete = document.getElementsByClassName("cmDelete");
+    let reply_content = document.getElementsByClassName("reply_content");
+    for(let i=0;i<btnModify.length;i++){
+        btnModify[i].addEventListener("click",function(e){
+            e.preventDefault();
+            if(this.textContent=="수정"){
+                this.textContent="등록";
+                reply_content[i].readOnly = false;
+                reply_content[i].focus();
+                reply_content[i].style.border = "1px solid black";
+                cmDelete[i].textContent="취소";
+                return;
+            }
+            if(this.textContent=="등록"){
+                let cmFrm = document.getElementsByClassName("cmFrm");
+                cmFrm[i].action = "/bbsReply/modify";
+                cmFrm[i].submit();
+            }
+        });
+    }
+    for(let i=0;i<cmDelete.length;i++) {
+        cmDelete[i].addEventListener("click", function (e) {
+            e.preventDefault();
+            if (this.textContent == "취소") {
+                console.log(11);
+                reply_content[i].readOnly = true;
+                this.textContent = "삭제";
+                reply_content[i].style.border = "0";
+                btnModify[i].textContent = "수정";
+                return;
+            }
+            if (this.textContent == "삭제") {
+                if (confirm("해당 댓글을 삭제하시겠습니까?")) {
+                    let cmFrm = document.getElementsByClassName("cmFrm");
+                    cmFrm[i].action = "/bbsReply/delete";
+                    cmFrm[i].submit();
+                }
+            }
+        });
+    }
     document.querySelector("#btn_comment").addEventListener("click", function (e){
         e.preventDefault();
 

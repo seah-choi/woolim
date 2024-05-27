@@ -352,7 +352,8 @@
                 </form>
             </div>
             <br>
-            <form name="frm" id="frm" action="/lecture/delete" method="post">
+            <form name="frm" id="gradeDeleteFrm" action="/lecture/delete" method="post">
+                <input type="hidden" name="lecture_idx" value="${list.lecture_idx}">
                 <button type="submit" class="btn" id="btn_delete" type="submit" onclick="godelete(event)">삭제</button>
                 <br>
             <table class="table">
@@ -365,12 +366,14 @@
                     <th></th>
                 </tr>
                 </thead>
+
                 <c:choose>
                 <c:when test="${not empty bbsList.dtolist}">
                 <c:forEach items="${bbsList.dtolist}" var="list">
                 <tbody>
                     <tr>
                         <th scope="row">
+
                             <input type="checkbox" name="grade_idx" value="${list.grade_idx}">
                         </th>
                         <td>${list.member_name}</td>
@@ -658,7 +661,7 @@
         e.preventDefault();
         if(confirm("해당 글을 정말 삭제하시겠습니까?")) {
             alert("삭제되었습니다.");
-            document.getElementById("frm").submit();
+            document.getElementById("gradeDeleteFrm").submit();
         } else {
             return false;
         }

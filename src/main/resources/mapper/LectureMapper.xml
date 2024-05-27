@@ -163,7 +163,11 @@
 
     <update id="delete">
         update woo_grade set grade = null
-        WHERE grade_idx = #{grade_idx}
+        WHERE grade_idx in
+        <foreach collection="grade_idx" item="item" open="(" close=")" separator="," index="index">
+            #{item}
+        </foreach>
+
     </update>
 
 

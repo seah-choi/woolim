@@ -24,7 +24,7 @@ public interface LectureMapper {
     int grade_count(PageRequestDTO pageRequestDTO);
     int modify(GradeVO gradeVO);
     int regist(GradeVO gradeVO);
-    int delete(int grade_idx);
+    int delete(String[] grade_idx);
 
     ClassVO getGrade(int class_idx);
 

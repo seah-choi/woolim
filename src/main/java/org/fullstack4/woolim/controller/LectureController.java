@@ -255,11 +255,16 @@ public class LectureController {
         model.addAttribute("bbs_idx", bbs_idx);
     }
     @PostMapping("/delete")
-    public String delete(@RequestParam(name="grade_idx", defaultValue = "0") int[] grade_idx){
-        for(int i : grade_idx) {
-            lectureServiceIf.delete(i);
+    public String delete(@RequestParam(name="grade_idx", defaultValue = "0") String grade_idx,
+                         @RequestParam(name = "lecture_idx")int lecture_idx){
+
+        String[] array_grade = grade_idx.split(",");
+        if(array_grade !=null){
+            lectureServiceIf.delete(array_grade);
         }
-        return "redirect:/lecture/studentList";
+
+        log.info("delete : " + grade_idx);
+        return "redirect:/lecture/studentList?lecture_idx="+lecture_idx;
     }
 
 

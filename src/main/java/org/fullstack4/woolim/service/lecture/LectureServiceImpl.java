@@ -97,7 +97,7 @@ public class LectureServiceImpl implements LectureServiceIf {
     }
 
     @Override
-    public int delete(int grade_idx) {
+    public int delete(String[] grade_idx) {
         return lectureMapper.delete(grade_idx);
     }
 
