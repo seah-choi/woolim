@@ -20,6 +20,7 @@
     }
     .container{
         padding-top: 15px;
+
     }
     .nav-item .nav-menu li .dropdown {
         background: #dde5e7 !important;
@@ -53,20 +54,18 @@
     .inner-header .logo {
         padding: 0 0 !important;
     }
+    .conDiv {
+        text-align: center;
+        padding: 20px 10px 10px 10px;
+    }
+    .conDiv a {
+        text-decoration: none;
+    }
 </style>
     <header class="header-section">
         <div class="header-top">
-            <div class="container">
-                <div class="ht-left">
-                    <%--<div class="mail-service">
-                        <i class=" fa fa-envelope"></i>
-                        hello.colorlib@gmail.com
-                    </div>--%>
+            <div class="container conDiv">
 
-                </div>
-                <div>
-
-                </div>
                 <div class="ht-right">
 
                     <c:if test="${sessionScope['user_id'] == null}">
@@ -178,23 +177,7 @@
             </div>
         </div>
         <div class="nav-item">
-            <div class="container">
-                <div class="nav-depart">
-                    <div class="depart-btn">
-                        <i class="ti-menu"></i>
-                        <span>All departments</span>
-                        <ul class="depart-hover">
-                            <li class="active"><a href="#">Women’s Clothing</a></li>
-                            <li><a href="#">Men’s Clothing</a></li>
-                            <li><a href="#">Underwear</a></li>
-                            <li><a href="#">Kid's Clothing</a></li>
-                            <li><a href="#">Brand Fashion</a></li>
-                            <li><a href="#">Accessories/Shoes</a></li>
-                            <li><a href="#">Luxury Brands</a></li>
-                            <li><a href="#">Brand Outdoor Apparel</a></li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="container conDiv">
                 <nav class="nav-menu mobile-menu">
                     <ul>
                         <li><a href="/">Home</a></li>
@@ -203,7 +186,7 @@
                                 <li><a href="/lecture/list">강좌 리스트</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">선생님</a>
+                        <li><a href="/teacher/list">선생님</a>
                             <ul class="dropdown">
                                 <li><a href="/teacher/list">선생님 정보</a></li>
                             </ul>
