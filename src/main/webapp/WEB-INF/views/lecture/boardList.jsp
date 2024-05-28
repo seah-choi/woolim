@@ -308,7 +308,7 @@
             <hr>
             <div style="display: flex;justify-content: flex-end;">
                 <c:if test="${responseDTO.bbs_type == 'bbs03'}">
-                    <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/boardRegist?bbs_type=${bbs_type}&lecture_idx=${list.lecture_idx}'">글쓰기</button>
+                    <button type="button" class="btn" id="btn_regist" onclick="">글쓰기</button>
                 </c:if>
                 <c:if test="${responseDTO.bbs_type != 'bbs03'}">
                     <c:if test="${sessionScope.member_id == list.member_id}">
@@ -453,6 +453,21 @@
         </div>
     </footer>
 </main>
+<script>
+    let btn_regist = document.getElementById("btn_regist");
+    btn_regist.addEventListener("click", function(e){
+        e.preventDefault();
+       if(${sessionScope.member_id == null}){
+           alert("로그인 후 이용 가능합니다.");
+           return false;
+       }
+       if(${order == null}){
+           alert("질문 작성은 수강신청 후 가능합니다.");
+           return false;
+       }
+       window.location.href='/lecture/boardRegist?bbs_type=${bbs_type}&lecture_idx=${list.lecture_idx}';
+    });
+</script>
 
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>

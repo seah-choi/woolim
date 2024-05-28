@@ -148,6 +148,7 @@ public class LectureController {
 
     @GetMapping("/boardList")
     public void noticeListGET(@RequestParam(defaultValue = "") String bbs_type,
+                              HttpSession session,
                               PageRequestDTO pageRequestDTO, Model model){
 
 //        log.info("-----------------------");
@@ -160,6 +161,14 @@ public class LectureController {
         PageResponseDTO<BbsDTO> noticeListDTO = bbsServiceIf.bbsListByPage(pageRequestDTO);
         log.info(noticeListDTO);
         model.addAttribute("responseDTO" , noticeListDTO);
+        String member_id = (String)session.getAttribute("member_id");
+        if(bbs_type.equals("bbs03")){
+            OrderListDTO orderDetailDTO = lectureServiceIf.lectureStatus(noticeListDTO.getLecture_idx(),member_id);
+            if(orderDetailDTO != null) {
+                log.info("-----orderDetailDTO--------" + orderDetailDTO);
+                model.addAttribute("order" , orderDetailDTO);
+            }
+        }
 
 
 //        int idx = Integer.parseInt(lecture_idx);
