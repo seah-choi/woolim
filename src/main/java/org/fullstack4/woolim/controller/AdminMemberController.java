@@ -58,7 +58,7 @@ public class AdminMemberController {
 
 
 
-        MemberDTO memberList = memberServiceIf.memberView(member_id);
+        MemberDTO memberList = memberServiceIf.adminMemberView(member_id);
         model.addAttribute("memberList", memberList);
 
         TeacherSubjectDTO teacherDTO = memberServiceIf.teacherIntroView(member_id);

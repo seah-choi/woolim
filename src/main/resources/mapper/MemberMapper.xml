@@ -329,4 +329,10 @@
         UPDATE woo_teacher_subject SET teacher_image_file = #{teacher_image_file}, teacher_intro = #{teacher_intro}, subject_category_code = #{subject_category_code}
         WHERE member_idx = #{member_idx}
     </update>
+
+    <select id="adminMemberView" resultType="org.fullstack4.woolim.domain.MemberVO">
+        SELECT member_idx, member_id,member_name, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date, member_oauth
+        FROM woo_member
+        WHERE member_id= #{member_id}
+    </select>
 </mapper>

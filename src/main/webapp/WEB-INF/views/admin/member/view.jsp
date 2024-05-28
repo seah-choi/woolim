@@ -60,7 +60,7 @@
        .image_container {
             border: 1px solid #e9ecef;
             border-radius: 5px;
-            width: 355px;
+            width: 353px;
             margin-left: 12px;
         }
         .fileDiv {
@@ -211,8 +211,14 @@
                             <div id="fileBox">
                                 <div class="d-flex align-items-start align-items-sm-center gap-4">
                                     <label class="col-sm-12 col-md-2 col-form-label fontWe-700">선생님 이미지</label>
+
                                     <div id="image_container" class="image_container">
-                                        <img src="/resources/upload/teacher/${teacherDTO.teacher_image_file}"  alt="user-avatar" class="d-block rounded"  height="400" width="350" id="preview"  />
+                                        <c:if test="${teacherDTO.teacher_image_file != null}">
+                                            <img src="/resources/upload/teacher/${teacherDTO.teacher_image_file}"  alt="user-avatar" class="d-block rounded"  height="400" width="350" id="preview"  />
+                                        </c:if>
+                                        <c:if test="${teacherDTO.teacher_image_file == null}">
+                                            <img src="/resources/upload/teacher/default.png"  alt="user-avatar" class="d-block rounded"  height="400" width="350" id="preview"  />
+                                        </c:if>
                                     </div>
 
                                     <div class="button-wrapper imgBtn">

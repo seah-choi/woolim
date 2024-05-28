@@ -40,4 +40,5 @@ public interface MemberMapper {
     int teacherIntroUpdate(TeacherSubjectVO teacherSubjectVO);
 
     int detailInsert(MemberVO memberVO);
+    MemberVO adminMemberView(String member_id);
 }

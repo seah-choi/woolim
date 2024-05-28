@@ -257,5 +257,12 @@ public class MemberServiceImpl implements MemberServiceIf{
         return result;
     }
 
+    @Override
+    public MemberDTO adminMemberView(String member_id) {
+        MemberVO memberVO = memberMapper.adminMemberView(member_id);
+        MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
+        return memberDTO;
+    }
+
 
 }
