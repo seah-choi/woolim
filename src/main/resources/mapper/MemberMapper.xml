@@ -53,8 +53,16 @@
         AND member_status= 'N'
     </select>
 
+    <select id="teahcerview" resultType="org.fullstack4.woolim.domain.MemberVO">
+        SELECT wm.member_idx, member_id, member_name ,member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_oauth,member_reg_date,wts.subject_category_code,teacher_image_file,teacher_intro
+        <!--        SELECT member_idx, member_id, member_name ,member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_oauth,member_reg_date-->
+        FROM woo_member as wm
+        INNER JOIN woo_teacher_subject AS wts ON wm.member_idx = wts.member_idx
+        WHERE wm.member_idx =#{member_idx}
+    </select>
+
     <select id ="MemberListbyPage" resultType="org.fullstack4.woolim.domain.MemberVO">
-        SELECT wm.member_idx, member_id, member_name ,member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_oauth,member_reg_date,wts.subject_category_code
+        SELECT wm.member_idx, member_id, member_name ,member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_oauth,member_reg_date,wts.subject_category_code,teacher_image_file,teacher_intro
 <!--        SELECT member_idx, member_id, member_name ,member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_oauth,member_reg_date-->
         FROM woo_member as wm
         INNER JOIN woo_teacher_subject AS wts ON wm.member_idx = wts.member_idx

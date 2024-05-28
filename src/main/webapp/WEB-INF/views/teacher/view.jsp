@@ -80,7 +80,7 @@
                     <div class="row imgDiv">
                         <div class="col-lg-6">
                             <div class="">
-                                <img class="" src="/resources/img/teacher/teacher1.png" alt="">
+                                <img class="" src="/resources/upload/teacher/${memberDTO.teacher_image_file}" alt="">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -92,12 +92,7 @@
 
                                 <div class="teacher_intro">
                                     <h5>
-                                        수능이 바뀐다면 우리의 공부도 바뀌어야 합니다. <br>
-                                        기초 개념부터 빈틈없이 소화할 수 있도록, <br>
-                                        국어의 원리를 자연스럽게 이해할 수 있도록 <br><br>
-                                        🌟자사고 교사 출신 리나쌤의 노하우로 출제자의 관점에서
-                                        생각하는 습관을 들인다. <br>
-                                        🌟내신에 출제되는 내용에서 확장시켜 근본적인 수능형 사고력까지 기른다.
+                                        ${memberDTO.teacher_intro}
                                     </h5>
                                 </div>
                             </div>

@@ -17,6 +17,7 @@ public interface MemberServiceIf {
     MemberDTO google(String member_oauth);
     MemberDTO memberView(String member_id);
     int google_modify(MemberDTO memberDTO);
+    MemberDTO teahcerview(int member_idx);
 
     PageResponseDTO<MemberDTO> adminMemberList(PageRequestDTO pageRequestDTO);
     PageResponseDTO<LectureDTO> LectureListbyTeacherpage(PageRequestDTO pageRequestDTO);

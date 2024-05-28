@@ -61,7 +61,10 @@ public class TeacherController {
 
         pageRequestDTO.setMember_id(member_id);
         PageResponseDTO<LectureDTO> responseDTO = memberServiceIf.LectureListbyTeacherpage(pageRequestDTO);
-        MemberDTO memberDTO = memberServiceIf.memberView(member_id);
+
+        MemberDTO memberDTO = memberServiceIf.teahcerview(member_idx);
+
+        log.info("memberDTO :" +memberDTO);
 
 
         pageRequestDTO.setTeacher_id(member_id);

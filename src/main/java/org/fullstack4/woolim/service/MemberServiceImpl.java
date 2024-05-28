@@ -128,6 +128,13 @@ public class MemberServiceImpl implements MemberServiceIf{
     }
 
     @Override
+    public MemberDTO teahcerview(int member_idx) {
+        MemberVO memberVO = memberMapper.teahcerview(member_idx);
+        MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
+        return memberDTO;
+    }
+
+    @Override
     public PageResponseDTO<MemberDTO> adminMemberList(PageRequestDTO pageRequestDTO) {
         List<MemberVO> voList = memberMapper.adminMemberList(pageRequestDTO);
         List<MemberDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo,MemberDTO.class)).collect(Collectors.toList());

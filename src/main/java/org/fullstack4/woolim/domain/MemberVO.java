@@ -49,4 +49,6 @@ public class MemberVO {
     private String member_status;
 
     private String subject_category_code;
+    private String teacher_image_file;
+    private String teacher_intro;
 }
