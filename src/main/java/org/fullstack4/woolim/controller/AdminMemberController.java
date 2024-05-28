@@ -2,9 +2,17 @@ package org.fullstack4.woolim.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+
 import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.FileUtil;
 import org.fullstack4.woolim.dto.*;
+
+import org.apache.ibatis.annotations.Param;
+import org.fullstack4.woolim.dto.BbsDTO;
+import org.fullstack4.woolim.dto.MemberDTO;
+import org.fullstack4.woolim.dto.PageRequestDTO;
+import org.fullstack4.woolim.dto.PageResponseDTO;
+
 import org.fullstack4.woolim.service.AdminServiceIf;
 import org.fullstack4.woolim.service.MemberServiceIf;
 import org.springframework.stereotype.Controller;
@@ -15,7 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,13 +87,15 @@ public class AdminMemberController {
     @PostMapping("/view")
     public String POSTView(@Valid MemberDTO memberDTO,
                            BindingResult bindingResult,
+
                            RedirectAttributes redirectAttributes,
                            HttpServletRequest req,
                            @RequestParam(name="member_idx", defaultValue = "0") int member_idx,
                            @RequestParam(name="teacher_intro") String teacher_intro,
                            @RequestParam(name="subject_category_code") String subject_category_code,
                            MultipartHttpServletRequest files,
-                           Model model) {
+                           Model model  )  {
+
         log.info("============================");
         log.info("AdminMemberController >> POSTView() START");
 

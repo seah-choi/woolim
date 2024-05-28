@@ -7,7 +7,10 @@ import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.InsufficientStockException;
 import org.fullstack4.woolim.domain.LectureVO;
 import org.fullstack4.woolim.domain.MemberVO;
+
 import org.fullstack4.woolim.domain.TeacherSubjectVO;
+
+
 import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.MemberMapper;
 
@@ -232,6 +235,7 @@ public class MemberServiceImpl implements MemberServiceIf{
     }
 
     @Override
+
     public TeacherSubjectDTO teacherIntroView(String member_id) {
         TeacherSubjectVO teacherSubjectVO = memberMapper.teacherIntroView(member_id);
         if (teacherSubjectVO == null) {
@@ -262,6 +266,11 @@ public class MemberServiceImpl implements MemberServiceIf{
         MemberVO memberVO = memberMapper.adminMemberView(member_id);
         MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
         return memberDTO;
+    }
+    public int countTeacherSubject(int member_idx) {
+        int count = memberMapper.countTeacherSubject(member_idx);
+        return count;
+
     }
 
 
