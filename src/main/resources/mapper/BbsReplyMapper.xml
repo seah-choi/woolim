@@ -7,6 +7,7 @@
         SELECT reply_idx,member_id,reply_content,reply_reg_date,bbs_idx
         FROM woo_bbs_reply
         WHERE bbs_idx = #{bbs_idx}
+        ORDER BY reply_idx desc
     </select>
 
     <insert id="regist">

@@ -307,8 +307,13 @@
             <c:if test="${responseDTO.bbs_type=='bbs03'}"><h5 style="font-weight: bold">Q&A</h5></c:if>
             <hr>
             <div style="display: flex;justify-content: flex-end;">
-                <c:if test="${sessionScope.member_id == list.member_id}">
+                <c:if test="${responseDTO.bbs_type == 'bbs03'}">
                     <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/boardRegist?bbs_type=${bbs_type}&lecture_idx=${list.lecture_idx}'">글쓰기</button>
+                </c:if>
+                <c:if test="${responseDTO.bbs_type != 'bbs03'}">
+                    <c:if test="${sessionScope.member_id == list.member_id}">
+                        <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/boardRegist?bbs_type=${bbs_type}&lecture_idx=${list.lecture_idx}'">글쓰기</button>
+                    </c:if>
                 </c:if>
             </div>
             <br>
