@@ -179,6 +179,16 @@
             border: 1px solid #68afcb;
             margin-right: 5px;
         }
+        .cart{
+            width: 58px;
+            height: 56px;
+            border-radius: 4px;
+            background: #fff url("/resources/img/lecture/cart2.png") no-repeat center;
+            vertical-align: middle;
+            border: 2px solid #fff;
+            cursor: pointer;
+            background-size: contain;
+        }
     </style>
 
 </head>
@@ -203,78 +213,76 @@
                 </ul>
 
                 <c:choose>
-                    <c:when test="${checkHeart eq 1 && checkCart eq 1}">
+                    <c:when test="${order.order_status eq '구매 완료' && cart.cart_status eq 'N'}">
 
                         <form method="post" name="frm" id="frm">
-                            <input type="hidden" id="memberId" value="${memberId}">
-                            <input type="hidden" id="heart" class="heart" value="">
-                            <input type="hidden" id="regist" class="regist" value="수강신청">
-                            <input type="hidden" id="idx" name="idx" value="${lectureDetail[0].lecture_idx}">
-                            <input type="hidden" id="imgUrl" name="imgUrl" value="${lectureDetail[0].lecture_img}">
-                            <input type="hidden" id="title" name="title" value="${lectureDetail[0].lecture_title}">
-                            <input type="hidden" id="name" name="name" value="${lectureDetail[0].member_name}">
-                            <input type="button" id="cancelHeart" name="cancelHeart" value="" style="background: #fff url(./img/ico_basic_view_09.png) no-repeat center;  height: 56px;
-					    border-radius: 4px;
-					width: 58px;
-					    vertical-align: middle;
-					    border: 2px solid #fff;
-					    cursor: pointer;">
-                            <input type="button" id="play" name="play" value="강좌듣기">
-                            <input type="button" id="cancel" name="cancel" value="수강취소">
+                            <input type="button" id="cancelHeart" name="cancelHeart" value="" style="">
+                            <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
+                            <input type="hidden" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
+                            <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
+                            <input type="hidden" id="regist" class="regist" value="수강신청" >
+                            <input type="hidden" id="buyLoad" class="buyLoad" value="구매 중" >
+                            <input type="button" id="watch" class="watch" value="강의보기" >
 
                         </form>
                     </c:when>
 
-                    <c:when test="${checkHeart eq 1}">
+                    <c:when test="${order.order_status eq '구매 중' && cart.cart_status eq 'N'}">
 
                         <form method="post" name="frm" id="frm">
-                            <input type="hidden" id="memberId" value="${memberId}">
-                            <input type="hidden" id="heart" class="heart" value="">
-                            <input type="button" id="cancelHeart" name="cancelHeart" value="" style="background: #fff url(./img/ico_basic_view_09.png) no-repeat center;  height: 56px;
-					    border-radius: 4px;
-					width: 58px;
-					    vertical-align: middle;
-					    border: 2px solid #fff;
-					    cursor: pointer;">
-                            <input type="button" id="regist" class="regist" value="수강신청">
-                            <input type="hidden" id="idx" name="idx" value="${lectureDetail[0].lecture_idx}">
-                            <input type="hidden" id="imgUrl" name="imgUrl" value="${lectureDetail[0].lecture_img}">
-                            <input type="hidden" id="title" name="title" value="${lectureDetail[0].lecture_title}">
-                            <input type="hidden" id="name" name="name" value="${lectureDetail[0].member_name}">
+                            <input type="button" id="cancelHeart" name="cancelHeart" value="" >
 
-                            <input type="hidden" id="play" name="play" value="강좌듣기">
-                            <input type="hidden" id="cancel" name="cancel" value="수강취소">
+                            <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
+                            <input type="hidden" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
+                            <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
+                            <input type="hidden" id="regist" class="regist" value="수강신청" >
+                            <input type="button" id="buyLoad" class="buyLoad" value="구매 중" >
+                            <input type="hidden" id="watch" class="watch" value="강의보기" >
 
                         </form>
                     </c:when>
-
-                    <c:when test="${checkCart eq 1}">
+                    <c:when test="${order.order_status eq '구매 완료'}">
                         <form method="post" name="frm" id="frm">
-                            <input type="hidden" id="memberId" value="${memberId}">
-                            <input type="button" id="heart" class="heart" value="">
-                            <input type="hidden" id="regist" class="regist" value="수강신청">
-                            <input type="hidden" id="idx" name="idx" value="${lectureDetail[0].lecture_idx}">
-                            <input type="hidden" id="imgUrl" name="imgUrl" value="${lectureDetail[0].lecture_img}">
-                            <input type="hidden" id="title" name="title" value="${lectureDetail[0].lecture_title}">
-                            <input type="hidden" id="name" name="name" value="${lectureDetail[0].member_name}">
-                            <input type="button" id="play" name="play" value="강좌듣기">
-                            <input type="button" id="cancel" name="cancel" value="수강취소">
-                            <input type="hidden" id="cancelHeart" name="cancelHeart" value="">
+                            <input type="hidden" id="cancelHeart" name="cancelHeart" value="" >
+                            <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
+                            <input type="button" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
+                            <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
+                            <input type="hidden" id="regist" class="regist" value="수강신청" >
+                            <input type="hidden" id="buyLoad" class="buyLoad" value="구매 중" >
+                            <input type="button" id="watch" class="watch" value="강의보기" >
                         </form>
                     </c:when>
-
+                    <c:when test="${order.order_status eq '구매 중'}">
+                        <form method="post" name="frm" id="frm">
+                            <input type="hidden" id="cancelHeart" name="cancelHeart" value="" >
+                            <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
+                            <input type="button" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
+                            <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
+                            <input type="hidden" id="regist" class="regist" value="수강신청" >
+                            <input type="button" id="buyLoad" class="buyLoad" value="구매 중" >
+                            <input type="hidden" id="watch" class="watch" value="강의보기" >
+                        </form>
+                    </c:when>
+                    <c:when test="${cart.cart_status eq 'N'}">
+                        <form method="post" name="frm" id="frm">
+                            <input type="button" id="cancelHeart" name="cancelHeart" >
+                            <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
+                            <input type="hidden" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
+                            <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
+                            <input type="button" id="regist" class="regist" value="수강신청" >
+                            <input type="hidden" id="buyLoad" class="buyLoad" value="구매 중" >
+                            <input type="hidden" id="watch" class="watch" value="강의보기" >
+                        </form>
+                    </c:when>
                     <c:otherwise>
                         <form method="post" name="frm" id="frm">
-                            <input type="hidden" id="memberId" value="${memberId}">
-                            <input type="button" id="heart" class="heart" value="">
-                            <input type="button" id="regist" class="regist" value="수강신청">
-                            <input type="hidden" id="idx" name="idx" value="${lectureDetail[0].lecture_idx}">
-                            <input type="hidden" id="imgUrl" name="imgUrl" value="${lectureDetail[0].lecture_img}">
-                            <input type="hidden" id="title" name="title" value="${lectureDetail[0].lecture_title}">
-                            <input type="hidden" id="name" name="name" value="${lectureDetail[0].member_name}">
-                            <input type="hidden" id="play" name="play" value="강좌듣기">
-                            <input type="hidden" id="cancel" name="cancel" value="수강취소">
-                            <input type="hidden" id="cancelHeart" name="cancelHeart" value="">
+                            <input type="hidden" id="cancelHeart" name="cancelHeart" value="" >
+                            <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
+                            <input type="button" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
+                            <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
+                            <input type="button" id="regist" class="regist" value="수강신청" >
+                            <input type="hidden" id="buyLoad" class="buyLoad" value="구매 중" >
+                            <input type="hidden" id="watch" class="watch" value="강의보기" >
                         </form>
                     </c:otherwise>
 
@@ -438,6 +446,7 @@
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
+<script src="/resources/js/cart.js"></script>
 <link href="/resources/css/summernote/summernote-lite.css" rel="stylesheet">
 <script src="/resources/js/summernote/summernote-lite.js"></script>
 <script>
@@ -504,6 +513,29 @@
         element.parentElement.parentElement.nextElementSibling.remove();
         element.parentElement.parentElement.remove();
     }
+    document.querySelector("#regist").addEventListener("click", function() {
+        if(${sessionScope.member_id == null}){
+            alert("로그인 후 이용 가능합니다.");
+            return false;
+        }
+        const lectureIdx = document.querySelector("#lecture_idx").value;
+        location.href = '/order/order?lecture_idx='+lectureIdx;
+    });
+    document.querySelector("#watch").addEventListener("click", function() {
+        const lectureIdx = document.querySelector("#lecture_idx").value;
+        let popupUrl = "/lecture/watchVideo?lectureIdx="+lectureIdx; // 팝업 창에 표시할 내용에 대한 URL을 여기에 설정합니다.
+
+        // 팝업 창 옵션 설정
+        let popupOption = "width=1200,height=480,scrollbars=yes,resizable=yes";
+
+        // 팝업 창 열기
+        window.open(popupUrl, "", popupOption);
+
+    });
+    document.querySelector("#cancelHeart").addEventListener("click", function() {
+        const lectureIdx = document.querySelector("#lecture_idx").value;
+        location.href = '/mypage/jjim';
+    });
 </script>
 <script src="/resources/js/cart.js"></script>
 </body>
