@@ -151,6 +151,6 @@
     <delete id="file_delete">
         DELETE
         FROM woo_bbs_file
-        WHERE idx = #{idx}
+        WHERE bbs_idx = #{bbs_idx}
     </delete>
 </mapper>

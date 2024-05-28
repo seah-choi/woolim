@@ -26,5 +26,5 @@ public interface BbsMapper {
     List<BoardFileVO> file_list(int bbs_idx);
     int checkExistingFiles(int bbs_idx);
     public boolean updateReadCount(int bbs_idx);
-    int file_delete(int idx);
+    int file_delete(int bbs_idx);
 }
