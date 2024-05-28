@@ -179,6 +179,22 @@
             border: 1px solid #68afcb;
             margin-right: 5px;
         }
+        #btn1, #btn2{
+            background: #68afcb;
+            color: #fff;
+            margin-right: 5px;
+        }
+
+        #btn_comment {
+            width: 100px;
+            background: #68afcb;
+            color: #fff;
+        }
+        #btnModify, #cmDelete {
+            background: #fff;
+            color: #68afcb;
+            border: 1px solid #68afcb;
+        }
     </style>
 
 </head>
@@ -303,8 +319,8 @@
         </div>
 
         <div class="product-tab" id="list">
-            <h5 style="font-weight: bold">${bbsDTO.bbs_title}</h5>
-            <hr>
+            <h5 style="font-weight: bold;">${bbsDTO.bbs_title}</h5>
+            <div style="border-bottom: 1px solid #ccc;margin-bottom: 10px;padding-top: 10px"></div>
             <div id="se">
                 <div>
                     <span style="font-weight: bold">작성일</span><span id="date">${bbsDTO.bbs_reg_date}</span>
@@ -313,28 +329,20 @@
                     <span style="font-weight: bold">조회수</span><span id="count">${bbsDTO.bbs_read_cnt}</span>
                 </div>
             </div>
-            <hr>
+            <div style="border-bottom: 1px solid #ccc;margin-bottom: 10px;padding-top: 10px"></div>
             <br>
-            <div>
+            <div style="white-space: pre-wrap;margin-bottom: 100px;">${bbsDTO.bbs_content}</div>
+            <div style="display: flex;justify-content: flex-end;">
                 <span style="padding-top: 8px;">첨부파일 : </span>
                 <c:if test="${fileList != null}">
                     <c:forEach var="file" items="${fileList}">
-                        <a download href="/resources/upload/bbs/${file.saveFile}" class="btn rounded-pill px-2 py-2 mb-4 text-primary"><i class="me-2 text-primary"></i>${file.orgFile}</a>
+                        <a download href="/resources/upload/bbs/${file.saveFile}"  class="btn rounded-pill px-2 py-2 mb-4 text-primary"><i class="me-2 text-primary"></i>${file.orgFile}</a>
                     </c:forEach>
                 </c:if>
                 <c:if test="${fileList == null}">등록된 파일이 없습니다.</c:if>
             </div>
             <br>
-            <div style="white-space: pre-wrap;margin-bottom: 100px;">${bbsDTO.bbs_content}</div>
-            <div style="display: flex;justify-content: center;">
-                <div>
-                    <button type="button" class="btn" id="btn_back" onclick="location.href='/lecture/boardList?bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">목록</button>
-                    <c:if test="${sessionScope.user_id == bbsDTO.member_id}">
-                        <button type="button" class="btn" onclick="location.href='/lecture/boardModify?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">수정</button>
-                        <button type="button" class="btn" onclick="location.href='/lecture/boardDelete?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">삭제</button>
-                    </c:if>
-                </div>
-            </div>
+
             <c:if test="${bbsDTO.bbs_category_code eq 'bbs03'}">
             <div id="comment">
                 <form name="frm" id="frm_comment" action="/bbsReply/regist" method="post">
@@ -346,7 +354,7 @@
                         <textarea class="form-control" placeholder="Leave a comment here" name="reply_content" id="replyContent"></textarea>
                         <label for="reply_content">댓글</label>
                         <input type="hidden" name="lecture_YN" value="Y">
-                        <button type="submit" class="btn btn-outline-info" id="btn_comment">등록</button>
+                        <button type="submit" class="btn" id="btn_comment">등록</button>
                     </div>
                 </form>
 
@@ -362,7 +370,7 @@
                                     <p><input type="text" name="reply_content"  class="reply_content" style="border: 0" value="${reply.reply_content}" id="reply_content" readonly></p>
 
                                     <c:if test="${reply.member_id == sessionScope.member_id}">
-                                        <div style="display: flex;justify-content: flex-end;">
+                                        <div style="display: flex;justify-content: flex-end;border-bottom: 1px solid #ccc;padding-bottom: 10px;margin-bottom: 10px;">
                                             <button type="button" class="btnModify" id="btnModify">수정</button>
                                             <span>&nbsp;|&nbsp;</span>
                                                 <%--                                    <button type="submit" id="cmDelete" onclick="cmDelete(event)">삭제</button>--%>
@@ -382,8 +390,18 @@
 
             </div>
             </c:if>
+            <br>
+            <br>
+            <div style="display: flex;justify-content: center;">
+                <div>
+                    <button type="button" class="btn" id="btn_back" onclick="location.href='/lecture/boardList?bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">목록</button>
+                    <c:if test="${sessionScope.user_id == bbsDTO.member_id}">
+                        <button type="button" class="btn" id="btn1" onclick="location.href='/lecture/boardModify?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">수정</button>
+                        <button type="button" class="btn" id="btn2" onclick="location.href='/lecture/boardDelete?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">삭제</button>
+                    </c:if>
+                </div>
+            </div>
         </div>
-
     </div>
 
     <footer class="footer-section">
