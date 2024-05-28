@@ -21,16 +21,16 @@ public class YUNTEST {
     public void registTest(){
         for(int i=1;i<=5;i++) {
             MemberVO memberVO = MemberVO.builder()
-                    .member_id("teacher"+i)
+                    .member_id("inwoo"+i)
                     .member_pwd("1234")
-                    .member_name("함창훈")
-                    .member_email("함창훈"+i)
+                    .member_name("장인우")
+                    .member_email("woowoo"+i)
                     .member_email_addr("gmail.com")
                     .member_zonecode("01122")
                     .member_phone("01043734457")
                     .member_addr("서울시 중랑구 겸재로")
                     .member_addr_detail("2층")
-                    .member_category("teacher")
+                    .member_category("student")
                     .build();
             memberMapper.regist(memberVO);
         }

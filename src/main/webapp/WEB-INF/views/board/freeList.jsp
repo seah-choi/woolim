@@ -118,7 +118,7 @@
                         <a href="/board/freeView?bbs_idx=${list.bbs_idx}">${list.bbs_content}</a>
                         <div style="display: flex;justify-content: space-between;">
                             <div style="color: #76767f;padding-top: 5px;"><span>${list.member_id}</span>•<span>${list.bbs_reg_date}</span></div>
-                            <div class="d-flex">
+                            <div class="">
                                 <img src="/resources/img/eye.png" width="16px" height="16px" style="margin-top: 6px;"> ${list.bbs_read_cnt}&nbsp;
                                 <img src="/resources/img/free-icon-chat-9256384.png" width="16px" height="16px" style="margin-top: 6px"> ${list.bbs_reply_cnt}
                             </div>
@@ -158,6 +158,7 @@
         </c:if>
     </div>
 </div>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>

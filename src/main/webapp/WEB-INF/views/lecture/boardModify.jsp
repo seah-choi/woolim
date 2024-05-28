@@ -505,5 +505,6 @@
         element.parentElement.parentElement.remove();
     }
 </script>
+<script src="/resources/js/cart.js"></script>
 </body>
 </html>

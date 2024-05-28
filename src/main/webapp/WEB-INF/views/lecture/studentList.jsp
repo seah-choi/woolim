@@ -562,6 +562,7 @@
 <script src="/resources/js/jquery.slicknav.js"></script>
 <script src="/resources/js/owl.carousel.min.js"></script>
 <script src="/resources/js/main.js"></script>
+<script src="/resources/js/cart.js"></script>
 <script>
 
 
