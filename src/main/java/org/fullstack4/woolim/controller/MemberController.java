@@ -53,6 +53,8 @@ public class MemberController {
         if(flag.equals("0")) {
             int result = memberService.regist(memberDTO);
             if (result > 0) {
+                MemberDTO memberDTO1 = memberService.memberView(memberDTO.getMember_id());
+                int result1 = memberService.detailInsert(memberDTO1);
                 redirectAttributes.addAttribute("joinOK", "1");
                 return "redirect:/login/login";
             } else {

@@ -47,11 +47,20 @@
             margin-left: 100px;
             padding-bottom: 100px;
         }
-        .image_container {
+
+        .button-wrapper .btn span {
+            font-size: 1.25rem; /* 텍스트 크기를 늘립니다 */
+            padding: 0.5rem 1rem; /* 패딩을 추가하여 버튼 크기를 늘립니다 */
+        }
+        .button-wrapper label {
+            margin-left: 50px;
+            margin-top: 200px;
+        }
+
+       .image_container {
             border: 1px solid #e9ecef;
             border-radius: 5px;
             width: 355px;
-            height: 405px;
             margin-left: 12px;
         }
         .fileDiv {
@@ -71,7 +80,8 @@
 <div class="main-container">
     <div class="pd-ltr-20 xs-pd-20-10 pb-5">
         <!-- basic table  Start -->
-        <form id="frmModify" method="post" action="/admin/member/view">
+        <form id="frmModify" method="post" action="/admin/member/view" enctype="multipart/form-data">
+            <input type="hidden" name="member_idx" value="${memberList.member_idx}">
             <div class="pd-20 card-box mb-30" style="padding-bottom: 80px">
                 <h4 class="h4">회원 상세</h4>
                 <br>
@@ -132,22 +142,26 @@
                             <div class="col-md-2 col-sm-12">
                                 <div class="form-group">
                                     <select class="selectpicker form-control" name="member_category" data-size="5" data-style="btn-outline-info">
-                                        <c:if test="${memberList.member_category eq 'admin'}">
-                                            <option value="admin">관리자</option>
-                                            <option value="student">학생</option>
-                                            <option value="teacher">선생님</option>
-                                        </c:if>
-                                        <c:if test="${memberList.member_category eq 'student'}">
-                                            <option value="student">학생</option>
-                                            <option value="teacher">선생님</option>
-                                            <option value="admin">관리자</option>
-                                        </c:if>
-                                        <c:if test="${memberList.member_category eq 'teacher'}">
-                                            <option value="teacher">선생님</option>
-                                            <option value="student">학생</option>
-                                            <option value="admin">관리자</option>
-                                        </c:if>
+                                        <option value="admin" <c:if test="${memberList.member_category eq 'admin'}"> selected</c:if>>관리자</option>
+                                        <option value="student" <c:if test="${memberList.member_category eq 'student'}"> selected</c:if>>학생</option>
+                                        <option value="teacher" <c:if test="${memberList.member_category eq 'teacher'}"> selected</c:if>>선생님</option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="subjectCategory">
+                            <div class="d-flex align-items-start align-items-sm-center mt-4" >
+                                <label class="col-sm-12 col-md-2 col-form-label fontWe-700 mb-3">담당 과목</label>
+                                <div class="col-md-2 col-sm-12">
+                                    <div class="form-group">
+                                        <select class="selectpicker form-control" name="subject_category_code" data-size="5" data-style="btn-outline-info">
+                                            <option value="s01" <c:if test="${teacherDTO.subject_category_code eq 's01'}"> selected </c:if>>국어</option>
+                                            <option value="s02" <c:if test="${teacherDTO.subject_category_code eq 's02'}"> selected </c:if>>영어</option>
+                                            <option value="s03" <c:if test="${teacherDTO.subject_category_code eq 's03'}"> selected </c:if>>수학</option>
+                                            <option value="s07" <c:if test="${teacherDTO.subject_category_code eq 's07'}"> selected </c:if>>과학</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -193,29 +207,33 @@
                             </div>
                         </div>
 
-                        <div>
+                        <div class="mt-5">
                             <div id="fileBox">
                                 <div class="d-flex align-items-start align-items-sm-center gap-4">
                                     <label class="col-sm-12 col-md-2 col-form-label fontWe-700">선생님 이미지</label>
-                                    <%--  <img src="/resources/uploads/${bbs.save_file}" alt="user-avatar" class="d-block rounded" height="100" width="100" id="preview"  />--%>
-                                    <div id="image_container" class="image_container"></div>
-                                    <div class="button-wrapper fileDiv">
-                                        <input type="file" id="file" name="file" class="form-control" accept="image/png, image/jpeg" onchange="setThumbnail(event);"/>
-                                        <p class="text-muted mb-0">JPG 또는 PNG 파일만 업로드 가능합니다.</p>
-                                        <input type="hidden" name="upload" value="">
+                                    <div id="image_container" class="image_container">
+                                        <img src="/resources/upload/teacher/${teacherDTO.teacher_image_file}"  alt="user-avatar" class="d-block rounded"  height="400" width="350" id="preview"  />
+                                    </div>
+
+                                    <div class="button-wrapper imgBtn">
+                                        <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                            <span class="d-none d-sm-block">이미지 업로드</span>
+                                            <i class="bx bx-upload d-block d-sm-none"></i>
+                                            <input type="file" id="upload" name="files" class="account-file-input" hidden  accept="image/png, image/jpeg" onchange="readURL(this)" />
+                                        </label>
+                                        <input type="hidden" name="teacher_image_file" value="${teacherDTO.teacher_image_file}">
+
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-start align-items-sm-center mt-3">
                                     <label class="col-sm-12 col-md-2 col-form-label fontWe-700">선생님 소개</label>
                                     <div class="col-sm-12 col-md-5">
-                                        <textarea name="teacher_intro" class="teacher_intro" rows="10" cols="70"></textarea>
+                                        <textarea name="teacher_intro" class="teacher_intro" rows="10" cols="70">${teacherDTO.teacher_intro}</textarea>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-
-
 
                 </div>
 
@@ -233,48 +251,45 @@
 </div>
 <!-- js -->
 <script>
-    //이미지 프리뷰
-    function setThumbnail(e) {
-        var reader = new FileReader();
 
-        reader.onload = function (e) {
-            // 기존 이미지를 제거
-            var imageContainer = document.querySelector("div#image_container");
-            imageContainer.innerHTML = '';
-
-            // 새로운 이미지 추가
-            var img = document.createElement("img");
-
-            img.setAttribute("src", e.target.result);
-            //img.setAttribute("class", "col-lg-3");
-            img.style.width = "350px"; // 원하는 너비로 설정
-            img.style.height = "400px"; // 비율을 유지하려면 auto 사용
-            imageContainer.appendChild(img);
-        };
-
-        reader.readAsDataURL(e.target.files[0]);
+    //프로필 사진 미리보기
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('preview').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            document.getElementById('preview').src = "";
+        }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
         var selectBox = document.querySelector('select[name="member_category"]');
         selectBox.addEventListener('change', function() {
-
             var fileBox = document.getElementById('fileBox');
-
             if(this.value === 'teacher') {
                 fileBox.style.display = 'block';
             } else {
                 fileBox.style.display = 'none';
             }
         });
-
         selectBox.dispatchEvent(new Event('change'));
     });
 
-
-
-
-
+    document.addEventListener('DOMContentLoaded', function () {
+        var selectBox2 = document.querySelector('select[name="member_category"]');
+        selectBox2.addEventListener('change', function () {
+            var subjectCategory = document.getElementById('subjectCategory');
+            if(this.value === 'teacher') {
+                subjectCategory.style.display = 'block';
+            } else {
+                subjectCategory.style.display = 'none';
+            }
+        });
+        selectBox2.dispatchEvent(new Event('change'));
+    });
 </script>
 <script src="/resources/vendors/scripts/core.js"></script>
 <script src="/resources/vendors/scripts/script.min.js"></script>
