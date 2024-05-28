@@ -30,6 +30,11 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -39,8 +44,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb-text">
-                    <a href="#"><i class="fa fa-home"></i> Home</a>
-                    <span>Shop</span>
+                    <a href="/"><i class="fa fa-home"></i> Home</a>
+                    <span>선생님</span>
                 </div>
             </div>
         </div>
@@ -118,22 +123,22 @@
                             <div class="product-item">
                                 <div class="pi-pic">
                                     <img src="/resources/img/products/product-1.jpg" alt="">
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
+<%--                                    <div class="icon">--%>
+<%--                                        <i class="icon_heart_alt"></i>--%>
+<%--                                    </div>--%>
                                     <ul>
                                         <li class="quick-view"><a href="/teacher/view?member_idx=${list.member_idx}">자세히 보기</a></li>
                                     </ul>
                                 </div>
                                 <div class="pi-text">
                                     <div class="catagory-name">${list.subject_category_code}</div>
-                                    <a href="#">
-                                        <h5>${list.member_name}</h5>
+                                    <a href="/teacher/view?member_idx=${list.member_idx}">
+                                        <h5>${list.member_name}<span style="font-size: large;color: #606060;">&nbsp;선생님</span></h5>
                                     </a>
-                                    <div class="product-price">
-                                        $14.00
-                                        <span>$35.00</span>
-                                    </div>
+<%--                                    <div class="product-price">--%>
+<%--                                        $14.00--%>
+<%--                                        <span>$35.00</span>--%>
+<%--                                    </div>--%>
                                 </div>
                             </div>
                         </div>

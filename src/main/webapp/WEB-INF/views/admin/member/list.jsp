@@ -64,7 +64,6 @@
                 <br>
                 <div class="searchBox">
                     <form role="search" id="frmSearch" class="searchForm" action="/admin/member/list">
-
                         <div class="mb-3 row d-flex">
                             <label class="ml-3 col-form-label fontWe-700 mt-4">검색 범위</label>
 

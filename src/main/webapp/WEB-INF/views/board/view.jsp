@@ -92,7 +92,7 @@
 <div id="box">
     <div id="leftNav">
         <nav class="nav flex-column">
-            <h4>게시판</h4>
+            <h5 style="font-weight: bold">게시판</h5>
             <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
             <div style="padding-top: 20px; line-height: unset;">
                 <a class="nav-link" aria-current="page" href="/board/freeList?bbs_type=bbs02">자유게시판</a>

@@ -3,9 +3,12 @@ package org.fullstack4.woolim.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.fullstack4.woolim.domain.LectureVO;
 import org.fullstack4.woolim.domain.MemberVO;
+import org.fullstack4.woolim.domain.TeacherSubjectVO;
 import org.fullstack4.woolim.dto.LectureDTO;
 import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.dto.PageRequestDTO;
+import org.fullstack4.woolim.dto.TeacherSubjectDTO;
+
 
 import java.util.List;
 
@@ -34,5 +37,15 @@ public interface MemberMapper {
     int email_check(String member_id);
 
     int modify(MemberVO memberVO);
+    TeacherSubjectVO teacherIntroView(String member_id);
+    int teacherIntroUpdate(TeacherSubjectVO teacherSubjectVO);
+
+
+    int detailInsert(MemberVO memberVO);
+    MemberVO adminMemberView(String member_id);
+
+    int countTeacherSubject(int member_idx);
+
+
 
 }

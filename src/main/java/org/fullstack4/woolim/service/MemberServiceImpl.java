@@ -7,10 +7,11 @@ import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.InsufficientStockException;
 import org.fullstack4.woolim.domain.LectureVO;
 import org.fullstack4.woolim.domain.MemberVO;
-import org.fullstack4.woolim.dto.LectureDTO;
-import org.fullstack4.woolim.dto.MemberDTO;
-import org.fullstack4.woolim.dto.PageRequestDTO;
-import org.fullstack4.woolim.dto.PageResponseDTO;
+
+import org.fullstack4.woolim.domain.TeacherSubjectVO;
+
+
+import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.MemberMapper;
 
 import org.json.simple.parser.JSONParser;
@@ -231,6 +232,45 @@ public class MemberServiceImpl implements MemberServiceIf{
 
             return newDTO;
         }
+    }
+
+    @Override
+
+    public TeacherSubjectDTO teacherIntroView(String member_id) {
+        TeacherSubjectVO teacherSubjectVO = memberMapper.teacherIntroView(member_id);
+        if (teacherSubjectVO == null) {
+            log.warn("No data found for member_id: {}", member_id);
+            return null;
+        }
+        TeacherSubjectDTO teacherSubjectDTO = modelMapper.map(teacherSubjectVO, TeacherSubjectDTO.class);
+        return teacherSubjectDTO;
+    }
+
+    @Override
+    public int teacherIntroUpdate(TeacherSubjectDTO teacherSubjectDTO) {
+        TeacherSubjectVO teacherSubjectVO = modelMapper.map(teacherSubjectDTO, TeacherSubjectVO.class);
+        int result = memberMapper.teacherIntroUpdate(teacherSubjectVO);
+
+        return result;
+    }
+
+    @Override
+    public int detailInsert(MemberDTO memberDTO) {
+        MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
+        int result = memberMapper.detailInsert(memberVO);
+        return result;
+    }
+
+    @Override
+    public MemberDTO adminMemberView(String member_id) {
+        MemberVO memberVO = memberMapper.adminMemberView(member_id);
+        MemberDTO memberDTO = modelMapper.map(memberVO, MemberDTO.class);
+        return memberDTO;
+    }
+    public int countTeacherSubject(int member_idx) {
+        int count = memberMapper.countTeacherSubject(member_idx);
+        return count;
+
     }
 
 
