@@ -6,6 +6,7 @@ import org.fullstack4.woolim.domain.MemberVO;
 import org.fullstack4.woolim.dto.LectureDTO;
 import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.dto.PageRequestDTO;
+import org.fullstack4.woolim.dto.TeacherSubjectDTO;
 
 import java.util.List;
 
@@ -34,5 +35,8 @@ public interface MemberMapper {
     int email_check(String member_id);
 
     int modify(MemberVO memberVO);
+
+    int countTeacherSubject(int member_idx);
+
 
 }

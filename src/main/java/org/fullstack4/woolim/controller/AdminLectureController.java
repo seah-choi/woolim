@@ -216,23 +216,7 @@ public class AdminLectureController {
             log.error("Error uploading image file: ", e);
         }
 
-        // 비디오 파일 처리
-       /* String uploadFolder1 = "C:\\java4\\spring\\springweb\\woolim\\src\\main\\webapp\\resources\\img\\video";
-        String fileRealName1 = video.getOriginalFilename();
-        String fileExt1 = fileRealName1.substring(fileRealName1.lastIndexOf("."));
-        UUID uuid1 = UUID.randomUUID();
-        String newName1 = uuid1.toString();
 
-        File saveFile1 = new File(uploadFolder1 + "\\" + newName1 + fileExt1);
-
-        try {
-            video.transferTo(saveFile1);
-        } catch (IOException e) {
-            log.error("Error uploading video file: ", e);
-        }
-
-        dto.setLecture_video(newName1 + fileExt1);
-*/
         dto.setLecture_image(newName + fileExt);
         log.info("lectureRegistPOST2 : " + dto.toString());
         int insertResult = lectureAdminService.insertLecture(dto);

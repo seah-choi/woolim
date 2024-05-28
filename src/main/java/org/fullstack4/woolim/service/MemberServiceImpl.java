@@ -7,10 +7,7 @@ import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.InsufficientStockException;
 import org.fullstack4.woolim.domain.LectureVO;
 import org.fullstack4.woolim.domain.MemberVO;
-import org.fullstack4.woolim.dto.LectureDTO;
-import org.fullstack4.woolim.dto.MemberDTO;
-import org.fullstack4.woolim.dto.PageRequestDTO;
-import org.fullstack4.woolim.dto.PageResponseDTO;
+import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.MemberMapper;
 
 import org.json.simple.parser.JSONParser;
@@ -231,6 +228,12 @@ public class MemberServiceImpl implements MemberServiceIf{
 
             return newDTO;
         }
+    }
+
+    @Override
+    public int countTeacherSubject(int member_idx) {
+        int count = memberMapper.countTeacherSubject(member_idx);
+        return count;
     }
 
 
