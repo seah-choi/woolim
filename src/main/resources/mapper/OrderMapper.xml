@@ -140,11 +140,11 @@
                 AND order_num = #{order_num}
                 ORDER by order_detail_idx DESC
             </if>
-            <if test="order_num == null or order_num ==''">
-                AND lecture_end_date >= NOW()
-                AND lecture_start_date <![CDATA[<=]]> NOW()
-                ORDER by lecture_end_date DESC
-            </if>
+<!--            <if test="order_num == null or order_num ==''">-->
+<!--                AND lecture_end_date >= NOW()-->
+<!--                AND lecture_start_date <![CDATA[<=]]> NOW()-->
+<!--                ORDER by lecture_end_date DESC-->
+<!--            </if>-->
         </where>
     </select>
 

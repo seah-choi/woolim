@@ -101,20 +101,20 @@
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7">
-                        <div class="advanced-search">
-                            <select class="category-btn" name="category_code">
-                                <option>전체</option>
-                                <option>제목</option>
-                                <option>강사</option>
-                                <option>과목</option>
-                            </select>
+<%--                        <div class="advanced-search">--%>
+<%--                            <select class="category-btn" name="category_code">--%>
+<%--                                <option value="">전체</option>--%>
+<%--                                <option value="t">제목</option>--%>
+<%--                                <option value="c">강사</option>--%>
+<%--                                <option value="u">과목</option>--%>
+<%--                            </select>--%>
 
 
-                            <form action="/lecture/list" method="get" class="input-group">
-                                <input type="text" name="search_word" placeholder="What do you need?">
-                                <button type="submit" class="headerBtn"><i class="ti-search"></i></button>
-                            </form>
-                        </div>
+<%--                            <form action="/lecture/list" method="get" class="input-group" id="searchfrm">--%>
+<%--                                <input type="text" name="search_word" placeholder="What do you need?">--%>
+<%--                                <button type="submit" class="headerBtn"><i class="ti-search"></i></button>--%>
+<%--                            </form>--%>
+<%--                        </div>--%>
                     </div>
                     <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
