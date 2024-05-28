@@ -11,8 +11,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class TeacherSubjectVO {
     private int ts_idx;
+
     private int member_idx;
     private String teacher_image_file;
     private String teacher_intro;
     private String subject_category_code;
+
+
+
 }

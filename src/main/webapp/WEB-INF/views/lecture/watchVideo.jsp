@@ -151,11 +151,11 @@
                 </h2>
                 <div class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                     <div class="accordion-body">
-                        <div><a href="#" class="video-link" data-index="${status.index}">스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</a></div>
-                        <div><a href="#" class="video-link" data-index="${status.index}">코드로 배우는 React with 스프링부트 API서버</a></div>
-                        <div><a href="#" class="video-link" data-index="${status.index}">비전공자도 이해할 수 있는 CI/CD 입문·실전</a></div>
-                        <div><a href="#" class="video-link" data-index="${status.index}">실리콘밸리 엔지니어와 함께하는 리눅스 실전</a></div>
-                        <div><a href="#" class="video-link" data-index="${status.index}">[왕초보편] 앱 8개를 만들면서 배우는 안드로이드 코틀린(Android Kotlin)</a></div>
+                        <div><a href="#" class="video-rank" data-index="${status.index}">스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</a></div>
+                        <div><a href="#" class="video-rank" data-index="${status.index}">코드로 배우는 React with 스프링부트 API서버</a></div>
+                        <div><a href="#" class="video-rank" data-index="${status.index}">비전공자도 이해할 수 있는 CI/CD 입문·실전</a></div>
+                        <div><a href="#" class="video-rank" data-index="${status.index}">실리콘밸리 엔지니어와 함께하는 리눅스 실전</a></div>
+                        <div><a href="#" class="video-rank" data-index="${status.index}">[왕초보편] 앱 8개를 만들면서 배우는 안드로이드 코틀린(Android Kotlin)</a></div>
                     </div>
                 </div>
             </div>
@@ -170,9 +170,9 @@
                 </h2>
                 <div class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                     <div class="accordion-body">
-                        <div><a href="#" class="video-link" data-index="${status.index}">스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</a></div>
-                        <div><a href="#" class="video-link" data-index="${status.index}">코드로 배우는 React with 스프링부트 API서버</a></div>
-                        <div><a href="#" class="video-link" data-index="${status.index}">비전공자도 이해할 수 있는 CI/CD 입문·실전</a></div>
+                        <div><a href="#" class="video-rank" data-index="${status.index}">스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</a></div>
+                        <div><a href="#" class="video-rank" data-index="${status.index}">코드로 배우는 React with 스프링부트 API서버</a></div>
+                        <div><a href="#" class="video-rank" data-index="${status.index}">비전공자도 이해할 수 있는 CI/CD 입문·실전</a></div>
 
                     </div>
                 </div>
@@ -324,6 +324,21 @@
             }
             console.log(`Changing video source to: videoFile` +  videoFiles[index]);
             source.setAttribute('src', '/resources/img/video/' + videoFiles[index] );
+            console.log("source" + source);
+        });
+    });
+
+    const videoRanks = document.querySelectorAll('.video-rank');
+    videoRanks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+
+
+
+            const source = videoPlayer.querySelector('.vjs-tech');
+
+
+            source.setAttribute('src', 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' );
             console.log("source" + source);
         });
     });

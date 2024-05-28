@@ -7,6 +7,7 @@ import org.fullstack4.woolim.domain.TeacherSubjectVO;
 import org.fullstack4.woolim.dto.LectureDTO;
 import org.fullstack4.woolim.dto.MemberDTO;
 import org.fullstack4.woolim.dto.PageRequestDTO;
+import org.fullstack4.woolim.dto.TeacherSubjectDTO;
 
 
 import java.util.List;
@@ -38,7 +39,17 @@ public interface MemberMapper {
     int modify(MemberVO memberVO);
     TeacherSubjectVO teacherIntroView(String member_id);
     int teacherIntroUpdate(TeacherSubjectVO teacherSubjectVO);
+
     MemberVO teahcerview(int member_idx);
+
+
+
+
     int detailInsert(MemberVO memberVO);
     MemberVO adminMemberView(String member_id);
+
+    int countTeacherSubject(int member_idx);
+
+
+
 }

@@ -89,23 +89,25 @@
             <div class="col-lg-9 order-1 order-lg-2">
                 <h5 style="font-weight: bold">1 : 1 문의하기</h5>
                 <hr>
-                <div class="input-group">
-                    <button class="btn btn-outline-secondary dropdown-toggle" id="drop" type="button" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">제목</a></li>
-                        <li><a class="dropdown-item" href="#">내용</a></li>
-                    </ul>
-                    <input type="text" class="form-control" aria-label="Text input with 2 dropdown buttons">
-                    <button class="btn btn-outline-secondary" type="button" id="search" aria-expanded="false">검색</button>
-                </div>
+                <form role="search" id="frmSearch" class="searchForm" action="/mypage/qnaList" method="get">
+                    <div class="input-group">
+                        <select id="schoolSelect" name="search_type" class="selectpicker form-control col-sm-1 school" data-size="5" data-style="btn-outline-info">
+                            <option value="">전체</option>
+                            <option value="t" ${param.search_type=="t" ? "selected" : ""}>제목</option>
+                            <option value="c" ${param.search_type=="c" ? "selected" : ""}>내용</option>
+                        </select>
+                        <input type="search" class="form-control" name="search_word"  id="search_word" value='<c:out value="${pageRequestDTO.search_word}"/>' placeholder="검색어를 입력하세요." aria-label="Text input with 2 dropdown buttons">
+                        <button class="btn btn-outline-secondary" type="submit" id="search" aria-expanded="false">검색</button>
+                    </div>
+                </form>
                 <br>
                 <table class="table">
                     <thead>
                     <tr class="table-secondary">
                         <th scope="col">no</th>
-                        <th scope="col">답변 상태</th>
                         <th scope="col">제목</th>
                         <th scope="col">등록일</th>
+                        <th scope="col">조회수</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -113,12 +115,12 @@
 
                     <c:choose>
                         <c:when test="${responseDTO.dtolist != null}">
-                            <c:forEach var="qnaDTO" items="${responseDTO.dtolist}" varStatus="i">
+                            <c:forEach var="bbsDTO" items="${responseDTO.dtolist}" varStatus="i">
                                 <tr>
                                     <th scope="row">${total_count - i.index - responseDTO.page_skip_count}</th>
-                                    <td>${qnaDTO.qna_answer_status}</td>
-                                    <td><a href="/mypage/qnaView?qna_idx=${qnaDTO.qna_idx}">${qnaDTO.qna_title}</a></td>
-                                    <td>${qnaDTO.qna_reg_date}</td>
+                                    <td><a href="/lecture/boardView?lecture_idx=${bbsDTO.lecture_idx}&bbs_idx=${bbsDTO.bbs_idx}&bbs_type=${bbsDTO.bbs_category_code}">${bbsDTO.bbs_title}</a></td>
+                                    <td>${bbsDTO.bbs_reg_date}</td>
+                                    <td>${bbsDTO.bbs_read_cnt}</td>
                                 </tr>
                             </c:forEach>
 
@@ -156,9 +158,6 @@
                         </li>
                     </ul>
                 </nav>
-                <div style="display: flex;justify-content: flex-end;">
-                    <button type="button" class="btn" id="btn_regist" onclick="location.href='/mypage/qnaRegist'">글쓰기</button>
-                </div>
             </div>
         </div>
     </div>

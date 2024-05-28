@@ -330,50 +330,39 @@
 <link href="/resources/css/summernote/summernote-lite.css" rel="stylesheet">
 <script src="/resources/js/summernote/summernote-lite.js"></script>
 <script>
-    /*document.getElementById('addSectionBtn').addEventListener('click', function() {
-        const sectionContainer = document.getElementById('videoFrm');
-
-        // 새로운 섹션을 담을 div 생성
-        const newSection = document.createElement('div');
-        newSection.className = 'section';
-
-        // 텍스트 입력 필드 생성
-        const textInput = document.createElement('input');
-        textInput.type = 'text';
-        textInput.placeholder = '섹션 제목';
-
-        // 비디오 URL 입력 필드 생성
-        const videoInput = document.createElement('input');
-        videoInput.type = 'file';
-        videoInput.placeholder = '비디오 URL';
-
-        // 비디오 설명 텍스트 영역 생성
-        const videoDescription = document.createElement('textarea');
-        videoDescription.placeholder = '비디오 설명';
-
-        document.querySelector("#addRegistVideo").style.display = 'block';
-
-
-
-        // 섹션에 필드 추가
-        newSection.appendChild(textInput);
-        newSection.appendChild(videoInput);
-        newSection.appendChild(videoDescription);
-
-        // 섹션 컨테이너에 섹션 추가
-        sectionContainer.appendChild(newSection);
-    });
 
     document.querySelector("#addRegistVideo").addEventListener("click", function (e){
         e.preventDefault();
         const videoFrm = document.querySelector("#videoFrm");
-        videoFrm.method = 'post';
-        videoFrm.action ='/admin/lecture/videoRegist';
-        videoFrm.submit();
-    })*/
-    document.querySelector("#addRegistVideo").addEventListener("click", function (e){
-        e.preventDefault();
-        const videoFrm = document.querySelector("#videoFrm");
+        const files = document.getElementById('file').files;
+        const maxFileSize = 50 * 1024 * 1024; // 50MB
+        let totalSize = 0;
+        if (files.length === 0) {
+            alert('파일이 선택되지 않았습니다.');
+            return;
+        }
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const fileName = file.name;
+            const fileSize = file.size;
+            totalSize += fileSize;
+            if (!fileName.endsWith('.mp4')) {
+                alert(`파일 ${fileName}은(는) .mp4 파일이 아닙니다.`);
+                return;
+            }
+
+            if (fileSize > maxFileSize) {
+                alert(`파일 ${fileName}은(는) 50MB를 초과합니다.`);
+                return;
+            }
+        }
+        console.log("size" + totalSize);
+        if (totalSize > 10240000) {
+            alert(`전체 파일용량이 50MB를 초과합니다.`);
+            return;
+        }
+
+        alert('모든 파일이 유효합니다.');
         videoFrm.method = 'post';
         videoFrm.action ='/admin/lecture/videoRegist';
         videoFrm.submit();

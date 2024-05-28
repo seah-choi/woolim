@@ -2,6 +2,9 @@ package org.fullstack4.woolim.service;
 
 import com.google.gson.JsonObject;
 import org.fullstack4.woolim.common.InsufficientStockException;
+
+import org.fullstack4.woolim.domain.MemberVO;
+
 import org.fullstack4.woolim.dto.*;
 import org.json.JSONObject;
 
@@ -28,8 +31,13 @@ public interface MemberServiceIf {
     int email_check(String member_id);
     int modify(MemberDTO memberDTO);
     MemberDTO socialLogin(JSONObject member_info) throws IOException;
+
     TeacherSubjectDTO teacherIntroView(String member_id);
     int teacherIntroUpdate(TeacherSubjectDTO teacherSubjectDTO);
     int detailInsert(MemberDTO memberDTO);
     MemberDTO adminMemberView(String member_id);
+
+
+    int countTeacherSubject(int member_idx);
+
 }

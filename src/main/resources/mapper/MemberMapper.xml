@@ -289,7 +289,9 @@
         ORDER by lecture_idx DESC
         LIMIT #{page_skip_count}, #{page_size}
     </select>
-
+    <select id="countTeacherSubject" resultType="int">
+        select count(*) from woo_teacher_subject where member_idx = #{member_idx}
+    </select>
     <select id="LectureListCountByT" resultType="int">
         select count(*)
         FROM woo_lecture
@@ -322,6 +324,7 @@
 
     </select>
 
+
     <insert id="detailInsert">
         INSERT INTO woo_teacher_subject (member_idx)
         VALUES (#{member_idx})
@@ -343,4 +346,7 @@
         FROM woo_member
         WHERE member_id= #{member_id}
     </select>
+
+
+
 </mapper>
