@@ -138,11 +138,11 @@
         </div>
         <hr>
         <br>
-        <div>
-            <c:if test="${not empty file}">
-                <img src="/resources/upload/bbs/${file.saveFile}" width="700px" height="400px">
-            </c:if>
-        </div>
+<%--        <div>--%>
+<%--            <c:if test="${not empty file}">--%>
+<%--                <img src="/resources/upload/bbs/${file.saveFile}" width="700px" height="400px">--%>
+<%--            </c:if>--%>
+<%--        </div>--%>
         <br>
         <div style="white-space: pre-wrap;">${bbs.bbs_content}</div>
         <c:if test="${not empty file}">

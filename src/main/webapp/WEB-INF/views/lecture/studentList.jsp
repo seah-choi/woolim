@@ -338,15 +338,12 @@
             <h5 style="font-weight: bold">수강생</h5>
             <hr>
             <div class="searchBox">
-                <form role="search" id="frmSearch" class="searchForm" action="/board/freeList" method="get">
-                    <input type="hidden" name="bbs_type" value="${bbs_type}" >
+                <form role="search" id="frmSearch" class="searchForm" action="/lecture/studentList" method="get">
+                    <input type="hidden" name="lecture_idx" value="${bbsList.lecture_idx}" >
                     <div class="mb-3 row d-flex">
                         <div class="input-group">
                             <select id="schoolSelect" name="search_type" class="selectpicker form-control col-sm-1 school" data-size="5" data-style="btn-outline-info">
-                                <option>전체</option>
-                                <option value="t" ${search_type=="t" ? "selected" : ""}>제목</option>
-                                <option value="c" ${search_type=="c" ? "selected" : ""}>내용</option>
-                                <option value="u" ${search_type=="u" ? "selected" : ""}>작성자</option>
+                                <option value="s" ${search_type=="s" ? "selected" : ""}>학생</option>
                             </select>
                             <input type="search" class="form-control" name="search_word"  id="search_word" value='<c:out value="${pageRequestDTO.search_word}"/>' placeholder="검색어를 입력하세요." aria-label="Text input with 2 dropdown buttons">
                             <button class="btn btn-outline-secondary" type="submit" id="search" aria-expanded="false">검색</button>
@@ -672,7 +669,7 @@
 
     function godelete(e) {
         e.preventDefault();
-        if(confirm("해당 글을 정말 삭제하시겠습니까?")) {
+        if(confirm("해당 학생의 점수를 삭제하시겠습니까?")) {
             alert("삭제되었습니다.");
             document.getElementById("gradeDeleteFrm").submit();
         } else {
