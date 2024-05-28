@@ -26,4 +26,5 @@ public interface OrderMapper {
     List<OrderDetailVO> viewOrderDetailList(OrderDetailVO orderDetailVO);
     int insertClass(ClassVO classVO);
     int insertGrade(ClassVO classVO);
+    int DeleteGrade(ClassVO classVO);
 }

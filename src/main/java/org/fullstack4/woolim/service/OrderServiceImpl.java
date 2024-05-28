@@ -162,7 +162,11 @@ public class OrderServiceImpl implements OrderServiceIf{
         
         
 
-
+        ClassVO classVO = ClassVO.builder()
+                .member_id(orderVO.getMember_id())
+                .lecture_idx(orderVO.getLecture_idx())
+                .build();
+        orderMapper.DeleteGrade(classVO);
         orderMapper.UpdateStatus(orderVO);
         orderMapper.InsertPayment(paymentVO);
         memberMapper.changePoint(memberVO);
