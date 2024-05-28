@@ -256,7 +256,7 @@
                 <ul>
 
                     <li style="margin-top:40px; margin-bottom: 20px;"><span>가격</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ₩${list.lecture_sale_price}원  <span style="text-decoration: line-through ;">₩${list.lecture_price}원</span></li>
-                    <li style="margin-bottom: 20px;"><span>과목</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${list.lecture_category_subject}</li>
+                    <li style="margin-bottom: 20px;"><span>과목</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${list.lecture_category_subject}</li>
                     <li style="margin-bottom: 20px;"><span>해시태그</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #${list.lecture_category_subject} #${list.member_name} <c:choose>
                         <c:when test="${list.lecture_category_school eq'elementary'}">#초등</c:when>
                         <c:when test="${list.lecture_category_school eq'middle'}">#중등</c:when>
@@ -264,7 +264,7 @@
                     </c:choose></li>
                     <li style="margin-bottom: 50px;"><span >별점</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%-- ${lectureDetail[0].lecture_star} --%><span class="star">⭐⭐⭐⭐</span></li>
                 </ul>
-
+                <input type="hidden" value="${sessionScope.member_id}" id="sessionId"/>
                 <c:choose>
                     <c:when test="${order.order_status eq '구매 완료' && cart.cart_status eq 'N'}">
 
@@ -681,6 +681,12 @@
         // document.querySelector('#review-tab').click();
     }
     document.querySelector("#regist").addEventListener("click", function() {
+        const memberId = document.querySelector("#sessionId").value;
+
+        if(memberId == null || memberId =='') {
+            alert("로그인 후 이용가능하십니다.");
+            return;
+        }
         const lectureIdx = document.querySelector("#lecture_idx").value;
         location.href = '/order/order?lecture_idx='+lectureIdx;
     });
@@ -699,6 +705,7 @@
         const lectureIdx = document.querySelector("#lecture_idx").value;
         location.href = '/mypage/jjim';
     });
+
 
 </script>
 <script src="/resources/js/jquery-3.3.1.min.js"></script>
