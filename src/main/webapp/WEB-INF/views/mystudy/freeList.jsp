@@ -22,10 +22,10 @@
             color: #212529 !important;
         }
 
-        #list a {
+       /* #list a {
             color: #000 !important;
             text-decoration: none;
-        }
+        }*/
 
         #list{
             padding: 50px;
@@ -51,13 +51,21 @@
             margin-bottom: 50px !important;
         }
 
+        a {
+            text-decoration: none !important;
+        }
+
         .page-item.active .page-link {
             background-color: #68afcb !important;
             color: #fff !important;
-            border-color : #68afcb !important;
+            border-color: #68afcb !important;
         }
-        a {
-            text-decoration: none !important;
+
+        a.page-link {
+            color: #68afcb;
+        }
+        li.page-item {
+            color: #68afcb;
         }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">

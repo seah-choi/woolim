@@ -22,10 +22,10 @@
             color: #212529 !important;
         }
 
-        #list a {
+/*        #list a {
             color: #000 !important;
             text-decoration: none;
-        }
+        }*/
 
         #list{
             padding: 50px;
@@ -49,6 +49,10 @@
 
         .table{
             margin-bottom: 50px !important;
+        }
+
+        .page-item .page-link {
+            color: #68afcb;
         }
 
         .page-item.active .page-link {

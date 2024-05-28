@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -340,8 +341,8 @@
                                             <h5>${list.lecture_title}</h5>
                                         </a>
                                         <div class="product-price">
-                                                ₩${list.lecture_sale_price}
-                                            <span>₩${list.lecture_price}</span>
+                                                <fmt:formatNumber value="${list.lecture_sale_price}" pattern="#,###"/>원
+                                            <span><fmt:formatNumber value="${list.lecture_price}" pattern="#,###"/>원</span>
                                         </div>
                                     </div>
                                 </div>
