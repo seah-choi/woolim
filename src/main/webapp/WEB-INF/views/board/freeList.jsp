@@ -119,8 +119,8 @@
                         <div style="display: flex;justify-content: space-between;">
                             <div style="color: #76767f;padding-top: 5px;"><span>${list.member_id}</span>•<span>${list.bbs_reg_date}</span></div>
                             <div class="d-flex">
-                                <div>조회수 : ${list.bbs_read_cnt} &nbsp;</div>
-                                <img src="/resources/img/free-icon-chat-9256384.png" width="12px" height="12px" style="margin-top: 6px"> ${list.bbs_reply_cnt}
+                                <img src="/resources/img/eye.png" width="16px" height="16px" style="margin-top: 6px;"> ${list.bbs_read_cnt}&nbsp;
+                                <img src="/resources/img/free-icon-chat-9256384.png" width="16px" height="16px" style="margin-top: 6px"> ${list.bbs_reply_cnt}
                             </div>
                         </div>
                     </div>
