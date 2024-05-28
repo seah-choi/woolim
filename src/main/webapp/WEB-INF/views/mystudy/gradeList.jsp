@@ -130,7 +130,7 @@
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
-                        입력된 성적표가 없습니다.
+                        <tr><td>입력된 성적표가 없습니다.</td></tr>
                     </c:otherwise>
                 </c:choose>
                 </tbody>
