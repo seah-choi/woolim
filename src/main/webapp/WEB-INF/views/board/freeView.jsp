@@ -179,7 +179,7 @@
                         <c:if test="${reply.member_id == sessionScope.member_id}">
                                 <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
                                 <input type="hidden" name="bbs_idx" value="${reply.bbs_idx}">
-                                <div style="display: flex;justify-content: flex-end;border-bottom: 1px solid #ccc;padding-bottom: 10px;margin-bottom: 10px;">
+                                <div style="display: flex;justify-content: flex-end;">
                                     <button type="button" class="btnModify" id="btnModify">수정</button>
                                     <span>&nbsp;|&nbsp;</span>
 <%--                                    <button type="submit" id="cmDelete" onclick="cmDelete(event)">삭제</button>--%>
@@ -187,6 +187,7 @@
                                 </div>
                             </form>
                         </c:if>
+                        <div style="border-bottom: 1px solid #ccc;padding-bottom: 10px;margin-bottom: 10px;"></div>
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
@@ -200,7 +201,7 @@
 
         <div style="display: flex;justify-content: center;">
             <div>
-                <button type="button" class="btn" id="btn_back" onclick="location.href='/board/freeList'">목록</button>
+                <button type="button" class="btn" id="btn_back" onclick="location.href='/board/freeList?bbs_type=bbs02'">목록</button>
             </div>
             <form name="frm" id="frm"  action="/board/delete" method="post">
                 <input type="hidden" name="bbs_idx" id="bbs_idx" value="${bbs.bbs_idx}">
