@@ -148,4 +148,9 @@
         FROM woo_bbs_file
         WHERE bbs_idx = #{bbs_idx}
     </select>
+    <delete id="file_delete">
+        DELETE
+        FROM woo_bbs_file
+        WHERE idx = #{idx}
+    </delete>
 </mapper>

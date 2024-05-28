@@ -20,4 +20,5 @@ public interface BbsServiceIf {
     List<BoardFileDTO> file_list(int bbs_idx);
     boolean hasExistingFiles(int bbs_idx);
     public boolean updateReadCount(int bbs_idx);
+    
 }

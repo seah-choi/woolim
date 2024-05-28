@@ -318,15 +318,15 @@
                     <label for="floatingTextarea">제목</label>
                 </div>
                 <br>
-                <input type="file" class="form-control" name="files" id="file" multiple onchange="fileList(this)">
+                <input type="file" class="form-control" name="files" id="file" onchange="fileList(this)">
                 <div class="ml-5">
-                    <label>파일 리스트</label>
+                    <label>선택한 파일</label>
                     <ul id="file-list" class="form-group col-md-10 d-flex flex-column m-0 p-0" style="gap:5px">
                     </ul>
                 </div>
                 <br>
                 <div class="ml-5">
-                    <label>기존 파일 리스트</label>
+                    <label>기존 파일</label>
                     <ul id="org-file-list" class="form-group col-md-10 d-flex flex-column m-0 p-0" style="gap:5px">
                         <c:forEach items="${fileList}" var="file">
                             <li class="card d-flex flex-row justify-content-between p-2 fileListNodes"><span>${file.orgFile}</span><span><a id="deleteButton" data-fileIdx="${file.idx}" class="text-danger font-weight-bold pr-2" href="#" onclick="deleteThisFile2(this)">X</a></span></li>

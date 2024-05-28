@@ -357,18 +357,19 @@
                                     <span style="font-weight: bold">${reply.member_id}</span>&nbsp;<span>${reply.reply_reg_date}</span>
                                     <br>
                                     <form name="frm" id="cmFrm" class="cmFrm" action="/bbsReply/delete" method="post">
-                                    <p><input type="text" name="reply_content"  class="reply_content" style="border: 0" value="${reply.reply_content}" id="reply_content" readonly></p>
-                                    <c:if test="${reply.member_id == sessionScope.member_id}">
                                         <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
                                         <input type="hidden" name="bbs_idx" value="${reply.bbs_idx}">
+                                    <p><input type="text" name="reply_content"  class="reply_content" style="border: 0" value="${reply.reply_content}" id="reply_content" readonly></p>
+
+                                    <c:if test="${reply.member_id == sessionScope.member_id}">
                                         <div style="display: flex;justify-content: flex-end;">
                                             <button type="button" class="btnModify" id="btnModify">수정</button>
                                             <span>&nbsp;|&nbsp;</span>
                                                 <%--                                    <button type="submit" id="cmDelete" onclick="cmDelete(event)">삭제</button>--%>
                                             <button type="button" class="cmDelete" id="cmDelete">삭제</button>
                                         </div>
-                                        </form>
                                     </c:if>
+                                    </form>
                                 </c:forEach>
                             </c:when>
                             <c:otherwise>
@@ -494,10 +495,11 @@
         btnModify[i].addEventListener("click",function(e){
             e.preventDefault();
             if(this.textContent=="수정"){
+                let el = this.parentElement.previousElementSibling.firstElementChild
                 this.textContent="등록";
-                reply_content[i].readOnly = false;
-                reply_content[i].focus();
-                reply_content[i].style.border = "1px solid black";
+                el.readOnly = false;
+                el.focus();
+                el.style.border = "1px solid black";
                 cmDelete[i].textContent="취소";
                 return;
             }
@@ -510,12 +512,12 @@
     }
     for(let i=0;i<cmDelete.length;i++) {
         cmDelete[i].addEventListener("click", function (e) {
+            let el = this.parentElement.previousElementSibling.firstElementChild
             e.preventDefault();
             if (this.textContent == "취소") {
-                console.log(11);
-                reply_content[i].readOnly = true;
+                el.readOnly = true;
                 this.textContent = "삭제";
-                reply_content[i].style.border = "0";
+                el.style.border = "0";
                 btnModify[i].textContent = "수정";
                 return;
             }
@@ -537,6 +539,10 @@
 
         if(member_id == "") {
             alert("로그인 후 이용하세요.");
+            return false;
+        }
+        if(${sessionScope.member_id != list.member_id}){
+            alert("답변 댓글 등록은 선생님만 가능합니다.");
             return false;
         }
 

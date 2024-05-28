@@ -486,8 +486,12 @@ public class LectureController {
             }
 
         } else {
+            int flag = 1;
             //기존 파일이 없을 때 로직
             for (int i = 0; i < list.size(); i++) {
+                if(list.get(i).getSize()>0){
+                    flag = 0;
+                }
                 if (list.get(i).getSize() == 0) {
                     break;
                 }
