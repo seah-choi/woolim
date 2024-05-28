@@ -439,12 +439,17 @@ public class LectureController {
 
     @PostMapping("/boardModify")
     public String POSTBModify(@RequestParam int lecture_idx, Model model, @RequestParam int bbs_idx
-            , @RequestParam String bbs_type, BbsDTO bbsDTO, HttpServletRequest req
+            , @RequestParam String bbs_type, BbsDTO bbsDTO, String fileYN,HttpServletRequest req
             , MultipartHttpServletRequest files) {
         int resultFile = 0;
         String upload = "";
 
         resultFile = bbsServiceIf.modify(bbsDTO);
+        log.info(files);
+
+        if(fileYN.equals("N")){
+            bbsServiceIf.file_delete(bbs_idx);
+        }
 
 
         List<MultipartFile> list = files.getFiles("files");

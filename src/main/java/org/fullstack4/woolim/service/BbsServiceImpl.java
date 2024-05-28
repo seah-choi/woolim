@@ -126,4 +126,9 @@ public class BbsServiceImpl implements BbsServiceIf{
         return bbsMapper.updateReadCount(bbs_idx);
     }
 
+    @Override
+    public int file_delete(int bbs_idx) {
+        return bbsMapper.file_delete(bbs_idx);
+    }
+
 }
