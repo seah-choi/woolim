@@ -473,6 +473,7 @@ public class MypageController {
                 .build();
 
         OrderDTO orderDTO = OrderDTO.builder()
+                .lecture_idx(lecture_idx)
                 .order_detail_idx(order_detail_idx)
                 .order_status("환불 완료")
                 .build();
