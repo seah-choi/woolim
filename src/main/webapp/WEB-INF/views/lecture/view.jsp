@@ -187,7 +187,7 @@
         #leftNav{
             border-right: 1px solid #ccc;
             padding: 30px;
-            width: 700px;
+            width: 200px;
         }
 
         #leftNav a {
@@ -365,7 +365,7 @@
         </nav>
     </div>
 
-    <div class="product-tab" style="margin-left: 100px;">
+    <div class="product-tab" style="margin-left: 100px;width: 800px;">
         <div class="tab-item">
             <ul class="nav" role="tablist">
                 <li>
