@@ -164,4 +164,8 @@
     <delete id="deleteGrade">
         DELETE FROM woo_grade WHERE member_id = #{member_id} and lecture_idx = #{lecture_idx}
     </delete>
+
+    <delete id="deleteClass">
+        DELETE FROM woo_class WHERE member_id = #{member_id} and lecture_idx = #{lecture_idx}
+    </delete>
 </mapper>
