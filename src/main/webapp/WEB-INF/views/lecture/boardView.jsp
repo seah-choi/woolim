@@ -179,13 +179,28 @@
             border: 1px solid #68afcb;
             margin-right: 5px;
         }
+        #btn1, #btn2{
+            background: #68afcb;
+            color: #fff;
+            margin-right: 5px;
+        }
+
+        #btn_comment {
+            width: 100px;
+            background: #68afcb;
+            color: #fff;
+        }
+        #btnModify, #cmDelete {
+            background: #fff;
+            color: #68afcb;
+            border: 1px solid #68afcb;
+        }
     </style>
 
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <main>
-
     <div id="back1">
 
         <div id="id2" class="container">
@@ -294,16 +309,18 @@
                 <div style="padding-top: 20px; line-height: unset;">
                     <a class="nav-link" aria-current="page" href="/lecture/view?lecture_idx=${list.lecture_idx}">강의소개</a>
                     <a class="nav-link" href="/lecture/boardList?bbs_type=bbs04&lecture_idx=${list.lecture_idx}">공지사항</a>
-                    <a class="nav-link" href="/lecture/qnaList?lecture_idx=${list.lecture_idx}">Q&A</a>
-                    <a class="nav-link" href="/lecture/jalyosilList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
-                    <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
+                    <a class="nav-link" href="/lecture/boardList?bbs_type=bbs03&lecture_idx=${list.lecture_idx}">Q&A</a>
+                    <a class="nav-link" href="/lecture/boardList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
+                    <c:if test="${sessionScope.member_id == list.member_id}">
+                        <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
+                    </c:if>
                 </div>
             </nav>
         </div>
 
         <div class="product-tab" id="list">
-            <h5 style="font-weight: bold">${bbsDTO.bbs_title}</h5>
-            <hr>
+            <h5 style="font-weight: bold;">${bbsDTO.bbs_title}</h5>
+            <div style="border-bottom: 1px solid #ccc;margin-bottom: 10px;padding-top: 10px"></div>
             <div id="se">
                 <div>
                     <span style="font-weight: bold">작성일</span><span id="date">${bbsDTO.bbs_reg_date}</span>
@@ -312,24 +329,81 @@
                     <span style="font-weight: bold">조회수</span><span id="count">${bbsDTO.bbs_read_cnt}</span>
                 </div>
             </div>
-            <hr>
-            <br>
-            <div>
-                <c:if test="${not empty file}">
-                    <img src="/resources/upload/bbs/${file.saveFile}" width="700px" height="400px">
-                </c:if>
-            </div>
+            <div style="border-bottom: 1px solid #ccc;margin-bottom: 10px;padding-top: 10px"></div>
             <br>
             <div style="white-space: pre-wrap;margin-bottom: 100px;">${bbsDTO.bbs_content}</div>
+            <div style="display: flex;justify-content: flex-end;">
+                <span style="padding-top: 8px;">첨부파일 : </span>
+                <c:if test="${fileList != null}">
+                    <c:forEach var="file" items="${fileList}">
+                        <a download href="/resources/upload/bbs/${file.saveFile}"  class="btn rounded-pill px-2 py-2 mb-4 text-primary"><i class="me-2 text-primary"></i>${file.orgFile}</a>
+                    </c:forEach>
+                </c:if>
+                <c:if test="${fileList == null}">등록된 파일이 없습니다.</c:if>
+            </div>
+            <br>
+
+            <c:if test="${bbsDTO.bbs_category_code eq 'bbs03'}">
+            <div id="comment">
+                <form name="frm" id="frm_comment" action="/bbsReply/regist" method="post">
+                    <input type="hidden" name="member_id" value="${sessionScope.member_id}">
+                    <input type="hidden" name="bbs_idx" value="${bbs_idx}">
+                    <input type="hidden" name="lecture_idx" value="${list.lecture_idx}">
+                    <span>답변</span>&nbsp;<span id="cmCount">${bbs.bbs_reply_cnt}</span>
+                    <div class="form-floating" style="display: flex;margin-top: 10px;margin-bottom: 40px;">
+                        <textarea class="form-control" placeholder="Leave a comment here" name="reply_content" id="replyContent"></textarea>
+                        <label for="reply_content">댓글</label>
+                        <input type="hidden" name="lecture_YN" value="Y">
+                        <button type="submit" class="btn" id="btn_comment">등록</button>
+                    </div>
+                </form>
+
+                    <div>
+                        <c:choose>
+                            <c:when test="${not empty reply}">
+                                <c:forEach items="${reply}" var="reply">
+                                    <span style="font-weight: bold">${reply.member_id}</span>&nbsp;<span>${reply.reply_reg_date}</span>
+                                    <br>
+                                    <form name="frm" id="cmFrm" class="cmFrm" action="/bbsReply/delete" method="post">
+                                        <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
+                                        <input type="hidden" name="bbs_idx" value="${reply.bbs_idx}">
+                                    <p><input type="text" name="reply_content"  class="reply_content" style="border: 0" value="${reply.reply_content}" id="reply_content" readonly></p>
+
+                                    <c:if test="${reply.member_id == sessionScope.member_id}">
+                                        <div style="display: flex;justify-content: flex-end;border-bottom: 1px solid #ccc;padding-bottom: 10px;margin-bottom: 10px;">
+                                            <button type="button" class="btnModify" id="btnModify">수정</button>
+                                            <span>&nbsp;|&nbsp;</span>
+                                                <%--                                    <button type="submit" id="cmDelete" onclick="cmDelete(event)">삭제</button>--%>
+                                            <button type="button" class="cmDelete" id="cmDelete">삭제</button>
+                                        </div>
+                                    </c:if>
+                                    </form>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <div style="padding: 10px;">
+                                    등록된 댓글이 없습니다.
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+
+            </div>
+            </c:if>
+            <br>
+            <br>
             <div style="display: flex;justify-content: center;">
                 <div>
                     <button type="button" class="btn" id="btn_back" onclick="location.href='/lecture/boardList?bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">목록</button>
-                    <button type="button" class="btn" onclick="location.href='/lecture/boardModify?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">수정</button>
-                    <button type="button" class="btn" onclick="location.href='/lecture/boardDelete?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">삭제</button>
+                    <c:if test="${sessionScope.user_id == bbsDTO.member_id}">
+                        <button type="button" class="btn" id="btn1" onclick="location.href='/lecture/boardModify?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">수정</button>
+                        <button type="button" class="btn" id="btn2" onclick="location.href='/lecture/boardDelete?bbs_idx=${bbs_idx}&bbs_type=${bbs_type}&lecture_idx=${lecture_idx}'">삭제</button>
+                    </c:if>
                 </div>
             </div>
         </div>
     </div>
+
     <footer class="footer-section">
         <div class="container">
             <div class="row">
@@ -431,6 +505,71 @@
             ['view', ['codeview', 'help']]
         ]
 
+    });
+    let btnModify = document.getElementsByClassName("btnModify");
+    let cmDelete = document.getElementsByClassName("cmDelete");
+    let reply_content = document.getElementsByClassName("reply_content");
+    for(let i=0;i<btnModify.length;i++){
+        btnModify[i].addEventListener("click",function(e){
+            e.preventDefault();
+            if(this.textContent=="수정"){
+                let el = this.parentElement.previousElementSibling.firstElementChild
+                this.textContent="등록";
+                el.readOnly = false;
+                el.focus();
+                el.style.border = "1px solid black";
+                cmDelete[i].textContent="취소";
+                return;
+            }
+            if(this.textContent=="등록"){
+                let cmFrm = document.getElementsByClassName("cmFrm");
+                cmFrm[i].action = "/bbsReply/modify";
+                cmFrm[i].submit();
+            }
+        });
+    }
+    for(let i=0;i<cmDelete.length;i++) {
+        cmDelete[i].addEventListener("click", function (e) {
+            let el = this.parentElement.previousElementSibling.firstElementChild
+            e.preventDefault();
+            if (this.textContent == "취소") {
+                el.readOnly = true;
+                this.textContent = "삭제";
+                el.style.border = "0";
+                btnModify[i].textContent = "수정";
+                return;
+            }
+            if (this.textContent == "삭제") {
+                if (confirm("해당 댓글을 삭제하시겠습니까?")) {
+                    let cmFrm = document.getElementsByClassName("cmFrm");
+                    cmFrm[i].action = "/bbsReply/delete";
+                    cmFrm[i].submit();
+                }
+            }
+        });
+    }
+    document.querySelector("#btn_comment").addEventListener("click", function (e){
+        e.preventDefault();
+
+        let member_id = `${member_id}`;
+        let frm = document.querySelector("#frm_comment");
+        let replyContent = document.querySelector("#replyContent");
+
+        if(member_id == "") {
+            alert("로그인 후 이용하세요.");
+            return false;
+        }
+        if(${sessionScope.member_id != list.member_id}){
+            alert("답변 댓글 등록은 선생님만 가능합니다.");
+            return false;
+        }
+
+        if(replyContent.value == "" ||  replyContent.value.length < 2 || replyContent.value == null ){
+            alert("댓글은 2자 이상 입력해주세요.");
+            return false;
+        }
+
+        frm.submit();
     });
 </script>
 </body>

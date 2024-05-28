@@ -92,7 +92,7 @@
 <div id="box">
     <div id="leftNav">
         <nav class="nav flex-column">
-            <h4>게시판</h4>
+            <h5 style="font-weight: bold">게시판</h5>
             <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
             <div style="padding-top: 20px; line-height: unset;">
                 <a class="nav-link" aria-current="page" href="/board/freeList?bbs_type=bbs02">자유게시판</a>
@@ -115,13 +115,19 @@
         </div>
         <hr>
         <br>
-        <div>
-            <c:if test="${not empty file}">
-                <img src="/resources/upload/bbs/${file.saveFile}" width="700px" height="400px">
-            </c:if>
-        </div>
+<%--        <div>--%>
+<%--            <c:if test="${not empty file}">--%>
+<%--                <img src="/resources/upload/bbs/${file.saveFile}" width="700px" height="400px">--%>
+<%--            </c:if>--%>
+<%--        </div>--%>
         <br>
         <div style="white-space: pre-wrap;margin-bottom: 100px;">${bbs.bbs_content}</div>
+        <c:if test="${not empty file}">
+            <div style="display: flex;justify-content: flex-end;">
+                <span style="padding-top: 8px;">첨부파일 : </span>
+                <a download href="/resources/upload/bbs/${file.saveFile}" class="btn rounded-pill px-2 py-2 mb-4 text-primary"><i class="me-2 text-primary"></i>${file.orgFile}</a>
+            </div>
+        </c:if>
         <div style="display: flex;justify-content: center;">
             <div>
                 <button type="button" class="btn" id="btn_back" onclick="location.href='/board/list?bbs_type=${bbs.bbs_category_code}'">목록</button>

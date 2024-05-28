@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderServiceIf{
                 throw new InsufficientStockException("이미 수강중인 강좌가 있습니다.");
             }
             orderMapper.DoOrderDetail(orderDetailVO);
-            orderMapper.Enrolment(orderDetailVO);
+//            orderMapper.Enrolment(orderDetailVO);
         }
 
         orderMapper.DoOrder(orderVO);

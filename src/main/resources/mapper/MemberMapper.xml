@@ -15,7 +15,7 @@
     </update>
 
     <select id="view" resultType="org.fullstack4.woolim.domain.MemberVO">
-        SELECT member_id,member_name, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date
+        SELECT member_idx,member_id,member_name, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date
         FROM woo_member
         <where>
             <if test="member_id !=null and member_id !=''">
@@ -312,5 +312,27 @@
             </if>
         </where>
 
+    </select>
+
+    <insert id="detailInsert">
+        INSERT INTO woo_teacher_subject (member_idx)
+        VALUES (#{member_idx})
+    </insert>
+
+    <select id="teacherIntroView" resultType="org.fullstack4.woolim.domain.TeacherSubjectVO">
+        SELECT ts.teacher_image_file, ts.teacher_intro, m.member_id, ts.subject_category_code
+        FROM woo_teacher_subject AS ts INNER JOIN woo_member AS m ON ts.member_idx = m.member_idx
+        WHERE m.member_id = #{member_id}
+    </select>
+
+    <update id="teacherIntroUpdate">
+        UPDATE woo_teacher_subject SET teacher_image_file = #{teacher_image_file}, teacher_intro = #{teacher_intro}, subject_category_code = #{subject_category_code}
+        WHERE member_idx = #{member_idx}
+    </update>
+
+    <select id="adminMemberView" resultType="org.fullstack4.woolim.domain.MemberVO">
+        SELECT member_idx, member_id,member_name, member_pwd, member_email, member_phone, member_email_addr, member_zonecode, member_addr, member_addr_detail, member_category, member_name, member_point, member_status, member_reg_date, member_oauth
+        FROM woo_member
+        WHERE member_id= #{member_id}
     </select>
 </mapper>

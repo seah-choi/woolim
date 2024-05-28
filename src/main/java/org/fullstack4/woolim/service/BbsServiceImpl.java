@@ -104,7 +104,16 @@ public class BbsServiceImpl implements BbsServiceIf{
     public int InsertLectureBbs(BbsDTO bbsDTO) {
         BbsVO bbsVO = modelMapper.map(bbsDTO, BbsVO.class);
         int result = bbsMapper.InsertLectureBbs(bbsVO);
-        return result;
+        return bbsVO.getBbs_idx();
+    }
+
+    @Override
+    public List<BoardFileDTO> file_list(int bbs_idx) {
+        List<BoardFileVO> voList =bbsMapper.file_list(bbs_idx);
+        log.info("voList" + voList);
+        List<BoardFileDTO> dtoList = voList.stream().map(vo->modelMapper.map(vo, BoardFileDTO.class)).collect(Collectors.toList());
+        log.info("dtoList" + dtoList);
+        return dtoList;
     }
 
     @Override
@@ -115,6 +124,11 @@ public class BbsServiceImpl implements BbsServiceIf{
     @Override
     public boolean updateReadCount(int bbs_idx) {
         return bbsMapper.updateReadCount(bbs_idx);
+    }
+
+    @Override
+    public int file_delete(int bbs_idx) {
+        return bbsMapper.file_delete(bbs_idx);
     }
 
 }

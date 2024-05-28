@@ -71,9 +71,6 @@
                     <h4 class="fw-title">카테고리</h4>
                     <ul class="filter-catagories">
                         <li><a href="#" >📹 최신강의</a></li>
-                        <li><a href="#" >📢 공지사항</a></li>
-                        <li><a href="#" >💡 Q&A</a></li>
-                        <li><a href="#" >🗂 자료실</a></li>
                     </ul>
                 </div>
             </div>
@@ -102,9 +99,7 @@
                                         생각하는 습관을 들인다. <br>
                                         🌟내신에 출제되는 내용에서 확장시켜 근본적인 수능형 사고력까지 기른다.
                                     </h5>
-
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -114,15 +109,15 @@
                                 <li>
                                     <a class="active" data-toggle="tab" href="#tab-1" role="tab">최신강의</a>
                                 </li>
-                                <li>
-                                    <a data-toggle="tab" href="#tab-2" role="tab">공지사항</a>
-                                </li>
-                                <li>
-                                    <a data-toggle="tab" href="?tab=3" role="tab">Q&A</a>
-                                </li>
-                                <li>
-                                    <a data-toggle="tab" href="#tab-4" role="tab">자료실</a>
-                                </li>
+<%--                                <li>--%>
+<%--                                    <a data-toggle="tab" href="#tab-2" role="tab">공지사항</a>--%>
+<%--                                </li>--%>
+<%--                                <li>--%>
+<%--                                    <a data-toggle="tab" href="?tab=3" role="tab">Q&A</a>--%>
+<%--                                </li>--%>
+<%--                                <li>--%>
+<%--                                    <a data-toggle="tab" href="#tab-4" role="tab">자료실</a>--%>
+<%--                                </li>--%>
                             </ul>
                         </div>
                         <div class="tab-item-content">

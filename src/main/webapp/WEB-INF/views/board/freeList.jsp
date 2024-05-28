@@ -79,7 +79,7 @@
 <div id="box">
     <div id="leftNav">
         <nav class="nav flex-column">
-            <h4>게시판</h4>
+            <h5 style="font-weight: bold">게시판</h5>
             <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
             <div style="padding-top: 20px; line-height: unset;">
                 <a class="nav-link" aria-current="page" href="/board/freeList?bbs_type=bbs02">자유게시판</a>
@@ -119,8 +119,8 @@
                         <div style="display: flex;justify-content: space-between;">
                             <div style="color: #76767f;padding-top: 5px;"><span>${list.member_id}</span>•<span>${list.bbs_reg_date}</span></div>
                             <div class="d-flex">
-                                <div>조회수 : ${list.bbs_read_cnt} &nbsp;</div>
-                                <img src="/resources/img/free-icon-chat-9256384.png" width="12px" height="12px" style="margin-top: 6px"> ${list.bbs_reply_cnt}
+                                <img src="/resources/img/eye.png" width="16px" height="16px" style="margin-top: 6px;"> ${list.bbs_read_cnt}&nbsp;
+                                <img src="/resources/img/free-icon-chat-9256384.png" width="16px" height="16px" style="margin-top: 6px"> ${list.bbs_reply_cnt}
                             </div>
                         </div>
                     </div>

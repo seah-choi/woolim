@@ -294,9 +294,11 @@
                 <div style="padding-top: 20px; line-height: unset;">
                     <a class="nav-link" aria-current="page" href="/lecture/view?lecture_idx=${list.lecture_idx}">강의소개</a>
                     <a class="nav-link" href="/lecture/boardList?bbs_type=bbs04&lecture_idx=${list.lecture_idx}">공지사항</a>
-                    <a class="nav-link" href="/lecture/qnaList?lecture_idx=${list.lecture_idx}">Q&A</a>
-                    <a class="nav-link" href="/lecture/jalyosilList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
-                    <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
+                    <a class="nav-link" href="/lecture/boardList?bbs_type=bbs03&lecture_idx=${list.lecture_idx}">Q&A</a>
+                    <a class="nav-link" href="/lecture/boardList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
+                    <c:if test="${sessionScope.member_id == list.member_id}">
+                        <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
+                    </c:if>
                 </div>
             </nav>
         </div>
@@ -307,7 +309,7 @@
             <c:if test="${bbs_type=='bbs03'}"><h5 style="font-weight: bold">Q&A</h5></c:if>
             <hr>
             <br>
-            <form name="frm" action="/lecture/boardModify" method="post" enctype="multipart/form-data">
+            <form name="frm" action="/lecture/boardModify" id="modifyFrm" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
                 <input type="hidden" name="bbs_type" id="bbs_category_code" value="${bbs_type}">
                 <input type="hidden" name="lecture_idx" value="${lecture_idx}">
@@ -318,7 +320,22 @@
                     <label for="floatingTextarea">제목</label>
                 </div>
                 <br>
-                <input type="file" class="form-control" name="files" id="file" multiple>
+                <input type="file" class="form-control" name="files" id="file" onchange="fileList(this)">
+                <div class="ml-5">
+                    <label>선택한 파일</label>
+                    <ul id="file-list" class="form-group col-md-10 d-flex flex-column m-0 p-0" style="gap:5px">
+                    </ul>
+                </div>
+                <br>
+                <div class="ml-5">
+                    <label>기존 파일</label>
+                    <ul id="org-file-list" class="form-group col-md-10 d-flex flex-column m-0 p-0" style="gap:5px">
+                        <c:forEach items="${fileList}" var="file">
+                            <li class="card d-flex flex-row justify-content-between p-2 fileListNodes"><span>${file.orgFile}</span><span><a id="deleteButton" data-fileIdx="${file.idx}" class="text-danger font-weight-bold pr-2" href="#" onclick="deleteThisFile2(this)">X</a></span></li>
+                            <input id="file-${file.idx}" type="hidden" class="file_YN" name="orgFiles" value="${file.idx}">
+                        </c:forEach>
+                    </ul>
+                </div>
                 <br>
                 <div>
                     <textarea id="summernote" name="bbs_content">${bbsDTO.bbs_content}</textarea>
@@ -329,6 +346,7 @@
                         <button type="button" class="btn" id="btn_back" onclick="location.href='/lecture/boardList?bbs_type=bbs04&lecture_idx=${list.lecture_idx}'">목록</button>
                     </div>
                     <div>
+                        <input type="hidden" id="fileYN" name="fileYN" value="">
                         <button type="submit" class="btn" id="btn_modify">수정</button>
                         <button type="button" class="btn btn-secondary" id="btn_delete">취소</button>
                     </div>
@@ -438,6 +456,54 @@
         ]
 
     });
+    let btn_modify = document.getElementById("btn_modify");
+    btn_modify.addEventListener("click",function (e){
+        e.preventDefault();
+        let file_YN = document.getElementsByClassName("file_YN");
+        let fileYN = document.getElementById("fileYN");
+        if(file_YN.length == 0)
+            fileYN.value = "N";
+        else
+            fileYN.value = "Y";
+
+        let modifyFrm = document.getElementById("modifyFrm");
+        modifyFrm.submit();
+
+    });
+    function fileList(element) {
+        document.querySelector('#file-list').innerHTML = "";
+        let fileList = document.querySelector('#file-list');
+        console.log(element.files);
+        for (let i=0; i < element.files.length; i++) {
+            let list = document.createElement('li');
+            list.classList.add('card', 'd-flex', 'flex-row', 'justify-content-between', 'p-2', 'fileListNodes', 'file_YN');
+            list.setAttribute("data-idx", i);
+            list.innerHTML = '<span>' + element.files.item(i).name + '</span><span><a id="deleteButton" class="text-danger font-weight-bold pr-2 " href="#" onclick="deleteThisFile(this)">X</a></span>'
+            fileList.append(list);
+        }
+    }
+    // 파일 리스트 개별 삭제용
+    function deleteThisFile(element) {
+        event.preventDefault();
+        let target = element.getAttribute("data-idx");
+        element.parentElement.parentElement.remove();
+        let input = document.getElementById("file-"+element.dataset.fileidx);
+        $(input).remove();
+        const dataTransfer = new DataTransfer();
+
+        let files = document.querySelector('#file').files;
+        let fileArray = Array.from(files);
+        console.log(files);
+        console.log(element);
+        fileArray.splice(target, 1);
+        fileArray.forEach(file => {dataTransfer.items.add(file);});
+        document.querySelector('#file').files = dataTransfer.files;
+    }
+    function deleteThisFile2(element) {
+        event.preventDefault();
+        element.parentElement.parentElement.nextElementSibling.remove();
+        element.parentElement.parentElement.remove();
+    }
 </script>
 </body>
 </html>

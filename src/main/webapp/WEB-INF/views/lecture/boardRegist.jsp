@@ -296,7 +296,9 @@
                     <a class="nav-link" href="/lecture/boardList?bbs_type=bbs04&lecture_idx=${list.lecture_idx}">공지사항</a>
                     <a class="nav-link" href="/lecture/qnaList?lecture_idx=${list.lecture_idx}">Q&A</a>
                     <a class="nav-link" href="/lecture/jalyosilList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
-                    <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
+                    <c:if test="${sessionScope.member_id == list.member_id}">
+                        <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
+                    </c:if>
                 </div>
             </nav>
         </div>
@@ -308,13 +310,13 @@
             <hr>
             <br>
             <form name="frm" action="/lecture/boardRegist" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
+                <input type="hidden" name="member_id" id="member_id" value="${sessionScope.user_id}">
                 <input type="hidden" name="bbs_category_code" id="bbs_category_code" value="${bbs_type}">
                 <input type="hidden" name="lecture_idx" value="${lecture_idx}">
                 <input type="hidden" name="bbs_teacher_yn" value="Y">
                 <div class="form-floating">
                     <textarea class="form-control" name="bbs_title" placeholder="Leave a comment here" id="floatingTextarea" style="resize: none"></textarea>
-                    <label for="floatingTextarea">제목</label>
+                    <label for="floatingTextarea">제목${sessionScope.user_id}</label>
                 </div>
                 <br>
                 <input type="file" class="form-control" name="files" id="file" multiple>

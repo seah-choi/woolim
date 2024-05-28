@@ -2,10 +2,7 @@ package org.fullstack4.woolim.service.lecture;
 
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.woolim.criteria.Criteria;
-import org.fullstack4.woolim.domain.BbsVO;
-import org.fullstack4.woolim.domain.ClassVO;
-import org.fullstack4.woolim.domain.GradeVO;
-import org.fullstack4.woolim.domain.LectureVO;
+import org.fullstack4.woolim.domain.*;
 
 import org.fullstack4.woolim.dto.*;
 
@@ -118,6 +115,37 @@ public class LectureServiceImpl implements LectureServiceIf {
 
         return list;
 
+    }
+
+    @Override
+    public OrderListDTO lectureStatus(int lecture_idx, String member_id) {
+        OrderListVO vo = lectureMapper.lectureStatus(lecture_idx, member_id);
+
+        if (vo == null) {
+            log.warn("No OrderListVO found for lecture_idx: " + lecture_idx + " and member_id: " + member_id);
+            return null;
+        }
+
+        OrderListDTO dto = modelMapper.map(vo, OrderListDTO.class);
+        log.info("vo: " + vo);
+        log.info("dto: " + dto);
+
+        return dto;
+    }
+
+    @Override
+    public CartDTO getLectureCartStatus(int lecture_idx, String member_id) {
+        CartVO vo = lectureMapper.getLectureCartStatus(lecture_idx, member_id);
+
+        if (vo == null) {
+            log.warn("No CartDTO found for lecture_idx: " + lecture_idx + " and member_id: " + member_id);
+            return null;
+        }
+
+        CartDTO dto = modelMapper.map(vo, CartDTO.class);
+
+
+        return dto;
     }
 }
 

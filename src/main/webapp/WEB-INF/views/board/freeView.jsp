@@ -72,7 +72,6 @@
             width: 700px;
         }
         #comment{
-            border-bottom: 1px solid #ccc;
             padding: 10px;
             margin-bottom: 50px;
         }
@@ -81,6 +80,12 @@
         }
         #cmDelete{
             border: none;
+        }
+
+        #btnModify, #cmDelete {
+            background: #fff;
+            color: #68afcb;
+            border: 1px solid #68afcb;
         }
 
     </style>
@@ -116,7 +121,7 @@
 <div id="box">
     <div id="leftNav">
         <nav class="nav flex-column">
-            <h4>게시판</h4>
+            <h5 style="font-weight: bold">게시판</h5>
             <div style="border-bottom: 1px solid #000;width: 50px;padding: 10px;"></div>
             <div style="padding-top: 20px; line-height: unset;">
                 <a class="nav-link" aria-current="page" href="/board/freeList?bbs_type=bbs02">자유게시판</a>
@@ -138,11 +143,11 @@
         </div>
         <hr>
         <br>
-        <div>
-            <c:if test="${not empty file}">
-                <img src="/resources/upload/bbs/${file.saveFile}" width="700px" height="400px">
-            </c:if>
-        </div>
+<%--        <div>--%>
+<%--            <c:if test="${not empty file}">--%>
+<%--                <img src="/resources/upload/bbs/${file.saveFile}" width="700px" height="400px">--%>
+<%--            </c:if>--%>
+<%--        </div>--%>
         <br>
         <div style="white-space: pre-wrap;">${bbs.bbs_content}</div>
         <c:if test="${not empty file}">
@@ -174,7 +179,7 @@
                         <c:if test="${reply.member_id == sessionScope.member_id}">
                                 <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
                                 <input type="hidden" name="bbs_idx" value="${reply.bbs_idx}">
-                                <div style="display: flex;justify-content: flex-end;">
+                                <div style="display: flex;justify-content: flex-end;border-bottom: 1px solid #ccc;padding-bottom: 10px;margin-bottom: 10px;">
                                     <button type="button" class="btnModify" id="btnModify">수정</button>
                                     <span>&nbsp;|&nbsp;</span>
 <%--                                    <button type="submit" id="cmDelete" onclick="cmDelete(event)">삭제</button>--%>

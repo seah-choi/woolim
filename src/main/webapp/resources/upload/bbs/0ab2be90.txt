@@ -1,0 +1,34 @@
+1. 컴퓨터를킨다
+2.sourcetree 에서 main 더블클릭 
+3. pull 클릭(main최신갱신)
+4. 작업을 시작
+5. dto 브랜치 더블클릭
+6. 작업을 시작한다
+7. 작업 완료하면 커밋누르기
+8. 모두 스테이지에 올리기
+9. 내용 ex) fetch : qna jsp생성
+10. push(dto 체크확인)
+11. main 더블클릭
+	-->main에서 pull
+12. dto 우클릭 누르고 현재 브런치로 통합
+13.push 클릭(main체크확인)
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+<!--    <tx:annotation-driven transaction-manager="transactionManager" />-->
+
+    <aop:aspectj-autoproxy/>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="regist*" rollback-for="Exception"/>
+            <tx:method name="modify*" rollback-for="Exception"/>
+            <tx:method name="delete*" rollback-for="Exception"/>
+            <tx:method name="reply_regist*" rollback-for="Exception"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:pointcut id="transactionPointcut" expression="within(org.fullstack4.mystudyproject..*)"/>
+        <aop:advisor id="transactionAdvisor" pointcut-ref="transactionPointcut" advice-ref="txAdvice"/>
+    </aop:config>

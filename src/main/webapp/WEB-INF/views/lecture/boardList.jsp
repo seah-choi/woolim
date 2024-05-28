@@ -176,6 +176,7 @@
             background: #68afcb;
             color: #fff;
         }
+
     </style>
 
 </head>
@@ -293,7 +294,9 @@
                     <a class="nav-link" href="/lecture/boardList?bbs_type=bbs04&lecture_idx=${list.lecture_idx}">공지사항</a>
                     <a class="nav-link" href="/lecture/boardList?bbs_type=bbs03&lecture_idx=${list.lecture_idx}">Q&A</a>
                     <a class="nav-link" href="/lecture/boardList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
-                    <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
+                    <c:if test="${sessionScope.member_id == list.member_id}">
+                        <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
+                    </c:if>
                 </div>
             </nav>
         </div>
@@ -304,7 +307,9 @@
             <c:if test="${responseDTO.bbs_type=='bbs03'}"><h5 style="font-weight: bold">Q&A</h5></c:if>
             <hr>
             <div style="display: flex;justify-content: flex-end;">
-                <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/boardRegist?bbs_type=${bbs_type}&lecture_idx=${list.lecture_idx}'">글쓰기</button>
+                <c:if test="${sessionScope.member_id == list.member_id}">
+                    <button type="button" class="btn" id="btn_regist" onclick="location.href='/lecture/boardRegist?bbs_type=${bbs_type}&lecture_idx=${list.lecture_idx}'">글쓰기</button>
+                </c:if>
             </div>
             <br>
             <div class="searchBox">

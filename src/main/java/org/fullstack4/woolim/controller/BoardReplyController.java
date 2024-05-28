@@ -22,10 +22,21 @@ public class BoardReplyController {
     private final BbsReplyServiceIf bbsReplyService;
 
     @PostMapping("/regist")
-    public String regist(BbsReplyDTO bbsReplyDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String regist(BbsReplyDTO bbsReplyDTO,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes,
+                         @RequestParam(name = "lecture_YN", defaultValue = "N")String lecture_YN,
+                         @RequestParam(name = "lecture_idx", defaultValue = "0")String lecture_idx) {
         int result = bbsReplyService.regist(bbsReplyDTO);
 
         log.info("result : " + result);
+        if(lecture_YN.equals("Y")){
+            if (result > 0) {
+                return "redirect:/lecture/boardView?bbs_idx="+bbsReplyDTO.getBbs_idx()+"&bbs_type=bbs03&lecture_idx="+lecture_idx;
+            } else {
+                return "/lecture/boadView?bbs_idx="+bbsReplyDTO.getBbs_idx()+"&bbs_type=bbs03&lecture_idx="+lecture_idx;
+            }
+        }
 
         if (result > 0) {
             return "redirect:/board/freeView?bbs_idx="+bbsReplyDTO.getBbs_idx();

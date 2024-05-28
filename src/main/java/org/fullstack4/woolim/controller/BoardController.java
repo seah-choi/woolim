@@ -134,6 +134,9 @@ public class BoardController {
 
         BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
         model.addAttribute("bbs", bbsDTO);
+
+        List<BoardFileDTO> fileList = bbsServiceIf.file_list(bbs_idx);
+        model.addAttribute("fileList", fileList);
     }
 
     @PostMapping("/modify")
@@ -335,6 +338,9 @@ public class BoardController {
         BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
         model.addAttribute("bbs", bbsDTO);
         model.addAttribute("file", boardFileDTO);
+
+        List<BoardFileDTO> fileList = bbsServiceIf.file_list(bbs_idx);
+        model.addAttribute("fileList", fileList);
         log.info("GETModify bbsDTO : "+bbsDTO);
 
     }

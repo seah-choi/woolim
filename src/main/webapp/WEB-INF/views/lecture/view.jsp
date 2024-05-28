@@ -101,6 +101,34 @@
             border: 1px solid #00A85D;
             cursor: pointer;
         }
+        .buyLoad{
+            height: 56px;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 56px;
+            border-radius: 4px;
+            vertical-align: middle;
+            text-align: center;
+            background: #00A85D;
+            color: #fff;
+            width: 70%;
+            border: 1px solid #00A85D;
+            cursor: pointer;
+        }
+        .watch{
+            height: 56px;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 56px;
+            border-radius: 4px;
+            vertical-align: middle;
+            text-align: center;
+            background: #00A85D;
+            color: #fff;
+            width: 70%;
+            border: 1px solid #00A85D;
+            cursor: pointer;
+        }
         #cancel{
             height: 56px;
             font-size: 16px;
@@ -159,12 +187,56 @@
         #leftNav{
             border-right: 1px solid #ccc;
             padding: 30px;
-            width: 700px;
+            width: 200px;
         }
 
         #leftNav a {
             padding-left: 0;
             color: #212529 !important;
+        }
+        #cancelHeart{
+            background: #fff url("/resources/img/lecture/ico_basic_view_09.png") no-repeat center;  height: 56px;
+            border-radius: 4px;
+            width: 58px;
+            vertical-align: middle;
+            border: 2px solid #fff;
+            cursor: pointer;
+        }
+
+        #reviewRegistFrm fieldset{
+            display: inline-block;
+            direction: rtl;
+            border:0;
+        }
+        #reviewRegistFrm fieldset legend{
+            text-align: left;
+        }
+        #reviewRegistFrm input[type=radio]{
+            display: none;
+        }
+        #reviewRegistFrm label{
+            font-size: 1.5em;
+            color: transparent;
+            text-shadow: 0 0 0 #f0f0f0;
+        }
+        #reviewRegistFrm label:hover{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        #reviewRegistFrm label:hover ~ label{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        #reviewRegistFrm input[type=radio]:checked ~ label{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+        #reviewContents {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: solid 1.5px #D3D3D3;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: none;
         }
     </style>
 
@@ -188,90 +260,82 @@
                     <li style="margin-bottom: 20px;"><span>해시태그</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #국어 #정성훈</li>
                     <li style="margin-bottom: 50px;"><span >별점</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%-- ${lectureDetail[0].lecture_star} --%><span class="star">⭐⭐⭐⭐</span></li>
                 </ul>
-                <form method="post" name="frm" id="frm">
-                    <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
-                    <input type="button" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
-                    <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
-                    <input type="button" id="regist" class="regist" value="수강신청" >
 
-                </form>
-                <%--<c:choose>
-                    <c:when test="${checkHeart eq 1 && checkCart eq 1}">
+                <c:choose>
+                    <c:when test="${order.order_status eq '구매 완료' && cart.cart_status eq 'N'}">
 
                         <form method="post" name="frm" id="frm">
-                            <input type="hidden" id="memberId" value="${memberId}">
-                            <input type="hidden" id="heart" class="heart" value="">
-                            <input type="hidden" id="regist" class="regist" value="수강신청">
-                            <input type="hidden" id="idx" name="idx" value="${lectureDetail[0].lecture_idx}">
-                            <input type="hidden" id="imgUrl" name="imgUrl" value="${lectureDetail[0].lecture_img}">
-                            <input type="hidden" id="title" name="title" value="${lectureDetail[0].lecture_title}">
-                            <input type="hidden" id="name" name="name" value="${lectureDetail[0].member_name}">
-                            <input type="button" id="cancelHeart" name="cancelHeart" value="" style="background: #fff url(./img/ico_basic_view_09.png) no-repeat center;  height: 56px;
-					    border-radius: 4px;
-					width: 58px;
-					    vertical-align: middle;
-					    border: 2px solid #fff;
-					    cursor: pointer;">
-                            <input type="button" id="play" name="play" value="강좌듣기">
-                            <input type="button" id="cancel" name="cancel" value="수강취소">
+                            <input type="button" id="cancelHeart" name="cancelHeart" value="" style="">
+                            <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
+                            <input type="hidden" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
+                            <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
+                            <input type="hidden" id="regist" class="regist" value="수강신청" >
+                            <input type="hidden" id="buyLoad" class="buyLoad" value="구매 중" >
+                            <input type="button" id="watch" class="watch" value="강의보기" >
 
                         </form>
                     </c:when>
 
-                    <c:when test="${checkHeart eq 1}">
+                    <c:when test="${order.order_status eq '구매 중' && cart.cart_status eq 'N'}">
 
                         <form method="post" name="frm" id="frm">
-                            <input type="hidden" id="memberId" value="${memberId}">
-                            <input type="hidden" id="heart" class="heart" value="">
-                            <input type="button" id="cancelHeart" name="cancelHeart" value="" style="background: #fff url(./img/ico_basic_view_09.png) no-repeat center;  height: 56px;
-					    border-radius: 4px;
-					width: 58px;
-					    vertical-align: middle;
-					    border: 2px solid #fff;
-					    cursor: pointer;">
-                            <input type="button" id="regist" class="regist" value="수강신청">
-                            <input type="hidden" id="idx" name="idx" value="${lectureDetail[0].lecture_idx}">
-                            <input type="hidden" id="imgUrl" name="imgUrl" value="${lectureDetail[0].lecture_img}">
-                            <input type="hidden" id="title" name="title" value="${lectureDetail[0].lecture_title}">
-                            <input type="hidden" id="name" name="name" value="${lectureDetail[0].member_name}">
+                            <input type="button" id="cancelHeart" name="cancelHeart" value="" >
 
-                            <input type="hidden" id="play" name="play" value="강좌듣기">
-                            <input type="hidden" id="cancel" name="cancel" value="수강취소">
+                          <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
+                          <input type="hidden" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
+                          <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
+                          <input type="hidden" id="regist" class="regist" value="수강신청" >
+                          <input type="button" id="buyLoad" class="buyLoad" value="구매 중" >
+                          <input type="hidden" id="watch" class="watch" value="강의보기" >
 
                         </form>
                     </c:when>
-
-                    <c:when test="${checkCart eq 1}">
+                    <c:when test="${order.order_status eq '구매 완료'}">
                         <form method="post" name="frm" id="frm">
-                            <input type="hidden" id="memberId" value="${memberId}">
-                            <input type="button" id="heart" class="heart" value="">
-                            <input type="hidden" id="regist" class="regist" value="수강신청">
-                            <input type="hidden" id="idx" name="idx" value="${lectureDetail[0].lecture_idx}">
-                            <input type="hidden" id="imgUrl" name="imgUrl" value="${lectureDetail[0].lecture_img}">
-                            <input type="hidden" id="title" name="title" value="${lectureDetail[0].lecture_title}">
-                            <input type="hidden" id="name" name="name" value="${lectureDetail[0].member_name}">
-                            <input type="button" id="play" name="play" value="강좌듣기">
-                            <input type="button" id="cancel" name="cancel" value="수강취소">
-                            <input type="hidden" id="cancelHeart" name="cancelHeart" value="">
+                            <input type="hidden" id="cancelHeart" name="cancelHeart" value="" >
+                            <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
+                            <input type="button" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
+                            <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
+                            <input type="hidden" id="regist" class="regist" value="수강신청" >
+                            <input type="hidden" id="buyLoad" class="buyLoad" value="구매 중" >
+                            <input type="button" id="watch" class="watch" value="강의보기" >
                         </form>
                     </c:when>
-
+                    <c:when test="${order.order_status eq '구매 중'}">
+                        <form method="post" name="frm" id="frm">
+                            <input type="hidden" id="cancelHeart" name="cancelHeart" value="" >
+                            <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
+                            <input type="button" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
+                            <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
+                            <input type="hidden" id="regist" class="regist" value="수강신청" >
+                            <input type="button" id="buyLoad" class="buyLoad" value="구매 중" >
+                            <input type="hidden" id="watch" class="watch" value="강의보기" >
+                        </form>
+                    </c:when>
+                    <c:when test="${cart.cart_status eq 'N'}">
+                        <form method="post" name="frm" id="frm">
+                            <input type="button" id="cancelHeart" name="cancelHeart" >
+                            <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
+                            <input type="hidden" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
+                            <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
+                            <input type="button" id="regist" class="regist" value="수강신청" >
+                            <input type="hidden" id="buyLoad" class="buyLoad" value="구매 중" >
+                            <input type="hidden" id="watch" class="watch" value="강의보기" >
+                        </form>
+                    </c:when>
                     <c:otherwise>
                         <form method="post" name="frm" id="frm">
-                            <input type="hidden" id="memberId" value="${memberId}">
-                            <input type="button" id="heart" class="heart" value="">
-                            <input type="button" id="regist" class="regist" value="수강신청">
-                            <input type="hidden" id="idx" name="idx" value="${lectureDetail[0].lecture_idx}">
-                            <input type="hidden" id="imgUrl" name="imgUrl" value="${lectureDetail[0].lecture_img}">
-                            <input type="hidden" id="title" name="title" value="${lectureDetail[0].lecture_title}">
-                            <input type="hidden" id="name" name="name" value="${lectureDetail[0].member_name}">
-                            <input type="hidden" id="play" name="play" value="강좌듣기">
-                            <input type="hidden" id="cancel" name="cancel" value="수강취소">
-                            <input type="hidden" id="cancelHeart" name="cancelHeart" value="">
+                            <input type="hidden" id="cancelHeart" name="cancelHeart" value="" >
+                            <input type="hidden" id="lecture_idx" value="${list.lecture_idx}">
+                            <input type="button" id="heart" class="heart" value="" onclick="addJjim(${list.lecture_idx})">
+                            <input type="button" id="cart" class="cart" value="" onclick="addCart(${list.lecture_idx})">
+                            <input type="button" id="regist" class="regist" value="수강신청" >
+                            <input type="hidden" id="buyLoad" class="buyLoad" value="구매 중" >
+                            <input type="hidden" id="watch" class="watch" value="강의보기" >
                         </form>
                     </c:otherwise>
 
-                </c:choose>--%>
+                </c:choose>
 
             </div>
         </div>
@@ -280,6 +344,11 @@
 
     <c:set var="lecture" value="}"></c:set>
 <div id="box">
+    <c:if test="${param.reviewNo == '1'}">
+        <script>
+            alert("리뷰는 수강신청 이후에 진행할 수 있습니다.");
+        </script>
+    </c:if>
     <div id="leftNav">
         <nav class="nav flex-column">
             <h4>강의</h4>
@@ -289,28 +358,30 @@
                 <a class="nav-link" href="/lecture/boardList?bbs_type=bbs04&lecture_idx=${list.lecture_idx}">공지사항</a>
                 <a class="nav-link" href="/lecture/boardList?bbs_type=bbs03&lecture_idx=${list.lecture_idx}">Q&A</a>
                 <a class="nav-link" href="/lecture/boardList?bbs_type=bbs05&lecture_idx=${list.lecture_idx}">자료실</a>
-                <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
+                <c:if test="${sessionScope.member_id == list.member_id}">
+                    <a class="nav-link" href="/lecture/studentList?lecture_idx=${list.lecture_idx}">수강생</a>
+                </c:if>
             </div>
         </nav>
     </div>
 
-    <div class="product-tab" style="margin-left: 100px;">
+    <div class="product-tab" style="margin-left: 100px;width: 800px;">
         <div class="tab-item">
             <ul class="nav" role="tablist">
                 <li>
-                    <a class="active" data-toggle="tab" href="#tab-1" role="tab">강의소개</a>
+                    <a class="active tab-a" data-toggle="tab" id="scrollTarget" href="#tab-1" role="tab">강의소개</a>
                 </li>
                 <li>
-                    <a data-toggle="tab" href="#tab-2" role="tab">강의 목차</a>
+                    <a class="tab-a" data-toggle="tab" href="#tab-2" role="tab">강의 목차</a>
                 </li>
                 <li>
-                    <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews (02)</a>
+                    <a class="tab-a" data-toggle="tab" href="#tab-3" role="tab">Customer Reviews (${responseDTO.total_count})</a>
                 </li>
             </ul>
         </div>
         <div class="tab-item-content">
             <div class="tab-content">
-                <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+                <div class="tab-pane fade-in active tab-div" id="tab-1" role="tabpanel">
                     <div class="product-content">
                         <div class="row">
                             <div class="col-lg-7">
@@ -330,7 +401,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                <div class="tab-pane fade tab-div" id="tab-2" role="tabpanel">
                     <div class="specification-table">
                         <table>
                             <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 500px;">
@@ -377,66 +448,89 @@
                         </table>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                <div class="tab-pane fade tab-div" id="tab-3" role="tabpanel">
                     <div class="customer-review-option">
-                        <h4>2 Comments</h4>
+                        <h4>${responseDTO.total_count} Comments</h4>
                         <div class="comment-option">
-                            <div class="co-item">
-                                <div class="avatar-pic">
-                                    <img src="img/product-single/avatar-1.png" alt="">
-                                </div>
-                                <div class="avatar-text">
-                                    <div class="at-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5>Brandon Kelley <span>27 Aug 2019</span></h5>
-                                    <div class="at-reply">Nice !</div>
-                                </div>
-                            </div>
-                            <div class="co-item">
-                                <div class="avatar-pic">
-                                    <img src="img/product-single/avatar-2.png" alt="">
-                                </div>
-                                <div class="avatar-text">
-                                    <div class="at-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5>Roy Banks <span>27 Aug 2019</span></h5>
-                                    <div class="at-reply">Nice !</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="personal-rating">
-                            <h6>Your Ratind</h6>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
+                            <c:choose>
+                                <c:when test="${not empty responseDTO.dtolist}">
+                                    <c:forEach var="review" items="${responseDTO.dtolist}">
+                                        <div class="co-item">
+                                            <div class="avatar-text">
+                                                <div class="at-rating">
+                                                    <c:forEach begin="1" end="${review.review_rank}">
+                                                        <i class="fa fa-star"></i>
+                                                    </c:forEach>
+                                                    <c:forEach begin="${review.review_rank}" end="4">
+                                                        <i class="fa fa-star-o"></i>
+                                                    </c:forEach>
+
+                                                </div>
+                                                <h5>${review.member_id} <span>${review.review_reg_date}</span></h5>
+                                                <div class="at-reply">${review.review_comment}</div>
+
+                                            </div>
+                                            <form action="/lecture/reviewDelete" method="post" name="frmRegistReview">
+                                                <input type="hidden" value="${review.review_idx}" name="review_idx">
+                                                <input type="hidden" value="${review.lecture_idx}" name="lecture_idx">
+                                                <c:if test="${review.member_id == sessionScope.user_id}">
+                                                    <button type="submit" class="btn btn-sm btnRemove">삭제</button>
+                                                </c:if>
+                                            </form>
+                                        </div>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    등록된 리뷰가 없습니다.
+                                </c:otherwise>
+                            </c:choose>
+                            <nav class="blog-pagination justify-content-center d-flex">
+                                <ul class="pagination">
+                                    <li class="page-item <c:if test="${!responseDTO.prev_page_plag}">disabled</c:if>">
+                                        <a class="page-link" href="/lecture/view?page_flag=1&page=${((responseDTO.page - responseDTO.page_block_size) >= 1) ? (responseDTO.page - responseDTO.page_block_size) : 1}${responseDTO.linkParams}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <c:forEach var="li" begin="${responseDTO.page_block_start}" end="${responseDTO.page_block_end}">
+                                        <li class="page-item <c:if test="${responseDTO.page eq li}">active</c:if> ">
+                                            <a class="page-link" href="/lecture/view?page_flag=1&page=${li}${responseDTO.linkParams}">${li}</a>
+                                        </li>
+                                    </c:forEach>
+                                    <li class="page-item <c:if test="${!responseDTO.next_page_plag}">disabled</c:if>">
+                                        <a class="page-link" href="/lecture/view?page_flag=1&page=${(responseDTO.page + responseDTO.page_block_size) <= responseDTO.total_page ? (responseDTO.page + responseDTO.page_block_size) : responseDTO.total_page}${responseDTO.linkParams}" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                         <div class="leave-comment">
                             <h4>Leave A Comment</h4>
-                            <form action="#" class="comment-form">
+                            <form action="/lecture/reviewRegist" id="reviewRegistFrm" method="post" class="comment-form">
+                            <div class="rating">
+                                <span class="text-bold">별점을 선택해주세요</span>
+                                <input type="radio" name="review_rank" value="5" id="rate1" class="star"><label
+                                    for="rate1">★</label>
+                                <input type="radio" name="review_rank" value="4" id="rate2" class="star"><label
+                                    for="rate2">★</label>
+                                <input type="radio" name="review_rank" value="3" id="rate3" class="star"><label
+                                    for="rate3">★</label>
+                                <input type="radio" name="review_rank" value="2" id="rate4" class="star"><label
+                                    for="rate4">★</label>
+                                <input type="radio" name="review_rank" value="1" id="rate5" class="star"><label
+                                    for="rate5">★</label>
+                            </div>
+
+                                <input type="hidden" name="review_rank" value="3">
+                                <input type="hidden" name="member_id" value="${sessionScope.user_id}">
+                                <input type="hidden" name="lecture_idx" value="${list.lecture_idx}">
                                 <div class="row">
-                                    <div class="col-lg-6">
-                                        <input type="text" placeholder="Name">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <input type="text" placeholder="Email">
-                                    </div>
                                     <div class="col-lg-12">
-                                        <textarea placeholder="Messages"></textarea>
-                                        <button type="submit" class="site-btn">Send message</button>
+                                        <textarea placeholder="Messages" name="review_comment" id="review_comment"></textarea>
+                                        <button type="submit" id="reviewRegistBtn" class="site-btn" <c:if test="${sessionScope.user_id == null}">disabled</c:if>>
+                                            <c:if test="${sessionScope.user_id == null}">로그인 후 가능합니다.</c:if>
+                                            <c:if test="${sessionScope.user_id != null}">리뷰 등록</c:if>
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -521,9 +615,85 @@
     </footer>
 </main>
 <script>
+    window.onload = function() {
+        // 특정 조건 확인
+        if (${param.registOK == '1'} || ${param.deleteOK == '1'} ||${param.page_flag == '1'} || ${param.reviewAgain == '1'}) {
+            reviewTAB();
+            if(${param.registOK == '1'}){
+                alert("등록 되었습니다.");
+            }
+            if(${param.deleteOK == '1'}){
+                alert("삭제 되었습니다.");
+            }
+            if(${param.reviewAgain == '1'}){
+                alert("리뷰는 한번만 작성 가능합니다.");
+            }
+            if(${param.reviewNo == '1'}){
+                alert("리뷰 등록은 수강신청 이후에 진행할 수 있습니다.");
+            }
+        }
+    };
+
+    let reviewRegistBtn = document.getElementById("reviewRegistBtn");
+    reviewRegistBtn.addEventListener("click", function(e){
+        e.preventDefault();
+        let star = document.getElementsByClassName("star");
+        let review_comment = document.getElementById("review_comment");
+        let flag = 0;
+        for(let i=0;i<star.length;i++){
+            if(star[i].checked)
+                flag = 1;
+        }
+        if(flag==0){
+            alert("별점을 선택해주세요");
+            return;
+        }
+        if(review_comment.value.trim()<10){
+            alert("리뷰는 10자리 이상 작성해주세요");
+            return;
+        }
+
+        let reviewRegistFrm = document.getElementById("reviewRegistFrm");
+        reviewRegistFrm.submit();
+    });
+    let tabA = document.querySelectorAll('.tab-a');
+    let tabDiv = document.querySelectorAll('.tab-div');
+    function reviewTAB(){
+        for(let i=0;i<tabA.length;i++){
+            tabA[i].classList.remove('active');
+        }
+        tabA[2].classList.add('active');
+        for(let i=0;i<tabDiv.length;i++){
+            tabDiv[i].classList.remove('active', 'show');
+        }
+        tabDiv[2].classList.add('active');
+        tabDiv[2].classList.add('show');
+        var targetElement = document.getElementById('scrollTarget');
+        var targetRect = targetElement.getBoundingClientRect();
+
+        window.scrollTo({
+            top: window.scrollY + targetRect.top
+        });
+        // document.querySelector('#review-tab').click();
+    }
     document.querySelector("#regist").addEventListener("click", function() {
         const lectureIdx = document.querySelector("#lecture_idx").value;
         location.href = '/order/order?lecture_idx='+lectureIdx;
+    });
+    document.querySelector("#watch").addEventListener("click", function() {
+        const lectureIdx = document.querySelector("#lecture_idx").value;
+        let popupUrl = "/lecture/watchVideo?lectureIdx="+lectureIdx; // 팝업 창에 표시할 내용에 대한 URL을 여기에 설정합니다.
+
+        // 팝업 창 옵션 설정
+        let popupOption = "width=1200,height=480,scrollbars=yes,resizable=yes";
+
+        // 팝업 창 열기
+        window.open(popupUrl, "", popupOption);
+
+    });
+    document.querySelector("#cancelHeart").addEventListener("click", function() {
+        const lectureIdx = document.querySelector("#lecture_idx").value;
+        location.href = '/mypage/jjim';
     });
 
 </script>

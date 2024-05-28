@@ -6,9 +6,13 @@ import org.fullstack4.woolim.common.CommonUtil;
 import org.fullstack4.woolim.common.FileUtil;
 import org.fullstack4.woolim.criteria.Criteria;
 import org.fullstack4.woolim.criteria.PageMakerDTO;
+import org.fullstack4.woolim.domain.BoardFileVO;
+import org.fullstack4.woolim.domain.OrderDetailVO;
 import org.fullstack4.woolim.dto.*;
+import org.fullstack4.woolim.service.BbsReplyServiceIf;
 import org.fullstack4.woolim.service.BbsServiceIf;
 import org.fullstack4.woolim.service.CartServiceIf;
+import org.fullstack4.woolim.service.ReviewServiceIf;
 import org.fullstack4.woolim.service.lecture.LectureServiceIf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +48,10 @@ public class LectureController {
     private BbsServiceIf bbsServiceIf;
     @Autowired
     private CartServiceIf cartServiceIf;
+    @Autowired
+    private BbsReplyServiceIf bbsReplyService;
+    @Autowired
+    private ReviewServiceIf reviewServiceif;
     @GetMapping("/list")
     public String GETList(Model model, Criteria cri, HttpSession session) {
         System.out.println("#####");
@@ -95,23 +103,46 @@ public class LectureController {
 
     }
 
-    @GetMapping("/delete")
-    public void GETDelete() {
 
-    }
     @GetMapping("/view")
-    public String viewGET(String lecture_idx, Model model) throws Exception {
+    public String viewGET(String lecture_idx, Model model , HttpServletRequest request, PageRequestDTO pageRequestDTO) throws Exception {
         log.info("-----------------------");
         log.info("-----LectureController-----" +"-> viewGET() ");
         log.info("-----------------------");
         int idx = Integer.parseInt(lecture_idx);
+        HttpSession session = request.getSession();
+        String member_id = (String)session.getAttribute("member_id");
+
+        pageRequestDTO.setLecture_idx(idx);
+        pageRequestDTO.setPage_size(7);
+        PageResponseDTO<ReviewDTO> responseDTO = reviewServiceif.list(pageRequestDTO);
+        log.info("lecture view : " + responseDTO);
+
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         List<VideoDTO> videoDTO = lectureServiceIf.lectureVideo(idx);
 
+
+        log.info("-----idx--------" + idx);
+        log.info("-----member_id--------" + member_id);
+        OrderListDTO orderDetailDTO = lectureServiceIf.lectureStatus(idx,member_id);
+        if(orderDetailDTO != null) {
+            log.info("-----orderDetailDTO--------" + orderDetailDTO);
+            model.addAttribute("order" , orderDetailDTO);
+        }
+        CartDTO cartDTO = lectureServiceIf.getLectureCartStatus(idx,member_id);
+        if(cartDTO != null) {
+            log.info("-----cartDTO--------" + cartDTO);
+            model.addAttribute("cart" , cartDTO);
+        }
+
         log.info("-----lectureDTO--------" + lectureDTO);
         log.info("-----video--------" + videoDTO);
+
+
+        model.addAttribute("responseDTO", responseDTO);
         model.addAttribute("list" , lectureDTO);
         model.addAttribute("video" , videoDTO);
+
         return "/lecture/view";
     }
 
@@ -170,9 +201,9 @@ public class LectureController {
     public String studentRegist(GradeDTO gradeDTO){
         int result = lectureServiceIf.regist(gradeDTO);
         if(result > 0){
-            return "redirect:/lecture/studentList";
+            return "redirect:/lecture/studentList?lecture_idx="+gradeDTO.getLecture_idx();
         } else {
-            return "redirect:/lecture/studentList";
+            return "redirect:/lecture/studentList?lecture_idx="+gradeDTO.getLecture_idx();
         }
     }
 
@@ -180,12 +211,62 @@ public class LectureController {
     public String studentModify(GradeDTO gradeDTO){
         int result = lectureServiceIf.modify(gradeDTO);
         if(result > 0){
-            return "redirect:/lecture/studentList";
+            return "redirect:/lecture/studentList?lecture_idx="+gradeDTO.getLecture_idx();
         } else {
-            return "redirect:/lecture/studentList";
+            return "redirect:/lecture/studentList?lecture_idx="+gradeDTO.getLecture_idx();
         }
     }
+    @PostMapping("/reviewRegist")
+    public String reviewRegist(ReviewDTO reviewDTO, RedirectAttributes redirectAttributes){
 
+        int reviewOkFlag = 0;
+        int reviewOkFlag2 = 0;
+
+        List<ClassDTO> classDTOList = reviewServiceif.reviewConfirm(reviewDTO.getLecture_idx());
+        List<ReviewDTO> reviewDTOList = reviewServiceif.listAll(reviewDTO.getLecture_idx());
+        for(ClassDTO classDTO :  classDTOList){
+            if(classDTO.getMember_id().equals(reviewDTO.getMember_id())){
+                reviewOkFlag = 1;
+            }
+        }
+        if(reviewOkFlag==0){
+            redirectAttributes.addAttribute("reviewNo",1);
+            return "redirect:/lecture/view?lecture_idx="+reviewDTO.getLecture_idx();
+        }
+
+        for(ReviewDTO dto : reviewDTOList){
+            if(dto.getMember_id().equals(reviewDTO.getMember_id())){
+                reviewOkFlag2 = 1;
+            }
+        }
+        if(reviewOkFlag2==1){
+            redirectAttributes.addAttribute("reviewAgain",1);
+            return "redirect:/lecture/view?lecture_idx="+reviewDTO.getLecture_idx();
+        }
+
+
+
+        int result = reviewServiceif.regist(reviewDTO);
+
+        if(result>0) {
+            redirectAttributes.addAttribute("registOK", 1);
+            reviewServiceif.updateAvg(reviewDTO.getLecture_idx());
+        }
+        return "redirect:/lecture/view?lecture_idx="+reviewDTO.getLecture_idx();
+    }
+    @PostMapping("/reviewDelete")
+    public String reviewDelete(@RequestParam int review_idx,
+                               @RequestParam int lecture_idx,
+                               RedirectAttributes redirectAttributes){
+        int result = reviewServiceif.delete(review_idx);
+        if(result>0){
+            redirectAttributes.addAttribute("deleteOK", 1);
+            reviewServiceif.updateAvg(lecture_idx);
+        }
+
+
+        return "redirect:/lecture/view?lecture_idx="+lecture_idx;
+    }
 
 
     @GetMapping("/boardRegist")
@@ -196,10 +277,58 @@ public class LectureController {
         model.addAttribute("bbs_type",bbs_type);
         model.addAttribute("lecture_idx", lecture_idx);
     }
+    @PostMapping
+    public String qnaRegistPOST(BbsDTO bbsDTO, RedirectAttributes redirectAttributes, Model model){
+        bbsDTO.setBbs_category_code("bbs03");
+        int result = bbsServiceIf.regist(bbsDTO);
+
+        if(result >0){
+            return "redirect:/lecture/qnaList?lecture_idx=" + bbsDTO.getLecture_idx();
+        }
+        else{
+            redirectAttributes.addFlashAttribute("bbsDTO");
+            return "redirect:/lecture/qnaRegist?lecture_idx=" + bbsDTO.getLecture_idx();
+        }
+    }
 
     @PostMapping("/boardRegist")
-    public String boardRegistPOST(BbsDTO bbsDTO){
+    public String boardRegistPOST(BbsDTO bbsDTO,
+                                  MultipartHttpServletRequest files,
+                                  HttpServletRequest request,
+                                  RedirectAttributes redirectAttributes,
+                                  Model model){
+
+        List<MultipartFile> list = files.getFiles("files");
+        log.info("fileupload list >> " + list);
+        log.info("list size : " + list.size());
+
         int result = bbsServiceIf.InsertLectureBbs(bbsDTO);
+
+        String uploadFolder = CommonUtil.getUploadFolder(request,"bbs");
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).getSize()==0){
+                break;
+            }
+            FileDTO fileDTO = FileDTO.builder()
+                    .file(list.get(i))
+                    .uploadFolder(uploadFolder)
+                    .build();
+            log.info("========================");
+            log.info("postQnaRegist >> qnaDTO" + bbsDTO);
+            log.info("========================");
+            Map<String, String> map = FileUtil.FileUpload(fileDTO);
+            log.info("=======================");
+            log.info("upload : " + map);
+            log.info("=======================");
+            if(map.get("result").equals("success")) {
+                BoardFileDTO boardFileDTO = BoardFileDTO.builder()
+                        .bbs_idx(result)
+                        .orgFile(map.get("orgName"))
+                        .saveFile(map.get("newName")).build();
+                bbsServiceIf.file_regist(boardFileDTO);
+            }
+        }
+
         if(result>0){
             return "redirect:/lecture/boardList?bbs_type="+bbsDTO.getBbs_category_code()+"&lecture_idx="+bbsDTO.getLecture_idx();
         }
@@ -212,9 +341,15 @@ public class LectureController {
     public void boardViewGET(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type){
 
         BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
-        BoardFileDTO boardFileDTO = bbsServiceIf.fileView(bbs_idx);
 
-        model.addAttribute("file",boardFileDTO);
+        if(bbs_type.equals("bbs03")){
+            List<BbsReplyDTO> reply = bbsReplyService.list(bbs_idx);
+            log.info(reply);
+            model.addAttribute("reply",reply);
+        }
+        List<BoardFileDTO> fileList = bbsServiceIf.file_list(bbs_idx);
+        model.addAttribute("fileList", fileList);
+
         model.addAttribute("bbsDTO" , bbsDTO);
         log.info(bbsDTO.toString());
         LectureDTO lectureDTO = lectureServiceIf.lectureView(lecture_idx);
@@ -223,7 +358,25 @@ public class LectureController {
         model.addAttribute("lecture_idx", lecture_idx);
         model.addAttribute("bbs_idx", bbs_idx);
     }
+    @PostMapping("/delete")
+    public String delete(@RequestParam(name="grade_idx", defaultValue = "0") int[] grade_idx, GradeDTO gradeDTO){
+        for(int i : grade_idx) {
+            lectureServiceIf.delete(i);
+        }
+        return "redirect:/lecture/studentList?lecture_idx="+gradeDTO.getLecture_idx();
+    }
 
+//    public String delete(@RequestParam(name="grade_idx", defaultValue = "0") String grade_idx,
+//                         @RequestParam(name = "lecture_idx")int lecture_idx){
+//
+//        String[] array_grade = grade_idx.split(",");
+//        if(array_grade !=null){
+//            lectureServiceIf.delete(array_grade);
+//        }
+//
+//        log.info("delete : " + grade_idx);
+//        return "redirect:/lecture/studentList?lecture_idx="+lecture_idx;
+//    }
 
 
 
@@ -247,6 +400,25 @@ public class LectureController {
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         model.addAttribute("list" , lectureDTO);
     }
+    @GetMapping("/watchVideo")
+    public String watchVideoGET(String lectureIdx, Model model){
+        int idx = Integer.parseInt(lectureIdx);
+        List<VideoDTO> videoDTO = lectureServiceIf.lectureVideo(idx);
+        log.info("VideoDTO" + videoDTO);
+        model.addAttribute("list" , videoDTO);
+        return "/lecture/watchVideo";
+    }
+
+    @GetMapping("/boardDelete")
+    public String boardDelete(@RequestParam(name = "bbs_idx") int bbs_idx,
+                              @RequestParam(name = "bbs_type") String bbs_type,
+                              @RequestParam(name = "lecture_idx")int lecture_idx){
+        int result = bbsServiceIf.delete(bbs_idx);
+        if(result>0)
+            return "redirect:/lecture/boardList?bbs_idx="+bbs_idx+"&bbs_type="+bbs_type+"&lecture_idx="+lecture_idx;
+        else
+            return "redirect:/lecture/boardView?bbs_idx="+bbs_idx+"&bbs_type="+bbs_type+"&lecture_idx="+lecture_idx;
+    }
 
     @GetMapping("/boardModify")
     public void GETBModify(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type) {
@@ -254,6 +426,10 @@ public class LectureController {
 
         log.info("bbsDTO : " + bbsDTO);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(lecture_idx);
+        List<BoardFileDTO> fileList = bbsServiceIf.file_list(bbs_idx);
+
+
+        model.addAttribute("fileList", fileList);
         model.addAttribute("list" , lectureDTO);
         model.addAttribute("bbsDTO", bbsDTO);
         model.addAttribute("bbs_type",bbs_type);
@@ -263,12 +439,17 @@ public class LectureController {
 
     @PostMapping("/boardModify")
     public String POSTBModify(@RequestParam int lecture_idx, Model model, @RequestParam int bbs_idx
-            , @RequestParam String bbs_type, BbsDTO bbsDTO, HttpServletRequest req
+            , @RequestParam String bbs_type, BbsDTO bbsDTO, String fileYN,HttpServletRequest req
             , MultipartHttpServletRequest files) {
         int resultFile = 0;
         String upload = "";
 
         resultFile = bbsServiceIf.modify(bbsDTO);
+        log.info(files);
+
+        if(fileYN.equals("N")){
+            bbsServiceIf.file_delete(bbs_idx);
+        }
 
 
         List<MultipartFile> list = files.getFiles("files");
@@ -310,8 +491,12 @@ public class LectureController {
             }
 
         } else {
+            int flag = 1;
             //기존 파일이 없을 때 로직
             for (int i = 0; i < list.size(); i++) {
+                if(list.get(i).getSize()>0){
+                    flag = 0;
+                }
                 if (list.get(i).getSize() == 0) {
                     break;
                 }

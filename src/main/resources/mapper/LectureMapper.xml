@@ -115,32 +115,33 @@
     </select>
 
     <select id="gradeListByPage" resultType="org.fullstack4.woolim.domain.ClassVO">
-        SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx
-        FROM woo_class AS wc
-        INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wc.lecture_idx
-        INNER JOIN woo_grade AS wg ON wg.lecture_idx = wl.lecture_idx
-        INNER JOIN woo_member AS wm ON wm.member_id = wc.member_id
+        SELECT wl.lecture_title, wm.member_name, wg.grade, wl.lecture_idx, wg.grade_idx
+        FROM woo_grade AS wg
+        INNER JOIN woo_member AS wm on wm.member_id = wg.member_id
+        INNER JOIN woo_lecture AS wl on wl.lecture_idx = wg.lecture_idx
         <where>
             <if test="teacher_id != null and teacher_id != ''">
                 and wm.member_id=#{teacher_id}
             </if>
-            and wl.lecture_idx = #{lecture_idx}
+            <if test="search_type == 's'.toString()">
+                AND wm.member_name LIKE concat('%',#{search_word},'%')
+            </if>
+            and wg.lecture_idx = #{lecture_idx}
         </where>
-        ORDER BY wc.class_idx DESC
+        ORDER BY wg.grade_idx DESC
         limit #{page_skip_count}, #{page_size}
     </select>
 
     <select id="grade_count" resultType="int">
         SELECT count(*)
-        FROM woo_class AS wc
-        INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wc.lecture_idx
-        INNER JOIN woo_grade AS wg ON wg.lecture_idx = wl.lecture_idx
-        INNER JOIN woo_member AS wm ON wm.member_id = wc.member_id
+        FROM woo_grade AS wg
+        INNER JOIN woo_member AS wm on wm.member_id = wg.member_id
+        INNER JOIN woo_lecture AS wl on wl.lecture_idx = wg.lecture_idx
         <where>
             <if test="teacher_id != null and teacher_id != ''">
                 and wm.member_id=#{teacher_id}
             </if>
-            and wl.lecture_idx = #{lecture_idx}
+            and wg.lecture_idx = #{lecture_idx}
         </where>
     </select>
 
@@ -168,12 +169,21 @@
 
 
     <select id="getGrade" resultType="org.fullstack4.woolim.domain.ClassVO">
-        SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx
+        SELECT wm.member_name, wg.grade, wl.lecture_title, wg.grade_idx, wc.class_idx
         FROM woo_class AS wc
          INNER JOIN woo_lecture AS wl ON wl.lecture_idx = wc.lecture_idx
          INNER JOIN woo_grade AS wg ON wg.lecture_idx = wl.lecture_idx
          INNER JOIN woo_member AS wm ON wm.member_id = wc.member_id
         WHERE wc.class_idx = #{class_idx}
     </select>
+    <select id="lectureStatus" resultType="org.fullstack4.woolim.domain.OrderListVO">
+        select * from woo_order_detail
+        where lecture_idx = #{arg0} and member_id = #{arg1}
 
+    </select>
+    <select id="getLectureCartStatus" resultType="org.fullstack4.woolim.domain.CartVO">
+        select * from woo_cart
+        where lecture_idx = #{arg0} and member_id = #{arg1} and cart_status = 'N'
+
+    </select>
 </mapper>
