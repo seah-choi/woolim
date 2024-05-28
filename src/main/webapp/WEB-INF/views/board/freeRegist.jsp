@@ -120,7 +120,7 @@
                 <label for="floatingTextarea">제목</label>
             </div>
             <br>
-            <input type="file" class="form-control" name="files" id="file" multiple>
+            <input type="file" class="form-control" name="files" id="file">
             <br>
             <div>
                 <textarea id="summernote" name="bbs_content"></textarea>

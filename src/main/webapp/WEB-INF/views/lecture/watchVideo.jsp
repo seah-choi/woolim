@@ -13,7 +13,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            background-color: rgb(134, 142, 150);
             margin: 20px;
         }
         .video-container {
@@ -31,7 +31,7 @@
             width: 500px;
         }
         .accordion-button {
-            background-color: #007bff;
+            background-color: #68afcb;
             color: white;
             border: none;
             border-radius: 4px;
@@ -39,7 +39,7 @@
             transition: background-color 0.3s;
         }
         .accordion-button:not(.collapsed) {
-            background-color: #0056b3;
+            background-color: #68afcb;
         }
         .accordion-body {
             background-color: #f1f1f1;
@@ -54,7 +54,7 @@
             transition: background-color 0.2s, color 0.2s;
         }
         .accordion-body a:hover {
-            background-color: #007bff;
+            background-color: #68afcb;
             color: white;
         }
         .controls-container {
@@ -74,7 +74,30 @@
             transition: background-color 0.3s;
         }
         .controls-container button:hover {
-            background-color: #0056b3;
+            background-color: #68afcb;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        .button-container button {
+            margin-right: 10px;
+            padding: 10px 20px;
+            border: 1px solid #68afcb;
+            background-color: #ffffff;
+            color: #68afcb;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button-container button:hover {
+            background-color: #68afcb;
+            color: #ffffff;
+        }
+
+        .button-container button:last-child {
+            margin-right: 0;
         }
     </style>
 </head>
@@ -86,9 +109,9 @@
             class="video-js"
             controls
             preload="auto"
-            width="854"
-            height="480"
-            poster="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
+            width="2900"
+            height="900"
+            poster="/resources/img/logo.png"
             data-setup="{}"
     >
         <source src="/resources/img/video/${list[0].video_file}" type="video/mp4"/>
@@ -98,44 +121,83 @@
             <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
         </p>
     </video>
+    <div>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"
+                    style="color: #fff;">
+                        ${list[0].video_content}
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        <c:forEach items="${list}" var="list" varStatus="status">
 
-    <div class="accordion" id="accordionPanelsStayOpenExample">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"
-                style="color: #fff;">
-                    ${list[0].video_content}
-                </button>
-            </h2>
-            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                <div class="accordion-body">
-                    <c:forEach items="${list}" var="list" varStatus="status">
+                            <div><a href="#" class="video-link" data-index="${status.index}">${list.video_title}</a></div>
+                        </c:forEach>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <div><a href="#" class="video-link" data-index="${status.index}">${list.video_title}</a></div>
-                    </c:forEach>
+        <div class="accordion" >
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"
+                            style="color: #fff;">
+                        오늘의 추천 강좌 보러가기
+                    </button>
+                </h2>
+                <div class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        <div><a href="#" class="video-link" data-index="${status.index}">스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</a></div>
+                        <div><a href="#" class="video-link" data-index="${status.index}">코드로 배우는 React with 스프링부트 API서버</a></div>
+                        <div><a href="#" class="video-link" data-index="${status.index}">비전공자도 이해할 수 있는 CI/CD 입문·실전</a></div>
+                        <div><a href="#" class="video-link" data-index="${status.index}">실리콘밸리 엔지니어와 함께하는 리눅스 실전</a></div>
+                        <div><a href="#" class="video-link" data-index="${status.index}">[왕초보편] 앱 8개를 만들면서 배우는 안드로이드 코틀린(Android Kotlin)</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion" >
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"
+                            style="color: #fff;">
+                        울림 베스트 강좌 보러가기
+                    </button>
+                </h2>
+                <div class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        <div><a href="#" class="video-link" data-index="${status.index}">스프링 입문 - 코드로 배우는 스프링 부트, 웹 MVC, DB 접근 기술</a></div>
+                        <div><a href="#" class="video-link" data-index="${status.index}">코드로 배우는 React with 스프링부트 API서버</a></div>
+                        <div><a href="#" class="video-link" data-index="${status.index}">비전공자도 이해할 수 있는 CI/CD 입문·실전</a></div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="controls-container">
-    <button id="audio-only-btn">오디오만 재생</button>
-    <p>재생속도: <span id="playback-speed">1</span></p>
-    <div>
-        <button id="speed-0.25-btn">0.25</button>
-        <button id="speed-0.5-btn">0.5</button>
-        <button id="speed-0.75-btn">0.75</button>
-        <button id="speed-normal-btn">1(기본)</button>
-        <button id="speed-1.25-btn">1.25</button>
-        <button id="speed-1.5-btn">1.5</button>
-        <button id="speed-1.75-btn">1.75</button>
-        <button id="speed-2-btn">2</button>
+<div style="margin-top: 30px;">
+    <p> <span id="playback-speed" style="display: none;"></span></p>
+    <div style="display: flex;"  class="button-container">
+        <button id="speed-0.25-btn" style="margin-right: 10px;">0.25</button>
+        <button id="speed-0.5-btn" style="margin-right: 10px;">0.5</button>
+        <button id="speed-0.75-btn" style="margin-right: 10px;">0.75</button>
+        <button id="speed-normal-btn" style="margin-right: 10px;">1(기본)</button>
+        <button id="speed-1.25-btn" style="margin-right: 10px;">1.25</button>
+        <button id="speed-1.5-btn" style="margin-right: 10px;">1.5</button>
+        <button id="speed-1.75-btn" style="margin-right: 10px;">1.75</button>
+        <button id="speed-2-btn" style="margin-right: 10px;">2</button>
+        <button id="audio-only-btn" style="margin-right: 10px;">오디오만 재생</button>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+
 <script>
     const video = document.getElementById('my-video');
 
@@ -150,7 +212,6 @@
     });
 
     const player = videojs('my-video');
-
 
     const audioOnlyBtn = document.getElementById("audio-only-btn");
     audioOnlyBtn.addEventListener('click', function handleClick() {
@@ -234,6 +295,7 @@
         video.playbackRate = 2;
         speed.innerHTML = '2';
     });
+
     const videoLinks = document.querySelectorAll('.video-link');
     const videoPlayer = document.getElementById('my-video');
     let videoFiles = []; // JavaScript 배열 선언

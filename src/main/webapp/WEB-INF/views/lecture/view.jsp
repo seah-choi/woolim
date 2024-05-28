@@ -685,7 +685,7 @@
         let popupUrl = "/lecture/watchVideo?lectureIdx="+lectureIdx; // 팝업 창에 표시할 내용에 대한 URL을 여기에 설정합니다.
 
         // 팝업 창 옵션 설정
-        let popupOption = "width=1200,height=600,scrollbars=yes,resizable=yes";
+        let popupOption = "width=1200,height=480,scrollbars=yes,resizable=yes";
 
         // 팝업 창 열기
         window.open(popupUrl, "", popupOption);

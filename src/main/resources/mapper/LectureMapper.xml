@@ -123,6 +123,9 @@
             <if test="teacher_id != null and teacher_id != ''">
                 and wm.member_id=#{teacher_id}
             </if>
+            <if test="search_type == 's'.toString()">
+                AND wm.member_name LIKE concat('%',#{search_word},'%')
+            </if>
             and wg.lecture_idx = #{lecture_idx}
         </where>
         ORDER BY wg.grade_idx DESC
