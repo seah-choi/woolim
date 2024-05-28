@@ -132,6 +132,9 @@ public class OrderServiceImpl implements OrderServiceIf{
         MemberVO memberVO = modelMapper.map(memberDTO, MemberVO.class);
         PaymentVO paymentVO = modelMapper.map(paymentDTO, PaymentVO.class);
 
+        log.info("orderVO####### :" + orderVO);
+        log.info("memberVO####### :" + memberVO);
+        log.info("paymentVO####### :" + paymentVO);
         LocalDate now = LocalDate.now();
 
         LocalDate lectureStartDate = lectureDTO.getLecture_start_date();
@@ -163,10 +166,13 @@ public class OrderServiceImpl implements OrderServiceIf{
         
 
         ClassVO classVO = ClassVO.builder()
-                .member_id(orderVO.getMember_id())
+                .member_id(memberVO.getMember_id())
                 .lecture_idx(orderVO.getLecture_idx())
                 .build();
-        orderMapper.DeleteGrade(classVO);
+
+        log.info("classVO : "+ classVO);
+        orderMapper.deleteClass(classVO);
+        orderMapper.deleteGrade(classVO);
         orderMapper.UpdateStatus(orderVO);
         orderMapper.InsertPayment(paymentVO);
         memberMapper.changePoint(memberVO);
