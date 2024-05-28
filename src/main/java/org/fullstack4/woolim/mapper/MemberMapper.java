@@ -40,6 +40,10 @@ public interface MemberMapper {
     TeacherSubjectVO teacherIntroView(String member_id);
     int teacherIntroUpdate(TeacherSubjectVO teacherSubjectVO);
 
+    MemberVO teahcerview(int member_idx);
+
+
+
 
     int detailInsert(MemberVO memberVO);
     MemberVO adminMemberView(String member_id);

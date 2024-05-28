@@ -32,4 +32,6 @@ public class MemberDTO {
     private LocalDate member_leave_date;
     private String member_status;
     private String subject_category_code;
+    private String teacher_image_file;
+    private String teacher_intro;
 }

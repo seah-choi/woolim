@@ -243,7 +243,7 @@
                     <c:forEach items="${responseDTO.dtolist}" var="list">
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="/resources/img/products/product-1.jpg" alt="">
+                                    <img src="/resources/upload/teacher/${list.teacher_image_file}" alt="">
                                     <ul>
                                         <li class="quick-view"><a href="/teacher/view?member_idx=${list.member_idx}">자세히 보기</a></li>
                                     </ul>

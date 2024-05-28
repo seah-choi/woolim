@@ -94,7 +94,12 @@ public class AdminMemberController {
                            @RequestParam(name="teacher_intro") String teacher_intro,
                            @RequestParam(name="subject_category_code") String subject_category_code,
                            MultipartHttpServletRequest files,
-                           Model model  )  {
+
+                           Model model) {
+        log.info(bindingResult);
+
+
+
 
         log.info("============================");
         log.info("AdminMemberController >> POSTView() START");
@@ -121,6 +126,7 @@ public class AdminMemberController {
             log.info("=======================");
             log.info("upload : " + map);
             log.info("=======================");
+            log.info(map.get("result"));
             if (map.get("result").equals("success")) {
                 TeacherSubjectDTO teacherSubjectDTO = TeacherSubjectDTO.builder()
                         .member_idx(member_idx)
