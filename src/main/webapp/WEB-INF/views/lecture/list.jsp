@@ -221,7 +221,7 @@
                         <li><a href="#" onclick="navigateWithSort('30000')">👨‍🚀 고등</a></li>
                     </ul>
                 </div>
-                <div class="filter-widget">
+              <%--  <div class="filter-widget">
                     <h4 class="fw-title">과목</h4>
                     <div class="fw-brand-check">
                         <div class="bc-item">
@@ -253,7 +253,7 @@
                             </label>
                         </div>
                     </div>
-                </div>
+                </div>--%>
 
             </div>
             <div class="col-lg-9 order-1 order-lg-2">

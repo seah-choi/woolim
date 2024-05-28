@@ -329,7 +329,7 @@
                             </form>
                         </div>
                     </form>
-                    <div class="mb-3 row" style="margin-left: 20px;">
+                   <%-- <div class="mb-3 row" style="margin-left: 20px;">
                         <label class="ml-3 col-form-label fontWe-700">검색 기간</label>
                         <div class="col-2 ml-4">
                             <input type="date" class="form-control" name="search_date1" id="search_date1" value="">
@@ -344,7 +344,7 @@
                             <button class="btn btn-warning" id="btnSearch" type="submit">검색</button>
                             <button class="btn btn-warning" id="btnReset" type="reset" onclick="location.href='/admin/board/list?bbs_type=${bbsList.bbs_type}'">초기화</button>
                         </div>
-                    </div>
+                    </div>--%>
                 </div>
                 <br>
                 <table class="table table-hover">

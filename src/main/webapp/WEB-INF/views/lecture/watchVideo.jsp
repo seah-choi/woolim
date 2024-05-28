@@ -9,6 +9,7 @@
     <title>Video with Accordion</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/7.19.2/video.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -110,7 +111,7 @@
                 <div class="accordion-body">
                     <c:forEach items="${list}" var="list" varStatus="status">
 
-                        <div><a href="#" class="video-link" data-index="${status.index}">${list.video_file}</a></div>
+                        <div><a href="#" class="video-link" data-index="${status.index}">${list.video_title}</a></div>
                     </c:forEach>
                 </div>
             </div>
