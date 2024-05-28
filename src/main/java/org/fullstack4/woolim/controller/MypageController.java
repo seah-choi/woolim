@@ -38,6 +38,7 @@ public class MypageController {
     private final OrderServiceIf orderService;
     private final PaymentServiceIf paymentService;
     private final LectureServiceIf lectureService;
+    private final MyStudyServiceIf myStudyService;
 
     @GetMapping("/view")
     public void GETView(HttpServletRequest req,
@@ -169,7 +170,12 @@ public class MypageController {
         String member_id = (String) session.getAttribute("member_id");
 
         pageRequestDTO.setMember_id(member_id);
-        PageResponseDTO<QnaDTO> responseDTO = qnaService.qnaListByPage(pageRequestDTO);
+        pageRequestDTO.setBbs_type("bbs03");
+
+        PageResponseDTO<BbsDTO> responseDTO = myStudyService.bbsListByPage(pageRequestDTO);
+        if(responseDTO.getSearch_types()!=null){
+            model.addAttribute("search_type", responseDTO.getSearch_types()[0]);
+        }
         model.addAttribute("responseDTO", responseDTO);
     }
     @GetMapping("/pointcharge")

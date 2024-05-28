@@ -113,7 +113,7 @@
         <h5 style="font-weight: bold">자유게시판</h5>
         <hr>
         <br>
-        <form name="frm" id="frm" action="/board/freeModify" method="post" enctype="multipart/form-data">
+        <form name="frm" id="modifyFrm" action="/board/freeModify" method="post" enctype="multipart/form-data">
             <input type="hidden" name="bbs_idx" id="bbs_idx" value="${bbs.bbs_idx}">
             <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
             <input type="hidden" name="bbs_category_code" id="bbs_category_code" value="bbs02">
@@ -134,7 +134,7 @@
                 <ul id="org-file-list" class="form-group col-md-10 d-flex flex-column m-0 p-0" style="gap:5px">
                     <c:forEach items="${fileList}" var="file">
                         <li class="card d-flex flex-row justify-content-between p-2 fileListNodes"><span>${file.orgFile}</span><span><a id="deleteButton" data-fileIdx="${file.idx}" class="text-danger font-weight-bold pr-2" href="#" onclick="deleteThisFile2(this)">X</a></span></li>
-                        <input id="file-${file.idx}" type="hidden" name="orgFiles" value="${file.idx}">
+                        <input id="file-${file.idx}" type="hidden" class="file_YN" name="orgFiles" value="${file.idx}">
                     </c:forEach>
                 </ul>
             </div>
@@ -148,6 +148,7 @@
                     <button type="button" class="btn" id="btn_back" onclick="location.href='/board/freeList?bbs_type=bbs02'">목록</button>
                 </div>
                 <div>
+                    <input type="hidden" id="fileYN" name="fileYN" value="">
                     <button type="submit" class="btn" id="btn_modify">등록</button>
                     <button type="reset" class="btn btn-secondary" id="btn_delete">취소</button>
                 </div>
@@ -185,7 +186,20 @@
         ]
 
     });
+    let btn_modify = document.getElementById("btn_modify");
+    btn_modify.addEventListener("click",function (e){
+        e.preventDefault();
+        let file_YN = document.getElementsByClassName("file_YN");
+        let fileYN = document.getElementById("fileYN");
+        if(file_YN.length == 0)
+            fileYN.value = "N";
+        else
+            fileYN.value = "Y";
 
+        let modifyFrm = document.getElementById("modifyFrm");
+        modifyFrm.submit();
+
+    });
     function fileList(element) {
         document.querySelector('#file-list').innerHTML = "";
         let fileList = document.querySelector('#file-list');

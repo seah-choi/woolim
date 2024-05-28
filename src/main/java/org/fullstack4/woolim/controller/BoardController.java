@@ -347,12 +347,15 @@ public class BoardController {
 
     @PostMapping("/freeModify")
     public String PostfreeModify(BbsDTO bbsDTO,MultipartHttpServletRequest files
-                                 ,HttpServletRequest req, RedirectAttributes redirectAttributes){
+                                 ,HttpServletRequest req, String fileYN, RedirectAttributes redirectAttributes){
 
         int resultFile = 0;
         String upload = "";
 
         resultFile = bbsServiceIf.modify(bbsDTO);
+        if(fileYN.equals("N")){
+            bbsServiceIf.file_delete(bbsDTO.getBbs_idx());
+        }
 
 
         List<MultipartFile> list = files.getFiles("files");
