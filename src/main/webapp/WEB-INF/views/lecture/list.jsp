@@ -217,44 +217,20 @@
                 <div class="filter-widget">
                     <h4 class="fw-title">카테고리</h4>
                     <ul class="filter-catagories">
-                        <li><a href="#" onclick="navigateWithSort('10000')">🧑‍🌾 초등</a></li>
-                        <li><a href="#" onclick="navigateWithSort('20000')">🕵️ 중등</a></li>
-                        <li><a href="#" onclick="navigateWithSort('30000')">👨‍🚀 고등</a></li>
+                        <li><a href="#" onclick="navigateWithSort('elementary')">🧑‍🌾 초등</a></li>
+                        <li><a href="#" onclick="navigateWithSort('middle')">🕵️ 중등</a></li>
+                        <li><a href="#" onclick="navigateWithSort('high')">👨‍🚀 고등</a></li>
                     </ul>
                 </div>
-              <%--  <div class="filter-widget">
+                <div class="filter-widget">
                     <h4 class="fw-title">과목</h4>
-                    <div class="fw-brand-check">
-                        <div class="bc-item">
-                            <label for="bc-calvin">
-                                📗 국어
-                                <input type="checkbox" id="bc-calvin" name="subject"  value="A" ${pageMaker.cri.subject eq 'A' ? 'checked' : ''}>
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="bc-item">
-                            <label for="bc-diesel">
-                                ⏲️ 수학
-                                <input type="checkbox" id="bc-diesel" name="subject" value="B" ${pageMaker.cri.subject eq 'B' ? 'checked' : ''}>
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="bc-item">
-                            <label for="bc-polo">
-                                🆖 영어
-                                <input type="checkbox" id="bc-polo" name="subject" value="C" ${pageMaker.cri.subject eq 'C' ? 'checked' : ''}>
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="bc-item">
-                            <label for="bc-tommy">
-                                🔎 과학
-                                <input type="checkbox" id="bc-tommy" name="subject" value="D" ${pageMaker.cri.subject eq 'D' ? 'checked' : ''}>
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>--%>
+                    <ul class="filter-catagories">
+                        <li><a href="#" onclick="navigateWithSortSub('국어')">📗 국어</a></li>
+                        <li><a href="#" onclick="navigateWithSortSub('수학')">⏲️ 수학</a></li>
+                        <li><a href="#" onclick="navigateWithSortSub('영어')">🆖 영어</a></li>
+                        <li><a href="#" onclick="navigateWithSortSub('과학')">🔎 과학</a></li>
+                    </ul>
+                </div>
 
             </div>
             <div class="col-lg-9 order-1 order-lg-2">
@@ -593,8 +569,25 @@
         moveForm.querySelector("input[name='keyword']").value;
         moveForm.querySelector("input[name='pageNum']").value = 1;
         moveForm.querySelector("input[name='category']").value = category;
+        moveForm.querySelector("input[name='subject']").value;
         moveForm.submit();
     }
+    function  navigateWithSortSub(category) {
+        let sort = document.getElementById("viewSorting").value;
+
+        if(sort == null) {
+            sort = 9;
+        }
+        moveForm.querySelector("input[name='viewSorting']").value = sort;
+        moveForm.querySelector("input[name='sorting']").value ;
+        moveForm.querySelector("input[name='type']").value;
+        moveForm.querySelector("input[name='keyword']").value;
+        moveForm.querySelector("input[name='pageNum']").value = 1;
+        moveForm.querySelector("input[name='category']").value;
+        moveForm.querySelector("input[name='subject']").value = category;
+        moveForm.submit();
+    }
+
     document.querySelector("#resetBtn").addEventListener("click", function (){
        location.href= '/lecture/list';
     });
@@ -617,13 +610,7 @@
             console.log("###" + checkbox.value);
         });
 
- /*       moveForm.querySelector("input[name='viewSorting']").value = sort;
-        moveForm.querySelector("input[name='sorting']").value ;
-        moveForm.querySelector("input[name='type']").value;
-        moveForm.querySelector("input[name='keyword']").value;
-        moveForm.querySelector("input[name='pageNum']").value = 1;
-        moveForm.querySelector("input[name='category']").value;
-        moveForm.submit();*/
+
     }
 
 </script>

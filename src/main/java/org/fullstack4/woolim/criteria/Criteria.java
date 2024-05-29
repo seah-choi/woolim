@@ -20,7 +20,7 @@ public class Criteria {
     private String sorting;
     private String viewSorting;
     private String category;
-    private String subject[];
+    private String subject;
     public Criteria() {
         this(1, 9);
         this.skip = 0;
@@ -114,11 +114,11 @@ public class Criteria {
         this.category = category;
     }
 
-    public String[] getSubject() {
+    public String getSubject() {
         return subject;
     }
 
-    public void setSubject(String[] subject) {
+    public void setSubject(String subject) {
         this.subject = subject;
     }
 }

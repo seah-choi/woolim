@@ -64,9 +64,26 @@ public class LectureController {
         List<LectureDTO> lectureDTOS = null;
         int total = 0;
         if(cri.getCategory() != null && cri.getCategory() != ""){
-            lectureDTOS  = lectureServiceIf.getListCategory(cri);
-            total = lectureServiceIf.getLectureKeywordCategory(cri);
-        } else{
+
+            if(cri.getSubject() != null && cri.getSubject() != "") {
+                lectureDTOS  = lectureServiceIf.getListSubjectCategory(cri);
+                total = lectureServiceIf.getLectureKeywordSubjectCategory(cri);
+            } else {
+                lectureDTOS  = lectureServiceIf.getListCategory(cri);
+                total = lectureServiceIf.getLectureKeywordCategory(cri);
+            }
+
+        } else if(cri.getSubject() != null && cri.getSubject() != "") {
+
+            if (cri.getCategory() != null && cri.getCategory() != "") {
+                lectureDTOS  = lectureServiceIf.getListSubjectCategory(cri);
+                total = lectureServiceIf.getLectureKeywordSubjectCategory(cri);
+            } else {
+                lectureDTOS = lectureServiceIf.getListSubject(cri);
+                total = lectureServiceIf.getLectureKeywordSubject(cri);
+            }
+        }
+        else{
             lectureDTOS =  lectureServiceIf.getList(cri);
             total = lectureServiceIf.getLectureKeyword(cri);
         }
