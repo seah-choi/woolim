@@ -22,7 +22,7 @@
         }
 
         #list a {
-            color: #68afcb;
+            color: #000000;
             text-decoration: none;
         }
 

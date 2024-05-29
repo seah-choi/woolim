@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -211,8 +212,8 @@
                                             <h5>${list.lecture_title}</h5>
                                         </a>
                                         <div class="product-price">
-                                            ₩${list.lecture_sale_price}
-                                            <span>₩${list.lecture_price}</span>
+                                            <fmt:formatNumber value="${list.lecture_sale_price}" pattern="#,###"/>원
+                                            <span><fmt:formatNumber value="${list.lecture_price}" pattern="#,###"/>원</span>
                                         </div>
                                     </div>
                                 </div>
@@ -282,41 +283,9 @@
 <!-- Instagram Section Begin -->
 <div class="instagram-photo">
     <div class="insta-item set-bg" data-setbg="img/insta-1.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
+
     </div>
-    <div class="insta-item set-bg" data-setbg="img/insta-2.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/insta-3.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/insta-4.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/insta-5.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/insta-6.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">colorlib_Collection</a></h5>
-        </div>
-    </div>
+
 </div>
 <!-- Instagram Section End -->
 
