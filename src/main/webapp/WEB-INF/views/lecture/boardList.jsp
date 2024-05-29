@@ -91,6 +91,20 @@
             border: 1px solid #00A85D;
             cursor: pointer;
         }
+        .watch{
+            height: 56px;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 56px;
+            border-radius: 4px;
+            vertical-align: middle;
+            text-align: center;
+            background: #00A85D;
+            color: #fff;
+            width: 70%;
+            border: 1px solid #00A85D;
+            cursor: pointer;
+        }
         #cancel{
             height: 56px;
             font-size: 16px;

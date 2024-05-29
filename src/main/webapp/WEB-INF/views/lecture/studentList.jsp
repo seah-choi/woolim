@@ -220,6 +220,20 @@
             cursor: pointer;
             background-size: contain;
         }
+        .watch{
+            height: 56px;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 56px;
+            border-radius: 4px;
+            vertical-align: middle;
+            text-align: center;
+            background: #00A85D;
+            color: #fff;
+            width: 70%;
+            border: 1px solid #00A85D;
+            cursor: pointer;
+        }
     </style>
 
 </head>
@@ -240,7 +254,11 @@
                     <li style="margin-top:40px; margin-bottom: 20px;"><span>가격</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ₩${list.lecture_sale_price}원  <span style="text-decoration: line-through ;">₩${list.lecture_price}원</span></li>
                     <li style="margin-bottom: 20px;"><span>과목</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;국어</li>
                     <li style="margin-bottom: 20px;"><span>해시태그</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #국어 #정성훈</li>
-                    <li style="margin-bottom: 50px;"><span >별점</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%-- ${lectureDetail[0].lecture_star} --%><span class="star">⭐⭐⭐⭐</span></li>
+                    <li style="margin-bottom: 50px;"><span >별점</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%-- ${lectureDetail[0].lecture_star} --%><span class="star">
+                        <c:forEach begin="1" end="${list.lecture_star}">
+                            ⭐
+                        </c:forEach>
+                    </span></li>
                 </ul>
 
                 <c:choose>
