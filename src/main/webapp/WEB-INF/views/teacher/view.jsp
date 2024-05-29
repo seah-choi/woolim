@@ -96,7 +96,7 @@
                         <div class="col-lg-6">
                             <div class="product-details">
                                 <div class="pd-title">
-                                    <span>국어 성적 향상의 핵심 키워드</span>
+                                    <span>성적 향상의 핵심 키워드</span>
                                     <h3>${memberDTO.member_name} 선생님</h3>
                                 </div>
 
