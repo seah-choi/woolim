@@ -69,10 +69,6 @@
             border-color: #dee2e6;
         }
 
-
-
-
-
         .pageInfo_wrap .page-item.disabled .page-link {
             color: #6c757d;
             pointer-events: none;
@@ -80,6 +76,7 @@
             background-color: #fff;
             border-color: #dee2e6;
         }
+
     </style>
 </head>
 <body>
@@ -183,7 +180,12 @@
                                     </ul>
                                 </div>
                                 <div class="pi-text">
-                                    <div class="catagory-name">${list.subject_category_code}</div>
+                                    <div class="catagory-name">
+                                        <c:if test="${list.subject_category_code == 's01'}">국어</c:if>
+                                        <c:if test="${list.subject_category_code == 's03'}">수학</c:if>
+                                        <c:if test="${list.subject_category_code == 's02'}">영어</c:if>
+                                        <c:if test="${list.subject_category_code == 's07'}">과학</c:if>
+                                    </div>
                                     <a href="/teacher/view?member_idx=${list.member_idx}">
                                         <h5>${list.member_name}<span style="font-size: large;color: #606060;">&nbsp;선생님</span></h5>
                                     </a>
