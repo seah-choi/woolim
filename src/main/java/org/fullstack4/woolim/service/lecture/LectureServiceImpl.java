@@ -53,7 +53,32 @@ public class LectureServiceImpl implements LectureServiceIf {
         int total = lectureMapper.getLectureKeywordCategory(cri);
         return total;
     }
+    @Override
+    public List<LectureDTO> getListSubject(Criteria cri) {
+        log.info("-----" + cri);
+        List<LectureDTO> list = lectureMapper.getListSubject(cri).stream().map(vo->modelMapper.map(vo, LectureDTO.class)).collect(Collectors.toList());
 
+        return list;
+    }
+
+    @Override
+    public int getLectureKeywordSubject(Criteria cri) {
+        int total = lectureMapper.getLectureKeywordSubject(cri);
+        return total;
+    }
+    @Override
+    public List<LectureDTO> getListSubjectCategory(Criteria cri) {
+        log.info("-----" + cri);
+        List<LectureDTO> list = lectureMapper.getListSubjectCategory(cri).stream().map(vo->modelMapper.map(vo, LectureDTO.class)).collect(Collectors.toList());
+
+        return list;
+    }
+
+    @Override
+    public int getLectureKeywordSubjectCategory(Criteria cri) {
+        int total = lectureMapper.getLectureKeywordSubjectCategory(cri);
+        return total;
+    }
     @Override
     public LectureDTO lectureView(int idx) {
         LectureVO lectureVO = lectureMapper.lectureView(idx);
@@ -147,6 +172,8 @@ public class LectureServiceImpl implements LectureServiceIf {
 
         return dto;
     }
+
+
 }
 
 

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -96,6 +97,8 @@
             list-style: none;
             border-radius: .25rem;
             justify-content: center;
+            margin-left: 300px;
+            margin-top: 50px;
         }
 
         .pageInfo_wrap .page-link {
@@ -149,37 +152,6 @@
             border-color: #dee2e6;
         }
 
-        .pageInfo_wrap .pagination-lg .page-link {
-            padding: .75rem 1.5rem;
-            font-size: 1.25rem;
-            line-height: 1.5;
-        }
-
-        .pageInfo_wrap .pagination-lg .page-item:first-child .page-link {
-            border-top-left-radius: .3rem;
-            border-bottom-left-radius: .3rem;
-        }
-
-        .pageInfo_wrap .pagination-lg .page-item:last-child .page-link {
-            border-top-right-radius: .3rem;
-            border-bottom-right-radius: .3rem;
-        }
-
-        .pageInfo_wrap .pagination-sm .page-link {
-            padding: .25rem .5rem;
-            font-size: .875rem;
-            line-height: 1.5;
-        }
-
-        .pageInfo_wrap .pagination-sm .page-item:first-child .page-link {
-            border-top-left-radius: .2rem;
-            border-bottom-left-radius: .2rem;
-        }
-
-        .pageInfo_wrap .pagination-sm .page-item:last-child .page-link {
-            border-top-right-radius: .2rem;
-            border-bottom-right-radius: .2rem;
-        }
 
     </style>
 </head>
@@ -216,44 +188,20 @@
                 <div class="filter-widget">
                     <h4 class="fw-title">카테고리</h4>
                     <ul class="filter-catagories">
-                        <li><a href="#" onclick="navigateWithSort('10000')">🧑‍🌾 초등</a></li>
-                        <li><a href="#" onclick="navigateWithSort('20000')">🕵️ 중등</a></li>
-                        <li><a href="#" onclick="navigateWithSort('30000')">👨‍🚀 고등</a></li>
+                        <li><a href="#" onclick="navigateWithSort('elementary')">🧑‍🌾 초등</a></li>
+                        <li><a href="#" onclick="navigateWithSort('middle')">🕵️ 중등</a></li>
+                        <li><a href="#" onclick="navigateWithSort('high')">👨‍🚀 고등</a></li>
                     </ul>
                 </div>
-              <%--  <div class="filter-widget">
+                <div class="filter-widget">
                     <h4 class="fw-title">과목</h4>
-                    <div class="fw-brand-check">
-                        <div class="bc-item">
-                            <label for="bc-calvin">
-                                📗 국어
-                                <input type="checkbox" id="bc-calvin" name="subject"  value="A" ${pageMaker.cri.subject eq 'A' ? 'checked' : ''}>
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="bc-item">
-                            <label for="bc-diesel">
-                                ⏲️ 수학
-                                <input type="checkbox" id="bc-diesel" name="subject" value="B" ${pageMaker.cri.subject eq 'B' ? 'checked' : ''}>
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="bc-item">
-                            <label for="bc-polo">
-                                🆖 영어
-                                <input type="checkbox" id="bc-polo" name="subject" value="C" ${pageMaker.cri.subject eq 'C' ? 'checked' : ''}>
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="bc-item">
-                            <label for="bc-tommy">
-                                🔎 과학
-                                <input type="checkbox" id="bc-tommy" name="subject" value="D" ${pageMaker.cri.subject eq 'D' ? 'checked' : ''}>
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>--%>
+                    <ul class="filter-catagories">
+                        <li><a href="#" onclick="navigateWithSortSub('국어')">📗 국어</a></li>
+                        <li><a href="#" onclick="navigateWithSortSub('수학')">⏲️ 수학</a></li>
+                        <li><a href="#" onclick="navigateWithSortSub('영어')">🆖 영어</a></li>
+                        <li><a href="#" onclick="navigateWithSortSub('과학')">🔎 과학</a></li>
+                    </ul>
+                </div>
 
             </div>
             <div class="col-lg-9 order-1 order-lg-2">
@@ -340,8 +288,8 @@
                                             <h5>${list.lecture_title}</h5>
                                         </a>
                                         <div class="product-price">
-                                                ₩${list.lecture_sale_price}
-                                            <span>₩${list.lecture_price}</span>
+                                                <fmt:formatNumber value="${list.lecture_sale_price}" pattern="#,###"/>원
+                                            <span><fmt:formatNumber value="${list.lecture_price}" pattern="#,###"/>원</span>
                                         </div>
                                     </div>
                                 </div>
@@ -592,8 +540,25 @@
         moveForm.querySelector("input[name='keyword']").value;
         moveForm.querySelector("input[name='pageNum']").value = 1;
         moveForm.querySelector("input[name='category']").value = category;
+        moveForm.querySelector("input[name='subject']").value;
         moveForm.submit();
     }
+    function  navigateWithSortSub(category) {
+        let sort = document.getElementById("viewSorting").value;
+
+        if(sort == null) {
+            sort = 9;
+        }
+        moveForm.querySelector("input[name='viewSorting']").value = sort;
+        moveForm.querySelector("input[name='sorting']").value ;
+        moveForm.querySelector("input[name='type']").value;
+        moveForm.querySelector("input[name='keyword']").value;
+        moveForm.querySelector("input[name='pageNum']").value = 1;
+        moveForm.querySelector("input[name='category']").value;
+        moveForm.querySelector("input[name='subject']").value = category;
+        moveForm.submit();
+    }
+
     document.querySelector("#resetBtn").addEventListener("click", function (){
        location.href= '/lecture/list';
     });
@@ -616,13 +581,7 @@
             console.log("###" + checkbox.value);
         });
 
- /*       moveForm.querySelector("input[name='viewSorting']").value = sort;
-        moveForm.querySelector("input[name='sorting']").value ;
-        moveForm.querySelector("input[name='type']").value;
-        moveForm.querySelector("input[name='keyword']").value;
-        moveForm.querySelector("input[name='pageNum']").value = 1;
-        moveForm.querySelector("input[name='category']").value;
-        moveForm.submit();*/
+
     }
 
 </script>

@@ -21,10 +21,10 @@ public class YUNTEST {
     public void registTest(){
         for(int i=1;i<=5;i++) {
             MemberVO memberVO = MemberVO.builder()
-                    .member_id("inwoo"+i)
+                    .member_id("sunghoon"+i)
                     .member_pwd("1234")
-                    .member_name("장인우")
-                    .member_email("woowoo"+i)
+                    .member_name("정성훈")
+                    .member_email("sunghoon"+i)
                     .member_email_addr("gmail.com")
                     .member_zonecode("01122")
                     .member_phone("01043734457")

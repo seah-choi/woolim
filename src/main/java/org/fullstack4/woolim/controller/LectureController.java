@@ -64,9 +64,26 @@ public class LectureController {
         List<LectureDTO> lectureDTOS = null;
         int total = 0;
         if(cri.getCategory() != null && cri.getCategory() != ""){
-            lectureDTOS  = lectureServiceIf.getListCategory(cri);
-            total = lectureServiceIf.getLectureKeywordCategory(cri);
-        } else{
+
+            if(cri.getSubject() != null && cri.getSubject() != "") {
+                lectureDTOS  = lectureServiceIf.getListSubjectCategory(cri);
+                total = lectureServiceIf.getLectureKeywordSubjectCategory(cri);
+            } else {
+                lectureDTOS  = lectureServiceIf.getListCategory(cri);
+                total = lectureServiceIf.getLectureKeywordCategory(cri);
+            }
+
+        } else if(cri.getSubject() != null && cri.getSubject() != "") {
+
+            if (cri.getCategory() != null && cri.getCategory() != "") {
+                lectureDTOS  = lectureServiceIf.getListSubjectCategory(cri);
+                total = lectureServiceIf.getLectureKeywordSubjectCategory(cri);
+            } else {
+                lectureDTOS = lectureServiceIf.getListSubject(cri);
+                total = lectureServiceIf.getLectureKeywordSubject(cri);
+            }
+        }
+        else{
             lectureDTOS =  lectureServiceIf.getList(cri);
             total = lectureServiceIf.getLectureKeyword(cri);
         }
@@ -162,13 +179,26 @@ public class LectureController {
         log.info(noticeListDTO);
         model.addAttribute("responseDTO" , noticeListDTO);
         String member_id = (String)session.getAttribute("member_id");
+
+        OrderListDTO orderDetailDTO = lectureServiceIf.lectureStatus(noticeListDTO.getLecture_idx(),member_id);
+        if(orderDetailDTO != null) {
+            log.info("-----orderDetailDTO--------" + orderDetailDTO);
+            model.addAttribute("order" , orderDetailDTO);
+        }
+        CartDTO cartDTO = lectureServiceIf.getLectureCartStatus(noticeListDTO.getLecture_idx(),member_id);
+        if(cartDTO != null) {
+            log.info("-----cartDTO--------" + cartDTO);
+            model.addAttribute("cart" , cartDTO);
+        }
+
         if(bbs_type.equals("bbs03")){
-            OrderListDTO orderDetailDTO = lectureServiceIf.lectureStatus(noticeListDTO.getLecture_idx(),member_id);
+            OrderListDTO orderDetailDTO2 = lectureServiceIf.lectureStatus(noticeListDTO.getLecture_idx(),member_id);
             if(orderDetailDTO != null) {
-                log.info("-----orderDetailDTO--------" + orderDetailDTO);
-                model.addAttribute("order" , orderDetailDTO);
+                log.info("-----orderDetailDTO--------" + orderDetailDTO2);
+                model.addAttribute("order" , orderDetailDTO2);
             }
         }
+
 
 
 //        int idx = Integer.parseInt(lecture_idx);
@@ -185,14 +215,27 @@ public class LectureController {
     }
 
     @GetMapping("/studentList")
-    public void studentListGET(String lecture_idx, Model model,PageRequestDTO pageRequestDTO){
+    public void studentListGET(String lecture_idx,HttpSession session, Model model,PageRequestDTO pageRequestDTO){
         int idx = Integer.parseInt(lecture_idx);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(idx);
         model.addAttribute("list" , lectureDTO);
 
+        String member_id = (String)session.getAttribute("member_id");
+
         pageRequestDTO.setBbs_teacher_yn("Y");
 
         PageResponseDTO<ClassDTO> bbsList = lectureServiceIf.gradeListByPage(pageRequestDTO);
+
+        OrderListDTO orderDetailDTO = lectureServiceIf.lectureStatus(idx,member_id);
+        if(orderDetailDTO != null) {
+            log.info("-----orderDetailDTO--------" + orderDetailDTO);
+            model.addAttribute("order" , orderDetailDTO);
+        }
+        CartDTO cartDTO = lectureServiceIf.getLectureCartStatus(idx,member_id);
+        if(cartDTO != null) {
+            log.info("-----cartDTO--------" + cartDTO);
+            model.addAttribute("cart" , cartDTO);
+        }
 
         model.addAttribute("bbsList", bbsList);
 
@@ -279,9 +322,19 @@ public class LectureController {
 
 
     @GetMapping("/boardRegist")
-    public void boardRegistGET(Model model, @RequestParam String bbs_type, @RequestParam int lecture_idx){
-
+    public void boardRegistGET(Model model, @RequestParam String bbs_type, HttpSession session, @RequestParam int lecture_idx){
+        String member_id = (String)session.getAttribute("member_id");
         LectureDTO lectureDTO = lectureServiceIf.lectureView(lecture_idx);
+        OrderListDTO orderDetailDTO = lectureServiceIf.lectureStatus(lecture_idx,member_id);
+        if(orderDetailDTO != null) {
+            log.info("-----orderDetailDTO--------" + orderDetailDTO);
+            model.addAttribute("order" , orderDetailDTO);
+        }
+        CartDTO cartDTO = lectureServiceIf.getLectureCartStatus(lecture_idx,member_id);
+        if(cartDTO != null) {
+            log.info("-----cartDTO--------" + cartDTO);
+            model.addAttribute("cart" , cartDTO);
+        }
         model.addAttribute("list" , lectureDTO);
         model.addAttribute("bbs_type",bbs_type);
         model.addAttribute("lecture_idx", lecture_idx);
@@ -347,14 +400,25 @@ public class LectureController {
     }
 
     @GetMapping("/boardView")
-    public void boardViewGET(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type){
+    public void boardViewGET(@RequestParam int lecture_idx, Model model, HttpSession session, @RequestParam int bbs_idx,@RequestParam String bbs_type){
 
         BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
+        String member_id = (String)session.getAttribute("member_id");
 
         if(bbs_type.equals("bbs03")){
             List<BbsReplyDTO> reply = bbsReplyService.list(bbs_idx);
             log.info(reply);
             model.addAttribute("reply",reply);
+        }
+        OrderListDTO orderDetailDTO = lectureServiceIf.lectureStatus(lecture_idx,member_id);
+        if(orderDetailDTO != null) {
+            log.info("-----orderDetailDTO--------" + orderDetailDTO);
+            model.addAttribute("order" , orderDetailDTO);
+        }
+        CartDTO cartDTO = lectureServiceIf.getLectureCartStatus(lecture_idx,member_id);
+        if(cartDTO != null) {
+            log.info("-----cartDTO--------" + cartDTO);
+            model.addAttribute("cart" , cartDTO);
         }
         List<BoardFileDTO> fileList = bbsServiceIf.file_list(bbs_idx);
         model.addAttribute("fileList", fileList);
@@ -430,12 +494,23 @@ public class LectureController {
     }
 
     @GetMapping("/boardModify")
-    public void GETBModify(@RequestParam int lecture_idx, Model model,@RequestParam int bbs_idx,@RequestParam String bbs_type) {
+    public void GETBModify(@RequestParam int lecture_idx, Model model, HttpSession session, @RequestParam int bbs_idx,@RequestParam String bbs_type) {
         BbsDTO bbsDTO = bbsServiceIf.view(bbs_idx);
 
         log.info("bbsDTO : " + bbsDTO);
         LectureDTO lectureDTO = lectureServiceIf.lectureView(lecture_idx);
         List<BoardFileDTO> fileList = bbsServiceIf.file_list(bbs_idx);
+        String member_id = (String)session.getAttribute("member_id");
+        OrderListDTO orderDetailDTO = lectureServiceIf.lectureStatus(lecture_idx,member_id);
+        if(orderDetailDTO != null) {
+            log.info("-----orderDetailDTO--------" + orderDetailDTO);
+            model.addAttribute("order" , orderDetailDTO);
+        }
+        CartDTO cartDTO = lectureServiceIf.getLectureCartStatus(lecture_idx,member_id);
+        if(cartDTO != null) {
+            log.info("-----cartDTO--------" + cartDTO);
+            model.addAttribute("cart" , cartDTO);
+        }
 
 
         model.addAttribute("fileList", fileList);

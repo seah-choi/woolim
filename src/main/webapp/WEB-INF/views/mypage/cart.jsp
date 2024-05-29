@@ -8,9 +8,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Title</title>
+
+    <style>
+        .btn-primary {
+            width: 90px;
+            height: 50px;
+            background-color: #68afcb !important;
+            border-color: #68afcb !important;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #8bc8e0 !important;
+            border-color: #8bc8e0 !important;
+        }
+
+        ul {
+            margin-bottom: 0 !important;
+        }
+    </style>
 </head>
 <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
@@ -36,9 +56,9 @@
                 <hr>
                 <form action="/mypage/cart">
                     <div class="d-flex justify-content-end">
-                        <input type="date" style="width: 20%" name="search_date1" class="form-control me-3">
-                            <span class="me-3">~</span>
-                        <input type="date" style="width: 20%" name="search_date2" class="me-3 form-control">
+                        <input type="date" style="width: 20%" name="search_date1" class="form-control me-3 mt-2">
+                            <span class="me-3 mt-3">~</span>
+                        <input type="date" style="width: 20%" name="search_date2" class="me-3 form-control mt-2">
                         <button type="submit" class="btn btn-primary" >검색</button>
                     </div>
                 </form>
@@ -71,8 +91,8 @@
                                 <td class="cart-title">
                                     <h5>${list.lecture_title}</h5>
                                 </td>
-                                <td class="p-price1">${list.lecture_price}</td>
-                                <td class="p-price">${list.lecture_sale_price}</td>
+                                <td class="p-price1"><fmt:formatNumber value="${list.lecture_price}" pattern="#,###"/>원</td>
+                                <td class="p-price"><fmt:formatNumber value="${list.lecture_sale_price}" pattern="#,###"/>원</td>
                                 <td class="qua-col">${list.lecture_start_date}</td>
                                 <td class="qua-col">${list.lecture_end_date}</td>
                                 <td class="close-td"><i class="ti-close"></i></td>
@@ -85,7 +105,7 @@
                     <div class="col-lg-4 offset-lg-4">
                         <div class="proceed-checkout d-flex justify-content-center">
                             <ul>
-                                <li class="cart-total">Total <span id="total_price">0</span></li>
+                                <li class="cart-total">Total <span id="total_price" class="ml-2">0</span></li>
                             </ul>
 <%--                            컨트롤러 전송용 전체 가격 input 태그--%>
                             <input type="hidden" id="price" name="price" value="">

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -255,14 +256,18 @@
                 <h3>${list.lecture_title}</h3>
                 <ul>
 
-                    <li style="margin-top:40px; margin-bottom: 20px;"><span>가격</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ₩${list.lecture_sale_price}원  <span style="text-decoration: line-through ;">₩${list.lecture_price}원</span></li>
+                    <li style="margin-top:40px; margin-bottom: 20px;"><span>가격</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <fmt:formatNumber value="${list.lecture_sale_price}" pattern="#,###"/>원  <span style="text-decoration: line-through ;"><fmt:formatNumber value="${list.lecture_price}" pattern="#,###"/>원</span></li>
                     <li style="margin-bottom: 20px;"><span>과목</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${list.lecture_category_subject}</li>
                     <li style="margin-bottom: 20px;"><span>해시태그</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #${list.lecture_category_subject} #${list.member_name} <c:choose>
                         <c:when test="${list.lecture_category_school eq'elementary'}">#초등</c:when>
                         <c:when test="${list.lecture_category_school eq'middle'}">#중등</c:when>
                         <c:otherwise>#고등</c:otherwise>
                     </c:choose></li>
-                    <li style="margin-bottom: 50px;"><span >별점</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%-- ${lectureDetail[0].lecture_star} --%><span class="star">⭐⭐⭐⭐</span></li>
+                    <li style="margin-bottom: 50px;"><span >별점</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%-- ${lectureDetail[0].lecture_star} --%><span class="star">
+                        <c:forEach begin="1" end="${list.lecture_star}">
+                            ⭐
+                        </c:forEach>
+                    </span></li>
                 </ul>
                 <input type="hidden" value="${sessionScope.member_id}" id="sessionId"/>
                 <c:choose>

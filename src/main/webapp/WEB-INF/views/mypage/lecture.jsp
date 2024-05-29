@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Title</title>
@@ -25,7 +26,38 @@
 <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+<style>
+    .btn-primary {
+        width: 100px;
+        height:50px;
+        background-color: #68afcb !important;
+        border-color: #68afcb !important;
+        transition: background-color 0.3s, border-color 0.3s !important;
+    }
+
+    button.btn-primary:hover {
+        background-color: #8bc8e0 !important;
+        border-color: #8bc8e0 !important;
+    }
+    .page-item.active .page-link {
+        background-color: #68afcb !important;
+        color: #fff !important;
+        border-color: #68afcb !important;
+    }
+
+    a.page-link {
+        color: #68afcb;
+    }
+    li.page-item {
+        color: #68afcb;
+    }
+</style>
+
 <body>
+
+
+
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
@@ -71,7 +103,7 @@
                                         <tr>
                                             <td style="width:25%; "><img src="/resources/img/lecture/${dto.lecture_image}"></td>
                                             <td>${dto.lecture_title}</td>
-                                            <td>${dto.price}</td>
+                                            <td><fmt:formatNumber value="${dto.price}" pattern="#,###"/>원</td>
                                             <td>${dto.lecture_start_date} ~ ${dto.lecture_end_date}</td>
                                             <td><button class="btn btn-primary" type="button" onclick="refund(${dto.order_detail_idx},${dto.price},${dto.lecture_idx})">수강 취소</button></td>
                                         </tr>
