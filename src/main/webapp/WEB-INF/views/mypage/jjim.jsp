@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Title</title>
@@ -25,6 +26,22 @@
 <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+<style>
+    .btn-primary {
+        width: 90px;
+        height: 50px;
+        background-color: #68afcb;
+        border-color: #68afcb;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #8bc8e0;
+        border-color: #8bc8e0;
+    }
+</style>
+
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <section class="shopping-cart spad">
@@ -36,9 +53,9 @@
                 <hr>
                 <form action="/mypage/jjim">
                     <div class="d-flex justify-content-end">
-                        <input type="date" style="width: 20%" name="search_date1" class="form-control me-3">
-                        <span class="me-3">~</span>
-                        <input type="date" style="width: 20%" name="search_date2" class="me-3 form-control">
+                        <input type="date" style="width: 20%" name="search_date1" class="form-control me-3 mt-2">
+                        <span class="me-3 mt-3">~</span>
+                        <input type="date" style="width: 20%" name="search_date2" class="me-3 form-control mt-2">
                         <button type="submit" class="btn btn-primary" >검색</button>
                     </div>
                 </form>
@@ -70,8 +87,8 @@
                                 <td class="cart-title">
                                     <h5>${list.lecture_title}</h5>
                                 </td>
-                                <td class="p-price1">${list.lecture_price}</td>
-                                <td class="p-price">${list.lecture_sale_price}</td>
+                                <td class="p-price1"><fmt:formatNumber value="${list.lecture_price}" pattern="#,###"/>원</td>
+                                <td class="p-price"><fmt:formatNumber value="${list.lecture_sale_price}" pattern="#,###"/>원</td>
                                 <td class="qua-col">${list.lecture_start_date}</td>
                                 <td class="qua-col">${list.lecture_end_date}</td>
                                 <td class="close-td"><i class="ti-close"></i></td>

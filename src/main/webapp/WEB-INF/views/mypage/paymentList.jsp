@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Title</title>
@@ -24,6 +25,36 @@
     <link rel="stylesheet" href="/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        .btn-primary {
+            width: 90px;
+            height: 50px;
+            background-color: #68afcb;
+            border-color: #68afcb;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #8bc8e0;
+            border-color: #8bc8e0;
+        }
+        .page-item.active .page-link {
+            background-color: #68afcb !important;
+            color: #fff !important;
+            border-color: #68afcb !important;
+        }
+
+        a.page-link {
+            color: #68afcb;
+        }
+        li.page-item {
+            color: #68afcb;
+        }
+        .ordersbtn {
+            width: 110px !important;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -74,7 +105,7 @@
                                     <div id="panelsStayOpen-collapseOne${status.index}" class="accordion-collapse collapse">
                                         <div class="accordion-body">
                                             <div class="d-flex justify-content-end">
-                                                총 결제 금액:${list.order_total}
+                                                총 결제 금액:<fmt:formatNumber value="${list.order_total}" pattern="#,###"/>원
                                             </div>
                                             <table class="table mt-5">
                                                 <thead class="table-secondary">
@@ -92,17 +123,17 @@
                                                         <tr>
                                                             <td style="width:25%; "><img src="/resources/img/lecture/${dto.lecture_image}"></td>
                                                             <td>${dto.lecture_title}</td>
-                                                            <td>${dto.price}</td>
+                                                            <td><fmt:formatNumber value="${dto.price}" pattern="#,###"/>원</td>
                                                             <td>${dto.lecture_start_date} ~ ${dto.lecture_end_date}</td>
                                                             <c:if test="${dto.order_status == '구매 완료' }">
-                                                                <td colspan="2"><button class="btn btn-primary" type="button" onclick="purchaseConfirm(${dto.order_detail_idx},${dto.lecture_idx})" disabled>구매 완료</button></td>
+                                                                <td colspan="2"><button class="btn btn-primary ordersbtn" type="button" onclick="purchaseConfirm(${dto.order_detail_idx},${dto.lecture_idx})" disabled>구매 완료</button></td>
                                                             </c:if>
                                                             <c:if test="${dto.order_status == '환불 완료' }">
-                                                                <td colspan="2"><button class="btn btn-primary" type="button" onclick="purchaseConfirm(${dto.order_detail_idx},${dto.lecture_idx})" disabled>환불 완료</button></td>
+                                                                <td colspan="2"><button class="btn btn-primary ordersbtn" type="button" onclick="purchaseConfirm(${dto.order_detail_idx},${dto.lecture_idx})" disabled>환불 완료</button></td>
                                                             </c:if>
                                                             <c:if test="${dto.order_status == '구매 중' }">
                                                                 <td>
-                                                                    <button class="btn btn-primary" type="button" onclick="purchaseConfirm(${dto.order_detail_idx},${dto.lecture_idx})">구매 확정</button>
+                                                                    <button class="btn btn-primary ordersbtn" type="button" onclick="purchaseConfirm(${dto.order_detail_idx},${dto.lecture_idx})">구매 확정</button>
                                                                 </td>
                                                             </c:if>
                                                         </tr>
