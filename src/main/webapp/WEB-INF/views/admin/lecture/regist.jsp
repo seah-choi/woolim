@@ -103,7 +103,7 @@
                     </div>
                     <div class="d-flex align-items-start align-items-sm-center mt-4">
                         <label class="col-sm-12 col-md-2 col-form-label fontWe-700 mt-3">분류</label>
-                        <div class="col-md-1 col-sm-12">
+                        <div class="col-md-2 col-sm-12">
                             <div class="form-group">
                                 <label>과목</label>
                                 <select class="selectpicker form-control" name="lecture_category_subject" data-size="5" data-style="btn-outline-info">
@@ -115,7 +115,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-1 col-sm-12">
+                        <div class="col-md-2 col-sm-12">
                             <div class="form-group">
                                 <label>초중고</label>
                                 <select id="schoolSelect" name="lecture_category_school" class="selectpicker form-control school" data-size="5" data-style="btn-outline-info">
@@ -126,7 +126,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-1 col-sm-12">
+                        <div class="col-md-2 col-sm-12">
                             <div class="form-group">
                                 <label>학년</label>
                                 <select id="gradeSelect" name="lecture_category_grade" class="selectpicker form-control grade" data-size="5" data-style="btn-outline-info">
