@@ -77,6 +77,10 @@
             border-color: #dee2e6;
         }
 
+        .product-item {
+            margin-bottom: 50px;
+        }
+
     </style>
 </head>
 <body>
