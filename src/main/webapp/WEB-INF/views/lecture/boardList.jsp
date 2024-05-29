@@ -372,9 +372,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${responseDTO.dtolist}" var="list">
+                <c:forEach items="${responseDTO.dtolist}" var="list" varStatus="i">
                     <tr>
-                        <th scope="row">#</th>
+                        <th scope="row">${responseDTO.total_count - i.index - responseDTO.page_skip_count}</th>
                         <td><a href="/lecture/boardView?bbs_idx=${list.bbs_idx}&lecture_idx=${list.lecture_idx}&bbs_type=${list.bbs_category_code}">${list.bbs_title}</a></td>
                         <td>${list.bbs_reg_date}</td>
                         <td>${list.bbs_read_cnt}</td>

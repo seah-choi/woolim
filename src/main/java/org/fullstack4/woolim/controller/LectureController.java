@@ -422,6 +422,7 @@ public class LectureController {
         }
         List<BoardFileDTO> fileList = bbsServiceIf.file_list(bbs_idx);
         model.addAttribute("fileList", fileList);
+        bbsServiceIf.updateReadCount(bbs_idx);
 
         model.addAttribute("bbsDTO" , bbsDTO);
         log.info(bbsDTO.toString());

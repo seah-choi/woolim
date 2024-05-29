@@ -8,6 +8,7 @@ import org.fullstack4.woolim.dto.*;
 import org.fullstack4.woolim.mapper.MemberMapper;
 import org.fullstack4.woolim.mapper.QnaMapper;
 import org.fullstack4.woolim.mapper.ReviewMapper;
+import org.fullstack4.woolim.service.BbsServiceIf;
 import org.fullstack4.woolim.service.QnaServiceIf;
 import org.fullstack4.woolim.service.ReviewServiceIf;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,8 @@ public class YUNTEST {
 
     @Autowired
     private QnaServiceIf qnaServiceIf;
+    @Autowired
+    private BbsServiceIf bbsServiceIf;
 
     @Autowired(required = false)
     private ModelMapper modelMapper;
@@ -97,6 +100,45 @@ public class YUNTEST {
 
         log.info("responseDTO :" +responseDTO);
 
+    }
+    @Test
+    public void noticeRegist(){
+        for(int i=2020;i<=2023;i++){
+            for(int j=1;j<=12;j++) {
+                BbsDTO bbsDTO = BbsDTO.builder()
+                        .bbs_title(i + "년 "+j+"월 한중 인물 비교사 수업 자료 입니다.")
+                        .bbs_content("<p>"+i+"년 "+j+"월 강좌 수업 자료 입니다<br></p>")
+                        .member_id("sunghoon4")
+                        .bbs_category_code("bbs05")
+                        .bbs_read_cnt(0)
+                        .bbs_reply_cnt(0)
+                        .bbs_teacher_yn("Y")
+                        .lecture_idx(1)
+                        .build();
+                int result = bbsServiceIf.InsertLectureBbs(bbsDTO);
+
+                log.info(result);
+            }
+        }
+
+    }
+    @Test
+    public void noticeRegist2(){
+        for(int j=1;j<=5;j++) {
+            BbsDTO bbsDTO = BbsDTO.builder()
+                    .bbs_title("2024년 "+j+"월 한중 인물 비교사 수업 자료 입니다.")
+                    .bbs_content("<p>2024년 "+j+"월 강좌 수업 자료 입니다<br></p>")
+                    .member_id("sunghoon4")
+                    .bbs_category_code("bbs05")
+                    .bbs_read_cnt(0)
+                    .bbs_reply_cnt(0)
+                    .bbs_teacher_yn("Y")
+                    .lecture_idx(1)
+                    .build();
+            int result = bbsServiceIf.InsertLectureBbs(bbsDTO);
+
+            log.info(result);
+        }
     }
 
 }
