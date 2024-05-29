@@ -201,7 +201,7 @@
                                                                             <h5>${list.lecture_title}</h5>
                                                                         </a>
                                                                         <div class="product-price">
-                                                                            ₩${list.lecture_price}
+                                                                            ₩${list.lecture_sale_price}
                                                                             <span>₩${list.lecture_price}</span>
                                                                         </div>
                                                                     </div>
