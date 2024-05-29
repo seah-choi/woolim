@@ -245,6 +245,7 @@
     <select id="lectureStatus" resultType="org.fullstack4.woolim.domain.OrderListVO">
         select * from woo_order_detail
         where lecture_idx = #{arg0} and member_id = #{arg1}
+        limit 0,1
 
     </select>
     <select id="getLectureCartStatus" resultType="org.fullstack4.woolim.domain.CartVO">
