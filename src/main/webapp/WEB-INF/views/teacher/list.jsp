@@ -34,6 +34,52 @@
         a {
             text-decoration: none;
         }
+
+        .pagination {
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: .25rem;
+            justify-content: center;
+        }
+
+        .page-link {
+            position: relative;
+            display: block;
+            padding: .5rem .75rem;
+            margin-left: -1px;
+            line-height: 1;
+            color: #327f9b;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+
+        .page-item.active .page-link {
+            z-index: 3;
+            color: #fff;
+            background-color: #68afcb;
+            border-color: #68afcb;
+        }
+
+        .pageInfo_wrap .page-link:hover {
+            z-index: 2;
+            color: #327f9b;
+            text-decoration: none;
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+        }
+
+
+
+
+
+        .pageInfo_wrap .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            cursor: auto;
+            background-color: #fff;
+            border-color: #dee2e6;
+        }
     </style>
 </head>
 <body>
@@ -123,7 +169,12 @@
                             <div class="product-item">
                                 <div class="pi-pic">
 <%--                                    <img src="/resources/img/products/product-1.jpg" alt="">--%>
-                                    <img src="/resources/upload/teacher/${list.teacher_image_file}" alt="">
+                                    <c:if test="${list.teacher_image_file != null}">
+                                        <img src="/resources/upload/teacher/${list.teacher_image_file}"  alt="user-avatar" class="d-block rounded"  height="400" width="350" id="preview"  />
+                                    </c:if>
+                                    <c:if test="${list.teacher_image_file == null}">
+                                        <img src="/resources/upload/teacher/default.png"  alt="user-avatar" class="d-block rounded"  height="400" width="350" id="preview"  />
+                                    </c:if>
 <%--                                    <div class="icon">--%>
 <%--                                        <i class="icon_heart_alt"></i>--%>
 <%--                                    </div>--%>
@@ -146,7 +197,7 @@
                         </c:forEach>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center">
+                <div  class="d-flex justify-content-center">
                     <!-- Pagination with icons -->
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">

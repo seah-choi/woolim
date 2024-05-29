@@ -97,6 +97,8 @@
             list-style: none;
             border-radius: .25rem;
             justify-content: center;
+            margin-left: 300px;
+            margin-top: 50px;
         }
 
         .pageInfo_wrap .page-link {
@@ -150,37 +152,6 @@
             border-color: #dee2e6;
         }
 
-        .pageInfo_wrap .pagination-lg .page-link {
-            padding: .75rem 1.5rem;
-            font-size: 1.25rem;
-            line-height: 1.5;
-        }
-
-        .pageInfo_wrap .pagination-lg .page-item:first-child .page-link {
-            border-top-left-radius: .3rem;
-            border-bottom-left-radius: .3rem;
-        }
-
-        .pageInfo_wrap .pagination-lg .page-item:last-child .page-link {
-            border-top-right-radius: .3rem;
-            border-bottom-right-radius: .3rem;
-        }
-
-        .pageInfo_wrap .pagination-sm .page-link {
-            padding: .25rem .5rem;
-            font-size: .875rem;
-            line-height: 1.5;
-        }
-
-        .pageInfo_wrap .pagination-sm .page-item:first-child .page-link {
-            border-top-left-radius: .2rem;
-            border-bottom-left-radius: .2rem;
-        }
-
-        .pageInfo_wrap .pagination-sm .page-item:last-child .page-link {
-            border-top-right-radius: .2rem;
-            border-bottom-right-radius: .2rem;
-        }
 
     </style>
 </head>

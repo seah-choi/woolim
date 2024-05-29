@@ -91,6 +91,20 @@
             border: 1px solid #00A85D;
             cursor: pointer;
         }
+        .watch{
+            height: 56px;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 56px;
+            border-radius: 4px;
+            vertical-align: middle;
+            text-align: center;
+            background: #00A85D;
+            color: #fff;
+            width: 70%;
+            border: 1px solid #00A85D;
+            cursor: pointer;
+        }
         #cancel{
             height: 56px;
             font-size: 16px;
@@ -358,9 +372,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${responseDTO.dtolist}" var="list">
+                <c:forEach items="${responseDTO.dtolist}" var="list" varStatus="i">
                     <tr>
-                        <th scope="row">#</th>
+                        <th scope="row">${responseDTO.total_count - i.index - responseDTO.page_skip_count}</th>
                         <td><a href="/lecture/boardView?bbs_idx=${list.bbs_idx}&lecture_idx=${list.lecture_idx}&bbs_type=${list.bbs_category_code}">${list.bbs_title}</a></td>
                         <td>${list.bbs_reg_date}</td>
                         <td>${list.bbs_read_cnt}</td>

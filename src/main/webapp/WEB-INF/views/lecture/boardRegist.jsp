@@ -189,6 +189,20 @@
             cursor: pointer;
             background-size: contain;
         }
+        .watch{
+            height: 56px;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 56px;
+            border-radius: 4px;
+            vertical-align: middle;
+            text-align: center;
+            background: #00A85D;
+            color: #fff;
+            width: 70%;
+            border: 1px solid #00A85D;
+            cursor: pointer;
+        }
     </style>
 
 </head>
@@ -209,7 +223,11 @@
                     <li style="margin-top:40px; margin-bottom: 20px;"><span>가격</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ₩${list.lecture_sale_price}원  <span style="text-decoration: line-through ;">₩${list.lecture_price}원</span></li>
                     <li style="margin-bottom: 20px;"><span>과목</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;국어</li>
                     <li style="margin-bottom: 20px;"><span>해시태그</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #국어 #정성훈</li>
-                    <li style="margin-bottom: 50px;"><span >별점</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%-- ${lectureDetail[0].lecture_star} --%><span class="star">⭐⭐⭐⭐</span></li>
+                    <li style="margin-bottom: 50px;"><span >별점</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%-- ${lectureDetail[0].lecture_star} --%><span class="star">
+                        <c:forEach begin="1" end="${list.lecture_star}">
+                            ⭐
+                        </c:forEach>
+                    </span></li>
                 </ul>
 
                 <c:choose>
@@ -317,14 +335,14 @@
             <c:if test="${bbs_type=='bbs03'}"><h5 style="font-weight: bold">Q&A</h5></c:if>
             <hr>
             <br>
-            <form name="frm" action="/lecture/boardRegist" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="member_id" id="member_id" value="${sessionScope.user_id}">
+            <form name="frm" action="/lecture/boardRegist" id="frmRegist" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="member_id" id="member_id" value="${sessionScope.member_id}">
                 <input type="hidden" name="bbs_category_code" id="bbs_category_code" value="${bbs_type}">
                 <input type="hidden" name="lecture_idx" value="${lecture_idx}">
                 <input type="hidden" name="bbs_teacher_yn" value="Y">
                 <div class="form-floating">
                     <textarea class="form-control" name="bbs_title" placeholder="Leave a comment here" id="floatingTextarea" style="resize: none"></textarea>
-                    <label for="floatingTextarea">제목${sessionScope.user_id}</label>
+                    <label for="floatingTextarea">제목</label>
                 </div>
                 <br>
                 <input type="file" class="form-control" name="files" id="file" multiple>
@@ -433,6 +451,24 @@
 <link href="/resources/css/summernote/summernote-lite.css" rel="stylesheet">
 <script src="/resources/js/summernote/summernote-lite.js"></script>
 <script>
+    let floatingTextarea = document.getElementById("floatingTextarea");
+    let btn_modify = document.getElementById("btn_modify");
+
+    btn_modify.addEventListener("click", function(e){
+        e.preventDefault();
+        if(floatingTextarea.value.trim()<4){
+            alert("제목은 4자리 이상 입력해주세요");
+            return;
+        }
+        let contentsText = (document.getElementById("summernote").value.replace(/<[^>]+>/g, '')).replaceAll("&nbsp;",'').trim();
+
+        if(contentsText.length <20){
+            alert("내용은 20자리 이상 입력해주세요");
+            return;
+        }
+        let frmRegist = document.getElementById("frmRegist");
+        frmRegist.submit();
+    });
     $('#summernote').summernote({
         placeholder: 'Hello stand alone ui',
         tabsize: 2,
