@@ -14,10 +14,14 @@ import java.util.List;
 public interface LectureMapper {
     List<LectureVO> getList(Criteria cri);
     List<LectureVO> getListCategory(Criteria cri);
+    List<LectureVO> getListSubject(Criteria cri);
+    List<LectureVO> getListSubjectCategory(Criteria cri);
 
     int getLectureKeyword(Criteria cri);
     int getLectureKeywordCategory(Criteria cri);
+    int getLectureKeywordSubject(Criteria cri);
 
+    int getLectureKeywordSubjectCategory(Criteria cri);
     LectureVO lectureView(int idx);
 
     List<ClassVO> gradeListByPage(PageRequestDTO pageRequestDTO);

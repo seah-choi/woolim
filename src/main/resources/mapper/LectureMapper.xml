@@ -68,7 +68,57 @@
         limit #{skip}, #{amount}
     </select>
     <select id="getListCategory" resultType="org.fullstack4.woolim.domain.LectureVO">
-        select * from woo_lecture where lecture_category_subject = #{category}
+        select * from woo_lecture where lecture_category_school = #{category}
+        <if test="keyword != null">
+            <include refid="category"></include>
+        </if>
+        <if test="sorting != null">
+
+            <choose>
+
+                <when test="sorting == '1'.toString()">
+                    order by lecture_count desc
+                </when>
+                <when test="sorting == '2'.toString()">
+                    order by lecture_reg_date desc
+                </when>
+                <when test="sorting == '3'.toString()">
+                    order by lecture_reg_date desc
+                </when>
+                <when test="sorting == '4'.toString()">
+                    order by  lecture_reg_date desc
+                </when>
+            </choose>
+        </if>
+        limit #{skip}, #{amount}
+    </select>
+    <select id="getListSubject" resultType="org.fullstack4.woolim.domain.LectureVO">
+        select * from woo_lecture where lecture_category_subject = #{subject}
+        <if test="keyword != null">
+            <include refid="category"></include>
+        </if>
+        <if test="sorting != null">
+
+            <choose>
+
+                <when test="sorting == '1'.toString()">
+                    order by lecture_count desc
+                </when>
+                <when test="sorting == '2'.toString()">
+                    order by lecture_reg_date desc
+                </when>
+                <when test="sorting == '3'.toString()">
+                    order by lecture_reg_date desc
+                </when>
+                <when test="sorting == '4'.toString()">
+                    order by  lecture_reg_date desc
+                </when>
+            </choose>
+        </if>
+        limit #{skip}, #{amount}
+    </select>
+    <select id="getListSubjectCategory" resultType="org.fullstack4.woolim.domain.LectureVO">
+        select * from woo_lecture where lecture_category_subject = #{subject} and lecture_category_school = #{category}
         <if test="keyword != null">
             <include refid="category"></include>
         </if>
@@ -103,7 +153,23 @@
     <select id="getLectureKeywordCategory" resultType="int">
         select count(*)
         from woo_lecture
-        where lecture_category_subject = #{category}
+        where lecture_category_school = #{category}
+        <if test="keyword != null">
+            <include refid="category"></include>
+        </if>
+    </select>
+    <select id="getLectureKeywordSubject" resultType="int">
+        select count(*)
+        from woo_lecture
+        where lecture_category_subject = #{subject}
+        <if test="keyword != null">
+            <include refid="category"></include>
+        </if>
+    </select>
+    <select id="getLectureKeywordSubjectCategory" resultType="int">
+        select count(*)
+        from woo_lecture
+        where lecture_category_subject = #{subject} and lecture_category_school = #{category}
         <if test="keyword != null">
             <include refid="category"></include>
         </if>

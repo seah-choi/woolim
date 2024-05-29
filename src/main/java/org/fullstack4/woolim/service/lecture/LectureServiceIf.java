@@ -22,10 +22,13 @@ public interface LectureServiceIf {
 
     List<LectureDTO> getList(Criteria cri);
     List<LectureDTO> getListCategory(Criteria cri);
+    List<LectureDTO> getListSubject(Criteria cri);
+    List<LectureDTO> getListSubjectCategory(Criteria cri);
 
     int getLectureKeyword(Criteria cri);
     int getLectureKeywordCategory(Criteria cri);
-
+    int getLectureKeywordSubject(Criteria cri);
+    int getLectureKeywordSubjectCategory(Criteria cri);
     LectureDTO lectureView(int idx);
 
     PageResponseDTO<ClassDTO> gradeListByPage(PageRequestDTO pageRequestDTO);
