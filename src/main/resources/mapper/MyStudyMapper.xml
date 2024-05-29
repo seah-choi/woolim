@@ -93,6 +93,7 @@
         INNER JOIN woo_order_detail as wod ON wl.lecture_idx = wod.lecture_idx
         <where>
             wod.member_id =#{member_id}
+            and order_status = '구매 완료'
             <if test="search_types == null">
                 and (lecture_title like concat('%', #{search_word},'%')
                 or member_name like concat('%', #{search_word},'%' ))
@@ -127,6 +128,7 @@
         INNER JOIN woo_order_detail as wod ON wl.lecture_idx = wod.lecture_idx
         <where>
             wod.member_id =#{member_id}
+            and order_status = '구매 완료'
             <if test="search_types == null">
                 and (lecture_title like concat('%', #{search_word},'%')
                 or member_name like concat('%', #{search_word},'%' ))
