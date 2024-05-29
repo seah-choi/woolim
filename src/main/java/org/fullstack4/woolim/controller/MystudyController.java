@@ -83,7 +83,9 @@ public class MystudyController {
         String id = (String) session.getAttribute("member_id");
         pageRequestDTO.setMember_id(id);
 
+
         PageResponseDTO<GradeDTO> bbsList = myStudyService.gradeListByPage(pageRequestDTO);
+        log.info(bbsList);
         model.addAttribute("bbsList", bbsList);
 
     }

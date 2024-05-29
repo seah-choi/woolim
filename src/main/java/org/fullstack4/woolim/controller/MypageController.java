@@ -188,6 +188,9 @@ public class MypageController {
 
         log.info("responseDTO:{}", responseDTO);
 
+        MemberDTO memberDTO = memberService.memberView(member_id);
+
+        model.addAttribute("memberDTO", memberDTO);
         model.addAttribute("paymentDTO", responseDTO.getDtolist());
         model.addAttribute("responseDTO", responseDTO);
     }

@@ -243,7 +243,12 @@
                     <c:forEach items="${responseDTO.dtolist}" var="list">
                             <div class="product-item">
                                 <div class="pi-pic">
-                                    <img src="/resources/upload/teacher/${list.teacher_image_file}" alt="">
+                                    <c:if test="${list.teacher_image_file != null}">
+                                        <img src="/resources/upload/teacher/${list.teacher_image_file}"  alt="user-avatar" class="d-block rounded"  height="400" width="350" id="preview"  />
+                                    </c:if>
+                                    <c:if test="${list.teacher_image_file == null}">
+                                        <img src="/resources/upload/teacher/default.png"  alt="user-avatar" class="d-block rounded"  height="400" width="350" id="preview"  />
+                                    </c:if>
                                     <ul>
                                         <li class="quick-view"><a href="/teacher/view?member_idx=${list.member_idx}">자세히 보기</a></li>
                                     </ul>

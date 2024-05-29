@@ -8,6 +8,7 @@ import org.fullstack4.woolim.mapper.MemberMapper;
 import org.fullstack4.woolim.mapper.MyStudyMapper;
 import org.fullstack4.woolim.mapper.OrderMapper;
 import org.fullstack4.woolim.service.OrderServiceIf;
+import org.fullstack4.woolim.service.PaymentServiceIf;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.modelmapper.ModelMapper;
@@ -40,7 +41,10 @@ public class HyunbeenTest {
     @Autowired(required = false)
     private MyStudyMapper myStudyMapper;
     @Autowired(required = false)
-    private OrderServiceIf orderServiceIf;
+    private OrderServiceIf orderService;
+    @Autowired(required = false)
+    private PaymentServiceIf paymentService;
+
 
     @Test
     public void HyunbeenTest() {
@@ -63,11 +67,28 @@ public class HyunbeenTest {
 
     @Test
     public void CartTest(){
-        OrderDetailVO orderDetailVO = new OrderDetailVO();
-        orderDetailVO.setMember_id("test2");
-        log.info(orderDetailVO);
-        List<OrderDetailVO> voList = orderMapper.viewOrderDetailList(orderDetailVO);
-        log.info(voList);
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        int price = 1000000;
+        String payment_num = "";
+        String member_id= "seah1";
+        String payment_type = "충전";
+        String payment_title = "포인트 충전";
+
+        MemberDTO memberDTO = MemberDTO.builder()
+                .member_id(member_id)
+                .member_point(price)
+                .build();
+
+        PaymentDTO paymentDTO = PaymentDTO.builder()
+                .payment_num(payment_num)
+                .payment_type(payment_type)
+                .payment_title(payment_title)
+                .price(price)
+                .member_id(member_id)
+                .build();
+
+        int result1=orderService.PointCharge(memberDTO);
+        int result = paymentService.InsertPayment(paymentDTO);
 
 
 

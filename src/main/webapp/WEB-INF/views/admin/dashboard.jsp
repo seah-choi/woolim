@@ -109,7 +109,7 @@
             box-shadow: 0 0 15px rgba(0, 0, 0.2, 0.3);
         }
         #sales_chart {
-            margin-left: 40px;
+            margin-left: 35px;
         }
 
     </style>
@@ -165,8 +165,8 @@
                     <!-- order-card end -->
 
                     <div class="d-flex justify-content-center">
-                        <div id="chart_div" class="chartDiv" style="width: 945px; height: 500px;"></div>
-                        <div id="sales_chart" class="chartDiv" style="width: 945px; height: 500px;"></div>
+                        <div id="chart_div" class="chartDiv" style="width: 755px; height: 500px;"></div>
+                        <div id="sales_chart" class="chartDiv" style="width: 755px; height: 500px;"></div>
                     </div>
 
         </div>
