@@ -146,7 +146,8 @@
                             </form>
                             <hr>
                             <h4 class="d-flex justify-content-center">포인트 사용 내역</h4>
-                            <div class="order-btn">
+                            <h2 class="d-flex justify-content-center">보유 포인트 : <fmt:formatNumber value="${memberDTO.member_point}" pattern="#,###"/>P</h2>
+                            <div class="order-btn mt-5">
                                 <a class="site-btn place-btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">충전하기</a>
                             </div>
                             <table class="table mt-5">

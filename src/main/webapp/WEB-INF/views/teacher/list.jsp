@@ -169,7 +169,12 @@
                             <div class="product-item">
                                 <div class="pi-pic">
 <%--                                    <img src="/resources/img/products/product-1.jpg" alt="">--%>
-                                    <img src="/resources/upload/teacher/${list.teacher_image_file}" alt="">
+                                    <c:if test="${list.teacher_image_file != null}">
+                                        <img src="/resources/upload/teacher/${list.teacher_image_file}"  alt="user-avatar" class="d-block rounded"  height="400" width="350" id="preview"  />
+                                    </c:if>
+                                    <c:if test="${list.teacher_image_file == null}">
+                                        <img src="/resources/upload/teacher/default.png"  alt="user-avatar" class="d-block rounded"  height="400" width="350" id="preview"  />
+                                    </c:if>
 <%--                                    <div class="icon">--%>
 <%--                                        <i class="icon_heart_alt"></i>--%>
 <%--                                    </div>--%>

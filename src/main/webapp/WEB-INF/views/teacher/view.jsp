@@ -85,7 +85,12 @@
                     <div class="row imgDiv">
                         <div class="col-lg-6">
                             <div class="">
-                                <img class="" src="/resources/upload/teacher/${memberDTO.teacher_image_file}" alt="">
+                                <c:if test="${memberDTO.teacher_image_file != null}">
+                                    <img src="/resources/upload/teacher/${memberDTO.teacher_image_file}"  alt="user-avatar" class="d-block rounded"  height="400" width="350" id="preview"  />
+                                </c:if>
+                                <c:if test="${memberDTO.teacher_image_file == null}">
+                                    <img src="/resources/upload/teacher/default.png"  alt="user-avatar" class="d-block rounded"  height="400" width="350" id="preview"  />
+                                </c:if>
                             </div>
                         </div>
                         <div class="col-lg-6">
